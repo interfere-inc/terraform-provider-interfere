@@ -1,0 +1,13 @@
+.tools/
+.terraform/
+bin/
+dist/
+*.tfstate*
+*.tfplan
+internal/sdk/
+internal/resource_surface/
+internal/resource_private_key/
+internal/resource_workspace/
+provider-code-spec.json
+fern/openapi.json
+fern/.fern/

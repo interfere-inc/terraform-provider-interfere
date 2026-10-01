@@ -1,0 +1,54 @@
+provider:
+  name: interfere
+resources:
+  workspace:
+    create:
+      path: /v3/workspaces/{workspaceSlug}/actions/organizations.updateBasics
+      method: POST
+    read:
+      path: /v3/workspaces/{workspaceSlug}/queries/organizations.current
+      method: POST
+    update:
+      path: /v3/workspaces/{workspaceSlug}/actions/organizations.updateBasics
+      method: POST
+    schema:
+      ignores:
+        - args
+        - success
+        - slug
+  private_key:
+    create:
+      path: /v3/workspaces/{workspaceSlug}/api-keys
+      method: POST
+    read:
+      path: /v3/workspaces/{workspaceSlug}/api-keys/{apiKeyId}
+      method: GET
+    delete:
+      path: /v3/workspaces/{workspaceSlug}/api-keys/{apiKeyId}
+      method: DELETE
+    schema:
+      ignores:
+        - apiKey
+        - revoked
+      attributes:
+        aliases:
+          apiKeyId: id
+  surface:
+    create:
+      path: /v3/workspaces/{workspaceSlug}/surfaces
+      method: POST
+    read:
+      path: /v3/workspaces/{workspaceSlug}/queries/surfaces.getBySlugIncludeDeleted
+      method: POST
+    update:
+      path: /v3/workspaces/{workspaceSlug}/actions/surfaces.updateName
+      method: POST
+    delete:
+      path: /v3/workspaces/{workspaceSlug}/actions/surfaces.delete
+      method: POST
+    schema:
+      ignores:
+        - apiKey
+        - publicKey
+        - surface
+        - deletedAt
