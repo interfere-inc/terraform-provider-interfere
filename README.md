@@ -1,12 +1,29 @@
 # Interfere Terraform provider
 
-Manage existing workspace settings, surfaces, and private API keys with HashiCorp's generated schemas and a Fern-generated Go client. The public source repository is [interfere-inc/terraform-provider-interfere](https://github.com/interfere-inc/terraform-provider-interfere). Registry publication is pending.
+Manage existing workspace settings, surfaces, and private API keys with HashiCorp's generated schemas and a Fern-generated Go client. Install it from the [Terraform Registry](https://registry.terraform.io/providers/interfere-inc/interfere/latest).
 
 | Resource                | Behavior                                                                                                                            |
 | ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
 | `interfere_workspace`   | Adopts an existing workspace and manages its name and slug. Destroying removes Terraform management without deleting the workspace. |
 | `interfere_surface`     | Creates, reads, renames, deletes, and imports surfaces.                                                                             |
 | `interfere_private_key` | Creates and revokes workspace or surface keys with explicit scopes and optional expiry. Configuration changes replace the key.      |
+
+## Install
+
+```hcl
+terraform {
+  required_providers {
+    interfere = {
+      source  = "interfere-inc/interfere"
+      version = "~> 0.1.0"
+    }
+  }
+}
+
+provider "interfere" {}
+```
+
+Set `INTERFERE_TOKEN` through your shell or secret manager, then run `terraform init` and `terraform plan`. The credential needs the permissions described below for the resources you manage.
 
 ## Generate and test
 
@@ -81,7 +98,7 @@ Refresh never fetches a secret. External rotation of a key created by Terraform 
 
 ## Surfaces
 
-Use `examples/surface/main.tf`, supply `workspace_slug` and a nonzero UUID for `creation_id`, then run `terraform plan`. The local override loads the unpublished provider without `terraform init`. Run `terraform apply` only against a workspace where you intend to create a surface.
+Use `examples/surface/main.tf`, supply `workspace_slug` and a nonzero UUID for `creation_id`, then run `terraform plan`. For local development, the override loads your built provider without `terraform init`. Run `terraform apply` only against a workspace where you intend to create a surface.
 
 Keep the creation UUID unchanged after an uncertain response. Use a new UUID for a new creation or a replacement. Changing `type` or `workspace_slug` requires replacement. Creation also issues default credentials, which the provider discards and never stores in state.
 
@@ -107,4 +124,4 @@ Sync a reviewed provider snapshot into the public repository, including `interna
 
 The public repository's release workflow builds eight OS/architecture combinations when a `v*` tag is pushed. It signs SHA-256 checksums with the dedicated `GPG_PRIVATE_KEY` and `PASSPHRASE` repository secrets, and creates a draft release. Verify its artifacts before publishing. Register the matching public signing key and provider in HCP Terraform once; subsequent published releases notify the registry through its webhook.
 
-Before the first release, deploy the corresponding API changes and run acceptance tests against a disposable workspace.
+Before publishing a release, deploy the corresponding API changes and run acceptance tests against a disposable workspace.
