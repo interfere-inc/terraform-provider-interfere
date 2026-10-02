@@ -2,10 +2,10 @@ package provider
 
 import (
 	"context"
+	"github.com/interfere-inc/terraform-provider-interfere/internal/sdk/keys"
 
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/interfere-inc/terraform-provider-interfere/internal/sdk"
 )
 
 func (r *privateKeyResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
@@ -19,16 +19,16 @@ func (r *privateKeyResource) Create(ctx context.Context, req resource.CreateRequ
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	request := &sdk.CreateWorkspaceAPIKeyRequest{WorkspaceSlug: data.WorkspaceSlug.ValueString(), SurfaceSlug: data.SurfaceSlug.ValueStringPointer(), Name: data.Name.ValueString(), IdempotencyKey: data.IdempotencyKey.ValueString()}
+	request := &keys.CreatePrivateRequest{WorkspaceSlug: data.WorkspaceSlug.ValueString(), SurfaceSlug: data.SurfaceSlug.ValueStringPointer(), Name: data.Name.ValueString(), IdempotencyKey: data.IdempotencyKey.ValueString()}
 	for _, scope := range scopes {
-		request.Scopes = append(request.Scopes, sdk.CreateWorkspaceAPIKeyRequestScopesItem(scope))
+		request.Scopes = append(request.Scopes, keys.CreatePrivateRequestScopesItem(scope))
 	}
 	request.SetSecondsUntilExpiration(nil)
 	if !data.SecondsUntilExpiration.IsNull() {
 		seconds := int(data.SecondsUntilExpiration.ValueInt64())
 		request.SetSecondsUntilExpiration(&seconds)
 	}
-	created, err := r.client.Workspaces.CreateWorkspaceAPIKey(ctx, request)
+	created, err := r.client.Keys.Private.Create(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("Unable to create private key", apiError(err))
 		return
@@ -61,7 +61,7 @@ func (r *privateKeyResource) Delete(ctx context.Context, req resource.DeleteRequ
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	result, err := r.client.Workspaces.RevokeWorkspaceAPIKey(ctx, &sdk.RevokeWorkspaceAPIKeyRequest{WorkspaceSlug: data.WorkspaceSlug.ValueString(), APIKeyID: data.Id.ValueString()})
+	result, err := r.client.Keys.Private.Delete(ctx, &keys.DeletePrivateRequest{WorkspaceSlug: data.WorkspaceSlug.ValueString(), APIKeyID: data.Id.ValueString()})
 	if err != nil {
 		resp.Diagnostics.AddError("Unable to revoke private key", apiError(err))
 		return

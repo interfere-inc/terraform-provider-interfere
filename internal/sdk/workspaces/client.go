@@ -39,19 +39,19 @@ func NewClient(options *core.RequestOptions) *Client {
 // 
 // Example:
 // 
-// 	request := &sdk.QueryOrganizationsCurrentRequest{
+// 	request := &sdk.CurrentWorkspacesRequest{
 // 	    WorkspaceSlug: "workspaceSlug",
 // 	}
-// 	client.Workspaces.QueryOrganizationsCurrent(
+// 	client.Workspaces.Current(
 // 	    context.TODO(),
 // 	    request,
 // 	)
-func (c *Client) QueryOrganizationsCurrent(
+func (c *Client) Current(
     ctx context.Context,
-    request *sdk.QueryOrganizationsCurrentRequest,
+    request *sdk.CurrentWorkspacesRequest,
     opts ...option.RequestOption,
 ) (*sdk.QueryOrganizationsCurrentResponse, error){
-    response, err := c.WithRawResponse.QueryOrganizationsCurrent(
+    response, err := c.WithRawResponse.Current(
         ctx,
         request,
         opts...,
@@ -62,203 +62,24 @@ func (c *Client) QueryOrganizationsCurrent(
     return response.Body, nil
 }
 
-// Read a surface by slug even if deleted. Use only when investigating historical references; prefer surfaces.getBySlug for active resources. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation is read-only despite using POST. Permission-filtered queries may return an empty result; do not assume that proves the resource does not exist. Only use pagination arguments declared in the schema.
+// Update workspace name or other basic settings described by the input schema. Read workspaces.current first. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.
 // 
 // Example:
 // 
-// 	request := &sdk.QuerySurfacesGetBySlugIncludeDeletedRequest{
+// 	request := &sdk.UpdateBasicsWorkspacesRequest{
 // 	    WorkspaceSlug: "workspaceSlug",
-// 	    Args: &sdk.QuerySurfacesGetBySlugIncludeDeletedRequestArgs{
-// 	        SurfaceSlug: "surfaceSlug",
-// 	    },
+// 	    Args: &sdk.UpdateBasicsWorkspacesRequestArgs{},
 // 	}
-// 	client.Workspaces.QuerySurfacesGetBySlugIncludeDeleted(
+// 	client.Workspaces.UpdateBasics(
 // 	    context.TODO(),
 // 	    request,
 // 	)
-func (c *Client) QuerySurfacesGetBySlugIncludeDeleted(
+func (c *Client) UpdateBasics(
     ctx context.Context,
-    request *sdk.QuerySurfacesGetBySlugIncludeDeletedRequest,
-    opts ...option.RequestOption,
-) (*sdk.QuerySurfacesGetBySlugIncludeDeletedResponse, error){
-    response, err := c.WithRawResponse.QuerySurfacesGetBySlugIncludeDeleted(
-        ctx,
-        request,
-        opts...,
-    )
-    if err != nil {
-        return nil, err
-    }
-    return response.Body, nil
-}
-
-// Update workspace name or other basic settings described by the input schema. Read organizations.current first. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.
-// 
-// Example:
-// 
-// 	request := &sdk.MutationOrganizationsUpdateBasicsRequest{
-// 	    WorkspaceSlug: "workspaceSlug",
-// 	    Args: &sdk.MutationOrganizationsUpdateBasicsRequestArgs{},
-// 	}
-// 	client.Workspaces.MutationOrganizationsUpdateBasics(
-// 	    context.TODO(),
-// 	    request,
-// 	)
-func (c *Client) MutationOrganizationsUpdateBasics(
-    ctx context.Context,
-    request *sdk.MutationOrganizationsUpdateBasicsRequest,
+    request *sdk.UpdateBasicsWorkspacesRequest,
     opts ...option.RequestOption,
 ) (*sdk.MutationOrganizationsUpdateBasicsResponse, error){
-    response, err := c.WithRawResponse.MutationOrganizationsUpdateBasics(
-        ctx,
-        request,
-        opts...,
-    )
-    if err != nil {
-        return nil, err
-    }
-    return response.Body, nil
-}
-
-// Delete a surface. This is destructive; resolve its exact ID and slug with surfaces.list and verify the requested target. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.
-// 
-// Example:
-// 
-// 	request := &sdk.MutationSurfacesDeleteRequest{
-// 	    WorkspaceSlug: "workspaceSlug",
-// 	    Args: &sdk.MutationSurfacesDeleteRequestArgs{
-// 	        SurfaceSlug: "surfaceSlug",
-// 	    },
-// 	}
-// 	client.Workspaces.MutationSurfacesDelete(
-// 	    context.TODO(),
-// 	    request,
-// 	)
-func (c *Client) MutationSurfacesDelete(
-    ctx context.Context,
-    request *sdk.MutationSurfacesDeleteRequest,
-    opts ...option.RequestOption,
-) (*sdk.MutationSurfacesDeleteResponse, error){
-    response, err := c.WithRawResponse.MutationSurfacesDelete(
-        ctx,
-        request,
-        opts...,
-    )
-    if err != nil {
-        return nil, err
-    }
-    return response.Body, nil
-}
-
-// Rename a surface. Resolve its ID with surfaces.list and preserve the rest of its settings. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.
-// 
-// Example:
-// 
-// 	request := &sdk.MutationSurfacesUpdateNameRequest{
-// 	    WorkspaceSlug: "workspaceSlug",
-// 	    Args: &sdk.MutationSurfacesUpdateNameRequestArgs{
-// 	        Name: "name",
-// 	        SurfaceSlug: "surfaceSlug",
-// 	    },
-// 	}
-// 	client.Workspaces.MutationSurfacesUpdateName(
-// 	    context.TODO(),
-// 	    request,
-// 	)
-func (c *Client) MutationSurfacesUpdateName(
-    ctx context.Context,
-    request *sdk.MutationSurfacesUpdateNameRequest,
-    opts ...option.RequestOption,
-) (*sdk.MutationSurfacesUpdateNameResponse, error){
-    response, err := c.WithRawResponse.MutationSurfacesUpdateName(
-        ctx,
-        request,
-        opts...,
-    )
-    if err != nil {
-        return nil, err
-    }
-    return response.Body, nil
-}
-
-// Creates a private API key with explicit scopes and expiration. Supply surfaceSlug for a surface key; omit it for a workspace key. Grants cannot exceed the caller's permissions. Reuse the same idempotency key and request after an uncertain response.
-// 
-// Example:
-// 
-// 	request := &sdk.CreateWorkspaceAPIKeyRequest{
-// 	    WorkspaceSlug: "workspaceSlug",
-// 	    IdempotencyKey: "idempotencyKey",
-// 	    Name: "name",
-// 	    Scopes: []sdk.CreateWorkspaceAPIKeyRequestScopesItem{
-// 	        sdk.CreateWorkspaceAPIKeyRequestScopesItemOrgSurfacesRead,
-// 	    },
-// 	}
-// 	client.Workspaces.CreateWorkspaceAPIKey(
-// 	    context.TODO(),
-// 	    request,
-// 	)
-func (c *Client) CreateWorkspaceAPIKey(
-    ctx context.Context,
-    request *sdk.CreateWorkspaceAPIKeyRequest,
-    opts ...option.RequestOption,
-) (*sdk.CreateWorkspaceAPIKeyResponse, error){
-    response, err := c.WithRawResponse.CreateWorkspaceAPIKey(
-        ctx,
-        request,
-        opts...,
-    )
-    if err != nil {
-        return nil, err
-    }
-    return response.Body, nil
-}
-
-// Reads a workspace or surface key's grants and expiration without retrieving its secret. Requires workspace authentication read permission for workspace keys or surface read permission for surface keys.
-// 
-// Example:
-// 
-// 	request := &sdk.ReadPrivateKeyRequest{
-// 	    WorkspaceSlug: "workspaceSlug",
-// 	    APIKeyID: "apiKeyId",
-// 	}
-// 	client.Workspaces.ReadPrivateKey(
-// 	    context.TODO(),
-// 	    request,
-// 	)
-func (c *Client) ReadPrivateKey(
-    ctx context.Context,
-    request *sdk.ReadPrivateKeyRequest,
-    opts ...option.RequestOption,
-) (*sdk.ReadPrivateKeyResponse, error){
-    response, err := c.WithRawResponse.ReadPrivateKey(
-        ctx,
-        request,
-        opts...,
-    )
-    if err != nil {
-        return nil, err
-    }
-    return response.Body, nil
-}
-
-// Revokes a workspace or surface API key so it can no longer authorize API requests. Requires workspace authentication write permission for workspace keys or surface write permission for surface keys.
-// 
-// Example:
-// 
-// 	request := &sdk.RevokeWorkspaceAPIKeyRequest{
-// 	    WorkspaceSlug: "workspaceSlug",
-// 	    APIKeyID: "apiKeyId",
-// 	}
-// 	client.Workspaces.RevokeWorkspaceAPIKey(
-// 	    context.TODO(),
-// 	    request,
-// 	)
-func (c *Client) RevokeWorkspaceAPIKey(
-    ctx context.Context,
-    request *sdk.RevokeWorkspaceAPIKeyRequest,
-    opts ...option.RequestOption,
-) (*sdk.RevokeWorkspaceAPIKeyResponse, error){
-    response, err := c.WithRawResponse.RevokeWorkspaceAPIKey(
+    response, err := c.WithRawResponse.UpdateBasics(
         ctx,
         request,
         opts...,

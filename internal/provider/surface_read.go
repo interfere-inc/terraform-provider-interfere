@@ -7,7 +7,6 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/interfere-inc/terraform-provider-interfere/internal/resource_surface"
 	"github.com/interfere-inc/terraform-provider-interfere/internal/sdk"
 	"github.com/interfere-inc/terraform-provider-interfere/internal/sdk/core"
 )
@@ -20,10 +19,10 @@ func apiError(err error) string {
 	return "The API request failed or returned an invalid response. Check connectivity and credentials. For an uncertain create result, retry with the same idempotency_key."
 }
 
-func (r *surfaceResource) read(ctx context.Context, data resource_surface.SurfaceModel) (*sdk.QuerySurfacesGetBySlugIncludeDeletedResponse, error) {
-	remote, err := r.client.Workspaces.QuerySurfacesGetBySlugIncludeDeleted(ctx, &sdk.QuerySurfacesGetBySlugIncludeDeletedRequest{
+func (r *surfaceResource) read(ctx context.Context, data surfaceModel) (*sdk.QuerySurfacesGetBySlugIncludeDeletedResponse, error) {
+	remote, err := r.client.Surfaces.GetBySlugIncludeDeleted(ctx, &sdk.GetBySlugIncludeDeletedSurfacesRequest{
 		WorkspaceSlug: data.WorkspaceSlug.ValueString(),
-		Args:          &sdk.QuerySurfacesGetBySlugIncludeDeletedRequestArgs{SurfaceSlug: data.Slug.ValueString()},
+		Args:          &sdk.GetBySlugIncludeDeletedSurfacesRequestArgs{SurfaceSlug: data.Slug.ValueString()},
 	})
 	if err != nil {
 		return nil, errors.New(apiError(err))
@@ -41,7 +40,7 @@ func (r *surfaceResource) read(ctx context.Context, data resource_surface.Surfac
 }
 
 func (r *surfaceResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
-	var data resource_surface.SurfaceModel
+	var data surfaceModel
 	resp.Diagnostics.Append(req.State.Get(ctx, &data)...)
 	if resp.Diagnostics.HasError() {
 		return

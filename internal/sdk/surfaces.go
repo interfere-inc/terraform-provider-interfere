@@ -94,6 +94,120 @@ func (c *CreateSurfaceRequest) MarshalJSON() ([]byte, error) {
 }
 
 var (
+	deleteSurfacesRequestFieldWorkspaceSlug = big.NewInt(1 << 0)
+	deleteSurfacesRequestFieldArgs          = big.NewInt(1 << 1)
+)
+
+type DeleteSurfacesRequest struct {
+	WorkspaceSlug string                     `json:"-" url:"-"`
+	Args          *DeleteSurfacesRequestArgs `json:"args" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (d *DeleteSurfacesRequest) require(field *big.Int) {
+	next := new(big.Int)
+	if d.explicitFields != nil {
+		next.Set(d.explicitFields)
+	}
+	next.Or(next, field)
+	d.explicitFields = next
+}
+
+// SetWorkspaceSlug sets the WorkspaceSlug field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeleteSurfacesRequest) SetWorkspaceSlug(workspaceSlug string) {
+	d.WorkspaceSlug = workspaceSlug
+	d.require(deleteSurfacesRequestFieldWorkspaceSlug)
+}
+
+// SetArgs sets the Args field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeleteSurfacesRequest) SetArgs(args *DeleteSurfacesRequestArgs) {
+	d.Args = args
+	d.require(deleteSurfacesRequestFieldArgs)
+}
+
+func (d *DeleteSurfacesRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler DeleteSurfacesRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*d = DeleteSurfacesRequest(body)
+	return nil
+}
+
+func (d *DeleteSurfacesRequest) MarshalJSON() ([]byte, error) {
+	type embed DeleteSurfacesRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*d),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, d.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
+	getBySlugIncludeDeletedSurfacesRequestFieldWorkspaceSlug = big.NewInt(1 << 0)
+	getBySlugIncludeDeletedSurfacesRequestFieldArgs          = big.NewInt(1 << 1)
+)
+
+type GetBySlugIncludeDeletedSurfacesRequest struct {
+	WorkspaceSlug string                                      `json:"-" url:"-"`
+	Args          *GetBySlugIncludeDeletedSurfacesRequestArgs `json:"args" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (g *GetBySlugIncludeDeletedSurfacesRequest) require(field *big.Int) {
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
+	}
+	next.Or(next, field)
+	g.explicitFields = next
+}
+
+// SetWorkspaceSlug sets the WorkspaceSlug field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetBySlugIncludeDeletedSurfacesRequest) SetWorkspaceSlug(workspaceSlug string) {
+	g.WorkspaceSlug = workspaceSlug
+	g.require(getBySlugIncludeDeletedSurfacesRequestFieldWorkspaceSlug)
+}
+
+// SetArgs sets the Args field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetBySlugIncludeDeletedSurfacesRequest) SetArgs(args *GetBySlugIncludeDeletedSurfacesRequestArgs) {
+	g.Args = args
+	g.require(getBySlugIncludeDeletedSurfacesRequestFieldArgs)
+}
+
+func (g *GetBySlugIncludeDeletedSurfacesRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler GetBySlugIncludeDeletedSurfacesRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*g = GetBySlugIncludeDeletedSurfacesRequest(body)
+	return nil
+}
+
+func (g *GetBySlugIncludeDeletedSurfacesRequest) MarshalJSON() ([]byte, error) {
+	type embed GetBySlugIncludeDeletedSurfacesRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
 	createSurfaceResponseFieldAPIKey    = big.NewInt(1 << 0)
 	createSurfaceResponseFieldPublicKey = big.NewInt(1 << 1)
 	createSurfaceResponseFieldSurface   = big.NewInt(1 << 2)
@@ -514,6 +628,376 @@ func (c CreateSurfaceResponseSurfaceType) Ptr() *CreateSurfaceResponseSurfaceTyp
 }
 
 var (
+	mutationSurfacesDeleteResponseFieldSuccess = big.NewInt(1 << 0)
+)
+
+type MutationSurfacesDeleteResponse struct {
+	Success bool `json:"success" url:"success"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (m *MutationSurfacesDeleteResponse) GetSuccess() bool {
+	if m == nil {
+		return false
+	}
+	return m.Success
+}
+
+func (m *MutationSurfacesDeleteResponse) GetExtraProperties() map[string]interface{} {
+	if m == nil {
+		return nil
+	}
+	return m.extraProperties
+}
+
+func (m *MutationSurfacesDeleteResponse) require(field *big.Int) {
+	next := new(big.Int)
+	if m.explicitFields != nil {
+		next.Set(m.explicitFields)
+	}
+	next.Or(next, field)
+	m.explicitFields = next
+}
+
+// SetSuccess sets the Success field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *MutationSurfacesDeleteResponse) SetSuccess(success bool) {
+	m.Success = success
+	m.require(mutationSurfacesDeleteResponseFieldSuccess)
+}
+
+func (m *MutationSurfacesDeleteResponse) UnmarshalJSON(data []byte) error {
+	type unmarshaler MutationSurfacesDeleteResponse
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*m = MutationSurfacesDeleteResponse(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *m)
+	if err != nil {
+		return err
+	}
+	m.extraProperties = extraProperties
+	m.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (m *MutationSurfacesDeleteResponse) MarshalJSON() ([]byte, error) {
+	type embed MutationSurfacesDeleteResponse
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*m),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, m.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (m *MutationSurfacesDeleteResponse) String() string {
+	if m == nil {
+		return "<nil>"
+	}
+	if len(m.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(m); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", m)
+}
+
+var (
+	mutationSurfacesUpdateNameResponseFieldSuccess = big.NewInt(1 << 0)
+)
+
+type MutationSurfacesUpdateNameResponse struct {
+	Success bool `json:"success" url:"success"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (m *MutationSurfacesUpdateNameResponse) GetSuccess() bool {
+	if m == nil {
+		return false
+	}
+	return m.Success
+}
+
+func (m *MutationSurfacesUpdateNameResponse) GetExtraProperties() map[string]interface{} {
+	if m == nil {
+		return nil
+	}
+	return m.extraProperties
+}
+
+func (m *MutationSurfacesUpdateNameResponse) require(field *big.Int) {
+	next := new(big.Int)
+	if m.explicitFields != nil {
+		next.Set(m.explicitFields)
+	}
+	next.Or(next, field)
+	m.explicitFields = next
+}
+
+// SetSuccess sets the Success field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *MutationSurfacesUpdateNameResponse) SetSuccess(success bool) {
+	m.Success = success
+	m.require(mutationSurfacesUpdateNameResponseFieldSuccess)
+}
+
+func (m *MutationSurfacesUpdateNameResponse) UnmarshalJSON(data []byte) error {
+	type unmarshaler MutationSurfacesUpdateNameResponse
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*m = MutationSurfacesUpdateNameResponse(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *m)
+	if err != nil {
+		return err
+	}
+	m.extraProperties = extraProperties
+	m.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (m *MutationSurfacesUpdateNameResponse) MarshalJSON() ([]byte, error) {
+	type embed MutationSurfacesUpdateNameResponse
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*m),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, m.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (m *MutationSurfacesUpdateNameResponse) String() string {
+	if m == nil {
+		return "<nil>"
+	}
+	if len(m.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(m); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", m)
+}
+
+var (
+	querySurfacesGetBySlugIncludeDeletedResponseFieldID        = big.NewInt(1 << 0)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldName      = big.NewInt(1 << 1)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldSlug      = big.NewInt(1 << 2)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldType      = big.NewInt(1 << 3)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldDeletedAt = big.NewInt(1 << 4)
+)
+
+// querySurfacesGetBySlugIncludeDeletedResponseNullableFields maps the wire names of QuerySurfacesGetBySlugIncludeDeletedResponse's nullable fields (required or optional) to their field bits.
+var querySurfacesGetBySlugIncludeDeletedResponseNullableFields = map[string]*big.Int{
+	"deletedAt": querySurfacesGetBySlugIncludeDeletedResponseFieldDeletedAt,
+}
+
+type QuerySurfacesGetBySlugIncludeDeletedResponse struct {
+	ID        string                                           `json:"id" url:"id"`
+	Name      string                                           `json:"name" url:"name"`
+	Slug      string                                           `json:"slug" url:"slug"`
+	Type      QuerySurfacesGetBySlugIncludeDeletedResponseType `json:"type" url:"type"`
+	DeletedAt *float64                                         `json:"deletedAt,omitempty" url:"deletedAt,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) GetID() string {
+	if q == nil {
+		return ""
+	}
+	return q.ID
+}
+
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) GetName() string {
+	if q == nil {
+		return ""
+	}
+	return q.Name
+}
+
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) GetSlug() string {
+	if q == nil {
+		return ""
+	}
+	return q.Slug
+}
+
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) GetType() QuerySurfacesGetBySlugIncludeDeletedResponseType {
+	if q == nil {
+		return ""
+	}
+	return q.Type
+}
+
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) GetDeletedAt() *float64 {
+	if q == nil {
+		return nil
+	}
+	return q.DeletedAt
+}
+
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) GetExtraProperties() map[string]interface{} {
+	if q == nil {
+		return nil
+	}
+	return q.ExtraProperties
+}
+
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) require(field *big.Int) {
+	next := new(big.Int)
+	if q.explicitFields != nil {
+		next.Set(q.explicitFields)
+	}
+	next.Or(next, field)
+	q.explicitFields = next
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) SetID(id string) {
+	q.ID = id
+	q.require(querySurfacesGetBySlugIncludeDeletedResponseFieldID)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) SetName(name string) {
+	q.Name = name
+	q.require(querySurfacesGetBySlugIncludeDeletedResponseFieldName)
+}
+
+// SetSlug sets the Slug field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) SetSlug(slug string) {
+	q.Slug = slug
+	q.require(querySurfacesGetBySlugIncludeDeletedResponseFieldSlug)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) SetType(type_ QuerySurfacesGetBySlugIncludeDeletedResponseType) {
+	q.Type = type_
+	q.require(querySurfacesGetBySlugIncludeDeletedResponseFieldType)
+}
+
+// SetDeletedAt sets the DeletedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) SetDeletedAt(deletedAt *float64) {
+	q.DeletedAt = deletedAt
+	q.require(querySurfacesGetBySlugIncludeDeletedResponseFieldDeletedAt)
+}
+
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) UnmarshalJSON(data []byte) error {
+	type embed QuerySurfacesGetBySlugIncludeDeletedResponse
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*q),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*q = QuerySurfacesGetBySlugIncludeDeletedResponse(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *q)
+	if err != nil {
+		return err
+	}
+	q.ExtraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, querySurfacesGetBySlugIncludeDeletedResponseNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		q.require(presentFields)
+	}
+	q.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) MarshalJSON() ([]byte, error) {
+	type embed QuerySurfacesGetBySlugIncludeDeletedResponse
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*q),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, q.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, q.ExtraProperties)
+}
+
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) String() string {
+	if q == nil {
+		return "<nil>"
+	}
+	if len(q.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(q.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(q); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", q)
+}
+
+type QuerySurfacesGetBySlugIncludeDeletedResponseType string
+
+const (
+	QuerySurfacesGetBySlugIncludeDeletedResponseTypeElysia QuerySurfacesGetBySlugIncludeDeletedResponseType = "elysia"
+	QuerySurfacesGetBySlugIncludeDeletedResponseTypeNest   QuerySurfacesGetBySlugIncludeDeletedResponseType = "nest"
+	QuerySurfacesGetBySlugIncludeDeletedResponseTypeNextjs QuerySurfacesGetBySlugIncludeDeletedResponseType = "nextjs"
+	QuerySurfacesGetBySlugIncludeDeletedResponseTypePython QuerySurfacesGetBySlugIncludeDeletedResponseType = "python"
+	QuerySurfacesGetBySlugIncludeDeletedResponseTypeReact  QuerySurfacesGetBySlugIncludeDeletedResponseType = "react"
+)
+
+func NewQuerySurfacesGetBySlugIncludeDeletedResponseTypeFromString(s string) (QuerySurfacesGetBySlugIncludeDeletedResponseType, error) {
+	switch s {
+	case "elysia":
+		return QuerySurfacesGetBySlugIncludeDeletedResponseTypeElysia, nil
+	case "nest":
+		return QuerySurfacesGetBySlugIncludeDeletedResponseTypeNest, nil
+	case "nextjs":
+		return QuerySurfacesGetBySlugIncludeDeletedResponseTypeNextjs, nil
+	case "python":
+		return QuerySurfacesGetBySlugIncludeDeletedResponseTypePython, nil
+	case "react":
+		return QuerySurfacesGetBySlugIncludeDeletedResponseTypeReact, nil
+	}
+	var t QuerySurfacesGetBySlugIncludeDeletedResponseType
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (q QuerySurfacesGetBySlugIncludeDeletedResponseType) Ptr() *QuerySurfacesGetBySlugIncludeDeletedResponseType {
+	return &q
+}
+
+var (
 	createSurfaceRequestAPIKeyFieldScopes                 = big.NewInt(1 << 0)
 	createSurfaceRequestAPIKeyFieldSecondsUntilExpiration = big.NewInt(1 << 1)
 )
@@ -747,4 +1231,335 @@ func NewCreateSurfaceRequestTypeFromString(s string) (CreateSurfaceRequestType, 
 
 func (c CreateSurfaceRequestType) Ptr() *CreateSurfaceRequestType {
 	return &c
+}
+
+var (
+	deleteSurfacesRequestArgsFieldSurfaceSlug = big.NewInt(1 << 0)
+)
+
+type DeleteSurfacesRequestArgs struct {
+	SurfaceSlug string `json:"surfaceSlug" url:"surfaceSlug"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (d *DeleteSurfacesRequestArgs) GetSurfaceSlug() string {
+	if d == nil {
+		return ""
+	}
+	return d.SurfaceSlug
+}
+
+func (d *DeleteSurfacesRequestArgs) GetExtraProperties() map[string]interface{} {
+	if d == nil {
+		return nil
+	}
+	return d.extraProperties
+}
+
+func (d *DeleteSurfacesRequestArgs) require(field *big.Int) {
+	next := new(big.Int)
+	if d.explicitFields != nil {
+		next.Set(d.explicitFields)
+	}
+	next.Or(next, field)
+	d.explicitFields = next
+}
+
+// SetSurfaceSlug sets the SurfaceSlug field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeleteSurfacesRequestArgs) SetSurfaceSlug(surfaceSlug string) {
+	d.SurfaceSlug = surfaceSlug
+	d.require(deleteSurfacesRequestArgsFieldSurfaceSlug)
+}
+
+func (d *DeleteSurfacesRequestArgs) UnmarshalJSON(data []byte) error {
+	type unmarshaler DeleteSurfacesRequestArgs
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*d = DeleteSurfacesRequestArgs(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *d)
+	if err != nil {
+		return err
+	}
+	d.extraProperties = extraProperties
+	d.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (d *DeleteSurfacesRequestArgs) MarshalJSON() ([]byte, error) {
+	type embed DeleteSurfacesRequestArgs
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*d),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, d.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (d *DeleteSurfacesRequestArgs) String() string {
+	if d == nil {
+		return "<nil>"
+	}
+	if len(d.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(d); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", d)
+}
+
+var (
+	getBySlugIncludeDeletedSurfacesRequestArgsFieldSurfaceSlug = big.NewInt(1 << 0)
+)
+
+type GetBySlugIncludeDeletedSurfacesRequestArgs struct {
+	SurfaceSlug string `json:"surfaceSlug" url:"surfaceSlug"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (g *GetBySlugIncludeDeletedSurfacesRequestArgs) GetSurfaceSlug() string {
+	if g == nil {
+		return ""
+	}
+	return g.SurfaceSlug
+}
+
+func (g *GetBySlugIncludeDeletedSurfacesRequestArgs) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
+	return g.extraProperties
+}
+
+func (g *GetBySlugIncludeDeletedSurfacesRequestArgs) require(field *big.Int) {
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
+	}
+	next.Or(next, field)
+	g.explicitFields = next
+}
+
+// SetSurfaceSlug sets the SurfaceSlug field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetBySlugIncludeDeletedSurfacesRequestArgs) SetSurfaceSlug(surfaceSlug string) {
+	g.SurfaceSlug = surfaceSlug
+	g.require(getBySlugIncludeDeletedSurfacesRequestArgsFieldSurfaceSlug)
+}
+
+func (g *GetBySlugIncludeDeletedSurfacesRequestArgs) UnmarshalJSON(data []byte) error {
+	type unmarshaler GetBySlugIncludeDeletedSurfacesRequestArgs
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*g = GetBySlugIncludeDeletedSurfacesRequestArgs(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.extraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GetBySlugIncludeDeletedSurfacesRequestArgs) MarshalJSON() ([]byte, error) {
+	type embed GetBySlugIncludeDeletedSurfacesRequestArgs
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (g *GetBySlugIncludeDeletedSurfacesRequestArgs) String() string {
+	if g == nil {
+		return "<nil>"
+	}
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
+}
+
+var (
+	updateNameSurfacesRequestArgsFieldName        = big.NewInt(1 << 0)
+	updateNameSurfacesRequestArgsFieldSurfaceSlug = big.NewInt(1 << 1)
+)
+
+type UpdateNameSurfacesRequestArgs struct {
+	Name        string `json:"name" url:"name"`
+	SurfaceSlug string `json:"surfaceSlug" url:"surfaceSlug"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UpdateNameSurfacesRequestArgs) GetName() string {
+	if u == nil {
+		return ""
+	}
+	return u.Name
+}
+
+func (u *UpdateNameSurfacesRequestArgs) GetSurfaceSlug() string {
+	if u == nil {
+		return ""
+	}
+	return u.SurfaceSlug
+}
+
+func (u *UpdateNameSurfacesRequestArgs) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
+	return u.extraProperties
+}
+
+func (u *UpdateNameSurfacesRequestArgs) require(field *big.Int) {
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
+	}
+	next.Or(next, field)
+	u.explicitFields = next
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateNameSurfacesRequestArgs) SetName(name string) {
+	u.Name = name
+	u.require(updateNameSurfacesRequestArgsFieldName)
+}
+
+// SetSurfaceSlug sets the SurfaceSlug field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateNameSurfacesRequestArgs) SetSurfaceSlug(surfaceSlug string) {
+	u.SurfaceSlug = surfaceSlug
+	u.require(updateNameSurfacesRequestArgsFieldSurfaceSlug)
+}
+
+func (u *UpdateNameSurfacesRequestArgs) UnmarshalJSON(data []byte) error {
+	type unmarshaler UpdateNameSurfacesRequestArgs
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UpdateNameSurfacesRequestArgs(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UpdateNameSurfacesRequestArgs) MarshalJSON() ([]byte, error) {
+	type embed UpdateNameSurfacesRequestArgs
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (u *UpdateNameSurfacesRequestArgs) String() string {
+	if u == nil {
+		return "<nil>"
+	}
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+var (
+	updateNameSurfacesRequestFieldWorkspaceSlug = big.NewInt(1 << 0)
+	updateNameSurfacesRequestFieldArgs          = big.NewInt(1 << 1)
+)
+
+type UpdateNameSurfacesRequest struct {
+	WorkspaceSlug string                         `json:"-" url:"-"`
+	Args          *UpdateNameSurfacesRequestArgs `json:"args" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (u *UpdateNameSurfacesRequest) require(field *big.Int) {
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
+	}
+	next.Or(next, field)
+	u.explicitFields = next
+}
+
+// SetWorkspaceSlug sets the WorkspaceSlug field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateNameSurfacesRequest) SetWorkspaceSlug(workspaceSlug string) {
+	u.WorkspaceSlug = workspaceSlug
+	u.require(updateNameSurfacesRequestFieldWorkspaceSlug)
+}
+
+// SetArgs sets the Args field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateNameSurfacesRequest) SetArgs(args *UpdateNameSurfacesRequestArgs) {
+	u.Args = args
+	u.require(updateNameSurfacesRequestFieldArgs)
+}
+
+func (u *UpdateNameSurfacesRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler UpdateNameSurfacesRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*u = UpdateNameSurfacesRequest(body)
+	return nil
+}
+
+func (u *UpdateNameSurfacesRequest) MarshalJSON() ([]byte, error) {
+	type embed UpdateNameSurfacesRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }

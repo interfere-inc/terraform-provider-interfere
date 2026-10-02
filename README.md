@@ -1,12 +1,14 @@
 # Interfere Terraform provider
 
-Manage existing workspace settings, surfaces, and private API keys with HashiCorp's generated schemas and a Fern-generated Go client. Install it from the [Terraform Registry](https://registry.terraform.io/providers/interfere-inc/interfere/latest).
+Manage existing workspace settings, surfaces, and private and public API keys with Terraform Plugin Framework and a Fern-generated Go client. Install it from the [Terraform Registry](https://registry.terraform.io/providers/interfere-inc/interfere/latest).
 
 | Resource                | Behavior                                                                                                                            |
 | ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
 | `interfere_workspace`   | Adopts an existing workspace and manages its name and slug. Destroying removes Terraform management without deleting the workspace. |
 | `interfere_surface`     | Creates, reads, renames, deletes, and imports surfaces.                                                                             |
 | `interfere_private_key` | Creates and revokes workspace or surface keys with explicit scopes and optional expiry. Configuration changes replace the key.      |
+
+| `interfere_public_key` | Creates, reads, imports, and revokes surface publishable keys. External rotation refreshes the current value. |
 
 ## Install
 
@@ -31,16 +33,16 @@ Building and testing requires Go 1.26 or newer and Terraform. The public reposit
 
 Regeneration additionally requires Docker and the Fern CLI pinned in `fern/fern.config.json`. The CLI prerelease is available from the [public Fern snapshot release](https://github.com/skve/fern/releases/tag/pr-17949-ffdd423). Fern Go generator 1.64.2 runs locally without an enterprise entitlement in the tested configuration.
 
-Supply the Terraform OpenAPI 3.1 publication containing the operations mapped in `generator_config.yml`:
+Supply the Terraform OpenAPI 3.1 publication containing the provider’s resource operations:
 
 ```sh
 make generate OPENAPI=/absolute/path/to/openapi.json FERN=/absolute/path/to/fern
 make build test check
 ```
 
-The two HashiCorp generators are pinned in the Makefile. Generated schemas and the Go client are recreated by `make generate` and included in public source snapshots. Go dependencies are locked in `go.mod` and `go.sum`. Tests use Terraform with a local HTTP fixture and do not create remote resources. Run `make docs` to regenerate the registry documentation.
+Resource schemas and lifecycle code are maintained together in `internal/provider`. `make generate` recreates only the Go client, which is included in public source snapshots. Go dependencies are locked in `go.mod` and `go.sum`. Tests use Terraform with a local HTTP fixture and do not create remote resources. Run `make docs` to regenerate the registry documentation.
 
-Both generators consume the API export unchanged. `generator_config.yml` uses HashiCorp's native operation mappings. The provider adds replacement rules and projects the created private-key secret into a sensitive Terraform attribute. Surface creation credentials are excluded from state. Surface names are limited to 48 characters so they can also be renamed through the API.
+Fern consumes the API export unchanged. Terraform schemas declare replacement rules and project the created private-key secret into a sensitive attribute. Surface creation credentials are excluded from state. Surface names are limited to 48 characters so they can also be renamed through the API.
 
 ## Try the local binary
 
@@ -96,6 +98,18 @@ For an imported key, set `idempotency_key` to its UUID and match its scopes and 
 
 Refresh never fetches a secret. External rotation of a key created by Terraform reports an error instead of presenting the old secret as current; import it for metadata-only management or replace it with a new key.
 
+## Public keys
+
+Use `interfere_public_key` for a surface's publishable browser credential. Its `content` output can feed build parameters. Creation requires surface write permission; refresh and import require surface read permission.
+
+Import an existing key without changing its value:
+
+```sh
+terraform import interfere_public_key.browser existing-workspace/existing-surface/11111111-1111-4111-8111-111111111111
+```
+
+Set `idempotency_key` to the imported UUID and match its name. External rotation updates `content` on refresh. Changing the name, workspace, or surface requires replacement with a fresh UUID. Use a distinct name with `create_before_destroy`. Revocation or deletion of the parent surface removes the resource from state; recreating a revoked key requires a fresh UUID. Destroy revokes the current value and its rotation grace-period values.
+
 ## Surfaces
 
 Use `examples/surface/main.tf`, supply `workspace_slug` and a nonzero UUID for `creation_id`, then run `terraform plan`. For local development, the override loads your built provider without `terraform init`. Run `terraform apply` only against a workspace where you intend to create a surface.
@@ -120,7 +134,7 @@ The provider disables automatic HTTP retries. Rename and delete acknowledgements
 
 The monorepo remains the development source. The public repository contains only this provider directory and its generated Go code, with a separate Git history. Infrastructure provisions the repository, Engineering access, and branch protection.
 
-Sync a reviewed provider snapshot into the public repository, including `internal/sdk` and `internal/resource_*`. Exclude `.tools`, `bin`, `dist`, Terraform state, and local Fern metadata. Review the resulting diff and run `make build test check` before committing it.
+Sync a reviewed provider snapshot into the public repository, including `internal/sdk`. Exclude `.tools`, `bin`, `dist`, Terraform state, and local Fern metadata. Review the resulting diff and run `make build test check` before committing it.
 
 The public repository's release workflow builds eight OS/architecture combinations when a `v*` tag is pushed. It signs SHA-256 checksums with the dedicated `GPG_PRIVATE_KEY` and `PASSPHRASE` repository secrets, and creates a draft release. Verify its artifacts before publishing. Register the matching public signing key and provider in HCP Terraform once; subsequent published releases notify the registry through its webhook.
 

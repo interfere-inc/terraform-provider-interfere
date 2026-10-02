@@ -43,10 +43,10 @@ func do() {
             "<token>",
         ),
     )
-    request := &sdk.QueryOrganizationsCurrentRequest{
+    request := &sdk.CurrentWorkspacesRequest{
         WorkspaceSlug: "workspaceSlug",
     }
-    client.Workspaces.QueryOrganizationsCurrent(
+    client.Workspaces.Current(
         context.TODO(),
         request,
     )
@@ -70,7 +70,7 @@ Structured error types are returned from API calls that return non-success statu
 with the `errors.Is` and `errors.As` APIs, so you can access the error like so:
 
 ```go
-response, err := client.Workspaces.QueryOrganizationsCurrent(...)
+response, err := client.Workspaces.Current(...)
 if err != nil {
     var apiError *core.APIError
     if errors.As(err, &apiError) {
@@ -104,7 +104,7 @@ client := client.NewClient(
 )
 
 // Specify options for an individual request.
-response, err := client.Workspaces.QueryOrganizationsCurrent(
+response, err := client.Workspaces.Current(
     ...,
     option.WithToken("<YOUR_API_KEY>"),
 )
@@ -119,7 +119,7 @@ when you need to examine the response headers received from the API call. (When 
 the raw HTTP response data will be included automatically in the Page response object.)
 
 ```go
-response, err := client.Workspaces.WithRawResponse.QueryOrganizationsCurrent(...)
+response, err := client.Workspaces.WithRawResponse.Current(...)
 if err != nil {
     return err
 }
@@ -157,7 +157,7 @@ client := client.NewClient(
     option.WithMaxAttempts(1),
 )
 
-response, err := client.Workspaces.QueryOrganizationsCurrent(
+response, err := client.Workspaces.Current(
     ...,
     option.WithMaxAttempts(1),
 )
@@ -171,7 +171,7 @@ Setting a timeout for each individual request is as simple as using the standard
 ctx, cancel := context.WithTimeout(ctx, time.Second)
 defer cancel()
 
-response, err := client.Workspaces.QueryOrganizationsCurrent(ctx, ...)
+response, err := client.Workspaces.Current(ctx, ...)
 ```
 
 ### Explicit Null
@@ -193,7 +193,7 @@ type ExampleRequest struct {
 request := &ExampleRequest{}
 request.SetName(nil)
 
-response, err := client.Workspaces.QueryOrganizationsCurrent(ctx, request, ...)
+response, err := client.Workspaces.Current(ctx, request, ...)
 ```
 
 ## Contributing

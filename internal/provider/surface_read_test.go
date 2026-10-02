@@ -8,7 +8,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/tfsdk"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/interfere-inc/terraform-provider-interfere/internal/resource_surface"
 	"github.com/interfere-inc/terraform-provider-interfere/internal/sdk/client"
 	"github.com/interfere-inc/terraform-provider-interfere/internal/sdk/option"
 )
@@ -19,7 +18,7 @@ func fixtureResource(t *testing.T, f *surfaceFixture) (*surfaceResource, tfsdk.S
 	var schema resource.SchemaResponse
 	r.Schema(context.Background(), resource.SchemaRequest{}, &schema)
 	state := tfsdk.State{Schema: schema.Schema}
-	diagnostics := state.Set(context.Background(), resource_surface.SurfaceModel{
+	diagnostics := state.Set(context.Background(), surfaceModel{
 		Id: types.StringValue(surfaceID), Slug: types.StringValue(surfaceSlug),
 		Name: types.StringValue("Example"), Type: types.StringValue("react"),
 		WorkspaceSlug: types.StringValue("example"), IdempotencyKey: types.StringValue(attemptID),

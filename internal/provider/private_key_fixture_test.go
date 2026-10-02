@@ -2,14 +2,13 @@ package provider
 
 import (
 	"encoding/json"
+	"github.com/interfere-inc/terraform-provider-interfere/internal/sdk/keys"
 	"io"
 	"net/http"
 	"net/http/httptest"
 	"strings"
 	"sync"
 	"testing"
-
-	"github.com/interfere-inc/terraform-provider-interfere/internal/sdk"
 )
 
 type keyFixture struct {
@@ -45,7 +44,7 @@ func newKeyFixture(t *testing.T) *keyFixture {
 				t.Error(err)
 				return
 			}
-			var body sdk.CreateWorkspaceAPIKeyRequest
+			var body keys.CreatePrivateRequest
 			if err := json.Unmarshal(payload, &body); err != nil {
 				t.Error(err)
 				return

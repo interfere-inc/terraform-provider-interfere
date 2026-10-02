@@ -7,7 +7,6 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/interfere-inc/terraform-provider-interfere/internal/resource_surface"
 )
 
 func (r *surfaceResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
@@ -17,7 +16,7 @@ func (r *surfaceResource) ImportState(ctx context.Context, req resource.ImportSt
 		resp.Diagnostics.AddError("Invalid import identifier", "Use workspace-slug/surface-slug.")
 		return
 	}
-	data := resource_surface.SurfaceModel{WorkspaceSlug: types.StringValue(parts[0]), Slug: types.StringValue(parts[1])}
+	data := surfaceModel{WorkspaceSlug: types.StringValue(parts[0]), Slug: types.StringValue(parts[1])}
 	remote, err := r.read(ctx, data)
 	if err != nil {
 		resp.Diagnostics.AddError("Unable to import surface", err.Error())
