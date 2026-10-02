@@ -7,8 +7,7 @@ Manage existing workspace settings, surfaces, and private and public API keys wi
 | `interfere_workspace`   | Adopts an existing workspace and manages its name and slug. Destroying removes Terraform management without deleting the workspace. |
 | `interfere_surface`     | Creates, reads, renames, deletes, and imports surfaces.                                                                             |
 | `interfere_private_key` | Creates and revokes workspace or surface keys with explicit scopes and optional expiry. Configuration changes replace the key.      |
-
-| `interfere_public_key` | Creates, reads, imports, and revokes surface publishable keys. External rotation refreshes the current value. |
+| `interfere_public_key`  | Creates, reads, imports, and revokes surface publishable keys. External rotation refreshes the current value.                       |
 
 ## Install
 
@@ -17,7 +16,7 @@ terraform {
   required_providers {
     interfere = {
       source  = "interfere-inc/interfere"
-      version = "~> 0.1.0"
+      version = "~> 0.2.0"
     }
   }
 }
