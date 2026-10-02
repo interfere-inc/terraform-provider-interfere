@@ -29,13 +29,13 @@ var ErrorCodes internal.ErrorCodes = internal.ErrorCodes{
             APIError: apiError,
         }
     },
-    409: func(apiError *core.APIError) error{
-        return &ConflictError{
+    404: func(apiError *core.APIError) error{
+        return &NotFoundError{
             APIError: apiError,
         }
     },
-    404: func(apiError *core.APIError) error{
-        return &NotFoundError{
+    409: func(apiError *core.APIError) error{
+        return &ConflictError{
             APIError: apiError,
         }
     },

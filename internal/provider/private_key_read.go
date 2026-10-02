@@ -3,6 +3,7 @@ package provider
 import (
 	"context"
 	"errors"
+	"github.com/interfere-inc/terraform-provider-interfere/internal/sdk/keys"
 	"slices"
 
 	"github.com/hashicorp/terraform-plugin-framework/diag"
@@ -14,7 +15,7 @@ import (
 var errPrivateKeyNotFound = errors.New("Private key no longer exists")
 
 func (r *privateKeyResource) read(ctx context.Context, data privateKeyModel) (*sdk.ReadPrivateKeyResponse, error) {
-	remote, err := r.client.Workspaces.ReadPrivateKey(ctx, &sdk.ReadPrivateKeyRequest{WorkspaceSlug: data.WorkspaceSlug.ValueString(), APIKeyID: data.Id.ValueString()})
+	remote, err := r.client.Keys.Private.Get(ctx, &keys.GetPrivateRequest{WorkspaceSlug: data.WorkspaceSlug.ValueString(), APIKeyID: data.Id.ValueString()})
 	if err != nil {
 		var missing *sdk.NotFoundError
 		if errors.As(err, &missing) {

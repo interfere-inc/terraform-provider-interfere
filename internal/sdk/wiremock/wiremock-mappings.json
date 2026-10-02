@@ -1,7 +1,7 @@
 {
   "mappings": [
     {
-      "id": "9d867a46-96f2-4ad4-b729-f7129ecfbb98",
+      "id": "00a0ea69-fec4-430a-8e70-660d956dd5e7",
       "name": "Read organizations.current - default",
       "request": {
         "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/queries/organizations.current",
@@ -19,7 +19,7 @@
           "Content-Type": "application/json"
         }
       },
-      "uuid": "9d867a46-96f2-4ad4-b729-f7129ecfbb98",
+      "uuid": "00a0ea69-fec4-430a-8e70-660d956dd5e7",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -32,38 +32,7 @@
       }
     },
     {
-      "id": "9ee3eb78-9337-49c8-bc3e-8c980678826c",
-      "name": "Read surfaces.getBySlugIncludeDeleted - default",
-      "request": {
-        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/queries/surfaces.getBySlugIncludeDeleted",
-        "method": "POST",
-        "pathParameters": {
-          "workspaceSlug": {
-            "equalTo": "workspaceSlug"
-          }
-        }
-      },
-      "response": {
-        "status": 200,
-        "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"slug\": \"slug\",\n  \"type\": \"elysia\",\n  \"deletedAt\": 1.1\n}",
-        "headers": {
-          "Content-Type": "application/json"
-        }
-      },
-      "uuid": "9ee3eb78-9337-49c8-bc3e-8c980678826c",
-      "persistent": true,
-      "priority": 3,
-      "metadata": {
-        "mocklab": {
-          "created": {
-            "at": "2020-01-01T00:00:00.000Z",
-            "via": "SYSTEM"
-          }
-        }
-      }
-    },
-    {
-      "id": "2c4faa5e-c462-4222-a515-1d8a885148c5",
+      "id": "b2272cba-f315-44ac-9a51-0ea6affbc368",
       "name": "Run organizations.updateBasics - default",
       "request": {
         "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/actions/organizations.updateBasics",
@@ -81,7 +50,7 @@
           "Content-Type": "application/json"
         }
       },
-      "uuid": "2c4faa5e-c462-4222-a515-1d8a885148c5",
+      "uuid": "b2272cba-f315-44ac-9a51-0ea6affbc368",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -94,7 +63,38 @@
       }
     },
     {
-      "id": "9744c04c-3f12-4e91-9d0d-249fcbe2df15",
+      "id": "6f221ee7-f858-4c5e-9648-95b02b1d63b1",
+      "name": "Read surfaces.getBySlugIncludeDeleted - default",
+      "request": {
+        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/queries/surfaces.getBySlugIncludeDeleted",
+        "method": "POST",
+        "pathParameters": {
+          "workspaceSlug": {
+            "equalTo": "workspaceSlug"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"slug\": \"slug\",\n  \"type\": \"elysia\",\n  \"deletedAt\": 1.1\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "6f221ee7-f858-4c5e-9648-95b02b1d63b1",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "ee5c3ac7-24a8-4d23-9991-6f89c10d0a93",
       "name": "Run surfaces.delete - default",
       "request": {
         "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/actions/surfaces.delete",
@@ -112,7 +112,7 @@
           "Content-Type": "application/json"
         }
       },
-      "uuid": "9744c04c-3f12-4e91-9d0d-249fcbe2df15",
+      "uuid": "ee5c3ac7-24a8-4d23-9991-6f89c10d0a93",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -125,7 +125,7 @@
       }
     },
     {
-      "id": "1de94d39-04e6-4c66-a79e-0eef6ad2e49d",
+      "id": "6cc9674f-8bfa-4fbb-8f51-80060b05c671",
       "name": "Run surfaces.updateName - default",
       "request": {
         "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/actions/surfaces.updateName",
@@ -143,106 +143,7 @@
           "Content-Type": "application/json"
         }
       },
-      "uuid": "1de94d39-04e6-4c66-a79e-0eef6ad2e49d",
-      "persistent": true,
-      "priority": 3,
-      "metadata": {
-        "mocklab": {
-          "created": {
-            "at": "2020-01-01T00:00:00.000Z",
-            "via": "SYSTEM"
-          }
-        }
-      }
-    },
-    {
-      "id": "4bc1d809-9e0f-4ff4-8baa-d4c3095a0838",
-      "name": "Create workspace API key - default",
-      "request": {
-        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/api-keys",
-        "method": "POST",
-        "pathParameters": {
-          "workspaceSlug": {
-            "equalTo": "workspaceSlug"
-          }
-        }
-      },
-      "response": {
-        "status": 200,
-        "body": "{\n  \"apiKey\": {\n    \"id\": \"id\",\n    \"name\": \"name\",\n    \"secret\": \"secret\"\n  }\n}",
-        "headers": {
-          "Content-Type": "application/json"
-        }
-      },
-      "uuid": "4bc1d809-9e0f-4ff4-8baa-d4c3095a0838",
-      "persistent": true,
-      "priority": 3,
-      "metadata": {
-        "mocklab": {
-          "created": {
-            "at": "2020-01-01T00:00:00.000Z",
-            "via": "SYSTEM"
-          }
-        }
-      }
-    },
-    {
-      "id": "0111e883-e187-457b-af2a-87046ae01847",
-      "name": "Read private key metadata - default",
-      "request": {
-        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/api-keys/{apiKeyId}",
-        "method": "GET",
-        "pathParameters": {
-          "workspaceSlug": {
-            "equalTo": "workspaceSlug"
-          },
-          "apiKeyId": {
-            "equalTo": "apiKeyId"
-          }
-        }
-      },
-      "response": {
-        "status": 200,
-        "body": "{\n  \"id\": \"id\",\n  \"version\": \"version\",\n  \"name\": \"name\",\n  \"surfaceSlug\": \"surfaceSlug\",\n  \"scopes\": [\n    \"org:surfaces:read\"\n  ],\n  \"secondsUntilExpiration\": 1,\n  \"expiresAt\": 1,\n  \"revoked\": true\n}",
-        "headers": {
-          "Content-Type": "application/json"
-        }
-      },
-      "uuid": "0111e883-e187-457b-af2a-87046ae01847",
-      "persistent": true,
-      "priority": 3,
-      "metadata": {
-        "mocklab": {
-          "created": {
-            "at": "2020-01-01T00:00:00.000Z",
-            "via": "SYSTEM"
-          }
-        }
-      }
-    },
-    {
-      "id": "a61f672a-2a49-4603-86bc-3b1a2bc812d7",
-      "name": "Revoke workspace API key - default",
-      "request": {
-        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/api-keys/{apiKeyId}",
-        "method": "DELETE",
-        "pathParameters": {
-          "workspaceSlug": {
-            "equalTo": "workspaceSlug"
-          },
-          "apiKeyId": {
-            "equalTo": "apiKeyId"
-          }
-        }
-      },
-      "response": {
-        "status": 200,
-        "body": "{\n  \"success\": true\n}",
-        "headers": {
-          "Content-Type": "application/json"
-        }
-      },
-      "uuid": "a61f672a-2a49-4603-86bc-3b1a2bc812d7",
+      "uuid": "6cc9674f-8bfa-4fbb-8f51-80060b05c671",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -284,9 +185,216 @@
           }
         }
       }
+    },
+    {
+      "id": "c65b9e2c-3c50-486f-9aa6-e15138687b0b",
+      "name": "Create workspace API key - default",
+      "request": {
+        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/api-keys",
+        "method": "POST",
+        "pathParameters": {
+          "workspaceSlug": {
+            "equalTo": "workspaceSlug"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"apiKey\": {\n    \"id\": \"id\",\n    \"name\": \"name\",\n    \"secret\": \"secret\"\n  }\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "c65b9e2c-3c50-486f-9aa6-e15138687b0b",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "1f743fbc-d8e7-4551-a499-588134efa2a9",
+      "name": "Read private key metadata - default",
+      "request": {
+        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/api-keys/{apiKeyId}",
+        "method": "GET",
+        "pathParameters": {
+          "workspaceSlug": {
+            "equalTo": "workspaceSlug"
+          },
+          "apiKeyId": {
+            "equalTo": "apiKeyId"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"id\": \"id\",\n  \"version\": \"version\",\n  \"name\": \"name\",\n  \"surfaceSlug\": \"surfaceSlug\",\n  \"scopes\": [\n    \"org:surfaces:read\"\n  ],\n  \"secondsUntilExpiration\": 1,\n  \"expiresAt\": 1,\n  \"revoked\": true\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "1f743fbc-d8e7-4551-a499-588134efa2a9",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "9d8daa64-1885-4fdd-b10c-9a250d025af0",
+      "name": "Revoke workspace API key - default",
+      "request": {
+        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/api-keys/{apiKeyId}",
+        "method": "DELETE",
+        "pathParameters": {
+          "workspaceSlug": {
+            "equalTo": "workspaceSlug"
+          },
+          "apiKeyId": {
+            "equalTo": "apiKeyId"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"success\": true\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "9d8daa64-1885-4fdd-b10c-9a250d025af0",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "867cd9a0-84b7-4bfe-bdfe-f9d15d5806b2",
+      "name": "Create surface public key - default",
+      "request": {
+        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/surfaces/{surfaceSlug}/publicKeys",
+        "method": "POST",
+        "pathParameters": {
+          "workspaceSlug": {
+            "equalTo": "workspaceSlug"
+          },
+          "surfaceSlug": {
+            "equalTo": "surfaceSlug"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"content\": \"content\",\n  \"name\": \"name\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "867cd9a0-84b7-4bfe-bdfe-f9d15d5806b2",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "7356ff97-7a63-42a4-9d89-e55721f2a348",
+      "name": "Read surface public key - default",
+      "request": {
+        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/surfaces/{surfaceSlug}/publicKeys/{publicKeyId}",
+        "method": "GET",
+        "pathParameters": {
+          "workspaceSlug": {
+            "equalTo": "workspaceSlug"
+          },
+          "surfaceSlug": {
+            "equalTo": "surfaceSlug"
+          },
+          "publicKeyId": {
+            "equalTo": "publicKeyId"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"content\": \"content\",\n  \"name\": \"name\",\n  \"id\": \"id\",\n  \"surfaceSlug\": \"surfaceSlug\",\n  \"revoked\": true\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "7356ff97-7a63-42a4-9d89-e55721f2a348",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "4d0861e1-0e71-4b8d-a6b6-f1cd6a55f1c4",
+      "name": "Revoke surface public key - default",
+      "request": {
+        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/surfaces/{surfaceSlug}/publicKeys/{publicKeyId}",
+        "method": "DELETE",
+        "pathParameters": {
+          "workspaceSlug": {
+            "equalTo": "workspaceSlug"
+          },
+          "surfaceSlug": {
+            "equalTo": "surfaceSlug"
+          },
+          "publicKeyId": {
+            "equalTo": "publicKeyId"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"success\": true\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "4d0861e1-0e71-4b8d-a6b6-f1cd6a55f1c4",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
     }
   ],
   "meta": {
-    "total": 9
+    "total": 12
   }
 }

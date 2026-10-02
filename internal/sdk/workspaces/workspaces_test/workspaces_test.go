@@ -111,7 +111,7 @@ func VerifyAuthHeaders(
     require.Equal(t, 1, len(result.Requests), "expected exactly one request with the routed auth headers for "+testId)
 }
 
-func TestWorkspacesQueryOrganizationsCurrentWithWireMock(
+func TestWorkspacesCurrentWithWireMock(
     t *testing.T,
 ) {
     WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -122,25 +122,25 @@ func TestWorkspacesQueryOrganizationsCurrentWithWireMock(
         option.WithBaseURL(WireMockBaseURL),
         option.WithToken("test-token"),
     )
-        request := &sdk.QueryOrganizationsCurrentRequest{
+        request := &sdk.CurrentWorkspacesRequest{
             WorkspaceSlug: "workspaceSlug",
         }
-    _, invocationErr :=     client.Workspaces.QueryOrganizationsCurrent(
+    _, invocationErr :=     client.Workspaces.Current(
             context.TODO(),
             request,
             option.WithHTTPHeader(
-                http.Header{"X-Test-Id": []string{"TestWorkspacesQueryOrganizationsCurrentWithWireMock"}},
+                http.Header{"X-Test-Id": []string{"TestWorkspacesCurrentWithWireMock"}},
             ),
         )
 
     require.NoError(t, invocationErr, "Client method call should succeed")
-    VerifyRequestCount(t, "TestWorkspacesQueryOrganizationsCurrentWithWireMock", "POST", "/v3/workspaces/workspaceSlug/queries/organizations.current", nil, 1)
-    VerifyAuthHeaders(t, "TestWorkspacesQueryOrganizationsCurrentWithWireMock", "POST", "/v3/workspaces/workspaceSlug/queries/organizations.current", map[string]string{
+    VerifyRequestCount(t, "TestWorkspacesCurrentWithWireMock", "POST", "/v3/workspaces/workspaceSlug/queries/organizations.current", nil, 1)
+    VerifyAuthHeaders(t, "TestWorkspacesCurrentWithWireMock", "POST", "/v3/workspaces/workspaceSlug/queries/organizations.current", map[string]string{
     		"Authorization": `{"matches":"Bearer .*"}`,
     	})
 }
 
-func TestWorkspacesQuerySurfacesGetBySlugIncludeDeletedWithWireMock(
+func TestWorkspacesUpdateBasicsWithWireMock(
     t *testing.T,
 ) {
     WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -151,212 +151,21 @@ func TestWorkspacesQuerySurfacesGetBySlugIncludeDeletedWithWireMock(
         option.WithBaseURL(WireMockBaseURL),
         option.WithToken("test-token"),
     )
-        request := &sdk.QuerySurfacesGetBySlugIncludeDeletedRequest{
+        request := &sdk.UpdateBasicsWorkspacesRequest{
             WorkspaceSlug: "workspaceSlug",
-            Args: &sdk.QuerySurfacesGetBySlugIncludeDeletedRequestArgs{
-                SurfaceSlug: "surfaceSlug",
-            },
+            Args: &sdk.UpdateBasicsWorkspacesRequestArgs{},
         }
-    _, invocationErr :=     client.Workspaces.QuerySurfacesGetBySlugIncludeDeleted(
+    _, invocationErr :=     client.Workspaces.UpdateBasics(
             context.TODO(),
             request,
             option.WithHTTPHeader(
-                http.Header{"X-Test-Id": []string{"TestWorkspacesQuerySurfacesGetBySlugIncludeDeletedWithWireMock"}},
+                http.Header{"X-Test-Id": []string{"TestWorkspacesUpdateBasicsWithWireMock"}},
             ),
         )
 
     require.NoError(t, invocationErr, "Client method call should succeed")
-    VerifyRequestCount(t, "TestWorkspacesQuerySurfacesGetBySlugIncludeDeletedWithWireMock", "POST", "/v3/workspaces/workspaceSlug/queries/surfaces.getBySlugIncludeDeleted", nil, 1)
-    VerifyAuthHeaders(t, "TestWorkspacesQuerySurfacesGetBySlugIncludeDeletedWithWireMock", "POST", "/v3/workspaces/workspaceSlug/queries/surfaces.getBySlugIncludeDeleted", map[string]string{
-    		"Authorization": `{"matches":"Bearer .*"}`,
-    	})
-}
-
-func TestWorkspacesMutationOrganizationsUpdateBasicsWithWireMock(
-    t *testing.T,
-) {
-    WireMockBaseURL := os.Getenv("WIREMOCK_URL")
-    	if WireMockBaseURL == "" {
-    		WireMockBaseURL = "http://localhost:8080"
-    	}
-    client := client.NewClient(
-        option.WithBaseURL(WireMockBaseURL),
-        option.WithToken("test-token"),
-    )
-        request := &sdk.MutationOrganizationsUpdateBasicsRequest{
-            WorkspaceSlug: "workspaceSlug",
-            Args: &sdk.MutationOrganizationsUpdateBasicsRequestArgs{},
-        }
-    _, invocationErr :=     client.Workspaces.MutationOrganizationsUpdateBasics(
-            context.TODO(),
-            request,
-            option.WithHTTPHeader(
-                http.Header{"X-Test-Id": []string{"TestWorkspacesMutationOrganizationsUpdateBasicsWithWireMock"}},
-            ),
-        )
-
-    require.NoError(t, invocationErr, "Client method call should succeed")
-    VerifyRequestCount(t, "TestWorkspacesMutationOrganizationsUpdateBasicsWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/organizations.updateBasics", nil, 1)
-    VerifyAuthHeaders(t, "TestWorkspacesMutationOrganizationsUpdateBasicsWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/organizations.updateBasics", map[string]string{
-    		"Authorization": `{"matches":"Bearer .*"}`,
-    	})
-}
-
-func TestWorkspacesMutationSurfacesDeleteWithWireMock(
-    t *testing.T,
-) {
-    WireMockBaseURL := os.Getenv("WIREMOCK_URL")
-    	if WireMockBaseURL == "" {
-    		WireMockBaseURL = "http://localhost:8080"
-    	}
-    client := client.NewClient(
-        option.WithBaseURL(WireMockBaseURL),
-        option.WithToken("test-token"),
-    )
-        request := &sdk.MutationSurfacesDeleteRequest{
-            WorkspaceSlug: "workspaceSlug",
-            Args: &sdk.MutationSurfacesDeleteRequestArgs{
-                SurfaceSlug: "surfaceSlug",
-            },
-        }
-    _, invocationErr :=     client.Workspaces.MutationSurfacesDelete(
-            context.TODO(),
-            request,
-            option.WithHTTPHeader(
-                http.Header{"X-Test-Id": []string{"TestWorkspacesMutationSurfacesDeleteWithWireMock"}},
-            ),
-        )
-
-    require.NoError(t, invocationErr, "Client method call should succeed")
-    VerifyRequestCount(t, "TestWorkspacesMutationSurfacesDeleteWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/surfaces.delete", nil, 1)
-    VerifyAuthHeaders(t, "TestWorkspacesMutationSurfacesDeleteWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/surfaces.delete", map[string]string{
-    		"Authorization": `{"matches":"Bearer .*"}`,
-    	})
-}
-
-func TestWorkspacesMutationSurfacesUpdateNameWithWireMock(
-    t *testing.T,
-) {
-    WireMockBaseURL := os.Getenv("WIREMOCK_URL")
-    	if WireMockBaseURL == "" {
-    		WireMockBaseURL = "http://localhost:8080"
-    	}
-    client := client.NewClient(
-        option.WithBaseURL(WireMockBaseURL),
-        option.WithToken("test-token"),
-    )
-        request := &sdk.MutationSurfacesUpdateNameRequest{
-            WorkspaceSlug: "workspaceSlug",
-            Args: &sdk.MutationSurfacesUpdateNameRequestArgs{
-                Name: "name",
-                SurfaceSlug: "surfaceSlug",
-            },
-        }
-    _, invocationErr :=     client.Workspaces.MutationSurfacesUpdateName(
-            context.TODO(),
-            request,
-            option.WithHTTPHeader(
-                http.Header{"X-Test-Id": []string{"TestWorkspacesMutationSurfacesUpdateNameWithWireMock"}},
-            ),
-        )
-
-    require.NoError(t, invocationErr, "Client method call should succeed")
-    VerifyRequestCount(t, "TestWorkspacesMutationSurfacesUpdateNameWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/surfaces.updateName", nil, 1)
-    VerifyAuthHeaders(t, "TestWorkspacesMutationSurfacesUpdateNameWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/surfaces.updateName", map[string]string{
-    		"Authorization": `{"matches":"Bearer .*"}`,
-    	})
-}
-
-func TestWorkspacesCreateWorkspaceAPIKeyWithWireMock(
-    t *testing.T,
-) {
-    WireMockBaseURL := os.Getenv("WIREMOCK_URL")
-    	if WireMockBaseURL == "" {
-    		WireMockBaseURL = "http://localhost:8080"
-    	}
-    client := client.NewClient(
-        option.WithBaseURL(WireMockBaseURL),
-        option.WithToken("test-token"),
-    )
-        request := &sdk.CreateWorkspaceAPIKeyRequest{
-            WorkspaceSlug: "workspaceSlug",
-            IdempotencyKey: "idempotencyKey",
-            Name: "name",
-            Scopes: []sdk.CreateWorkspaceAPIKeyRequestScopesItem{
-                sdk.CreateWorkspaceAPIKeyRequestScopesItemOrgSurfacesRead,
-            },
-        }
-    _, invocationErr :=     client.Workspaces.CreateWorkspaceAPIKey(
-            context.TODO(),
-            request,
-            option.WithHTTPHeader(
-                http.Header{"X-Test-Id": []string{"TestWorkspacesCreateWorkspaceAPIKeyWithWireMock"}},
-            ),
-        )
-
-    require.NoError(t, invocationErr, "Client method call should succeed")
-    VerifyRequestCount(t, "TestWorkspacesCreateWorkspaceAPIKeyWithWireMock", "POST", "/v3/workspaces/workspaceSlug/api-keys", nil, 1)
-    VerifyAuthHeaders(t, "TestWorkspacesCreateWorkspaceAPIKeyWithWireMock", "POST", "/v3/workspaces/workspaceSlug/api-keys", map[string]string{
-    		"Authorization": `{"matches":"Bearer .*"}`,
-    	})
-}
-
-func TestWorkspacesReadPrivateKeyWithWireMock(
-    t *testing.T,
-) {
-    WireMockBaseURL := os.Getenv("WIREMOCK_URL")
-    	if WireMockBaseURL == "" {
-    		WireMockBaseURL = "http://localhost:8080"
-    	}
-    client := client.NewClient(
-        option.WithBaseURL(WireMockBaseURL),
-        option.WithToken("test-token"),
-    )
-        request := &sdk.ReadPrivateKeyRequest{
-            WorkspaceSlug: "workspaceSlug",
-            APIKeyID: "apiKeyId",
-        }
-    _, invocationErr :=     client.Workspaces.ReadPrivateKey(
-            context.TODO(),
-            request,
-            option.WithHTTPHeader(
-                http.Header{"X-Test-Id": []string{"TestWorkspacesReadPrivateKeyWithWireMock"}},
-            ),
-        )
-
-    require.NoError(t, invocationErr, "Client method call should succeed")
-    VerifyRequestCount(t, "TestWorkspacesReadPrivateKeyWithWireMock", "GET", "/v3/workspaces/workspaceSlug/api-keys/apiKeyId", nil, 1)
-    VerifyAuthHeaders(t, "TestWorkspacesReadPrivateKeyWithWireMock", "GET", "/v3/workspaces/workspaceSlug/api-keys/apiKeyId", map[string]string{
-    		"Authorization": `{"matches":"Bearer .*"}`,
-    	})
-}
-
-func TestWorkspacesRevokeWorkspaceAPIKeyWithWireMock(
-    t *testing.T,
-) {
-    WireMockBaseURL := os.Getenv("WIREMOCK_URL")
-    	if WireMockBaseURL == "" {
-    		WireMockBaseURL = "http://localhost:8080"
-    	}
-    client := client.NewClient(
-        option.WithBaseURL(WireMockBaseURL),
-        option.WithToken("test-token"),
-    )
-        request := &sdk.RevokeWorkspaceAPIKeyRequest{
-            WorkspaceSlug: "workspaceSlug",
-            APIKeyID: "apiKeyId",
-        }
-    _, invocationErr :=     client.Workspaces.RevokeWorkspaceAPIKey(
-            context.TODO(),
-            request,
-            option.WithHTTPHeader(
-                http.Header{"X-Test-Id": []string{"TestWorkspacesRevokeWorkspaceAPIKeyWithWireMock"}},
-            ),
-        )
-
-    require.NoError(t, invocationErr, "Client method call should succeed")
-    VerifyRequestCount(t, "TestWorkspacesRevokeWorkspaceAPIKeyWithWireMock", "DELETE", "/v3/workspaces/workspaceSlug/api-keys/apiKeyId", nil, 1)
-    VerifyAuthHeaders(t, "TestWorkspacesRevokeWorkspaceAPIKeyWithWireMock", "DELETE", "/v3/workspaces/workspaceSlug/api-keys/apiKeyId", map[string]string{
+    VerifyRequestCount(t, "TestWorkspacesUpdateBasicsWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/organizations.updateBasics", nil, 1)
+    VerifyAuthHeaders(t, "TestWorkspacesUpdateBasicsWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/organizations.updateBasics", map[string]string{
     		"Authorization": `{"matches":"Bearer .*"}`,
     	})
 }

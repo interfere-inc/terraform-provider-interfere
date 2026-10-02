@@ -5,12 +5,11 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/interfere-inc/terraform-provider-interfere/internal/resource_surface"
 	"github.com/interfere-inc/terraform-provider-interfere/internal/sdk"
 )
 
 func (r *surfaceResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	var data resource_surface.SurfaceModel
+	var data surfaceModel
 	resp.Diagnostics.Append(req.Plan.Get(ctx, &data)...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -40,7 +39,7 @@ func (r *surfaceResource) Create(ctx context.Context, req resource.CreateRequest
 }
 
 func (r *surfaceResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
-	var data resource_surface.SurfaceModel
+	var data surfaceModel
 	resp.Diagnostics.Append(req.Plan.Get(ctx, &data)...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -55,9 +54,9 @@ func (r *surfaceResource) Update(ctx context.Context, req resource.UpdateRequest
 		return
 	}
 	if remote.Name != data.Name.ValueString() {
-		updated, err := r.client.Workspaces.MutationSurfacesUpdateName(ctx, &sdk.MutationSurfacesUpdateNameRequest{
+		updated, err := r.client.Surfaces.UpdateName(ctx, &sdk.UpdateNameSurfacesRequest{
 			WorkspaceSlug: data.WorkspaceSlug.ValueString(),
-			Args:          &sdk.MutationSurfacesUpdateNameRequestArgs{SurfaceSlug: data.Slug.ValueString(), Name: data.Name.ValueString()},
+			Args:          &sdk.UpdateNameSurfacesRequestArgs{SurfaceSlug: data.Slug.ValueString(), Name: data.Name.ValueString()},
 		})
 		if err != nil {
 			resp.Diagnostics.AddError("Unable to update surface", apiError(err))
@@ -72,7 +71,7 @@ func (r *surfaceResource) Update(ctx context.Context, req resource.UpdateRequest
 }
 
 func (r *surfaceResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
-	var data resource_surface.SurfaceModel
+	var data surfaceModel
 	resp.Diagnostics.Append(req.State.Get(ctx, &data)...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -85,9 +84,9 @@ func (r *surfaceResource) Delete(ctx context.Context, req resource.DeleteRequest
 	if remote.DeletedAt != nil {
 		return
 	}
-	deleted, err := r.client.Workspaces.MutationSurfacesDelete(ctx, &sdk.MutationSurfacesDeleteRequest{
+	deleted, err := r.client.Surfaces.Delete(ctx, &sdk.DeleteSurfacesRequest{
 		WorkspaceSlug: data.WorkspaceSlug.ValueString(),
-		Args:          &sdk.MutationSurfacesDeleteRequestArgs{SurfaceSlug: data.Slug.ValueString()},
+		Args:          &sdk.DeleteSurfacesRequestArgs{SurfaceSlug: data.Slug.ValueString()},
 	})
 	if err != nil {
 		resp.Diagnostics.AddError("Unable to delete surface", apiError(err))

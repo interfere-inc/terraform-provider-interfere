@@ -6,20 +6,19 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/interfere-inc/terraform-provider-interfere/internal/resource_workspace"
 	"github.com/interfere-inc/terraform-provider-interfere/internal/sdk"
 )
 
-func (r *workspaceResource) apply(ctx context.Context, data *resource_workspace.WorkspaceModel, previous resource_workspace.WorkspaceModel) error {
+func (r *workspaceResource) apply(ctx context.Context, data *workspaceModel, previous workspaceModel) error {
 	remote, err := r.read(ctx, previous)
 	if err != nil {
 		return err
 	}
 	if remote.Name != data.Name.ValueString() || remote.Slug != data.WorkspaceSlug.ValueString() {
 		name, slug := data.Name.ValueString(), data.WorkspaceSlug.ValueString()
-		result, err := r.client.Workspaces.MutationOrganizationsUpdateBasics(ctx, &sdk.MutationOrganizationsUpdateBasicsRequest{
+		result, err := r.client.Workspaces.UpdateBasics(ctx, &sdk.UpdateBasicsWorkspacesRequest{
 			WorkspaceSlug: previous.WorkspaceSlug.ValueString(),
-			Args:          &sdk.MutationOrganizationsUpdateBasicsRequestArgs{Name: &name, Slug: &slug},
+			Args:          &sdk.UpdateBasicsWorkspacesRequestArgs{Name: &name, Slug: &slug},
 		})
 		if err != nil {
 			return errors.New(apiError(err))
@@ -34,7 +33,7 @@ func (r *workspaceResource) apply(ctx context.Context, data *resource_workspace.
 }
 
 func (r *workspaceResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	var data resource_workspace.WorkspaceModel
+	var data workspaceModel
 	resp.Diagnostics.Append(req.Plan.Get(ctx, &data)...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -47,7 +46,7 @@ func (r *workspaceResource) Create(ctx context.Context, req resource.CreateReque
 }
 
 func (r *workspaceResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
-	var data, previous resource_workspace.WorkspaceModel
+	var data, previous workspaceModel
 	resp.Diagnostics.Append(req.Plan.Get(ctx, &data)...)
 	resp.Diagnostics.Append(req.State.Get(ctx, &previous)...)
 	if resp.Diagnostics.HasError() {

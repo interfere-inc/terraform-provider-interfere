@@ -111,6 +111,103 @@ func VerifyAuthHeaders(
     require.Equal(t, 1, len(result.Requests), "expected exactly one request with the routed auth headers for "+testId)
 }
 
+func TestSurfacesGetBySlugIncludeDeletedWithWireMock(
+    t *testing.T,
+) {
+    WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+    	if WireMockBaseURL == "" {
+    		WireMockBaseURL = "http://localhost:8080"
+    	}
+    client := client.NewClient(
+        option.WithBaseURL(WireMockBaseURL),
+        option.WithToken("test-token"),
+    )
+        request := &sdk.GetBySlugIncludeDeletedSurfacesRequest{
+            WorkspaceSlug: "workspaceSlug",
+            Args: &sdk.GetBySlugIncludeDeletedSurfacesRequestArgs{
+                SurfaceSlug: "surfaceSlug",
+            },
+        }
+    _, invocationErr :=     client.Surfaces.GetBySlugIncludeDeleted(
+            context.TODO(),
+            request,
+            option.WithHTTPHeader(
+                http.Header{"X-Test-Id": []string{"TestSurfacesGetBySlugIncludeDeletedWithWireMock"}},
+            ),
+        )
+
+    require.NoError(t, invocationErr, "Client method call should succeed")
+    VerifyRequestCount(t, "TestSurfacesGetBySlugIncludeDeletedWithWireMock", "POST", "/v3/workspaces/workspaceSlug/queries/surfaces.getBySlugIncludeDeleted", nil, 1)
+    VerifyAuthHeaders(t, "TestSurfacesGetBySlugIncludeDeletedWithWireMock", "POST", "/v3/workspaces/workspaceSlug/queries/surfaces.getBySlugIncludeDeleted", map[string]string{
+    		"Authorization": `{"matches":"Bearer .*"}`,
+    	})
+}
+
+func TestSurfacesDeleteWithWireMock(
+    t *testing.T,
+) {
+    WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+    	if WireMockBaseURL == "" {
+    		WireMockBaseURL = "http://localhost:8080"
+    	}
+    client := client.NewClient(
+        option.WithBaseURL(WireMockBaseURL),
+        option.WithToken("test-token"),
+    )
+        request := &sdk.DeleteSurfacesRequest{
+            WorkspaceSlug: "workspaceSlug",
+            Args: &sdk.DeleteSurfacesRequestArgs{
+                SurfaceSlug: "surfaceSlug",
+            },
+        }
+    _, invocationErr :=     client.Surfaces.Delete(
+            context.TODO(),
+            request,
+            option.WithHTTPHeader(
+                http.Header{"X-Test-Id": []string{"TestSurfacesDeleteWithWireMock"}},
+            ),
+        )
+
+    require.NoError(t, invocationErr, "Client method call should succeed")
+    VerifyRequestCount(t, "TestSurfacesDeleteWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/surfaces.delete", nil, 1)
+    VerifyAuthHeaders(t, "TestSurfacesDeleteWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/surfaces.delete", map[string]string{
+    		"Authorization": `{"matches":"Bearer .*"}`,
+    	})
+}
+
+func TestSurfacesUpdateNameWithWireMock(
+    t *testing.T,
+) {
+    WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+    	if WireMockBaseURL == "" {
+    		WireMockBaseURL = "http://localhost:8080"
+    	}
+    client := client.NewClient(
+        option.WithBaseURL(WireMockBaseURL),
+        option.WithToken("test-token"),
+    )
+        request := &sdk.UpdateNameSurfacesRequest{
+            WorkspaceSlug: "workspaceSlug",
+            Args: &sdk.UpdateNameSurfacesRequestArgs{
+                Name: "name",
+                SurfaceSlug: "surfaceSlug",
+            },
+        }
+    _, invocationErr :=     client.Surfaces.UpdateName(
+            context.TODO(),
+            request,
+            option.WithHTTPHeader(
+                http.Header{"X-Test-Id": []string{"TestSurfacesUpdateNameWithWireMock"}},
+            ),
+        )
+
+    require.NoError(t, invocationErr, "Client method call should succeed")
+    VerifyRequestCount(t, "TestSurfacesUpdateNameWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/surfaces.updateName", nil, 1)
+    VerifyAuthHeaders(t, "TestSurfacesUpdateNameWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/surfaces.updateName", map[string]string{
+    		"Authorization": `{"matches":"Bearer .*"}`,
+    	})
+}
+
 func TestSurfacesCreateSurfaceWithWireMock(
     t *testing.T,
 ) {

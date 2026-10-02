@@ -78,7 +78,7 @@ func newSurfaceFixture(t *testing.T) *surfaceFixture {
 				})
 			},
 			"/v3/workspaces/example/queries/surfaces.getBySlugIncludeDeleted": func() {
-				var body sdk.QuerySurfacesGetBySlugIncludeDeletedRequest
+				var body sdk.GetBySlugIncludeDeletedSurfacesRequest
 				if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
 					t.Error(err)
 				}
@@ -102,7 +102,7 @@ func newSurfaceFixture(t *testing.T) *surfaceFixture {
 			},
 			"/v3/workspaces/example/actions/surfaces.updateName": func() {
 				f.updates++
-				var body sdk.MutationSurfacesUpdateNameRequest
+				var body sdk.UpdateNameSurfacesRequest
 				if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
 					t.Error(err)
 				}
@@ -115,7 +115,7 @@ func newSurfaceFixture(t *testing.T) *surfaceFixture {
 			},
 			"/v3/workspaces/example/actions/surfaces.delete": func() {
 				f.deletes++
-				var body sdk.MutationSurfacesDeleteRequest
+				var body sdk.DeleteSurfacesRequest
 				if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
 					t.Error(err)
 				}

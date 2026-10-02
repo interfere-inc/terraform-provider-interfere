@@ -6,12 +6,11 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/interfere-inc/terraform-provider-interfere/internal/resource_workspace"
 	"github.com/interfere-inc/terraform-provider-interfere/internal/sdk"
 )
 
-func (r *workspaceResource) read(ctx context.Context, data resource_workspace.WorkspaceModel) (*sdk.QueryOrganizationsCurrentResponse, error) {
-	remote, err := r.client.Workspaces.QueryOrganizationsCurrent(ctx, &sdk.QueryOrganizationsCurrentRequest{WorkspaceSlug: data.WorkspaceSlug.ValueString()})
+func (r *workspaceResource) read(ctx context.Context, data workspaceModel) (*sdk.QueryOrganizationsCurrentResponse, error) {
+	remote, err := r.client.Workspaces.Current(ctx, &sdk.CurrentWorkspacesRequest{WorkspaceSlug: data.WorkspaceSlug.ValueString()})
 	if err != nil {
 		return nil, errors.New(apiError(err))
 	}
@@ -25,7 +24,7 @@ func (r *workspaceResource) read(ctx context.Context, data resource_workspace.Wo
 }
 
 func (r *workspaceResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
-	var data resource_workspace.WorkspaceModel
+	var data workspaceModel
 	resp.Diagnostics.Append(req.State.Get(ctx, &data)...)
 	if resp.Diagnostics.HasError() {
 		return

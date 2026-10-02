@@ -22,6 +22,7 @@ type interfereProvider struct{ version string }
 type providerModel struct {
 	Token   types.String `tfsdk:"token"`
 	BaseURL types.String `tfsdk:"base_url"`
+	Headers types.Map    `tfsdk:"headers"`
 }
 
 func New(version string) func() provider.Provider {
@@ -35,8 +36,9 @@ func (p *interfereProvider) Metadata(_ context.Context, _ provider.MetadataReque
 
 func (p *interfereProvider) Schema(_ context.Context, _ provider.SchemaRequest, resp *provider.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		Description: "Manage existing workspace settings, surfaces, and private API keys using a workspace API key, session, or delegated OAuth access token.",
+		Description: "Manage existing workspace settings, surfaces, public keys, and private API keys using a workspace API key, session, or delegated OAuth access token.",
 		Attributes: map[string]schema.Attribute{
+			"headers":  schema.MapAttribute{Optional: true, Sensitive: true, ElementType: types.StringType, Description: "Additional HTTP headers for an authenticated API proxy, such as Cloudflare Access. Values must be known before planning."},
 			"token":    schema.StringAttribute{Optional: true, Sensitive: true, Description: "Workspace API key, session, or delegated OAuth access token. Defaults to INTERFERE_TOKEN. Grant the workspace-basics, surface, or workspace-auth permissions required by the configured resources. Release-only keys are not supported."},
 			"base_url": schema.StringAttribute{Optional: true, Description: "API URL. Defaults to https://api.interfere.com. Plain HTTP is supported only for local development on loopback addresses."},
 		},
@@ -49,9 +51,20 @@ func (p *interfereProvider) Configure(ctx context.Context, req provider.Configur
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	if data.Token.IsUnknown() || data.BaseURL.IsUnknown() {
-		resp.Diagnostics.AddError("Unknown provider configuration", "The token and base_url must be known before managing resources.")
+	if data.Token.IsUnknown() || data.BaseURL.IsUnknown() || data.Headers.IsUnknown() {
+		resp.Diagnostics.AddError("Unknown provider configuration", "The token, base_url, and headers must be known before managing resources.")
 		return
+	}
+	headers := http.Header{}
+	if !data.Headers.IsNull() {
+		var configured map[string]string
+		resp.Diagnostics.Append(data.Headers.ElementsAs(ctx, &configured, false)...)
+		if resp.Diagnostics.HasError() {
+			return
+		}
+		for name, value := range configured {
+			headers.Set(name, value)
+		}
 	}
 	token := data.Token.ValueString()
 	if data.Token.IsNull() {
@@ -76,6 +89,7 @@ func (p *interfereProvider) Configure(ctx context.Context, req provider.Configur
 		return
 	}
 	resp.ResourceData = client.NewClient(
+		option.WithHTTPHeader(headers),
 		option.WithBaseURL(strings.TrimRight(baseURL, "/")),
 		option.WithToken(token),
 		option.WithoutRetries(),
@@ -87,7 +101,7 @@ func (p *interfereProvider) Configure(ctx context.Context, req provider.Configur
 }
 
 func (p *interfereProvider) Resources(context.Context) []func() resource.Resource {
-	return []func() resource.Resource{NewSurfaceResource, NewWorkspaceResource, NewPrivateKeyResource}
+	return []func() resource.Resource{NewSurfaceResource, NewWorkspaceResource, NewPrivateKeyResource, NewPublicKeyResource}
 }
 
 func (p *interfereProvider) DataSources(context.Context) []func() datasource.DataSource { return nil }

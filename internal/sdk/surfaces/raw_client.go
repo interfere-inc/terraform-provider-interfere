@@ -33,6 +33,169 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
     }
 }
 
+func (r *RawClient) GetBySlugIncludeDeleted(
+    ctx context.Context,
+    request *sdk.GetBySlugIncludeDeletedSurfacesRequest,
+    opts ...option.RequestOption,
+) (*core.Response[*sdk.QuerySurfacesGetBySlugIncludeDeletedResponse], error){
+    options := core.NewRequestOptions(opts...)
+    baseURL := internal.ResolveBaseURL(
+        options.BaseURL,
+        r.baseURL,
+        "",
+    )
+    endpointURL := internal.EncodeURL(
+        baseURL + "/v3/workspaces/%v/queries/surfaces.getBySlugIncludeDeleted",
+        request.WorkspaceSlug,
+    )
+    authHeaders, authErr := r.options.AuthHeadersForEndpoint([][]string{{"clerkSession"}})
+    if authErr != nil {
+        return nil, authErr
+    }
+    headers := internal.MergeHeaders(
+        internal.MergeHeaders(
+            r.options.ToHeader(),
+            options.ToHeader(),
+        ),
+        authHeaders,
+    )
+    headers.Add("Content-Type", "application/json")
+    var response *sdk.QuerySurfacesGetBySlugIncludeDeletedResponse
+    raw, err := r.caller.Call(
+        ctx,
+        &internal.CallParams{
+            URL: endpointURL,
+            Method: http.MethodPost,
+            Headers: headers,
+            MaxAttempts: options.MaxAttempts,
+            DisableRetries: options.DisableRetries,
+            BodyProperties: options.BodyProperties,
+            QueryParameters: options.QueryParameters,
+            Client: options.HTTPClient,
+            Request: request,
+            Response: &response,
+            ResponseIsOptional: true,
+            ErrorDecoder: internal.NewErrorDecoder(sdk.ErrorCodes),
+        },
+    )
+    if err != nil {
+        return nil, err
+    }
+    return &core.Response[*sdk.QuerySurfacesGetBySlugIncludeDeletedResponse]{
+        StatusCode: raw.StatusCode,
+        Header: raw.Header,
+        Body: response,
+    }, nil
+}
+
+func (r *RawClient) Delete(
+    ctx context.Context,
+    request *sdk.DeleteSurfacesRequest,
+    opts ...option.RequestOption,
+) (*core.Response[*sdk.MutationSurfacesDeleteResponse], error){
+    options := core.NewRequestOptions(opts...)
+    baseURL := internal.ResolveBaseURL(
+        options.BaseURL,
+        r.baseURL,
+        "",
+    )
+    endpointURL := internal.EncodeURL(
+        baseURL + "/v3/workspaces/%v/actions/surfaces.delete",
+        request.WorkspaceSlug,
+    )
+    authHeaders, authErr := r.options.AuthHeadersForEndpoint([][]string{{"clerkSession"}})
+    if authErr != nil {
+        return nil, authErr
+    }
+    headers := internal.MergeHeaders(
+        internal.MergeHeaders(
+            r.options.ToHeader(),
+            options.ToHeader(),
+        ),
+        authHeaders,
+    )
+    headers.Add("Content-Type", "application/json")
+    var response *sdk.MutationSurfacesDeleteResponse
+    raw, err := r.caller.Call(
+        ctx,
+        &internal.CallParams{
+            URL: endpointURL,
+            Method: http.MethodPost,
+            Headers: headers,
+            MaxAttempts: options.MaxAttempts,
+            DisableRetries: options.DisableRetries,
+            BodyProperties: options.BodyProperties,
+            QueryParameters: options.QueryParameters,
+            Client: options.HTTPClient,
+            Request: request,
+            Response: &response,
+            ErrorDecoder: internal.NewErrorDecoder(sdk.ErrorCodes),
+        },
+    )
+    if err != nil {
+        return nil, err
+    }
+    return &core.Response[*sdk.MutationSurfacesDeleteResponse]{
+        StatusCode: raw.StatusCode,
+        Header: raw.Header,
+        Body: response,
+    }, nil
+}
+
+func (r *RawClient) UpdateName(
+    ctx context.Context,
+    request *sdk.UpdateNameSurfacesRequest,
+    opts ...option.RequestOption,
+) (*core.Response[*sdk.MutationSurfacesUpdateNameResponse], error){
+    options := core.NewRequestOptions(opts...)
+    baseURL := internal.ResolveBaseURL(
+        options.BaseURL,
+        r.baseURL,
+        "",
+    )
+    endpointURL := internal.EncodeURL(
+        baseURL + "/v3/workspaces/%v/actions/surfaces.updateName",
+        request.WorkspaceSlug,
+    )
+    authHeaders, authErr := r.options.AuthHeadersForEndpoint([][]string{{"clerkSession"}})
+    if authErr != nil {
+        return nil, authErr
+    }
+    headers := internal.MergeHeaders(
+        internal.MergeHeaders(
+            r.options.ToHeader(),
+            options.ToHeader(),
+        ),
+        authHeaders,
+    )
+    headers.Add("Content-Type", "application/json")
+    var response *sdk.MutationSurfacesUpdateNameResponse
+    raw, err := r.caller.Call(
+        ctx,
+        &internal.CallParams{
+            URL: endpointURL,
+            Method: http.MethodPost,
+            Headers: headers,
+            MaxAttempts: options.MaxAttempts,
+            DisableRetries: options.DisableRetries,
+            BodyProperties: options.BodyProperties,
+            QueryParameters: options.QueryParameters,
+            Client: options.HTTPClient,
+            Request: request,
+            Response: &response,
+            ErrorDecoder: internal.NewErrorDecoder(sdk.ErrorCodes),
+        },
+    )
+    if err != nil {
+        return nil, err
+    }
+    return &core.Response[*sdk.MutationSurfacesUpdateNameResponse]{
+        StatusCode: raw.StatusCode,
+        Header: raw.Header,
+        Body: response,
+    }, nil
+}
+
 func (r *RawClient) CreateSurface(
     ctx context.Context,
     request *sdk.CreateSurfaceRequest,

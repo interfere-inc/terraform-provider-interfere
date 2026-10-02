@@ -35,6 +35,97 @@ func NewClient(options *core.RequestOptions) *Client {
     }
 }
 
+// Read a surface by slug even if deleted. Use only when investigating historical references; prefer surfaces.get for active resources. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation is read-only despite using POST. Permission-filtered queries may return an empty result; do not assume that proves the resource does not exist. Only use pagination arguments declared in the schema.
+// 
+// Example:
+// 
+// 	request := &sdk.GetBySlugIncludeDeletedSurfacesRequest{
+// 	    WorkspaceSlug: "workspaceSlug",
+// 	    Args: &sdk.GetBySlugIncludeDeletedSurfacesRequestArgs{
+// 	        SurfaceSlug: "surfaceSlug",
+// 	    },
+// 	}
+// 	client.Surfaces.GetBySlugIncludeDeleted(
+// 	    context.TODO(),
+// 	    request,
+// 	)
+func (c *Client) GetBySlugIncludeDeleted(
+    ctx context.Context,
+    request *sdk.GetBySlugIncludeDeletedSurfacesRequest,
+    opts ...option.RequestOption,
+) (*sdk.QuerySurfacesGetBySlugIncludeDeletedResponse, error){
+    response, err := c.WithRawResponse.GetBySlugIncludeDeleted(
+        ctx,
+        request,
+        opts...,
+    )
+    if err != nil {
+        return nil, err
+    }
+    return response.Body, nil
+}
+
+// Delete a surface. This is destructive; resolve its exact ID and slug with surfaces.list and verify the requested target. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.
+// 
+// Example:
+// 
+// 	request := &sdk.DeleteSurfacesRequest{
+// 	    WorkspaceSlug: "workspaceSlug",
+// 	    Args: &sdk.DeleteSurfacesRequestArgs{
+// 	        SurfaceSlug: "surfaceSlug",
+// 	    },
+// 	}
+// 	client.Surfaces.Delete(
+// 	    context.TODO(),
+// 	    request,
+// 	)
+func (c *Client) Delete(
+    ctx context.Context,
+    request *sdk.DeleteSurfacesRequest,
+    opts ...option.RequestOption,
+) (*sdk.MutationSurfacesDeleteResponse, error){
+    response, err := c.WithRawResponse.Delete(
+        ctx,
+        request,
+        opts...,
+    )
+    if err != nil {
+        return nil, err
+    }
+    return response.Body, nil
+}
+
+// Rename a surface. Resolve its ID with surfaces.list and preserve the rest of its settings. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.
+// 
+// Example:
+// 
+// 	request := &sdk.UpdateNameSurfacesRequest{
+// 	    WorkspaceSlug: "workspaceSlug",
+// 	    Args: &sdk.UpdateNameSurfacesRequestArgs{
+// 	        Name: "name",
+// 	        SurfaceSlug: "surfaceSlug",
+// 	    },
+// 	}
+// 	client.Surfaces.UpdateName(
+// 	    context.TODO(),
+// 	    request,
+// 	)
+func (c *Client) UpdateName(
+    ctx context.Context,
+    request *sdk.UpdateNameSurfacesRequest,
+    opts ...option.RequestOption,
+) (*sdk.MutationSurfacesUpdateNameResponse, error){
+    response, err := c.WithRawResponse.UpdateName(
+        ctx,
+        request,
+        opts...,
+    )
+    if err != nil {
+        return nil, err
+    }
+    return response.Body, nil
+}
+
 // Creates a surface in the workspace. Reuse the original request identity when retrying the same creation attempt.
 // 
 // Example:

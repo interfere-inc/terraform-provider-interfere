@@ -5,6 +5,7 @@ package client
 import (
     core "github.com/interfere-inc/terraform-provider-interfere/internal/sdk/core"
     internal "github.com/interfere-inc/terraform-provider-interfere/internal/sdk/internal"
+    client "github.com/interfere-inc/terraform-provider-interfere/internal/sdk/keys/client"
     option "github.com/interfere-inc/terraform-provider-interfere/internal/sdk/option"
     surfaces "github.com/interfere-inc/terraform-provider-interfere/internal/sdk/surfaces"
     workspaces "github.com/interfere-inc/terraform-provider-interfere/internal/sdk/workspaces"
@@ -14,6 +15,7 @@ import (
 type Client struct {
     Workspaces *workspaces.Client
     Surfaces *surfaces.Client
+    Keys *client.Client
 
     options *core.RequestOptions
     baseURL string
@@ -25,6 +27,7 @@ func NewClient(opts ...option.RequestOption) *Client {
     return &Client{
         Workspaces: workspaces.NewClient(options),
         Surfaces: surfaces.NewClient(options),
+        Keys: client.NewClient(options),
         options: options,
         baseURL: options.BaseURL,
         caller: internal.NewCaller(

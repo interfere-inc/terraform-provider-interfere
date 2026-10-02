@@ -10,26 +10,10 @@ import (
 )
 
 type ConflictErrorBody struct {
-	ConflictErrorBodyZero *ConflictErrorBodyZero
-	ConflictErrorBodyOne  *ConflictErrorBodyOne
 	ConflictErrorBodyCode *ConflictErrorBodyCode
 	RPCUnexpectedError    *RPCUnexpectedError
 
 	typ string
-}
-
-func (c *ConflictErrorBody) GetConflictErrorBodyZero() *ConflictErrorBodyZero {
-	if c == nil {
-		return nil
-	}
-	return c.ConflictErrorBodyZero
-}
-
-func (c *ConflictErrorBody) GetConflictErrorBodyOne() *ConflictErrorBodyOne {
-	if c == nil {
-		return nil
-	}
-	return c.ConflictErrorBodyOne
 }
 
 func (c *ConflictErrorBody) GetConflictErrorBodyCode() *ConflictErrorBodyCode {
@@ -48,22 +32,6 @@ func (c *ConflictErrorBody) GetRPCUnexpectedError() *RPCUnexpectedError {
 
 func (c *ConflictErrorBody) UnmarshalJSON(data []byte) error {
 	if internal.MatchesObjectKeys(data, []string{"defined", "code", "status", "message", "data"}, []string{"defined", "code", "status", "message"}) {
-		valueConflictErrorBodyZero := new(ConflictErrorBodyZero)
-		if err := json.Unmarshal(data, &valueConflictErrorBodyZero); err == nil {
-			c.typ = "ConflictErrorBodyZero"
-			c.ConflictErrorBodyZero = valueConflictErrorBodyZero
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"defined", "code", "status", "message", "data"}, []string{"defined", "code", "status", "message"}) {
-		valueConflictErrorBodyOne := new(ConflictErrorBodyOne)
-		if err := json.Unmarshal(data, &valueConflictErrorBodyOne); err == nil {
-			c.typ = "ConflictErrorBodyOne"
-			c.ConflictErrorBodyOne = valueConflictErrorBodyOne
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"defined", "code", "status", "message", "data"}, []string{"defined", "code", "status", "message"}) {
 		valueConflictErrorBodyCode := new(ConflictErrorBodyCode)
 		if err := json.Unmarshal(data, &valueConflictErrorBodyCode); err == nil {
 			c.typ = "ConflictErrorBodyCode"
@@ -76,22 +44,6 @@ func (c *ConflictErrorBody) UnmarshalJSON(data []byte) error {
 		if err := json.Unmarshal(data, &valueRPCUnexpectedError); err == nil {
 			c.typ = "RPCUnexpectedError"
 			c.RPCUnexpectedError = valueRPCUnexpectedError
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"defined", "code", "status", "message"}) {
-		valueConflictErrorBodyZero := new(ConflictErrorBodyZero)
-		if err := json.Unmarshal(data, &valueConflictErrorBodyZero); err == nil {
-			c.typ = "ConflictErrorBodyZero"
-			c.ConflictErrorBodyZero = valueConflictErrorBodyZero
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"defined", "code", "status", "message"}) {
-		valueConflictErrorBodyOne := new(ConflictErrorBodyOne)
-		if err := json.Unmarshal(data, &valueConflictErrorBodyOne); err == nil {
-			c.typ = "ConflictErrorBodyOne"
-			c.ConflictErrorBodyOne = valueConflictErrorBodyOne
 			return nil
 		}
 	}
@@ -110,18 +62,6 @@ func (c *ConflictErrorBody) UnmarshalJSON(data []byte) error {
 			c.RPCUnexpectedError = valueRPCUnexpectedError
 			return nil
 		}
-	}
-	valueConflictErrorBodyZero := new(ConflictErrorBodyZero)
-	if err := json.Unmarshal(data, &valueConflictErrorBodyZero); err == nil {
-		c.typ = "ConflictErrorBodyZero"
-		c.ConflictErrorBodyZero = valueConflictErrorBodyZero
-		return nil
-	}
-	valueConflictErrorBodyOne := new(ConflictErrorBodyOne)
-	if err := json.Unmarshal(data, &valueConflictErrorBodyOne); err == nil {
-		c.typ = "ConflictErrorBodyOne"
-		c.ConflictErrorBodyOne = valueConflictErrorBodyOne
-		return nil
 	}
 	valueConflictErrorBodyCode := new(ConflictErrorBodyCode)
 	if err := json.Unmarshal(data, &valueConflictErrorBodyCode); err == nil {
@@ -139,12 +79,6 @@ func (c *ConflictErrorBody) UnmarshalJSON(data []byte) error {
 }
 
 func (c ConflictErrorBody) MarshalJSON() ([]byte, error) {
-	if c.typ == "ConflictErrorBodyZero" || c.ConflictErrorBodyZero != nil {
-		return json.Marshal(c.ConflictErrorBodyZero)
-	}
-	if c.typ == "ConflictErrorBodyOne" || c.ConflictErrorBodyOne != nil {
-		return json.Marshal(c.ConflictErrorBodyOne)
-	}
 	if c.typ == "ConflictErrorBodyCode" || c.ConflictErrorBodyCode != nil {
 		return json.Marshal(c.ConflictErrorBodyCode)
 	}
@@ -155,19 +89,11 @@ func (c ConflictErrorBody) MarshalJSON() ([]byte, error) {
 }
 
 type ConflictErrorBodyVisitor interface {
-	VisitConflictErrorBodyZero(*ConflictErrorBodyZero) error
-	VisitConflictErrorBodyOne(*ConflictErrorBodyOne) error
 	VisitConflictErrorBodyCode(*ConflictErrorBodyCode) error
 	VisitRPCUnexpectedError(*RPCUnexpectedError) error
 }
 
 func (c *ConflictErrorBody) Accept(visitor ConflictErrorBodyVisitor) error {
-	if c.typ == "ConflictErrorBodyZero" || c.ConflictErrorBodyZero != nil {
-		return visitor.VisitConflictErrorBodyZero(c.ConflictErrorBodyZero)
-	}
-	if c.typ == "ConflictErrorBodyOne" || c.ConflictErrorBodyOne != nil {
-		return visitor.VisitConflictErrorBodyOne(c.ConflictErrorBodyOne)
-	}
 	if c.typ == "ConflictErrorBodyCode" || c.ConflictErrorBodyCode != nil {
 		return visitor.VisitConflictErrorBodyCode(c.ConflictErrorBodyCode)
 	}
@@ -330,13 +256,13 @@ func (c *ConflictErrorBodyCode) String() string {
 type ConflictErrorBodyCodeCode string
 
 const (
-	ConflictErrorBodyCodeCodeSurfaceNameConflict ConflictErrorBodyCodeCode = "SURFACE_NAME_CONFLICT"
+	ConflictErrorBodyCodeCodeSurfaceKeyConflict ConflictErrorBodyCodeCode = "SURFACE_KEY_CONFLICT"
 )
 
 func NewConflictErrorBodyCodeCodeFromString(s string) (ConflictErrorBodyCodeCode, error) {
 	switch s {
-	case "SURFACE_NAME_CONFLICT":
-		return ConflictErrorBodyCodeCodeSurfaceNameConflict, nil
+	case "SURFACE_KEY_CONFLICT":
+		return ConflictErrorBodyCodeCodeSurfaceKeyConflict, nil
 	}
 	var t ConflictErrorBodyCodeCode
 	return "", fmt.Errorf("%s is not a valid %T", s, t)
@@ -682,6 +608,312 @@ func NewConflictErrorBodyZeroCodeFromString(s string) (ConflictErrorBodyZeroCode
 
 func (c ConflictErrorBodyZeroCode) Ptr() *ConflictErrorBodyZeroCode {
 	return &c
+}
+
+var (
+	createSurfacePublicKeyResponseFieldContent = big.NewInt(1 << 0)
+	createSurfacePublicKeyResponseFieldName    = big.NewInt(1 << 1)
+)
+
+type CreateSurfacePublicKeyResponse struct {
+	Content string `json:"content" url:"content"`
+	Name    string `json:"name" url:"name"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateSurfacePublicKeyResponse) GetContent() string {
+	if c == nil {
+		return ""
+	}
+	return c.Content
+}
+
+func (c *CreateSurfacePublicKeyResponse) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CreateSurfacePublicKeyResponse) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CreateSurfacePublicKeyResponse) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+// SetContent sets the Content field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateSurfacePublicKeyResponse) SetContent(content string) {
+	c.Content = content
+	c.require(createSurfacePublicKeyResponseFieldContent)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateSurfacePublicKeyResponse) SetName(name string) {
+	c.Name = name
+	c.require(createSurfacePublicKeyResponseFieldName)
+}
+
+func (c *CreateSurfacePublicKeyResponse) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateSurfacePublicKeyResponse
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateSurfacePublicKeyResponse(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateSurfacePublicKeyResponse) MarshalJSON() ([]byte, error) {
+	type embed CreateSurfacePublicKeyResponse
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateSurfacePublicKeyResponse) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+var (
+	createWorkspaceAPIKeyResponseFieldAPIKey = big.NewInt(1 << 0)
+)
+
+type CreateWorkspaceAPIKeyResponse struct {
+	APIKey *CreateWorkspaceAPIKeyResponseAPIKey `json:"apiKey" url:"apiKey"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateWorkspaceAPIKeyResponse) GetAPIKey() *CreateWorkspaceAPIKeyResponseAPIKey {
+	if c == nil {
+		return nil
+	}
+	return c.APIKey
+}
+
+func (c *CreateWorkspaceAPIKeyResponse) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CreateWorkspaceAPIKeyResponse) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+// SetAPIKey sets the APIKey field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateWorkspaceAPIKeyResponse) SetAPIKey(apiKey *CreateWorkspaceAPIKeyResponseAPIKey) {
+	c.APIKey = apiKey
+	c.require(createWorkspaceAPIKeyResponseFieldAPIKey)
+}
+
+func (c *CreateWorkspaceAPIKeyResponse) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateWorkspaceAPIKeyResponse
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateWorkspaceAPIKeyResponse(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateWorkspaceAPIKeyResponse) MarshalJSON() ([]byte, error) {
+	type embed CreateWorkspaceAPIKeyResponse
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateWorkspaceAPIKeyResponse) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+var (
+	createWorkspaceAPIKeyResponseAPIKeyFieldID     = big.NewInt(1 << 0)
+	createWorkspaceAPIKeyResponseAPIKeyFieldName   = big.NewInt(1 << 1)
+	createWorkspaceAPIKeyResponseAPIKeyFieldSecret = big.NewInt(1 << 2)
+)
+
+type CreateWorkspaceAPIKeyResponseAPIKey struct {
+	ID     string `json:"id" url:"id"`
+	Name   string `json:"name" url:"name"`
+	Secret string `json:"secret" url:"secret"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateWorkspaceAPIKeyResponseAPIKey) GetID() string {
+	if c == nil {
+		return ""
+	}
+	return c.ID
+}
+
+func (c *CreateWorkspaceAPIKeyResponseAPIKey) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CreateWorkspaceAPIKeyResponseAPIKey) GetSecret() string {
+	if c == nil {
+		return ""
+	}
+	return c.Secret
+}
+
+func (c *CreateWorkspaceAPIKeyResponseAPIKey) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CreateWorkspaceAPIKeyResponseAPIKey) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateWorkspaceAPIKeyResponseAPIKey) SetID(id string) {
+	c.ID = id
+	c.require(createWorkspaceAPIKeyResponseAPIKeyFieldID)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateWorkspaceAPIKeyResponseAPIKey) SetName(name string) {
+	c.Name = name
+	c.require(createWorkspaceAPIKeyResponseAPIKeyFieldName)
+}
+
+// SetSecret sets the Secret field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateWorkspaceAPIKeyResponseAPIKey) SetSecret(secret string) {
+	c.Secret = secret
+	c.require(createWorkspaceAPIKeyResponseAPIKeyFieldSecret)
+}
+
+func (c *CreateWorkspaceAPIKeyResponseAPIKey) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateWorkspaceAPIKeyResponseAPIKey
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateWorkspaceAPIKeyResponseAPIKey(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateWorkspaceAPIKeyResponseAPIKey) MarshalJSON() ([]byte, error) {
+	type embed CreateWorkspaceAPIKeyResponseAPIKey
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateWorkspaceAPIKeyResponseAPIKey) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
 }
 
 type ForbiddenErrorBody struct {
@@ -1154,25 +1386,17 @@ func (f ForbiddenErrorBodyZeroCode) Ptr() *ForbiddenErrorBodyZeroCode {
 }
 
 type NotFoundErrorBody struct {
-	NotFoundErrorBodyZero *NotFoundErrorBodyZero
-	NotFoundErrorBodyOne  *NotFoundErrorBodyOne
+	NotFoundErrorBodyCode *NotFoundErrorBodyCode
 	RPCUnexpectedError    *RPCUnexpectedError
 
 	typ string
 }
 
-func (n *NotFoundErrorBody) GetNotFoundErrorBodyZero() *NotFoundErrorBodyZero {
+func (n *NotFoundErrorBody) GetNotFoundErrorBodyCode() *NotFoundErrorBodyCode {
 	if n == nil {
 		return nil
 	}
-	return n.NotFoundErrorBodyZero
-}
-
-func (n *NotFoundErrorBody) GetNotFoundErrorBodyOne() *NotFoundErrorBodyOne {
-	if n == nil {
-		return nil
-	}
-	return n.NotFoundErrorBodyOne
+	return n.NotFoundErrorBodyCode
 }
 
 func (n *NotFoundErrorBody) GetRPCUnexpectedError() *RPCUnexpectedError {
@@ -1184,18 +1408,10 @@ func (n *NotFoundErrorBody) GetRPCUnexpectedError() *RPCUnexpectedError {
 
 func (n *NotFoundErrorBody) UnmarshalJSON(data []byte) error {
 	if internal.MatchesObjectKeys(data, []string{"defined", "code", "status", "message", "data"}, []string{"defined", "code", "status", "message"}) {
-		valueNotFoundErrorBodyZero := new(NotFoundErrorBodyZero)
-		if err := json.Unmarshal(data, &valueNotFoundErrorBodyZero); err == nil {
-			n.typ = "NotFoundErrorBodyZero"
-			n.NotFoundErrorBodyZero = valueNotFoundErrorBodyZero
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"defined", "code", "status", "message", "data"}, []string{"defined", "code", "status", "message"}) {
-		valueNotFoundErrorBodyOne := new(NotFoundErrorBodyOne)
-		if err := json.Unmarshal(data, &valueNotFoundErrorBodyOne); err == nil {
-			n.typ = "NotFoundErrorBodyOne"
-			n.NotFoundErrorBodyOne = valueNotFoundErrorBodyOne
+		valueNotFoundErrorBodyCode := new(NotFoundErrorBodyCode)
+		if err := json.Unmarshal(data, &valueNotFoundErrorBodyCode); err == nil {
+			n.typ = "NotFoundErrorBodyCode"
+			n.NotFoundErrorBodyCode = valueNotFoundErrorBodyCode
 			return nil
 		}
 	}
@@ -1208,18 +1424,10 @@ func (n *NotFoundErrorBody) UnmarshalJSON(data []byte) error {
 		}
 	}
 	if internal.HasObjectKeys(data, []string{"defined", "code", "status", "message"}) {
-		valueNotFoundErrorBodyZero := new(NotFoundErrorBodyZero)
-		if err := json.Unmarshal(data, &valueNotFoundErrorBodyZero); err == nil {
-			n.typ = "NotFoundErrorBodyZero"
-			n.NotFoundErrorBodyZero = valueNotFoundErrorBodyZero
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"defined", "code", "status", "message"}) {
-		valueNotFoundErrorBodyOne := new(NotFoundErrorBodyOne)
-		if err := json.Unmarshal(data, &valueNotFoundErrorBodyOne); err == nil {
-			n.typ = "NotFoundErrorBodyOne"
-			n.NotFoundErrorBodyOne = valueNotFoundErrorBodyOne
+		valueNotFoundErrorBodyCode := new(NotFoundErrorBodyCode)
+		if err := json.Unmarshal(data, &valueNotFoundErrorBodyCode); err == nil {
+			n.typ = "NotFoundErrorBodyCode"
+			n.NotFoundErrorBodyCode = valueNotFoundErrorBodyCode
 			return nil
 		}
 	}
@@ -1231,16 +1439,10 @@ func (n *NotFoundErrorBody) UnmarshalJSON(data []byte) error {
 			return nil
 		}
 	}
-	valueNotFoundErrorBodyZero := new(NotFoundErrorBodyZero)
-	if err := json.Unmarshal(data, &valueNotFoundErrorBodyZero); err == nil {
-		n.typ = "NotFoundErrorBodyZero"
-		n.NotFoundErrorBodyZero = valueNotFoundErrorBodyZero
-		return nil
-	}
-	valueNotFoundErrorBodyOne := new(NotFoundErrorBodyOne)
-	if err := json.Unmarshal(data, &valueNotFoundErrorBodyOne); err == nil {
-		n.typ = "NotFoundErrorBodyOne"
-		n.NotFoundErrorBodyOne = valueNotFoundErrorBodyOne
+	valueNotFoundErrorBodyCode := new(NotFoundErrorBodyCode)
+	if err := json.Unmarshal(data, &valueNotFoundErrorBodyCode); err == nil {
+		n.typ = "NotFoundErrorBodyCode"
+		n.NotFoundErrorBodyCode = valueNotFoundErrorBodyCode
 		return nil
 	}
 	valueRPCUnexpectedError := new(RPCUnexpectedError)
@@ -1253,11 +1455,8 @@ func (n *NotFoundErrorBody) UnmarshalJSON(data []byte) error {
 }
 
 func (n NotFoundErrorBody) MarshalJSON() ([]byte, error) {
-	if n.typ == "NotFoundErrorBodyZero" || n.NotFoundErrorBodyZero != nil {
-		return json.Marshal(n.NotFoundErrorBodyZero)
-	}
-	if n.typ == "NotFoundErrorBodyOne" || n.NotFoundErrorBodyOne != nil {
-		return json.Marshal(n.NotFoundErrorBodyOne)
+	if n.typ == "NotFoundErrorBodyCode" || n.NotFoundErrorBodyCode != nil {
+		return json.Marshal(n.NotFoundErrorBodyCode)
 	}
 	if n.typ == "RPCUnexpectedError" || n.RPCUnexpectedError != nil {
 		return json.Marshal(n.RPCUnexpectedError)
@@ -1266,17 +1465,13 @@ func (n NotFoundErrorBody) MarshalJSON() ([]byte, error) {
 }
 
 type NotFoundErrorBodyVisitor interface {
-	VisitNotFoundErrorBodyZero(*NotFoundErrorBodyZero) error
-	VisitNotFoundErrorBodyOne(*NotFoundErrorBodyOne) error
+	VisitNotFoundErrorBodyCode(*NotFoundErrorBodyCode) error
 	VisitRPCUnexpectedError(*RPCUnexpectedError) error
 }
 
 func (n *NotFoundErrorBody) Accept(visitor NotFoundErrorBodyVisitor) error {
-	if n.typ == "NotFoundErrorBodyZero" || n.NotFoundErrorBodyZero != nil {
-		return visitor.VisitNotFoundErrorBodyZero(n.NotFoundErrorBodyZero)
-	}
-	if n.typ == "NotFoundErrorBodyOne" || n.NotFoundErrorBodyOne != nil {
-		return visitor.VisitNotFoundErrorBodyOne(n.NotFoundErrorBodyOne)
+	if n.typ == "NotFoundErrorBodyCode" || n.NotFoundErrorBodyCode != nil {
+		return visitor.VisitNotFoundErrorBodyCode(n.NotFoundErrorBodyCode)
 	}
 	if n.typ == "RPCUnexpectedError" || n.RPCUnexpectedError != nil {
 		return visitor.VisitRPCUnexpectedError(n.RPCUnexpectedError)
@@ -1789,6 +1984,631 @@ func NewNotFoundErrorBodyZeroCodeFromString(s string) (NotFoundErrorBodyZeroCode
 
 func (n NotFoundErrorBodyZeroCode) Ptr() *NotFoundErrorBodyZeroCode {
 	return &n
+}
+
+var (
+	readPrivateKeyResponseFieldID                     = big.NewInt(1 << 0)
+	readPrivateKeyResponseFieldVersion                = big.NewInt(1 << 1)
+	readPrivateKeyResponseFieldName                   = big.NewInt(1 << 2)
+	readPrivateKeyResponseFieldSurfaceSlug            = big.NewInt(1 << 3)
+	readPrivateKeyResponseFieldScopes                 = big.NewInt(1 << 4)
+	readPrivateKeyResponseFieldSecondsUntilExpiration = big.NewInt(1 << 5)
+	readPrivateKeyResponseFieldExpiresAt              = big.NewInt(1 << 6)
+	readPrivateKeyResponseFieldRevoked                = big.NewInt(1 << 7)
+)
+
+// readPrivateKeyResponseNullableFields maps the wire names of ReadPrivateKeyResponse's nullable fields (required or optional) to their field bits.
+var readPrivateKeyResponseNullableFields = map[string]*big.Int{
+	"surfaceSlug":            readPrivateKeyResponseFieldSurfaceSlug,
+	"secondsUntilExpiration": readPrivateKeyResponseFieldSecondsUntilExpiration,
+	"expiresAt":              readPrivateKeyResponseFieldExpiresAt,
+}
+
+type ReadPrivateKeyResponse struct {
+	ID                     string                             `json:"id" url:"id"`
+	Version                string                             `json:"version" url:"version"`
+	Name                   string                             `json:"name" url:"name"`
+	SurfaceSlug            *string                            `json:"surfaceSlug,omitempty" url:"surfaceSlug,omitempty"`
+	Scopes                 []ReadPrivateKeyResponseScopesItem `json:"scopes" url:"scopes"`
+	SecondsUntilExpiration *int                               `json:"secondsUntilExpiration,omitempty" url:"secondsUntilExpiration,omitempty"`
+	ExpiresAt              *int                               `json:"expiresAt,omitempty" url:"expiresAt,omitempty"`
+	Revoked                bool                               `json:"revoked" url:"revoked"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (r *ReadPrivateKeyResponse) GetID() string {
+	if r == nil {
+		return ""
+	}
+	return r.ID
+}
+
+func (r *ReadPrivateKeyResponse) GetVersion() string {
+	if r == nil {
+		return ""
+	}
+	return r.Version
+}
+
+func (r *ReadPrivateKeyResponse) GetName() string {
+	if r == nil {
+		return ""
+	}
+	return r.Name
+}
+
+func (r *ReadPrivateKeyResponse) GetSurfaceSlug() *string {
+	if r == nil {
+		return nil
+	}
+	return r.SurfaceSlug
+}
+
+func (r *ReadPrivateKeyResponse) GetScopes() []ReadPrivateKeyResponseScopesItem {
+	if r == nil {
+		return nil
+	}
+	return r.Scopes
+}
+
+func (r *ReadPrivateKeyResponse) GetSecondsUntilExpiration() *int {
+	if r == nil {
+		return nil
+	}
+	return r.SecondsUntilExpiration
+}
+
+func (r *ReadPrivateKeyResponse) GetExpiresAt() *int {
+	if r == nil {
+		return nil
+	}
+	return r.ExpiresAt
+}
+
+func (r *ReadPrivateKeyResponse) GetRevoked() bool {
+	if r == nil {
+		return false
+	}
+	return r.Revoked
+}
+
+func (r *ReadPrivateKeyResponse) GetExtraProperties() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
+	return r.extraProperties
+}
+
+func (r *ReadPrivateKeyResponse) require(field *big.Int) {
+	next := new(big.Int)
+	if r.explicitFields != nil {
+		next.Set(r.explicitFields)
+	}
+	next.Or(next, field)
+	r.explicitFields = next
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ReadPrivateKeyResponse) SetID(id string) {
+	r.ID = id
+	r.require(readPrivateKeyResponseFieldID)
+}
+
+// SetVersion sets the Version field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ReadPrivateKeyResponse) SetVersion(version string) {
+	r.Version = version
+	r.require(readPrivateKeyResponseFieldVersion)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ReadPrivateKeyResponse) SetName(name string) {
+	r.Name = name
+	r.require(readPrivateKeyResponseFieldName)
+}
+
+// SetSurfaceSlug sets the SurfaceSlug field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ReadPrivateKeyResponse) SetSurfaceSlug(surfaceSlug *string) {
+	r.SurfaceSlug = surfaceSlug
+	r.require(readPrivateKeyResponseFieldSurfaceSlug)
+}
+
+// SetScopes sets the Scopes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ReadPrivateKeyResponse) SetScopes(scopes []ReadPrivateKeyResponseScopesItem) {
+	r.Scopes = scopes
+	r.require(readPrivateKeyResponseFieldScopes)
+}
+
+// SetSecondsUntilExpiration sets the SecondsUntilExpiration field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ReadPrivateKeyResponse) SetSecondsUntilExpiration(secondsUntilExpiration *int) {
+	r.SecondsUntilExpiration = secondsUntilExpiration
+	r.require(readPrivateKeyResponseFieldSecondsUntilExpiration)
+}
+
+// SetExpiresAt sets the ExpiresAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ReadPrivateKeyResponse) SetExpiresAt(expiresAt *int) {
+	r.ExpiresAt = expiresAt
+	r.require(readPrivateKeyResponseFieldExpiresAt)
+}
+
+// SetRevoked sets the Revoked field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ReadPrivateKeyResponse) SetRevoked(revoked bool) {
+	r.Revoked = revoked
+	r.require(readPrivateKeyResponseFieldRevoked)
+}
+
+func (r *ReadPrivateKeyResponse) UnmarshalJSON(data []byte) error {
+	type unmarshaler ReadPrivateKeyResponse
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*r = ReadPrivateKeyResponse(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *r)
+	if err != nil {
+		return err
+	}
+	r.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, readPrivateKeyResponseNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		r.require(presentFields)
+	}
+	r.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (r *ReadPrivateKeyResponse) MarshalJSON() ([]byte, error) {
+	type embed ReadPrivateKeyResponse
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*r),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, r.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (r *ReadPrivateKeyResponse) String() string {
+	if r == nil {
+		return "<nil>"
+	}
+	if len(r.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(r); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", r)
+}
+
+type ReadPrivateKeyResponseScopesItem string
+
+const (
+	ReadPrivateKeyResponseScopesItemOrgSurfacesRead               ReadPrivateKeyResponseScopesItem = "org:surfaces:read"
+	ReadPrivateKeyResponseScopesItemOrgSurfacesWrite              ReadPrivateKeyResponseScopesItem = "org:surfaces:write"
+	ReadPrivateKeyResponseScopesItemOrgSurfacesDelete             ReadPrivateKeyResponseScopesItem = "org:surfaces:delete"
+	ReadPrivateKeyResponseScopesItemOrgProblemsRead               ReadPrivateKeyResponseScopesItem = "org:problems:read"
+	ReadPrivateKeyResponseScopesItemOrgProblemsWrite              ReadPrivateKeyResponseScopesItem = "org:problems:write"
+	ReadPrivateKeyResponseScopesItemOrgSupportRead                ReadPrivateKeyResponseScopesItem = "org:support:read"
+	ReadPrivateKeyResponseScopesItemOrgSupportWrite               ReadPrivateKeyResponseScopesItem = "org:support:write"
+	ReadPrivateKeyResponseScopesItemOrgReplaysRead                ReadPrivateKeyResponseScopesItem = "org:replays:read"
+	ReadPrivateKeyResponseScopesItemOrgSourceContextRead          ReadPrivateKeyResponseScopesItem = "org:source_context:read"
+	ReadPrivateKeyResponseScopesItemOrgIntegrationSettingsRead    ReadPrivateKeyResponseScopesItem = "org:integration_settings:read"
+	ReadPrivateKeyResponseScopesItemOrgIntegrationSettingsWrite   ReadPrivateKeyResponseScopesItem = "org:integration_settings:write"
+	ReadPrivateKeyResponseScopesItemOrgWorkspaceMembersRead       ReadPrivateKeyResponseScopesItem = "org:workspace_members:read"
+	ReadPrivateKeyResponseScopesItemOrgWorkspaceMembersWrite      ReadPrivateKeyResponseScopesItem = "org:workspace_members:write"
+	ReadPrivateKeyResponseScopesItemOrgWorkspaceBillingRead       ReadPrivateKeyResponseScopesItem = "org:workspace_billing:read"
+	ReadPrivateKeyResponseScopesItemOrgWorkspaceBillingWrite      ReadPrivateKeyResponseScopesItem = "org:workspace_billing:write"
+	ReadPrivateKeyResponseScopesItemOrgWorkspaceBasicsRead        ReadPrivateKeyResponseScopesItem = "org:workspace_basics:read"
+	ReadPrivateKeyResponseScopesItemOrgWorkspaceBasicsWrite       ReadPrivateKeyResponseScopesItem = "org:workspace_basics:write"
+	ReadPrivateKeyResponseScopesItemOrgWorkspaceDomainsRead       ReadPrivateKeyResponseScopesItem = "org:workspace_domains:read"
+	ReadPrivateKeyResponseScopesItemOrgWorkspaceDomainsWrite      ReadPrivateKeyResponseScopesItem = "org:workspace_domains:write"
+	ReadPrivateKeyResponseScopesItemOrgWorkspaceAuthRead          ReadPrivateKeyResponseScopesItem = "org:workspace_auth:read"
+	ReadPrivateKeyResponseScopesItemOrgWorkspaceAuthWrite         ReadPrivateKeyResponseScopesItem = "org:workspace_auth:write"
+	ReadPrivateKeyResponseScopesItemOrgWorkspaceDestroy           ReadPrivateKeyResponseScopesItem = "org:workspace:destroy"
+	ReadPrivateKeyResponseScopesItemOrgWorkspaceTransferOwnership ReadPrivateKeyResponseScopesItem = "org:workspace:transfer_ownership"
+	ReadPrivateKeyResponseScopesItemReleaseWrite                  ReadPrivateKeyResponseScopesItem = "release:write"
+	ReadPrivateKeyResponseScopesItemIngestWrite                   ReadPrivateKeyResponseScopesItem = "ingest:write"
+)
+
+func NewReadPrivateKeyResponseScopesItemFromString(s string) (ReadPrivateKeyResponseScopesItem, error) {
+	switch s {
+	case "org:surfaces:read":
+		return ReadPrivateKeyResponseScopesItemOrgSurfacesRead, nil
+	case "org:surfaces:write":
+		return ReadPrivateKeyResponseScopesItemOrgSurfacesWrite, nil
+	case "org:surfaces:delete":
+		return ReadPrivateKeyResponseScopesItemOrgSurfacesDelete, nil
+	case "org:problems:read":
+		return ReadPrivateKeyResponseScopesItemOrgProblemsRead, nil
+	case "org:problems:write":
+		return ReadPrivateKeyResponseScopesItemOrgProblemsWrite, nil
+	case "org:support:read":
+		return ReadPrivateKeyResponseScopesItemOrgSupportRead, nil
+	case "org:support:write":
+		return ReadPrivateKeyResponseScopesItemOrgSupportWrite, nil
+	case "org:replays:read":
+		return ReadPrivateKeyResponseScopesItemOrgReplaysRead, nil
+	case "org:source_context:read":
+		return ReadPrivateKeyResponseScopesItemOrgSourceContextRead, nil
+	case "org:integration_settings:read":
+		return ReadPrivateKeyResponseScopesItemOrgIntegrationSettingsRead, nil
+	case "org:integration_settings:write":
+		return ReadPrivateKeyResponseScopesItemOrgIntegrationSettingsWrite, nil
+	case "org:workspace_members:read":
+		return ReadPrivateKeyResponseScopesItemOrgWorkspaceMembersRead, nil
+	case "org:workspace_members:write":
+		return ReadPrivateKeyResponseScopesItemOrgWorkspaceMembersWrite, nil
+	case "org:workspace_billing:read":
+		return ReadPrivateKeyResponseScopesItemOrgWorkspaceBillingRead, nil
+	case "org:workspace_billing:write":
+		return ReadPrivateKeyResponseScopesItemOrgWorkspaceBillingWrite, nil
+	case "org:workspace_basics:read":
+		return ReadPrivateKeyResponseScopesItemOrgWorkspaceBasicsRead, nil
+	case "org:workspace_basics:write":
+		return ReadPrivateKeyResponseScopesItemOrgWorkspaceBasicsWrite, nil
+	case "org:workspace_domains:read":
+		return ReadPrivateKeyResponseScopesItemOrgWorkspaceDomainsRead, nil
+	case "org:workspace_domains:write":
+		return ReadPrivateKeyResponseScopesItemOrgWorkspaceDomainsWrite, nil
+	case "org:workspace_auth:read":
+		return ReadPrivateKeyResponseScopesItemOrgWorkspaceAuthRead, nil
+	case "org:workspace_auth:write":
+		return ReadPrivateKeyResponseScopesItemOrgWorkspaceAuthWrite, nil
+	case "org:workspace:destroy":
+		return ReadPrivateKeyResponseScopesItemOrgWorkspaceDestroy, nil
+	case "org:workspace:transfer_ownership":
+		return ReadPrivateKeyResponseScopesItemOrgWorkspaceTransferOwnership, nil
+	case "release:write":
+		return ReadPrivateKeyResponseScopesItemReleaseWrite, nil
+	case "ingest:write":
+		return ReadPrivateKeyResponseScopesItemIngestWrite, nil
+	}
+	var t ReadPrivateKeyResponseScopesItem
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (r ReadPrivateKeyResponseScopesItem) Ptr() *ReadPrivateKeyResponseScopesItem {
+	return &r
+}
+
+var (
+	readPublicKeyResponseFieldContent     = big.NewInt(1 << 0)
+	readPublicKeyResponseFieldName        = big.NewInt(1 << 1)
+	readPublicKeyResponseFieldID          = big.NewInt(1 << 2)
+	readPublicKeyResponseFieldSurfaceSlug = big.NewInt(1 << 3)
+	readPublicKeyResponseFieldRevoked     = big.NewInt(1 << 4)
+)
+
+type ReadPublicKeyResponse struct {
+	Content     string `json:"content" url:"content"`
+	Name        string `json:"name" url:"name"`
+	ID          string `json:"id" url:"id"`
+	SurfaceSlug string `json:"surfaceSlug" url:"surfaceSlug"`
+	Revoked     bool   `json:"revoked" url:"revoked"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (r *ReadPublicKeyResponse) GetContent() string {
+	if r == nil {
+		return ""
+	}
+	return r.Content
+}
+
+func (r *ReadPublicKeyResponse) GetName() string {
+	if r == nil {
+		return ""
+	}
+	return r.Name
+}
+
+func (r *ReadPublicKeyResponse) GetID() string {
+	if r == nil {
+		return ""
+	}
+	return r.ID
+}
+
+func (r *ReadPublicKeyResponse) GetSurfaceSlug() string {
+	if r == nil {
+		return ""
+	}
+	return r.SurfaceSlug
+}
+
+func (r *ReadPublicKeyResponse) GetRevoked() bool {
+	if r == nil {
+		return false
+	}
+	return r.Revoked
+}
+
+func (r *ReadPublicKeyResponse) GetExtraProperties() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
+	return r.extraProperties
+}
+
+func (r *ReadPublicKeyResponse) require(field *big.Int) {
+	next := new(big.Int)
+	if r.explicitFields != nil {
+		next.Set(r.explicitFields)
+	}
+	next.Or(next, field)
+	r.explicitFields = next
+}
+
+// SetContent sets the Content field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ReadPublicKeyResponse) SetContent(content string) {
+	r.Content = content
+	r.require(readPublicKeyResponseFieldContent)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ReadPublicKeyResponse) SetName(name string) {
+	r.Name = name
+	r.require(readPublicKeyResponseFieldName)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ReadPublicKeyResponse) SetID(id string) {
+	r.ID = id
+	r.require(readPublicKeyResponseFieldID)
+}
+
+// SetSurfaceSlug sets the SurfaceSlug field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ReadPublicKeyResponse) SetSurfaceSlug(surfaceSlug string) {
+	r.SurfaceSlug = surfaceSlug
+	r.require(readPublicKeyResponseFieldSurfaceSlug)
+}
+
+// SetRevoked sets the Revoked field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ReadPublicKeyResponse) SetRevoked(revoked bool) {
+	r.Revoked = revoked
+	r.require(readPublicKeyResponseFieldRevoked)
+}
+
+func (r *ReadPublicKeyResponse) UnmarshalJSON(data []byte) error {
+	type unmarshaler ReadPublicKeyResponse
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*r = ReadPublicKeyResponse(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *r)
+	if err != nil {
+		return err
+	}
+	r.extraProperties = extraProperties
+	r.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (r *ReadPublicKeyResponse) MarshalJSON() ([]byte, error) {
+	type embed ReadPublicKeyResponse
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*r),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, r.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (r *ReadPublicKeyResponse) String() string {
+	if r == nil {
+		return "<nil>"
+	}
+	if len(r.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(r); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", r)
+}
+
+var (
+	revokeSurfacePublicKeyResponseFieldSuccess = big.NewInt(1 << 0)
+)
+
+type RevokeSurfacePublicKeyResponse struct {
+	Success bool `json:"success" url:"success"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (r *RevokeSurfacePublicKeyResponse) GetSuccess() bool {
+	if r == nil {
+		return false
+	}
+	return r.Success
+}
+
+func (r *RevokeSurfacePublicKeyResponse) GetExtraProperties() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
+	return r.extraProperties
+}
+
+func (r *RevokeSurfacePublicKeyResponse) require(field *big.Int) {
+	next := new(big.Int)
+	if r.explicitFields != nil {
+		next.Set(r.explicitFields)
+	}
+	next.Or(next, field)
+	r.explicitFields = next
+}
+
+// SetSuccess sets the Success field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RevokeSurfacePublicKeyResponse) SetSuccess(success bool) {
+	r.Success = success
+	r.require(revokeSurfacePublicKeyResponseFieldSuccess)
+}
+
+func (r *RevokeSurfacePublicKeyResponse) UnmarshalJSON(data []byte) error {
+	type unmarshaler RevokeSurfacePublicKeyResponse
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*r = RevokeSurfacePublicKeyResponse(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *r)
+	if err != nil {
+		return err
+	}
+	r.extraProperties = extraProperties
+	r.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (r *RevokeSurfacePublicKeyResponse) MarshalJSON() ([]byte, error) {
+	type embed RevokeSurfacePublicKeyResponse
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*r),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, r.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (r *RevokeSurfacePublicKeyResponse) String() string {
+	if r == nil {
+		return "<nil>"
+	}
+	if len(r.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(r); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", r)
+}
+
+var (
+	revokeWorkspaceAPIKeyResponseFieldSuccess = big.NewInt(1 << 0)
+)
+
+type RevokeWorkspaceAPIKeyResponse struct {
+	Success bool `json:"success" url:"success"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (r *RevokeWorkspaceAPIKeyResponse) GetSuccess() bool {
+	if r == nil {
+		return false
+	}
+	return r.Success
+}
+
+func (r *RevokeWorkspaceAPIKeyResponse) GetExtraProperties() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
+	return r.extraProperties
+}
+
+func (r *RevokeWorkspaceAPIKeyResponse) require(field *big.Int) {
+	next := new(big.Int)
+	if r.explicitFields != nil {
+		next.Set(r.explicitFields)
+	}
+	next.Or(next, field)
+	r.explicitFields = next
+}
+
+// SetSuccess sets the Success field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RevokeWorkspaceAPIKeyResponse) SetSuccess(success bool) {
+	r.Success = success
+	r.require(revokeWorkspaceAPIKeyResponseFieldSuccess)
+}
+
+func (r *RevokeWorkspaceAPIKeyResponse) UnmarshalJSON(data []byte) error {
+	type unmarshaler RevokeWorkspaceAPIKeyResponse
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*r = RevokeWorkspaceAPIKeyResponse(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *r)
+	if err != nil {
+		return err
+	}
+	r.extraProperties = extraProperties
+	r.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (r *RevokeWorkspaceAPIKeyResponse) MarshalJSON() ([]byte, error) {
+	type embed RevokeWorkspaceAPIKeyResponse
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*r),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, r.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (r *RevokeWorkspaceAPIKeyResponse) String() string {
+	if r == nil {
+		return "<nil>"
+	}
+	if len(r.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(r); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", r)
 }
 
 var (
@@ -2580,10 +3400,11 @@ func (s ServiceUnavailableErrorBodyZeroCode) Ptr() *ServiceUnavailableErrorBodyZ
 }
 
 type UnauthorizedErrorBody struct {
-	UnauthorizedErrorBodyZero *UnauthorizedErrorBodyZero
-	UnauthorizedErrorBodyOne  *UnauthorizedErrorBodyOne
-	UnauthorizedErrorBodyCode *UnauthorizedErrorBodyCode
-	RPCUnexpectedError        *RPCUnexpectedError
+	UnauthorizedErrorBodyZero  *UnauthorizedErrorBodyZero
+	UnauthorizedErrorBodyOne   *UnauthorizedErrorBodyOne
+	UnauthorizedErrorBodyTwo   *UnauthorizedErrorBodyTwo
+	UnauthorizedErrorBodyThree *UnauthorizedErrorBodyThree
+	RPCUnexpectedError         *RPCUnexpectedError
 
 	typ string
 }
@@ -2602,11 +3423,18 @@ func (u *UnauthorizedErrorBody) GetUnauthorizedErrorBodyOne() *UnauthorizedError
 	return u.UnauthorizedErrorBodyOne
 }
 
-func (u *UnauthorizedErrorBody) GetUnauthorizedErrorBodyCode() *UnauthorizedErrorBodyCode {
+func (u *UnauthorizedErrorBody) GetUnauthorizedErrorBodyTwo() *UnauthorizedErrorBodyTwo {
 	if u == nil {
 		return nil
 	}
-	return u.UnauthorizedErrorBodyCode
+	return u.UnauthorizedErrorBodyTwo
+}
+
+func (u *UnauthorizedErrorBody) GetUnauthorizedErrorBodyThree() *UnauthorizedErrorBodyThree {
+	if u == nil {
+		return nil
+	}
+	return u.UnauthorizedErrorBodyThree
 }
 
 func (u *UnauthorizedErrorBody) GetRPCUnexpectedError() *RPCUnexpectedError {
@@ -2634,10 +3462,18 @@ func (u *UnauthorizedErrorBody) UnmarshalJSON(data []byte) error {
 		}
 	}
 	if internal.MatchesObjectKeys(data, []string{"defined", "code", "status", "message", "data"}, []string{"defined", "code", "status", "message"}) {
-		valueUnauthorizedErrorBodyCode := new(UnauthorizedErrorBodyCode)
-		if err := json.Unmarshal(data, &valueUnauthorizedErrorBodyCode); err == nil {
-			u.typ = "UnauthorizedErrorBodyCode"
-			u.UnauthorizedErrorBodyCode = valueUnauthorizedErrorBodyCode
+		valueUnauthorizedErrorBodyTwo := new(UnauthorizedErrorBodyTwo)
+		if err := json.Unmarshal(data, &valueUnauthorizedErrorBodyTwo); err == nil {
+			u.typ = "UnauthorizedErrorBodyTwo"
+			u.UnauthorizedErrorBodyTwo = valueUnauthorizedErrorBodyTwo
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"defined", "code", "status", "message", "data"}, []string{"defined", "code", "status", "message"}) {
+		valueUnauthorizedErrorBodyThree := new(UnauthorizedErrorBodyThree)
+		if err := json.Unmarshal(data, &valueUnauthorizedErrorBodyThree); err == nil {
+			u.typ = "UnauthorizedErrorBodyThree"
+			u.UnauthorizedErrorBodyThree = valueUnauthorizedErrorBodyThree
 			return nil
 		}
 	}
@@ -2666,10 +3502,18 @@ func (u *UnauthorizedErrorBody) UnmarshalJSON(data []byte) error {
 		}
 	}
 	if internal.HasObjectKeys(data, []string{"defined", "code", "status", "message"}) {
-		valueUnauthorizedErrorBodyCode := new(UnauthorizedErrorBodyCode)
-		if err := json.Unmarshal(data, &valueUnauthorizedErrorBodyCode); err == nil {
-			u.typ = "UnauthorizedErrorBodyCode"
-			u.UnauthorizedErrorBodyCode = valueUnauthorizedErrorBodyCode
+		valueUnauthorizedErrorBodyTwo := new(UnauthorizedErrorBodyTwo)
+		if err := json.Unmarshal(data, &valueUnauthorizedErrorBodyTwo); err == nil {
+			u.typ = "UnauthorizedErrorBodyTwo"
+			u.UnauthorizedErrorBodyTwo = valueUnauthorizedErrorBodyTwo
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"defined", "code", "status", "message"}) {
+		valueUnauthorizedErrorBodyThree := new(UnauthorizedErrorBodyThree)
+		if err := json.Unmarshal(data, &valueUnauthorizedErrorBodyThree); err == nil {
+			u.typ = "UnauthorizedErrorBodyThree"
+			u.UnauthorizedErrorBodyThree = valueUnauthorizedErrorBodyThree
 			return nil
 		}
 	}
@@ -2693,10 +3537,16 @@ func (u *UnauthorizedErrorBody) UnmarshalJSON(data []byte) error {
 		u.UnauthorizedErrorBodyOne = valueUnauthorizedErrorBodyOne
 		return nil
 	}
-	valueUnauthorizedErrorBodyCode := new(UnauthorizedErrorBodyCode)
-	if err := json.Unmarshal(data, &valueUnauthorizedErrorBodyCode); err == nil {
-		u.typ = "UnauthorizedErrorBodyCode"
-		u.UnauthorizedErrorBodyCode = valueUnauthorizedErrorBodyCode
+	valueUnauthorizedErrorBodyTwo := new(UnauthorizedErrorBodyTwo)
+	if err := json.Unmarshal(data, &valueUnauthorizedErrorBodyTwo); err == nil {
+		u.typ = "UnauthorizedErrorBodyTwo"
+		u.UnauthorizedErrorBodyTwo = valueUnauthorizedErrorBodyTwo
+		return nil
+	}
+	valueUnauthorizedErrorBodyThree := new(UnauthorizedErrorBodyThree)
+	if err := json.Unmarshal(data, &valueUnauthorizedErrorBodyThree); err == nil {
+		u.typ = "UnauthorizedErrorBodyThree"
+		u.UnauthorizedErrorBodyThree = valueUnauthorizedErrorBodyThree
 		return nil
 	}
 	valueRPCUnexpectedError := new(RPCUnexpectedError)
@@ -2715,8 +3565,11 @@ func (u UnauthorizedErrorBody) MarshalJSON() ([]byte, error) {
 	if u.typ == "UnauthorizedErrorBodyOne" || u.UnauthorizedErrorBodyOne != nil {
 		return json.Marshal(u.UnauthorizedErrorBodyOne)
 	}
-	if u.typ == "UnauthorizedErrorBodyCode" || u.UnauthorizedErrorBodyCode != nil {
-		return json.Marshal(u.UnauthorizedErrorBodyCode)
+	if u.typ == "UnauthorizedErrorBodyTwo" || u.UnauthorizedErrorBodyTwo != nil {
+		return json.Marshal(u.UnauthorizedErrorBodyTwo)
+	}
+	if u.typ == "UnauthorizedErrorBodyThree" || u.UnauthorizedErrorBodyThree != nil {
+		return json.Marshal(u.UnauthorizedErrorBodyThree)
 	}
 	if u.typ == "RPCUnexpectedError" || u.RPCUnexpectedError != nil {
 		return json.Marshal(u.RPCUnexpectedError)
@@ -2727,7 +3580,8 @@ func (u UnauthorizedErrorBody) MarshalJSON() ([]byte, error) {
 type UnauthorizedErrorBodyVisitor interface {
 	VisitUnauthorizedErrorBodyZero(*UnauthorizedErrorBodyZero) error
 	VisitUnauthorizedErrorBodyOne(*UnauthorizedErrorBodyOne) error
-	VisitUnauthorizedErrorBodyCode(*UnauthorizedErrorBodyCode) error
+	VisitUnauthorizedErrorBodyTwo(*UnauthorizedErrorBodyTwo) error
+	VisitUnauthorizedErrorBodyThree(*UnauthorizedErrorBodyThree) error
 	VisitRPCUnexpectedError(*RPCUnexpectedError) error
 }
 
@@ -2738,8 +3592,11 @@ func (u *UnauthorizedErrorBody) Accept(visitor UnauthorizedErrorBodyVisitor) err
 	if u.typ == "UnauthorizedErrorBodyOne" || u.UnauthorizedErrorBodyOne != nil {
 		return visitor.VisitUnauthorizedErrorBodyOne(u.UnauthorizedErrorBodyOne)
 	}
-	if u.typ == "UnauthorizedErrorBodyCode" || u.UnauthorizedErrorBodyCode != nil {
-		return visitor.VisitUnauthorizedErrorBodyCode(u.UnauthorizedErrorBodyCode)
+	if u.typ == "UnauthorizedErrorBodyTwo" || u.UnauthorizedErrorBodyTwo != nil {
+		return visitor.VisitUnauthorizedErrorBodyTwo(u.UnauthorizedErrorBodyTwo)
+	}
+	if u.typ == "UnauthorizedErrorBodyThree" || u.UnauthorizedErrorBodyThree != nil {
+		return visitor.VisitUnauthorizedErrorBodyThree(u.UnauthorizedErrorBodyThree)
 	}
 	if u.typ == "RPCUnexpectedError" || u.RPCUnexpectedError != nil {
 		return visitor.VisitRPCUnexpectedError(u.RPCUnexpectedError)

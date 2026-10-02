@@ -23,7 +23,7 @@ func TestWorkspaceSettingsLifecycle(t *testing.T) {
 		mu.Lock()
 		defer mu.Unlock()
 		w.Header().Set("Content-Type", "application/json")
-		if r.Method != http.MethodPost || r.Header.Get("Authorization") != "Bearer fixture-token" {
+		if r.Method != http.MethodPost || r.Header.Get("Authorization") != "Bearer fixture-token" || r.Header.Get("CF-Access-Client-Id") != "proxy-client" || r.Header.Get("CF-Access-Client-Secret") != "proxy-secret" {
 			t.Error("Unexpected authentication or method")
 			w.WriteHeader(400)
 			return
@@ -36,7 +36,7 @@ func TestWorkspaceSettingsLifecycle(t *testing.T) {
 			return
 		}
 		if r.URL.Path == root+"/actions/organizations.updateBasics" {
-			var input sdk.MutationOrganizationsUpdateBasicsRequest
+			var input sdk.UpdateBasicsWorkspacesRequest
 			if err := json.NewDecoder(r.Body).Decode(&input); err != nil {
 				t.Error(err)
 				return
@@ -59,6 +59,7 @@ func TestWorkspaceSettingsLifecycle(t *testing.T) {
 	config := func(workspaceSlug, workspaceName string) string {
 		return fmt.Sprintf(`
 provider "interfere" {
+ headers = { "CF-Access-Client-Id" = "proxy-client", "CF-Access-Client-Secret" = "proxy-secret" }
  token = "fixture-token"
  base_url = %q
 }
