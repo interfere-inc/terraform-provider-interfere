@@ -33,7 +33,7 @@ func (r *surfaceResource) read(ctx context.Context, data surfaceModel) (*sdk.Que
 	if remote.ID == "" || remote.Name == "" || remote.Type == "" || remote.Slug != data.Slug.ValueString() {
 		return nil, errors.New("The API returned an incomplete or unexpected surface. Terraform state was preserved.")
 	}
-	if !data.Id.IsNull() && remote.ID != data.Id.ValueString() {
+	if !data.Id.IsNull() && !data.Id.IsUnknown() && remote.ID != data.Id.ValueString() {
 		return nil, errors.New("This slug now identifies a different surface. Terraform state was preserved to avoid managing the wrong resource.")
 	}
 	return remote, nil
@@ -55,6 +55,7 @@ func (r *surfaceResource) Read(ctx context.Context, req resource.ReadRequest, re
 		return
 	}
 	data.Id = types.StringValue(remote.ID)
+	data.AnonymousUserTracking = types.BoolValue(remote.AnonymousUserTracking)
 	data.Name = types.StringValue(remote.Name)
 	data.Type = types.StringValue(string(remote.Type))
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

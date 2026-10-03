@@ -36,7 +36,7 @@ func (p *interfereProvider) Metadata(_ context.Context, _ provider.MetadataReque
 
 func (p *interfereProvider) Schema(_ context.Context, _ provider.SchemaRequest, resp *provider.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		Description: "Manage existing workspace settings, surfaces, public keys, and private API keys using a workspace API key, session, or delegated OAuth access token.",
+		Description: "Manage workspace settings, surfaces, integration mappings, tracking domains, and API keys using a workspace API key, session, or delegated OAuth access token.",
 		Attributes: map[string]schema.Attribute{
 			"headers":  schema.MapAttribute{Optional: true, Sensitive: true, ElementType: types.StringType, Description: "Additional HTTP headers for an authenticated API proxy, such as Cloudflare Access. Values must be known before planning."},
 			"token":    schema.StringAttribute{Optional: true, Sensitive: true, Description: "Workspace API key, session, or delegated OAuth access token. Defaults to INTERFERE_TOKEN. Grant the workspace-basics, surface, or workspace-auth permissions required by the configured resources. Release-only keys are not supported."},
@@ -88,7 +88,7 @@ func (p *interfereProvider) Configure(ctx context.Context, req provider.Configur
 		resp.Diagnostics.AddError("Invalid API URL", "Use HTTPS, or HTTP with a loopback address for local development.")
 		return
 	}
-	resp.ResourceData = client.NewClient(
+	configured := client.NewClient(
 		option.WithHTTPHeader(headers),
 		option.WithBaseURL(strings.TrimRight(baseURL, "/")),
 		option.WithToken(token),
@@ -98,10 +98,14 @@ func (p *interfereProvider) Configure(ctx context.Context, req provider.Configur
 			CheckRedirect: func(_ *http.Request, _ []*http.Request) error { return http.ErrUseLastResponse },
 		}),
 	)
+	resp.ResourceData = configured
+	resp.DataSourceData = configured
 }
 
 func (p *interfereProvider) Resources(context.Context) []func() resource.Resource {
-	return []func() resource.Resource{NewSurfaceResource, NewWorkspaceResource, NewPrivateKeyResource, NewPublicKeyResource}
+	return []func() resource.Resource{NewSurfaceResource, NewWorkspaceResource, NewPrivateKeyResource, NewPublicKeyResource, NewSurfaceRepositoryResource, NewSurfaceDestinationResource, NewTrackingDomainResource}
 }
 
-func (p *interfereProvider) DataSources(context.Context) []func() datasource.DataSource { return nil }
+func (p *interfereProvider) DataSources(context.Context) []func() datasource.DataSource {
+	return []func() datasource.DataSource{NewWorkspaceDataSource, NewSurfaceDataSource, NewIntegrationDataSource}
+}

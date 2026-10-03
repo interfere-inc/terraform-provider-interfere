@@ -1,13 +1,16 @@
 # Interfere Terraform provider
 
-Manage existing workspace settings, surfaces, and private and public API keys with Terraform Plugin Framework and a Fern-generated Go client. Install it from the [Terraform Registry](https://registry.terraform.io/providers/interfere-inc/interfere/latest).
+Manage existing workspace settings, surfaces, integration mappings, tracking domains, and private and public API keys with Terraform Plugin Framework and a Fern-generated Go client. Install it from the [Terraform Registry](https://registry.terraform.io/providers/interfere-inc/interfere/latest).
 
-| Resource                | Behavior                                                                                                                            |
-| ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| `interfere_workspace`   | Adopts an existing workspace and manages its name and slug. Destroying removes Terraform management without deleting the workspace. |
-| `interfere_surface`     | Creates, reads, renames, deletes, and imports surfaces.                                                                             |
-| `interfere_private_key` | Creates and revokes workspace or surface keys with explicit scopes and optional expiry. Configuration changes replace the key.      |
-| `interfere_public_key`  | Creates, reads, imports, and revokes surface publishable keys. External rotation refreshes the current value.                       |
+| Resource                        | Behavior                                                                                                                            |
+| ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| `interfere_workspace`           | Adopts an existing workspace and manages its name and slug. Destroying removes Terraform management without deleting the workspace. |
+| `interfere_surface_repository`  | Links a surface to an installed GitHub integration, repository, and working directory. Destroy unlinks only the mapping.            |
+| `interfere_surface_destination` | Links a surface to an installed Vercel, Cloudflare, or CLI destination. Destroy unlinks only the mapping.                           |
+| `interfere_tracking_domain`     | Provisions a tracking hostname and exposes DNS/TLS verification status.                                                             |
+| `interfere_surface`             | Creates, reads, renames, deletes, and imports surfaces.                                                                             |
+| `interfere_private_key`         | Creates and revokes workspace or surface keys with explicit scopes and optional expiry. Configuration changes replace the key.      |
+| `interfere_public_key`          | Creates, reads, imports, and revokes surface publishable keys. External rotation refreshes the current value.                       |
 
 ## Install
 
@@ -16,7 +19,7 @@ terraform {
   required_providers {
     interfere = {
       source  = "interfere-inc/interfere"
-      version = "~> 0.2.0"
+      version = "~> 0.3.0"
     }
   }
 }
@@ -138,3 +141,25 @@ Sync a reviewed provider snapshot into the public repository, including `interna
 The public repository's release workflow builds eight OS/architecture combinations when a `v*` tag is pushed. It signs SHA-256 checksums with the dedicated `GPG_PRIVATE_KEY` and `PASSPHRASE` repository secrets, and creates a draft release. Verify its artifacts before publishing. Register the matching public signing key and provider in HCP Terraform once; subsequent published releases notify the registry through its webhook.
 
 Before publishing a release, deploy the corresponding API changes and run acceptance tests against a disposable workspace.
+
+## Surface settings and integration mappings
+
+Set `anonymous_user_tracking` on `interfere_surface` to manage collection of anonymous-user telemetry. Omit it to preserve the API setting. Changes update the existing surface in place. SDK plugin, tracing, and log-sourcing configuration are not managed by this version.
+
+Use `interfere_surface_repository` for a GitHub, GitHub Enterprise Cloud, or GitHub Enterprise Server repository and optional repository-relative `working_directory`. Use `interfere_surface_destination` for a Vercel project, Cloudflare Worker, or CLI destination. Both require an existing installation and `org:surfaces:read` plus `org:integration_settings:write`. Installation and OAuth consent remain outside Terraform.
+
+Import mappings using `workspace-slug/surface-slug`. Creating over a different existing mapping fails and requires import first. Changing integration, repository, working directory, or project updates the link without replacing the surface. Destroy only removes the link.
+
+## Tracking domains
+
+Use `interfere_tracking_domain` with a lowercase hostname and a creation UUID. The credential needs `org:workspace_domains:read` and `org:workspace_domains:write`. Configure a DNS-only CNAME from `name` to the computed `cname_target` through your DNS provider.
+
+Creation returns while verification is pending so the DNS record can depend on this resource. `status` and `ssl_status` refresh as the service processes verification. Apply completion does not mean DNS or TLS is active. The resource manages the workspace hostname, not DNS records.
+
+Import using `workspace-slug/domain-UUID` and set `idempotency_key` to that domain UUID. Use a fresh UUID when replacing or recreating a deleted domain. Name and workspace changes require replacement. Destroy removes the hostname registration and its managed TLS provisioning.
+
+## Data sources
+
+`data.interfere_workspace` looks up workspace identity, name, and residency with `org:workspace_basics:read`. `data.interfere_surface` reads surface identity, type, and anonymous-user tracking with `org:surfaces:read`. Neither takes ownership of the object.
+
+`data.interfere_integration` looks up an installation using `integration_provider` and requires `org:integration_settings:read`. When multiple installations match, set `integration_id` explicitly. Missing, ambiguous, or inaccessible results produce an error. Only installation identity, provider, and status enter state; installation credentials and provider metadata do not.

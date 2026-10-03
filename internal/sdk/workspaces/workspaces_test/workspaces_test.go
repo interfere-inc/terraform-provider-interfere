@@ -140,6 +140,71 @@ func TestWorkspacesCurrentWithWireMock(
     	})
 }
 
+func TestWorkspacesAddProxyDomainWithWireMock(
+    t *testing.T,
+) {
+    WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+    	if WireMockBaseURL == "" {
+    		WireMockBaseURL = "http://localhost:8080"
+    	}
+    client := client.NewClient(
+        option.WithBaseURL(WireMockBaseURL),
+        option.WithToken("test-token"),
+    )
+        request := &sdk.AddProxyDomainWorkspacesRequest{
+            WorkspaceSlug: "workspaceSlug",
+            Args: &sdk.AddProxyDomainWorkspacesRequestArgs{
+                ID: "id",
+                Name: "name",
+            },
+        }
+    _, invocationErr :=     client.Workspaces.AddProxyDomain(
+            context.TODO(),
+            request,
+            option.WithHTTPHeader(
+                http.Header{"X-Test-Id": []string{"TestWorkspacesAddProxyDomainWithWireMock"}},
+            ),
+        )
+
+    require.NoError(t, invocationErr, "Client method call should succeed")
+    VerifyRequestCount(t, "TestWorkspacesAddProxyDomainWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/organizations.addProxyDomain", nil, 1)
+    VerifyAuthHeaders(t, "TestWorkspacesAddProxyDomainWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/organizations.addProxyDomain", map[string]string{
+    		"Authorization": `{"matches":"Bearer .*"}`,
+    	})
+}
+
+func TestWorkspacesRemoveProxyDomainWithWireMock(
+    t *testing.T,
+) {
+    WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+    	if WireMockBaseURL == "" {
+    		WireMockBaseURL = "http://localhost:8080"
+    	}
+    client := client.NewClient(
+        option.WithBaseURL(WireMockBaseURL),
+        option.WithToken("test-token"),
+    )
+        request := &sdk.RemoveProxyDomainWorkspacesRequest{
+            WorkspaceSlug: "workspaceSlug",
+            Args: &sdk.RemoveProxyDomainWorkspacesRequestArgs{
+                Name: "name",
+            },
+        }
+    _, invocationErr :=     client.Workspaces.RemoveProxyDomain(
+            context.TODO(),
+            request,
+            option.WithHTTPHeader(
+                http.Header{"X-Test-Id": []string{"TestWorkspacesRemoveProxyDomainWithWireMock"}},
+            ),
+        )
+
+    require.NoError(t, invocationErr, "Client method call should succeed")
+    VerifyRequestCount(t, "TestWorkspacesRemoveProxyDomainWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/organizations.removeProxyDomain", nil, 1)
+    VerifyAuthHeaders(t, "TestWorkspacesRemoveProxyDomainWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/organizations.removeProxyDomain", map[string]string{
+    		"Authorization": `{"matches":"Bearer .*"}`,
+    	})
+}
+
 func TestWorkspacesUpdateBasicsWithWireMock(
     t *testing.T,
 ) {

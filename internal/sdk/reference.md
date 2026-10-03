@@ -1,4 +1,438 @@
 # Reference
+## Domains
+<details><summary><code>client.Domains.ByIDIncludeDeleted(WorkspaceSlug, request) -> *sdk.QueryDomainsByIDIncludeDeletedResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Read a tracking domain by ID, including its deletion marker. Requires workspace domain read permission; null can also indicate insufficient access. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation is read-only despite using POST. Permission-filtered queries may return an empty result; do not assume that proves the resource does not exist. Only use pagination arguments declared in the schema.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &sdk.ByIDIncludeDeletedDomainsRequest{
+    WorkspaceSlug: "workspaceSlug",
+    Args: &sdk.ByIDIncludeDeletedDomainsRequestArgs{
+        DomainID: "domainId",
+    },
+}
+client.Domains.ByIDIncludeDeleted(
+    context.TODO(),
+    request,
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**workspaceSlug:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**args:** `*sdk.ByIDIncludeDeletedDomainsRequestArgs` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Integrations
+<details><summary><code>client.Integrations.Installations(WorkspaceSlug, request) -> sdk.QueryIntegrationsInstallationsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List integration installations to discover provider, connection state and installation identifiers. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation is read-only despite using POST. Permission-filtered queries may return an empty result; do not assume that proves the resource does not exist. Only use pagination arguments declared in the schema.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &sdk.InstallationsIntegrationsRequest{
+    WorkspaceSlug: "workspaceSlug",
+    Args: &sdk.InstallationsIntegrationsRequestArgs{
+        Providers: []sdk.InstallationsIntegrationsRequestArgsProvidersItem{
+            sdk.InstallationsIntegrationsRequestArgsProvidersItemGithub,
+        },
+    },
+}
+client.Integrations.Installations(
+    context.TODO(),
+    request,
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**workspaceSlug:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**args:** `*sdk.InstallationsIntegrationsRequestArgs` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Integrations.LinkSurfaceToDestination(WorkspaceSlug, request) -> *sdk.MutationIntegrationsLinkSurfaceToDestinationResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Link a surface to an integration destination. Inspect the existing installation and mapping first. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &sdk.LinkSurfaceToDestinationIntegrationsRequest{
+    WorkspaceSlug: "workspaceSlug",
+    Args: &sdk.LinkSurfaceToDestinationIntegrationsRequestArgs{
+        IntegrationID: "integrationId",
+        ProjectID: "projectId",
+        SurfaceSlug: "surfaceSlug",
+    },
+}
+client.Integrations.LinkSurfaceToDestination(
+    context.TODO(),
+    request,
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**workspaceSlug:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**args:** `*sdk.LinkSurfaceToDestinationIntegrationsRequestArgs` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Integrations.LinkSurfaceToRepository(WorkspaceSlug, request) -> *sdk.MutationIntegrationsLinkSurfaceToRepositoryResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Link a surface to a repository. Resolve repository and surface IDs from their list queries first. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &sdk.LinkSurfaceToRepositoryIntegrationsRequest{
+    WorkspaceSlug: "workspaceSlug",
+    Args: &sdk.LinkSurfaceToRepositoryIntegrationsRequestArgs{
+        IntegrationID: "integrationId",
+        RepositoryID: "repositoryId",
+        SurfaceSlug: "surfaceSlug",
+    },
+}
+client.Integrations.LinkSurfaceToRepository(
+    context.TODO(),
+    request,
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**workspaceSlug:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**args:** `*sdk.LinkSurfaceToRepositoryIntegrationsRequestArgs` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Integrations.UnlinkSurfaceDestinationMapping(WorkspaceSlug, request) -> *sdk.MutationIntegrationsUnlinkSurfaceDestinationMappingResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Remove a surface's destination mapping. This changes integration routing. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &sdk.UnlinkSurfaceDestinationMappingIntegrationsRequest{
+    WorkspaceSlug: "workspaceSlug",
+    Args: &sdk.UnlinkSurfaceDestinationMappingIntegrationsRequestArgs{
+        SurfaceSlug: "surfaceSlug",
+    },
+}
+client.Integrations.UnlinkSurfaceDestinationMapping(
+    context.TODO(),
+    request,
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**workspaceSlug:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**args:** `*sdk.UnlinkSurfaceDestinationMappingIntegrationsRequestArgs` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Integrations.UnlinkSurfaceMapping(WorkspaceSlug, request) -> *sdk.MutationIntegrationsUnlinkSurfaceMappingResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Remove a surface's integration mapping. Inspect the selected mapping before unlinking it. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &sdk.UnlinkSurfaceMappingIntegrationsRequest{
+    WorkspaceSlug: "workspaceSlug",
+    Args: &sdk.UnlinkSurfaceMappingIntegrationsRequestArgs{
+        SurfaceSlug: "surfaceSlug",
+    },
+}
+client.Integrations.UnlinkSurfaceMapping(
+    context.TODO(),
+    request,
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**workspaceSlug:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**args:** `*sdk.UnlinkSurfaceMappingIntegrationsRequestArgs` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Workspaces
 <details><summary><code>client.Workspaces.Current(WorkspaceSlug, request) -> *sdk.QueryOrganizationsCurrentResponse</code></summary>
 <dl>
@@ -57,6 +491,149 @@ client.Workspaces.Current(
 <dd>
 
 **args:** `map[string]any` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Workspaces.AddProxyDomain(WorkspaceSlug, request) -> *sdk.MutationOrganizationsAddProxyDomainResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Add a tracking proxy domain to the workspace. Check domains.list and domains.proxyInUse first. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &sdk.AddProxyDomainWorkspacesRequest{
+    WorkspaceSlug: "workspaceSlug",
+    Args: &sdk.AddProxyDomainWorkspacesRequestArgs{
+        ID: "id",
+        Name: "name",
+    },
+}
+client.Workspaces.AddProxyDomain(
+    context.TODO(),
+    request,
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**workspaceSlug:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**args:** `*sdk.AddProxyDomainWorkspacesRequestArgs` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Workspaces.RemoveProxyDomain(WorkspaceSlug, request) -> *sdk.MutationOrganizationsRemoveProxyDomainResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Remove a tracking proxy domain. This can affect telemetry sent through that hostname. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &sdk.RemoveProxyDomainWorkspacesRequest{
+    WorkspaceSlug: "workspaceSlug",
+    Args: &sdk.RemoveProxyDomainWorkspacesRequestArgs{
+        Name: "name",
+    },
+}
+client.Workspaces.RemoveProxyDomain(
+    context.TODO(),
+    request,
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**workspaceSlug:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**args:** `*sdk.RemoveProxyDomainWorkspacesRequestArgs` 
     
 </dd>
 </dl>
@@ -269,6 +846,78 @@ client.Surfaces.Delete(
 <dd>
 
 **args:** `*sdk.DeleteSurfacesRequestArgs` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Surfaces.SetAnonymousUserTracking(WorkspaceSlug, request) -> *sdk.MutationSurfacesSetAnonymousUserTrackingResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Enable or disable anonymous-user tracking for a surface. Inspect its current setting first. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &sdk.SetAnonymousUserTrackingSurfacesRequest{
+    WorkspaceSlug: "workspaceSlug",
+    Args: &sdk.SetAnonymousUserTrackingSurfacesRequestArgs{
+        SurfaceSlug: "surfaceSlug",
+        Enabled: true,
+    },
+}
+client.Surfaces.SetAnonymousUserTracking(
+    context.TODO(),
+    request,
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**workspaceSlug:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**args:** `*sdk.SetAnonymousUserTrackingSurfacesRequestArgs` 
     
 </dd>
 </dl>

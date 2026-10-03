@@ -35,6 +35,15 @@ func (r *surfaceResource) Create(ctx context.Context, req resource.CreateRequest
 	data.Slug = types.StringValue(created.Surface.Slug)
 	data.Name = types.StringValue(created.Surface.Name)
 	data.Type = types.StringValue(string(created.Surface.Type))
+	partial := data
+	if partial.AnonymousUserTracking.IsUnknown() {
+		partial.AnonymousUserTracking = types.BoolNull()
+	}
+	resp.Diagnostics.Append(resp.State.Set(ctx, &partial)...)
+	if err := r.applySettings(ctx, &data); err != nil {
+		resp.Diagnostics.AddError("Unable to configure surface", err.Error())
+		return
+	}
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
@@ -66,6 +75,10 @@ func (r *surfaceResource) Update(ctx context.Context, req resource.UpdateRequest
 			resp.Diagnostics.AddError("Update was not acknowledged", "The API did not confirm the rename. Refresh the plan before retrying.")
 			return
 		}
+	}
+	if err := r.applySettings(ctx, &data); err != nil {
+		resp.Diagnostics.AddError("Unable to configure surface", err.Error())
+		return
 	}
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
