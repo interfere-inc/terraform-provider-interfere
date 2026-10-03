@@ -18,11 +18,14 @@ var (
 )
 
 type CreateSurfaceRequest struct {
+	// Workspace URL slug, using lowercase letters, numbers, and hyphens.
 	WorkspaceSlug  string                      `json:"-" url:"-"`
 	APIKey         *CreateSurfaceRequestAPIKey `json:"apiKey" url:"-"`
 	IdempotencyKey string                      `json:"idempotencyKey" url:"-"`
-	Name           string                      `json:"name" url:"-"`
-	Type           CreateSurfaceRequestType    `json:"type" url:"-"`
+	// Display name of the surface.
+	Name string `json:"name" url:"-"`
+	// Application framework used by the surface.
+	Type CreateSurfaceRequestType `json:"type" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -99,6 +102,7 @@ var (
 )
 
 type DeleteSurfacesRequest struct {
+	// Workspace URL slug, using lowercase letters, numbers, and hyphens.
 	WorkspaceSlug string                     `json:"-" url:"-"`
 	Args          *DeleteSurfacesRequestArgs `json:"args" url:"-"`
 
@@ -156,6 +160,7 @@ var (
 )
 
 type GetBySlugIncludeDeletedSurfacesRequest struct {
+	// Workspace URL slug, using lowercase letters, numbers, and hyphens.
 	WorkspaceSlug string                                      `json:"-" url:"-"`
 	Args          *GetBySlugIncludeDeletedSurfacesRequestArgs `json:"args" url:"-"`
 
@@ -213,6 +218,7 @@ var (
 )
 
 type SetAnonymousUserTrackingSurfacesRequest struct {
+	// Workspace URL slug, using lowercase letters, numbers, and hyphens.
 	WorkspaceSlug string                                       `json:"-" url:"-"`
 	Args          *SetAnonymousUserTrackingSurfacesRequestArgs `json:"args" url:"-"`
 
@@ -527,9 +533,13 @@ var (
 )
 
 type CreateSurfaceResponseSurface struct {
-	ID   string                           `json:"id" url:"id"`
-	Name string                           `json:"name" url:"name"`
-	Slug string                           `json:"slug" url:"slug"`
+	// Unique surface identifier.
+	ID string `json:"id" url:"id"`
+	// Display name of the surface.
+	Name string `json:"name" url:"name"`
+	// Surface URL slug, using lowercase letters, numbers, and hyphens.
+	Slug string `json:"slug" url:"slug"`
+	// Application framework used by the surface.
 	Type CreateSurfaceResponseSurfaceType `json:"type" url:"type"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -653,6 +663,7 @@ func (c *CreateSurfaceResponseSurface) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Application framework used by the surface.
 type CreateSurfaceResponseSurfaceType string
 
 const (
@@ -967,17 +978,22 @@ var querySurfacesGetBySlugIncludeDeletedResponseNullableFields = map[string]*big
 }
 
 type QuerySurfacesGetBySlugIncludeDeletedResponse struct {
-	ID                       string                                           `json:"id" url:"id"`
-	Name                     string                                           `json:"name" url:"name"`
-	Slug                     string                                           `json:"slug" url:"slug"`
-	Type                     QuerySurfacesGetBySlugIncludeDeletedResponseType `json:"type" url:"type"`
-	DeletedAt                *float64                                         `json:"deletedAt,omitempty" url:"deletedAt,omitempty"`
-	AnonymousUserTracking    bool                                             `json:"anonymousUserTracking" url:"anonymousUserTracking"`
-	SourceIntegrationID      *string                                          `json:"sourceIntegrationId,omitempty" url:"sourceIntegrationId,omitempty"`
-	SourceMappingID          *string                                          `json:"sourceMappingId,omitempty" url:"sourceMappingId,omitempty"`
-	SourceWorkingDirectory   *string                                          `json:"sourceWorkingDirectory,omitempty" url:"sourceWorkingDirectory,omitempty"`
-	DestinationIntegrationID *string                                          `json:"destinationIntegrationId,omitempty" url:"destinationIntegrationId,omitempty"`
-	DestinationMappingID     *string                                          `json:"destinationMappingId,omitempty" url:"destinationMappingId,omitempty"`
+	// Unique surface identifier.
+	ID string `json:"id" url:"id"`
+	// Display name of the surface.
+	Name string `json:"name" url:"name"`
+	// Surface URL slug, using lowercase letters, numbers, and hyphens.
+	Slug string `json:"slug" url:"slug"`
+	// Application framework used by the surface.
+	Type      QuerySurfacesGetBySlugIncludeDeletedResponseType `json:"type" url:"type"`
+	DeletedAt *float64                                         `json:"deletedAt,omitempty" url:"deletedAt,omitempty"`
+	// Whether anonymous-user telemetry is collected.
+	AnonymousUserTracking    bool    `json:"anonymousUserTracking" url:"anonymousUserTracking"`
+	SourceIntegrationID      *string `json:"sourceIntegrationId,omitempty" url:"sourceIntegrationId,omitempty"`
+	SourceMappingID          *string `json:"sourceMappingId,omitempty" url:"sourceMappingId,omitempty"`
+	SourceWorkingDirectory   *string `json:"sourceWorkingDirectory,omitempty" url:"sourceWorkingDirectory,omitempty"`
+	DestinationIntegrationID *string `json:"destinationIntegrationId,omitempty" url:"destinationIntegrationId,omitempty"`
+	DestinationMappingID     *string `json:"destinationMappingId,omitempty" url:"destinationMappingId,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -1210,6 +1226,7 @@ func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) String() string {
 	return fmt.Sprintf("%#v", q)
 }
 
+// Application framework used by the surface.
 type QuerySurfacesGetBySlugIncludeDeletedResponseType string
 
 const (
@@ -1252,8 +1269,10 @@ var createSurfaceRequestAPIKeyNullableFields = map[string]*big.Int{
 }
 
 type CreateSurfaceRequestAPIKey struct {
-	Scopes                 []CreateSurfaceRequestAPIKeyScopesItem `json:"scopes" url:"scopes"`
-	SecondsUntilExpiration *int                                   `json:"secondsUntilExpiration,omitempty" url:"secondsUntilExpiration,omitempty"`
+	// Permission scopes granted to the key.
+	Scopes []CreateSurfaceRequestAPIKeyScopesItem `json:"scopes" url:"scopes"`
+	// Positive lifetime in seconds, or null for no expiry.
+	SecondsUntilExpiration *int `json:"secondsUntilExpiration,omitempty" url:"secondsUntilExpiration,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -1446,6 +1465,7 @@ func (c CreateSurfaceRequestAPIKeyScopesItem) Ptr() *CreateSurfaceRequestAPIKeyS
 	return &c
 }
 
+// Application framework used by the surface.
 type CreateSurfaceRequestType string
 
 const (
@@ -1482,6 +1502,7 @@ var (
 )
 
 type DeleteSurfacesRequestArgs struct {
+	// Surface URL slug, using lowercase letters, numbers, and hyphens.
 	SurfaceSlug string `json:"surfaceSlug" url:"surfaceSlug"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -1568,6 +1589,7 @@ var (
 )
 
 type GetBySlugIncludeDeletedSurfacesRequestArgs struct {
+	// Surface URL slug, using lowercase letters, numbers, and hyphens.
 	SurfaceSlug string `json:"surfaceSlug" url:"surfaceSlug"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -1655,6 +1677,7 @@ var (
 )
 
 type SetAnonymousUserTrackingSurfacesRequestArgs struct {
+	// Surface URL slug, using lowercase letters, numbers, and hyphens.
 	SurfaceSlug string `json:"surfaceSlug" url:"surfaceSlug"`
 	Enabled     bool   `json:"enabled" url:"enabled"`
 
@@ -1757,7 +1780,8 @@ var (
 )
 
 type UpdateNameSurfacesRequestArgs struct {
-	Name        string `json:"name" url:"name"`
+	Name string `json:"name" url:"name"`
+	// Surface URL slug, using lowercase letters, numbers, and hyphens.
 	SurfaceSlug string `json:"surfaceSlug" url:"surfaceSlug"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -1859,6 +1883,7 @@ var (
 )
 
 type UpdateNameSurfacesRequest struct {
+	// Workspace URL slug, using lowercase letters, numbers, and hyphens.
 	WorkspaceSlug string                         `json:"-" url:"-"`
 	Args          *UpdateNameSurfacesRequestArgs `json:"args" url:"-"`
 

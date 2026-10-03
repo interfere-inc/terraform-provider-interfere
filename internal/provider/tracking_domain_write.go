@@ -6,6 +6,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/interfere-inc/terraform-provider-interfere/internal/sdk"
+	"github.com/interfere-inc/terraform-provider-interfere/internal/sdk/option"
 )
 
 func (r *trackingDomainResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
@@ -14,13 +15,14 @@ func (r *trackingDomainResource) Create(ctx context.Context, req resource.Create
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	result, err := r.client.Workspaces.AddProxyDomain(ctx, &sdk.AddProxyDomainWorkspacesRequest{WorkspaceSlug: data.WorkspaceSlug.ValueString(), Args: &sdk.AddProxyDomainWorkspacesRequestArgs{ID: data.IdempotencyKey.ValueString(), Name: data.Name.ValueString()}})
+	data.IdempotencyKey = creationIdentity(data.IdempotencyKey)
+	result, err := r.client.Workspaces.AddProxyDomain(ctx, &sdk.AddProxyDomainWorkspacesRequest{WorkspaceSlug: data.WorkspaceSlug.ValueString(), Args: &sdk.AddProxyDomainWorkspacesRequestArgs{ID: data.IdempotencyKey.ValueString(), Name: data.Name.ValueString()}}, option.WithMaxAttempts(3))
 	if err != nil {
-		resp.Diagnostics.AddError("Unable to create domain", apiError(err))
+		resp.Diagnostics.AddError("Unable to create domain", creationError(data.IdempotencyKey, apiError(err)))
 		return
 	}
 	if result == nil || !result.Success {
-		resp.Diagnostics.AddError("Creation not acknowledged", "Retry with the same idempotency_key to recover an uncertain creation.")
+		resp.Diagnostics.AddError("Creation not acknowledged", creationError(data.IdempotencyKey, "The API did not confirm domain creation."))
 		return
 	}
 	data.ID = data.IdempotencyKey

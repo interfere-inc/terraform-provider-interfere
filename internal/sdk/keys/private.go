@@ -19,12 +19,17 @@ var (
 )
 
 type CreatePrivateRequest struct {
-	WorkspaceSlug          string                           `json:"-" url:"-"`
-	SurfaceSlug            *string                          `json:"surfaceSlug,omitempty" url:"-"`
-	IdempotencyKey         string                           `json:"idempotencyKey" url:"-"`
-	Name                   string                           `json:"name" url:"-"`
-	Scopes                 []CreatePrivateRequestScopesItem `json:"scopes" url:"-"`
-	SecondsUntilExpiration *int                             `json:"secondsUntilExpiration,omitempty" url:"-"`
+	// Workspace URL slug, using lowercase letters, numbers, and hyphens.
+	WorkspaceSlug string `json:"-" url:"-"`
+	// Surface URL slug, using lowercase letters, numbers, and hyphens.
+	SurfaceSlug    *string `json:"surfaceSlug,omitempty" url:"-"`
+	IdempotencyKey string  `json:"idempotencyKey" url:"-"`
+	// Display name of the key.
+	Name string `json:"name" url:"-"`
+	// Permission scopes granted to the key.
+	Scopes []CreatePrivateRequestScopesItem `json:"scopes" url:"-"`
+	// Positive lifetime in seconds, or null for no expiry.
+	SecondsUntilExpiration *int `json:"secondsUntilExpiration,omitempty" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -108,6 +113,7 @@ var (
 )
 
 type DeletePrivateRequest struct {
+	// Workspace URL slug, using lowercase letters, numbers, and hyphens.
 	WorkspaceSlug string `json:"-" url:"-"`
 	APIKeyID      string `json:"-" url:"-"`
 
@@ -144,6 +150,7 @@ var (
 )
 
 type GetPrivateRequest struct {
+	// Workspace URL slug, using lowercase letters, numbers, and hyphens.
 	WorkspaceSlug string `json:"-" url:"-"`
 	APIKeyID      string `json:"-" url:"-"`
 

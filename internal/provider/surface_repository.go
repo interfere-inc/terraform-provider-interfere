@@ -7,10 +7,10 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/interfere-inc/terraform-provider-interfere/internal/resource_surface_repository"
 	"github.com/interfere-inc/terraform-provider-interfere/internal/sdk/client"
 )
 
@@ -41,15 +41,23 @@ func (r *surfaceRepositoryResource) Configure(_ context.Context, req resource.Co
 	r.client = configured
 }
 
-func (r *surfaceRepositoryResource) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.SchemaResponse) {
-	resp.Schema = schema.Schema{Description: "Manage a surface's repository mapping through an existing integration. Import with workspace-slug/surface-slug. Destroy unlinks the mapping without deleting the surface or integration.", Attributes: map[string]schema.Attribute{
-		"id":                schema.StringAttribute{Computed: true, PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()}},
-		"workspace_slug":    schema.StringAttribute{Required: true, Validators: []validator.String{stringvalidator.RegexMatches(slugPattern, "Must be a workspace slug.")}, PlanModifiers: []planmodifier.String{stringplanmodifier.RequiresReplace()}},
-		"surface_slug":      schema.StringAttribute{Required: true, Validators: []validator.String{stringvalidator.RegexMatches(slugPattern, "Must be a surface slug.")}, PlanModifiers: []planmodifier.String{stringplanmodifier.RequiresReplace()}},
-		"integration_id":    schema.StringAttribute{Required: true, Validators: []validator.String{stringvalidator.LengthAtLeast(1)}},
-		"repository_id":     schema.StringAttribute{Required: true, Validators: []validator.String{stringvalidator.LengthAtLeast(1)}},
-		"working_directory": schema.StringAttribute{Optional: true, Description: "Repository-relative working directory. Omit for the repository root."},
-	}}
+func (r *surfaceRepositoryResource) Schema(ctx context.Context, _ resource.SchemaRequest, resp *resource.SchemaResponse) {
+	resp.Schema = resource_surface_repository.SurfaceRepositoryResourceSchema(ctx)
+	resp.Schema.Description = "Manage a surface's repository mapping through an existing integration. Import with workspace-slug/surface-slug. Destroy unlinks the mapping without deleting the surface or integration."
+	attributes := resp.Schema.Attributes
+	flattenAttributes(attributes, "args")
+	attributes["id"] = stableString(attributes["id"])
+	for _, field := range []string{"workspace_slug", "surface_slug"} {
+		attributes[field] = requiredString(attributes[field], stringplanmodifier.RequiresReplace())
+	}
+	for _, field := range []string{"integration_id", "repository_id"} {
+		attribute := requiredString(attributes[field])
+		attribute.Validators = []validator.String{stringvalidator.LengthAtLeast(1)}
+		attributes[field] = attribute
+	}
+	directory := attributes["working_directory"].(schema.StringAttribute)
+	directory.Computed = false
+	attributes["working_directory"] = directory
 }
 
 func (r *surfaceRepositoryResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {

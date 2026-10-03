@@ -4,8 +4,8 @@ import (
 	"context"
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
-	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/interfere-inc/terraform-provider-interfere/internal/datasource_workspace"
 	"github.com/interfere-inc/terraform-provider-interfere/internal/sdk/client"
 )
 
@@ -28,10 +28,9 @@ func (r *workspaceDataSource) Configure(_ context.Context, req datasource.Config
 	r.client = configured
 }
 
-func (r *workspaceDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
-	resp.Schema = schema.Schema{Description: "Look up an existing workspace without managing its lifecycle.", Attributes: map[string]schema.Attribute{
-		"id": schema.StringAttribute{Computed: true}, "workspace_slug": schema.StringAttribute{Required: true}, "name": schema.StringAttribute{Computed: true}, "data_residency_location": schema.StringAttribute{Computed: true},
-	}}
+func (r *workspaceDataSource) Schema(ctx context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
+	resp.Schema = datasource_workspace.WorkspaceDataSourceSchema(ctx)
+	resp.Schema.Description = "Look up an existing workspace without managing its lifecycle."
 }
 
 func (r *workspaceDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {

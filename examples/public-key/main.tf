@@ -16,15 +16,10 @@ variable "surface_slug" {
   type = string
 }
 
-variable "creation_id" {
-  type = string
-}
-
 resource "interfere_public_key" "browser" {
-  workspace_slug  = var.workspace_slug
-  surface_slug    = var.surface_slug
-  idempotency_key = var.creation_id
-  name            = "Browser"
+  workspace_slug = var.workspace_slug
+  surface_slug   = var.surface_slug
+  name           = "Browser"
 }
 
 output "public_key" {

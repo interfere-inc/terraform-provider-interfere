@@ -616,8 +616,10 @@ var (
 )
 
 type CreateSurfacePublicKeyResponse struct {
+	// Publishable credential for browser SDK configuration.
 	Content string `json:"content" url:"content"`
-	Name    string `json:"name" url:"name"`
+	// Display name of the key.
+	Name string `json:"name" url:"name"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -805,8 +807,9 @@ var (
 )
 
 type CreateWorkspaceAPIKeyResponseAPIKey struct {
-	ID     string `json:"id" url:"id"`
-	Name   string `json:"name" url:"name"`
+	ID   string `json:"id" url:"id"`
+	Name string `json:"name" url:"name"`
+	// Private API credential returned only on creation.
 	Secret string `json:"secret" url:"secret"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -2005,14 +2008,21 @@ var readPrivateKeyResponseNullableFields = map[string]*big.Int{
 }
 
 type ReadPrivateKeyResponse struct {
-	ID                     string                             `json:"id" url:"id"`
-	Version                string                             `json:"version" url:"version"`
-	Name                   string                             `json:"name" url:"name"`
-	SurfaceSlug            *string                            `json:"surfaceSlug,omitempty" url:"surfaceSlug,omitempty"`
-	Scopes                 []ReadPrivateKeyResponseScopesItem `json:"scopes" url:"scopes"`
-	SecondsUntilExpiration *int                               `json:"secondsUntilExpiration,omitempty" url:"secondsUntilExpiration,omitempty"`
-	ExpiresAt              *int                               `json:"expiresAt,omitempty" url:"expiresAt,omitempty"`
-	Revoked                bool                               `json:"revoked" url:"revoked"`
+	// Stable private key identifier.
+	ID string `json:"id" url:"id"`
+	// Identifier of the currently active key version.
+	Version string `json:"version" url:"version"`
+	// Display name of the key.
+	Name string `json:"name" url:"name"`
+	// Surface URL slug, using lowercase letters, numbers, and hyphens.
+	SurfaceSlug *string `json:"surfaceSlug,omitempty" url:"surfaceSlug,omitempty"`
+	// Permission scopes granted to the key.
+	Scopes []ReadPrivateKeyResponseScopesItem `json:"scopes" url:"scopes"`
+	// Positive lifetime in seconds, or null for no expiry.
+	SecondsUntilExpiration *int `json:"secondsUntilExpiration,omitempty" url:"secondsUntilExpiration,omitempty"`
+	// Expiration as Unix milliseconds, or null for no expiry.
+	ExpiresAt *int `json:"expiresAt,omitempty" url:"expiresAt,omitempty"`
+	Revoked   bool `json:"revoked" url:"revoked"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -2298,9 +2308,13 @@ var (
 )
 
 type ReadPublicKeyResponse struct {
-	Content     string `json:"content" url:"content"`
-	Name        string `json:"name" url:"name"`
-	ID          string `json:"id" url:"id"`
+	// Publishable credential for browser SDK configuration.
+	Content string `json:"content" url:"content"`
+	// Display name of the key.
+	Name string `json:"name" url:"name"`
+	// Unique publishable key identifier.
+	ID string `json:"id" url:"id"`
+	// Surface URL slug, using lowercase letters, numbers, and hyphens.
 	SurfaceSlug string `json:"surfaceSlug" url:"surfaceSlug"`
 	Revoked     bool   `json:"revoked" url:"revoked"`
 

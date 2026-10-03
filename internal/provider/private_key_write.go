@@ -3,6 +3,7 @@ package provider
 import (
 	"context"
 	"github.com/interfere-inc/terraform-provider-interfere/internal/sdk/keys"
+	"github.com/interfere-inc/terraform-provider-interfere/internal/sdk/option"
 
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -14,6 +15,7 @@ func (r *privateKeyResource) Create(ctx context.Context, req resource.CreateRequ
 	if resp.Diagnostics.HasError() {
 		return
 	}
+	data.IdempotencyKey = creationIdentity(data.IdempotencyKey)
 	var scopes []string
 	resp.Diagnostics.Append(data.Scopes.ElementsAs(ctx, &scopes, false)...)
 	if resp.Diagnostics.HasError() {
@@ -28,13 +30,13 @@ func (r *privateKeyResource) Create(ctx context.Context, req resource.CreateRequ
 		seconds := int(data.SecondsUntilExpiration.ValueInt64())
 		request.SetSecondsUntilExpiration(&seconds)
 	}
-	created, err := r.client.Keys.Private.Create(ctx, request)
+	created, err := r.client.Keys.Private.Create(ctx, request, option.WithMaxAttempts(3))
 	if err != nil {
-		resp.Diagnostics.AddError("Unable to create private key", apiError(err))
+		resp.Diagnostics.AddError("Unable to create private key", creationError(data.IdempotencyKey, apiError(err)))
 		return
 	}
 	if created == nil || created.APIKey == nil || created.APIKey.ID != data.IdempotencyKey.ValueString() || created.APIKey.Secret == "" {
-		resp.Diagnostics.AddError("Invalid key creation response", "Retry with the same idempotency_key to recover the credential.")
+		resp.Diagnostics.AddError("Invalid key creation response", creationError(data.IdempotencyKey, "The API did not return the expected credential."))
 		return
 	}
 	data.Id = types.StringValue(created.APIKey.ID)

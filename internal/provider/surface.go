@@ -9,6 +9,10 @@ import (
 
 type surfaceResource struct{ client *client.Client }
 
+func (r *surfaceResource) ModifyPlan(ctx context.Context, req resource.ModifyPlanRequest, resp *resource.ModifyPlanResponse) {
+	planCreationIdentity(ctx, req, resp, "type", "workspace_slug")
+}
+
 func NewSurfaceResource() resource.Resource { return &surfaceResource{} }
 
 func (r *surfaceResource) Metadata(_ context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {

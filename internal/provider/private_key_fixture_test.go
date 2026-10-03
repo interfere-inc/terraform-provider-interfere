@@ -18,6 +18,8 @@ type keyFixture struct {
 	creates, deletes int
 	readStatus       int
 	readBody         any
+	createFailures   int
+	createIdentities []string
 }
 
 func newKeyFixture(t *testing.T) *keyFixture {
@@ -56,12 +58,16 @@ func newKeyFixture(t *testing.T) *keyFixture {
 			if _, present := raw["secondsUntilExpiration"]; !present {
 				t.Error("Missing explicit key expiry")
 			}
-			if old := f.keys[body.IdempotencyKey]; old != nil {
+			f.createIdentities = append(f.createIdentities, body.IdempotencyKey)
+			old := f.keys[body.IdempotencyKey]
+			if old != nil && (old["revoked"] == true || old["name"] != body.Name) {
 				w.WriteHeader(409)
 				write(map[string]string{"code": "SURFACE_KEY_CONFLICT"})
 				return
 			}
-			f.creates++
+			if old == nil {
+				f.creates++
+			}
 			var surface any
 			if body.SurfaceSlug != nil {
 				surface = *body.SurfaceSlug
@@ -71,6 +77,12 @@ func newKeyFixture(t *testing.T) *keyFixture {
 				expires = 4000000000000
 			}
 			f.keys[body.IdempotencyKey] = map[string]any{"id": body.IdempotencyKey, "version": "ak_" + body.IdempotencyKey, "name": body.Name, "surfaceSlug": surface, "scopes": body.Scopes, "secondsUntilExpiration": body.SecondsUntilExpiration, "expiresAt": expires, "revoked": false}
+			if f.createFailures > 0 {
+				f.createFailures--
+				w.WriteHeader(http.StatusServiceUnavailable)
+				write(map[string]string{"message": "fixture-secret-must-not-leak"})
+				return
+			}
 			write(map[string]any{"apiKey": map[string]string{"id": body.IdempotencyKey, "name": body.Name, "secret": "fixture-secret-" + body.IdempotencyKey}})
 			return
 		}

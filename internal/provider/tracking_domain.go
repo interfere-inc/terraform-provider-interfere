@@ -4,13 +4,12 @@ import (
 	"context"
 	"strings"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/interfere-inc/terraform-provider-interfere/internal/resource_tracking_domain"
 	"github.com/interfere-inc/terraform-provider-interfere/internal/sdk/client"
 )
 
@@ -42,14 +41,19 @@ func (r *trackingDomainResource) Configure(_ context.Context, req resource.Confi
 	r.client = configured
 }
 
-func (r *trackingDomainResource) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.SchemaResponse) {
-	resp.Schema = schema.Schema{Description: "Manage a workspace tracking hostname. Creation returns while DNS and TLS verification is pending. Configure a DNS-only CNAME to cname_target using your DNS provider. Import with workspace-slug/domain-UUID.", Attributes: map[string]schema.Attribute{
-		"id":              schema.StringAttribute{Computed: true, PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()}},
-		"workspace_slug":  schema.StringAttribute{Required: true, Validators: []validator.String{stringvalidator.RegexMatches(slugPattern, "Must be a workspace slug.")}, PlanModifiers: []planmodifier.String{stringplanmodifier.RequiresReplace()}},
-		"name":            schema.StringAttribute{Required: true, Description: "Lowercase fully qualified tracking hostname, without a trailing dot.", Validators: []validator.String{trackingHostnameValidator{}}, PlanModifiers: []planmodifier.String{stringplanmodifier.RequiresReplace()}},
-		"idempotency_key": schema.StringAttribute{Required: true, Validators: []validator.String{stringvalidator.RegexMatches(uuidPattern, "Must be a UUID."), stringvalidator.NoneOf("00000000-0000-0000-0000-000000000000")}, PlanModifiers: []planmodifier.String{stringplanmodifier.RequiresReplace()}, Description: "UUID for this domain creation. Choose a fresh UUID for replacement or recreation."},
-		"status":          schema.StringAttribute{Computed: true}, "ssl_status": schema.StringAttribute{Computed: true}, "cname_target": schema.StringAttribute{Computed: true},
-	}}
+func (r *trackingDomainResource) Schema(ctx context.Context, _ resource.SchemaRequest, resp *resource.SchemaResponse) {
+	resp.Schema = resource_tracking_domain.TrackingDomainResourceSchema(ctx)
+	resp.Schema.Description = "Manage a workspace tracking hostname. Creation returns while DNS and TLS verification is pending. Configure a DNS-only CNAME to cname_target using your DNS provider. Import with workspace-slug/domain-UUID."
+	attributes := resp.Schema.Attributes
+	attributes["id"] = stableString(attributes["id"])
+	attributes["workspace_slug"] = requiredString(attributes["workspace_slug"], stringplanmodifier.RequiresReplace())
+	name := requiredString(attributes["name"], stringplanmodifier.RequiresReplace())
+	name.Validators = []validator.String{trackingHostnameValidator{}}
+	attributes["name"] = name
+	attributes["ssl_status"] = attributes["domain_metadata"].(schema.SingleNestedAttribute).Attributes["cf_ssl_status"]
+	delete(attributes, "domain_metadata")
+	attributes["cname_target"] = schema.StringAttribute{Computed: true, Description: "DNS-only CNAME target for the tracking hostname."}
+	attributes["idempotency_key"] = creationIdentityAttribute(true)
 }
 
 func (r *trackingDomainResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
@@ -73,19 +77,5 @@ func (r *trackingDomainResource) ImportState(ctx context.Context, req resource.I
 }
 
 func (r *trackingDomainResource) ModifyPlan(ctx context.Context, req resource.ModifyPlanRequest, resp *resource.ModifyPlanResponse) {
-	if req.State.Raw.IsNull() || req.Plan.Raw.IsNull() {
-		return
-	}
-	var state, plan trackingDomainModel
-	resp.Diagnostics.Append(req.State.Get(ctx, &state)...)
-	resp.Diagnostics.Append(req.Plan.Get(ctx, &plan)...)
-	if resp.Diagnostics.HasError() {
-		return
-	}
-	if plan.IdempotencyKey.IsUnknown() || plan.Name.IsUnknown() || plan.WorkspaceSlug.IsUnknown() {
-		return
-	}
-	if plan.IdempotencyKey.Equal(state.IdempotencyKey) && (!plan.Name.Equal(state.Name) || !plan.WorkspaceSlug.Equal(state.WorkspaceSlug)) {
-		resp.Diagnostics.AddError("Replacement needs a new creation UUID", "Choose a new idempotency_key when changing the domain name or workspace.")
-	}
+	planCreationIdentity(ctx, req, resp, "name", "workspace_slug")
 }

@@ -51,7 +51,7 @@ client.Domains.ByIDIncludeDeleted(
 <dl>
 <dd>
 
-**workspaceSlug:** `string` 
+**workspaceSlug:** `string` — Workspace URL slug, using lowercase letters, numbers, and hyphens.
     
 </dd>
 </dl>
@@ -125,7 +125,7 @@ client.Integrations.Installations(
 <dl>
 <dd>
 
-**workspaceSlug:** `string` 
+**workspaceSlug:** `string` — Workspace URL slug, using lowercase letters, numbers, and hyphens.
     
 </dd>
 </dl>
@@ -198,7 +198,7 @@ client.Integrations.LinkSurfaceToDestination(
 <dl>
 <dd>
 
-**workspaceSlug:** `string` 
+**workspaceSlug:** `string` — Workspace URL slug, using lowercase letters, numbers, and hyphens.
     
 </dd>
 </dl>
@@ -271,7 +271,7 @@ client.Integrations.LinkSurfaceToRepository(
 <dl>
 <dd>
 
-**workspaceSlug:** `string` 
+**workspaceSlug:** `string` — Workspace URL slug, using lowercase letters, numbers, and hyphens.
     
 </dd>
 </dl>
@@ -342,7 +342,7 @@ client.Integrations.UnlinkSurfaceDestinationMapping(
 <dl>
 <dd>
 
-**workspaceSlug:** `string` 
+**workspaceSlug:** `string` — Workspace URL slug, using lowercase letters, numbers, and hyphens.
     
 </dd>
 </dl>
@@ -413,7 +413,7 @@ client.Integrations.UnlinkSurfaceMapping(
 <dl>
 <dd>
 
-**workspaceSlug:** `string` 
+**workspaceSlug:** `string` — Workspace URL slug, using lowercase letters, numbers, and hyphens.
     
 </dd>
 </dl>
@@ -482,7 +482,7 @@ client.Workspaces.Current(
 <dl>
 <dd>
 
-**workspaceSlug:** `string` 
+**workspaceSlug:** `string` — Workspace URL slug, using lowercase letters, numbers, and hyphens.
     
 </dd>
 </dl>
@@ -554,7 +554,7 @@ client.Workspaces.AddProxyDomain(
 <dl>
 <dd>
 
-**workspaceSlug:** `string` 
+**workspaceSlug:** `string` — Workspace URL slug, using lowercase letters, numbers, and hyphens.
     
 </dd>
 </dl>
@@ -625,7 +625,7 @@ client.Workspaces.RemoveProxyDomain(
 <dl>
 <dd>
 
-**workspaceSlug:** `string` 
+**workspaceSlug:** `string` — Workspace URL slug, using lowercase letters, numbers, and hyphens.
     
 </dd>
 </dl>
@@ -694,7 +694,7 @@ client.Workspaces.UpdateBasics(
 <dl>
 <dd>
 
-**workspaceSlug:** `string` 
+**workspaceSlug:** `string` — Workspace URL slug, using lowercase letters, numbers, and hyphens.
     
 </dd>
 </dl>
@@ -766,7 +766,7 @@ client.Surfaces.GetBySlugIncludeDeleted(
 <dl>
 <dd>
 
-**workspaceSlug:** `string` 
+**workspaceSlug:** `string` — Workspace URL slug, using lowercase letters, numbers, and hyphens.
     
 </dd>
 </dl>
@@ -837,7 +837,7 @@ client.Surfaces.Delete(
 <dl>
 <dd>
 
-**workspaceSlug:** `string` 
+**workspaceSlug:** `string` — Workspace URL slug, using lowercase letters, numbers, and hyphens.
     
 </dd>
 </dl>
@@ -909,7 +909,7 @@ client.Surfaces.SetAnonymousUserTracking(
 <dl>
 <dd>
 
-**workspaceSlug:** `string` 
+**workspaceSlug:** `string` — Workspace URL slug, using lowercase letters, numbers, and hyphens.
     
 </dd>
 </dl>
@@ -981,7 +981,7 @@ client.Surfaces.UpdateName(
 <dl>
 <dd>
 
-**workspaceSlug:** `string` 
+**workspaceSlug:** `string` — Workspace URL slug, using lowercase letters, numbers, and hyphens.
     
 </dd>
 </dl>
@@ -1057,7 +1057,7 @@ client.Surfaces.CreateSurface(
 <dl>
 <dd>
 
-**workspaceSlug:** `string` 
+**workspaceSlug:** `string` — Workspace URL slug, using lowercase letters, numbers, and hyphens.
     
 </dd>
 </dl>
@@ -1081,7 +1081,7 @@ client.Surfaces.CreateSurface(
 <dl>
 <dd>
 
-**name:** `string` 
+**name:** `string` — Display name of the surface.
     
 </dd>
 </dl>
@@ -1089,7 +1089,7 @@ client.Surfaces.CreateSurface(
 <dl>
 <dd>
 
-**type_:** `sdk.CreateSurfaceRequestType` 
+**type_:** `sdk.CreateSurfaceRequestType` — Application framework used by the surface.
     
 </dd>
 </dl>
@@ -1155,7 +1155,7 @@ client.Keys.Private.Create(
 <dl>
 <dd>
 
-**workspaceSlug:** `string` 
+**workspaceSlug:** `string` — Workspace URL slug, using lowercase letters, numbers, and hyphens.
     
 </dd>
 </dl>
@@ -1163,7 +1163,7 @@ client.Keys.Private.Create(
 <dl>
 <dd>
 
-**surfaceSlug:** `*string` 
+**surfaceSlug:** `*string` — Surface URL slug, using lowercase letters, numbers, and hyphens.
     
 </dd>
 </dl>
@@ -1179,7 +1179,7 @@ client.Keys.Private.Create(
 <dl>
 <dd>
 
-**name:** `string` 
+**name:** `string` — Display name of the key.
     
 </dd>
 </dl>
@@ -1187,7 +1187,7 @@ client.Keys.Private.Create(
 <dl>
 <dd>
 
-**scopes:** `[]keys.CreatePrivateRequestScopesItem` 
+**scopes:** `[]keys.CreatePrivateRequestScopesItem` — Permission scopes granted to the key.
     
 </dd>
 </dl>
@@ -1195,7 +1195,7 @@ client.Keys.Private.Create(
 <dl>
 <dd>
 
-**secondsUntilExpiration:** `*int` 
+**secondsUntilExpiration:** `*int` — Positive lifetime in seconds, or null for no expiry.
     
 </dd>
 </dl>
@@ -1256,7 +1256,7 @@ client.Keys.Private.Get(
 <dl>
 <dd>
 
-**workspaceSlug:** `string` 
+**workspaceSlug:** `string` — Workspace URL slug, using lowercase letters, numbers, and hyphens.
     
 </dd>
 </dl>
@@ -1325,7 +1325,7 @@ client.Keys.Private.Delete(
 <dl>
 <dd>
 
-**workspaceSlug:** `string` 
+**workspaceSlug:** `string` — Workspace URL slug, using lowercase letters, numbers, and hyphens.
     
 </dd>
 </dl>
@@ -1397,7 +1397,7 @@ client.Keys.Public.Create(
 <dl>
 <dd>
 
-**workspaceSlug:** `string` 
+**workspaceSlug:** `string` — Workspace URL slug, using lowercase letters, numbers, and hyphens.
     
 </dd>
 </dl>
@@ -1405,7 +1405,7 @@ client.Keys.Public.Create(
 <dl>
 <dd>
 
-**surfaceSlug:** `string` 
+**surfaceSlug:** `string` — Surface URL slug, using lowercase letters, numbers, and hyphens.
     
 </dd>
 </dl>
@@ -1421,7 +1421,7 @@ client.Keys.Public.Create(
 <dl>
 <dd>
 
-**name:** `string` 
+**name:** `string` — Display name of the key.
     
 </dd>
 </dl>
@@ -1483,7 +1483,7 @@ client.Keys.Public.Get(
 <dl>
 <dd>
 
-**workspaceSlug:** `string` 
+**workspaceSlug:** `string` — Workspace URL slug, using lowercase letters, numbers, and hyphens.
     
 </dd>
 </dl>
@@ -1491,7 +1491,7 @@ client.Keys.Public.Get(
 <dl>
 <dd>
 
-**surfaceSlug:** `string` 
+**surfaceSlug:** `string` — Surface URL slug, using lowercase letters, numbers, and hyphens.
     
 </dd>
 </dl>
@@ -1561,7 +1561,7 @@ client.Keys.Public.Delete(
 <dl>
 <dd>
 
-**workspaceSlug:** `string` 
+**workspaceSlug:** `string` — Workspace URL slug, using lowercase letters, numbers, and hyphens.
     
 </dd>
 </dl>
@@ -1569,7 +1569,7 @@ client.Keys.Public.Delete(
 <dl>
 <dd>
 
-**surfaceSlug:** `string` 
+**surfaceSlug:** `string` — Surface URL slug, using lowercase letters, numbers, and hyphens.
     
 </dd>
 </dl>

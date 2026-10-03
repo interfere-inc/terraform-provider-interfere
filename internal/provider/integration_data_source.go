@@ -6,6 +6,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/interfere-inc/terraform-provider-interfere/internal/datasource_integration"
 	"github.com/interfere-inc/terraform-provider-interfere/internal/sdk"
 	"github.com/interfere-inc/terraform-provider-interfere/internal/sdk/client"
 )
@@ -36,10 +37,21 @@ func (r *integrationDataSource) Configure(_ context.Context, req datasource.Conf
 	r.client = configured
 }
 
-func (r *integrationDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
-	resp.Schema = schema.Schema{Description: "Look up an existing integration without managing its lifecycle.", Attributes: map[string]schema.Attribute{
-		"id": schema.StringAttribute{Computed: true}, "workspace_slug": schema.StringAttribute{Required: true}, "integration_provider": schema.StringAttribute{Required: true, Description: "Installed provider, such as github, ghe_cloud, ghe_server, vercel, cloudflare, slack, or cli."}, "integration_id": schema.StringAttribute{Optional: true, Description: "Select a specific installation when the provider has multiple installations."}, "status": schema.StringAttribute{Computed: true},
-	}}
+func (r *integrationDataSource) Schema(ctx context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
+	resp.Schema = datasource_integration.IntegrationDataSourceSchema(ctx)
+	resp.Schema.Description = "Look up an existing integration without managing its lifecycle."
+	attributes := resp.Schema.Attributes
+	installation := attributes["integration"].(schema.SetNestedAttribute).NestedObject.Attributes
+	attributes["id"], attributes["status"] = installation["id"], installation["status"]
+	provider := installation["provider"].(schema.StringAttribute)
+	provider.Required, provider.Computed = true, false
+	attributes["integration_provider"] = provider
+	selector := installation["id"].(schema.StringAttribute)
+	selector.Optional, selector.Computed = true, false
+	selector.Description += " Select a specific installation when the provider has multiple installations."
+	selector.MarkdownDescription = selector.Description
+	attributes["integration_id"] = selector
+	delete(attributes, "integration")
 }
 
 func (r *integrationDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {

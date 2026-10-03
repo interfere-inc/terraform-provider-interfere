@@ -16,10 +16,13 @@ var (
 )
 
 type CreatePublicRequest struct {
-	WorkspaceSlug  string `json:"-" url:"-"`
+	// Workspace URL slug, using lowercase letters, numbers, and hyphens.
+	WorkspaceSlug string `json:"-" url:"-"`
+	// Surface URL slug, using lowercase letters, numbers, and hyphens.
 	SurfaceSlug    string `json:"-" url:"-"`
 	IdempotencyKey string `json:"idempotencyKey" url:"-"`
-	Name           string `json:"name" url:"-"`
+	// Display name of the key.
+	Name string `json:"name" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -90,9 +93,11 @@ var (
 )
 
 type DeletePublicRequest struct {
+	// Workspace URL slug, using lowercase letters, numbers, and hyphens.
 	WorkspaceSlug string `json:"-" url:"-"`
-	SurfaceSlug   string `json:"-" url:"-"`
-	PublicKeyID   string `json:"-" url:"-"`
+	// Surface URL slug, using lowercase letters, numbers, and hyphens.
+	SurfaceSlug string `json:"-" url:"-"`
+	PublicKeyID string `json:"-" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -135,9 +140,11 @@ var (
 )
 
 type GetPublicRequest struct {
+	// Workspace URL slug, using lowercase letters, numbers, and hyphens.
 	WorkspaceSlug string `json:"-" url:"-"`
-	SurfaceSlug   string `json:"-" url:"-"`
-	PublicKeyID   string `json:"-" url:"-"`
+	// Surface URL slug, using lowercase letters, numbers, and hyphens.
+	SurfaceSlug string `json:"-" url:"-"`
+	PublicKeyID string `json:"-" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`

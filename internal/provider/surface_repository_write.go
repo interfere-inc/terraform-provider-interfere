@@ -17,7 +17,7 @@ func (r *surfaceRepositoryResource) write(ctx context.Context, data *surfaceRepo
 	if remote.DeletedAt != nil {
 		return errors.New("The surface was deleted.")
 	}
-	if creating && (remote.SourceIntegrationID != nil || remote.SourceMappingID != nil || remote.SourceWorkingDirectory != nil) && (remote.SourceIntegrationID == nil || remote.SourceMappingID == nil || *remote.SourceIntegrationID != data.IntegrationID.ValueString() || *remote.SourceMappingID != data.MappingID.ValueString() || types.StringPointerValue(remote.SourceWorkingDirectory) != data.WorkingDirectory) {
+	if creating && remote.SourceIntegrationID != nil && (*remote.SourceIntegrationID != data.IntegrationID.ValueString() || remote.SourceMappingID == nil || *remote.SourceMappingID != data.MappingID.ValueString() || types.StringPointerValue(remote.SourceWorkingDirectory) != data.WorkingDirectory) {
 		return errors.New("The surface already has a different mapping. Import it before changing it.")
 	}
 	result, err := r.client.Integrations.LinkSurfaceToRepository(ctx, &sdk.LinkSurfaceToRepositoryIntegrationsRequest{WorkspaceSlug: data.WorkspaceSlug.ValueString(), Args: &sdk.LinkSurfaceToRepositoryIntegrationsRequestArgs{IntegrationID: data.IntegrationID.ValueString(), SurfaceSlug: data.SurfaceSlug.ValueString(), RepositoryID: data.MappingID.ValueString(), WorkingDirectory: data.WorkingDirectory.ValueStringPointer()}})

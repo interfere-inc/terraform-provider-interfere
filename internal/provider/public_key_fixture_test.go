@@ -19,6 +19,8 @@ type publicKeyFixture struct {
 	readStatus       int
 	readBody         any
 	acknowledge      bool
+	createFailures   int
+	createIdentities []string
 }
 
 func newPublicKeyFixture(t *testing.T) *publicKeyFixture {
@@ -45,6 +47,7 @@ func newPublicKeyFixture(t *testing.T) *publicKeyFixture {
 				t.Error(err)
 				return
 			}
+			f.createIdentities = append(f.createIdentities, body.IdempotencyKey)
 			key := f.keys[body.IdempotencyKey]
 			if key != nil && (key["revoked"] == true || key["name"] != body.Name) {
 				w.WriteHeader(409)
@@ -55,6 +58,12 @@ func newPublicKeyFixture(t *testing.T) *publicKeyFixture {
 				f.creates++
 				key = map[string]any{"id": body.IdempotencyKey, "name": body.Name, "surfaceSlug": "example-surface", "content": "interfere_public_us_" + body.IdempotencyKey, "revoked": false}
 				f.keys[body.IdempotencyKey] = key
+			}
+			if f.createFailures > 0 {
+				f.createFailures--
+				w.WriteHeader(http.StatusServiceUnavailable)
+				write(map[string]string{"message": "fixture-secret-must-not-leak"})
+				return
 			}
 			write(map[string]any{"content": key["content"], "name": key["name"]})
 			return
