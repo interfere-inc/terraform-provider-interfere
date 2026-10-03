@@ -7,6 +7,8 @@ import (
 	"strings"
 	"sync"
 	"testing"
+
+	"github.com/google/uuid"
 )
 
 type configFixture struct {
@@ -18,11 +20,13 @@ type configFixture struct {
 	readStatus                                          int
 	acknowledge                                         bool
 	integrations                                        []map[string]any
+	domainID, domainName                                string
+	domainIdentities                                    []string
 }
 
 func newConfigFixture(t *testing.T) *configFixture {
 	t.Helper()
-	f := &configFixture{acknowledge: true, domainStatus: "pending", integrations: []map[string]any{{"id": "integration-1", "provider": "github", "status": "connected"}}}
+	f := &configFixture{acknowledge: true, domainID: attemptID, domainName: "track.example.com", domainStatus: "pending", integrations: []map[string]any{{"id": "integration-1", "provider": "github", "status": "connected"}}}
 	f.server = httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		f.mu.Lock()
 		defer f.mu.Unlock()
@@ -60,7 +64,7 @@ func newConfigFixture(t *testing.T) *configFixture {
 			},
 			"queries/integrations.installations": func() { write(f.integrations) },
 			"queries/domains.byIdIncludeDeleted": func() {
-				if body.Args["domainId"] != attemptID {
+				if body.Args["domainId"] != f.domainID {
 					t.Error("Wrong domain identity")
 				}
 				if !f.domain {
@@ -71,7 +75,7 @@ func newConfigFixture(t *testing.T) *configFixture {
 				if f.domainDeleted {
 					deleted = 1234
 				}
-				write(map[string]any{"id": attemptID, "name": "track.example.com", "type": "proxy", "deletedAt": deleted, "status": f.domainStatus, "domainMetadata": map[string]any{"cfHostnameId": "cf-domain", "cfSslStatus": f.domainStatus, "lastError": nil}})
+				write(map[string]any{"id": f.domainID, "name": f.domainName, "type": "proxy", "deletedAt": deleted, "status": f.domainStatus, "domainMetadata": map[string]any{"cfHostnameId": "cf-domain", "cfSslStatus": f.domainStatus, "lastError": nil}})
 			},
 			"actions/integrations.linkSurfaceToRepository": func() {
 				if f.acknowledge {
@@ -104,17 +108,21 @@ func newConfigFixture(t *testing.T) *configFixture {
 				write(map[string]any{"success": f.acknowledge})
 			},
 			"actions/organizations.addProxyDomain": func() {
-				if body.Args["id"] != attemptID || body.Args["name"] != "track.example.com" {
+				id, ok := body.Args["id"].(string)
+				if _, err := uuid.Parse(id); err != nil || !ok {
 					t.Error("Wrong domain creation")
 				}
 				if f.acknowledge {
+					f.domainID = id
+					f.domainName = body.Args["name"].(string)
+					f.domainIdentities = append(f.domainIdentities, id)
 					f.domain = true
 					f.domainDeleted = false
 				}
 				write(map[string]any{"success": f.acknowledge})
 			},
 			"actions/organizations.removeProxyDomain": func() {
-				if body.Args["name"] != "track.example.com" || body.Args["id"] != attemptID {
+				if body.Args["name"] != f.domainName || body.Args["id"] != f.domainID {
 					t.Error("Wrong domain removal")
 				}
 				if f.acknowledge {

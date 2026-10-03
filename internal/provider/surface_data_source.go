@@ -6,6 +6,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/interfere-inc/terraform-provider-interfere/internal/datasource_surface"
 	"github.com/interfere-inc/terraform-provider-interfere/internal/sdk/client"
 )
 
@@ -36,10 +37,12 @@ func (r *surfaceDataSource) Configure(_ context.Context, req datasource.Configur
 	r.client = configured
 }
 
-func (r *surfaceDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
-	resp.Schema = schema.Schema{Description: "Look up an existing surface without managing its lifecycle.", Attributes: map[string]schema.Attribute{
-		"id": schema.StringAttribute{Computed: true}, "workspace_slug": schema.StringAttribute{Required: true}, "slug": schema.StringAttribute{Required: true}, "name": schema.StringAttribute{Computed: true}, "type": schema.StringAttribute{Computed: true}, "anonymous_user_tracking": schema.BoolAttribute{Computed: true},
-	}}
+func (r *surfaceDataSource) Schema(ctx context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
+	resp.Schema = datasource_surface.SurfaceDataSourceSchema(ctx)
+	resp.Schema.Description = "Look up an existing surface without managing its lifecycle."
+	slug := resp.Schema.Attributes["slug"].(schema.StringAttribute)
+	slug.Required, slug.Computed = true, false
+	resp.Schema.Attributes["slug"] = slug
 }
 
 func (r *surfaceDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {

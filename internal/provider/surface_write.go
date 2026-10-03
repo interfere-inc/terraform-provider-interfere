@@ -6,6 +6,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/interfere-inc/terraform-provider-interfere/internal/sdk"
+	"github.com/interfere-inc/terraform-provider-interfere/internal/sdk/option"
 )
 
 func (r *surfaceResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
@@ -14,6 +15,7 @@ func (r *surfaceResource) Create(ctx context.Context, req resource.CreateRequest
 	if resp.Diagnostics.HasError() {
 		return
 	}
+	data.IdempotencyKey = creationIdentity(data.IdempotencyKey)
 	grants := &sdk.CreateSurfaceRequestAPIKey{Scopes: []sdk.CreateSurfaceRequestAPIKeyScopesItem{sdk.CreateSurfaceRequestAPIKeyScopesItemReleaseWrite}}
 	grants.SetSecondsUntilExpiration(nil)
 	created, err := r.client.Surfaces.CreateSurface(ctx, &sdk.CreateSurfaceRequest{
@@ -22,13 +24,13 @@ func (r *surfaceResource) Create(ctx context.Context, req resource.CreateRequest
 		IdempotencyKey: data.IdempotencyKey.ValueString(),
 		Name:           data.Name.ValueString(),
 		Type:           sdk.CreateSurfaceRequestType(data.Type.ValueString()),
-	})
+	}, option.WithMaxAttempts(3))
 	if err != nil {
-		resp.Diagnostics.AddError("Unable to create surface", apiError(err))
+		resp.Diagnostics.AddError("Unable to create surface", creationError(data.IdempotencyKey, apiError(err)))
 		return
 	}
 	if created == nil || created.Surface == nil || created.Surface.ID == "" || created.Surface.Slug == "" {
-		resp.Diagnostics.AddError("Invalid creation response", "The API did not return a surface identity. Retry with the same idempotency_key to recover the creation result.")
+		resp.Diagnostics.AddError("Invalid creation response", creationError(data.IdempotencyKey, "The API did not return a surface identity."))
 		return
 	}
 	data.Id = types.StringValue(created.Surface.ID)

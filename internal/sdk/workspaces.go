@@ -15,6 +15,7 @@ var (
 )
 
 type AddProxyDomainWorkspacesRequest struct {
+	// Workspace URL slug, using lowercase letters, numbers, and hyphens.
 	WorkspaceSlug string                               `json:"-" url:"-"`
 	Args          *AddProxyDomainWorkspacesRequestArgs `json:"args" url:"-"`
 
@@ -72,6 +73,7 @@ var (
 )
 
 type CurrentWorkspacesRequest struct {
+	// Workspace URL slug, using lowercase letters, numbers, and hyphens.
 	WorkspaceSlug string         `json:"-" url:"-"`
 	Args          map[string]any `json:"args,omitempty" url:"-"`
 
@@ -129,6 +131,7 @@ var (
 )
 
 type RemoveProxyDomainWorkspacesRequest struct {
+	// Workspace URL slug, using lowercase letters, numbers, and hyphens.
 	WorkspaceSlug string                                  `json:"-" url:"-"`
 	Args          *RemoveProxyDomainWorkspacesRequestArgs `json:"args" url:"-"`
 
@@ -446,9 +449,13 @@ var (
 )
 
 type QueryOrganizationsCurrentResponse struct {
-	ID                    string                                                 `json:"id" url:"id"`
-	Name                  string                                                 `json:"name" url:"name"`
-	Slug                  string                                                 `json:"slug" url:"slug"`
+	// Unique workspace identifier.
+	ID string `json:"id" url:"id"`
+	// Display name of the workspace.
+	Name string `json:"name" url:"name"`
+	// Workspace URL slug, using lowercase letters, numbers, and hyphens.
+	Slug string `json:"slug" url:"slug"`
+	// Region where workspace data is stored. Set when the workspace is created.
 	DataResidencyLocation QueryOrganizationsCurrentResponseDataResidencyLocation `json:"dataResidencyLocation" url:"dataResidencyLocation"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -577,6 +584,7 @@ func (q *QueryOrganizationsCurrentResponse) String() string {
 	return fmt.Sprintf("%#v", q)
 }
 
+// Region where workspace data is stored. Set when the workspace is created.
 type QueryOrganizationsCurrentResponseDataResidencyLocation string
 
 const (
@@ -605,7 +613,9 @@ var (
 )
 
 type AddProxyDomainWorkspacesRequestArgs struct {
-	ID   string `json:"id" url:"id"`
+	// Unique tracking domain identifier.
+	ID string `json:"id" url:"id"`
+	// Lowercase fully qualified tracking hostname, without a trailing dot.
 	Name string `json:"name" url:"name"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -810,6 +820,7 @@ var (
 
 type UpdateBasicsWorkspacesRequestArgs struct {
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
+	// Workspace URL slug, using lowercase letters, numbers, and hyphens.
 	Slug *string `json:"slug,omitempty" url:"slug,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -911,6 +922,7 @@ var (
 )
 
 type UpdateBasicsWorkspacesRequest struct {
+	// Workspace URL slug, using lowercase letters, numbers, and hyphens.
 	WorkspaceSlug string                             `json:"-" url:"-"`
 	Args          *UpdateBasicsWorkspacesRequestArgs `json:"args" url:"-"`
 

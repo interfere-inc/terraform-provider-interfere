@@ -15,6 +15,7 @@ var (
 )
 
 type InstallationsIntegrationsRequest struct {
+	// Workspace URL slug, using lowercase letters, numbers, and hyphens.
 	WorkspaceSlug string                                `json:"-" url:"-"`
 	Args          *InstallationsIntegrationsRequestArgs `json:"args" url:"-"`
 
@@ -72,6 +73,7 @@ var (
 )
 
 type LinkSurfaceToDestinationIntegrationsRequest struct {
+	// Workspace URL slug, using lowercase letters, numbers, and hyphens.
 	WorkspaceSlug string                                           `json:"-" url:"-"`
 	Args          *LinkSurfaceToDestinationIntegrationsRequestArgs `json:"args" url:"-"`
 
@@ -129,6 +131,7 @@ var (
 )
 
 type LinkSurfaceToRepositoryIntegrationsRequest struct {
+	// Workspace URL slug, using lowercase letters, numbers, and hyphens.
 	WorkspaceSlug string                                          `json:"-" url:"-"`
 	Args          *LinkSurfaceToRepositoryIntegrationsRequestArgs `json:"args" url:"-"`
 
@@ -533,9 +536,12 @@ var (
 )
 
 type QueryIntegrationsInstallationsResponseItem struct {
-	ID       string                                             `json:"id" url:"id"`
+	// Unique integration installation identifier.
+	ID string `json:"id" url:"id"`
+	// Installed integration provider.
 	Provider QueryIntegrationsInstallationsResponseItemProvider `json:"provider" url:"provider"`
-	Status   string                                             `json:"status" url:"status"`
+	// Current integration installation status.
+	Status string `json:"status" url:"status"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -649,6 +655,7 @@ func (q *QueryIntegrationsInstallationsResponseItem) String() string {
 	return fmt.Sprintf("%#v", q)
 }
 
+// Installed integration provider.
 type QueryIntegrationsInstallationsResponseItemProvider string
 
 const (
@@ -816,9 +823,12 @@ var (
 )
 
 type LinkSurfaceToDestinationIntegrationsRequestArgs struct {
+	// Identifier of the existing integration installation.
 	IntegrationID string `json:"integrationId" url:"integrationId"`
-	ProjectID     string `json:"projectId" url:"projectId"`
-	SurfaceSlug   string `json:"surfaceSlug" url:"surfaceSlug"`
+	// Destination project identifier exposed by the integration.
+	ProjectID string `json:"projectId" url:"projectId"`
+	// Surface URL slug, using lowercase letters, numbers, and hyphens.
+	SurfaceSlug string `json:"surfaceSlug" url:"surfaceSlug"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -940,9 +950,13 @@ var linkSurfaceToRepositoryIntegrationsRequestArgsNullableFields = map[string]*b
 }
 
 type LinkSurfaceToRepositoryIntegrationsRequestArgs struct {
-	IntegrationID    string  `json:"integrationId" url:"integrationId"`
-	RepositoryID     string  `json:"repositoryId" url:"repositoryId"`
-	SurfaceSlug      string  `json:"surfaceSlug" url:"surfaceSlug"`
+	// Identifier of the existing integration installation.
+	IntegrationID string `json:"integrationId" url:"integrationId"`
+	// Repository identifier exposed by the integration.
+	RepositoryID string `json:"repositoryId" url:"repositoryId"`
+	// Surface URL slug, using lowercase letters, numbers, and hyphens.
+	SurfaceSlug string `json:"surfaceSlug" url:"surfaceSlug"`
+	// Repository-relative working directory. Omit for the repository root.
 	WorkingDirectory *string `json:"workingDirectory,omitempty" url:"workingDirectory,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -1078,6 +1092,7 @@ var (
 )
 
 type UnlinkSurfaceDestinationMappingIntegrationsRequestArgs struct {
+	// Surface URL slug, using lowercase letters, numbers, and hyphens.
 	SurfaceSlug string `json:"surfaceSlug" url:"surfaceSlug"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -1164,6 +1179,7 @@ var (
 )
 
 type UnlinkSurfaceMappingIntegrationsRequestArgs struct {
+	// Surface URL slug, using lowercase letters, numbers, and hyphens.
 	SurfaceSlug string `json:"surfaceSlug" url:"surfaceSlug"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -1251,6 +1267,7 @@ var (
 )
 
 type UnlinkSurfaceDestinationMappingIntegrationsRequest struct {
+	// Workspace URL slug, using lowercase letters, numbers, and hyphens.
 	WorkspaceSlug string                                                  `json:"-" url:"-"`
 	Args          *UnlinkSurfaceDestinationMappingIntegrationsRequestArgs `json:"args" url:"-"`
 
@@ -1308,6 +1325,7 @@ var (
 )
 
 type UnlinkSurfaceMappingIntegrationsRequest struct {
+	// Workspace URL slug, using lowercase letters, numbers, and hyphens.
 	WorkspaceSlug string                                       `json:"-" url:"-"`
 	Args          *UnlinkSurfaceMappingIntegrationsRequestArgs `json:"args" url:"-"`
 

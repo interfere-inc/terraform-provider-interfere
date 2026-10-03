@@ -24,7 +24,7 @@ jobs:
         with:
           terraform_version: "1.16.4"
           terraform_wrapper: false
-      - run: make build test check
+      - run: make build test check check-generated
       - name: Import signing key
         uses: crazy-max/ghaction-import-gpg@2dc316deee8e90f13e1a351ab510b4d5bc0c82cd
         id: signing

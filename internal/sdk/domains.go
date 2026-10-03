@@ -15,6 +15,7 @@ var (
 )
 
 type ByIDIncludeDeletedDomainsRequest struct {
+	// Workspace URL slug, using lowercase letters, numbers, and hyphens.
 	WorkspaceSlug string                                `json:"-" url:"-"`
 	Args          *ByIDIncludeDeletedDomainsRequestArgs `json:"args" url:"-"`
 
@@ -84,9 +85,12 @@ var queryDomainsByIDIncludeDeletedResponseNullableFields = map[string]*big.Int{
 }
 
 type QueryDomainsByIDIncludeDeletedResponse struct {
-	ID             string                                                `json:"id" url:"id"`
-	Name           string                                                `json:"name" url:"name"`
-	Type           *string                                               `json:"type,omitempty" url:"type,omitempty"`
+	// Unique tracking domain identifier.
+	ID string `json:"id" url:"id"`
+	// Lowercase fully qualified tracking hostname, without a trailing dot.
+	Name string  `json:"name" url:"name"`
+	Type *string `json:"type,omitempty" url:"type,omitempty"`
+	// Current hostname verification status.
 	Status         *QueryDomainsByIDIncludeDeletedResponseStatus         `json:"status,omitempty" url:"status,omitempty"`
 	DeletedAt      *float64                                              `json:"deletedAt,omitempty" url:"deletedAt,omitempty"`
 	DomainMetadata *QueryDomainsByIDIncludeDeletedResponseDomainMetadata `json:"domainMetadata,omitempty" url:"domainMetadata,omitempty"`
@@ -261,10 +265,11 @@ var queryDomainsByIDIncludeDeletedResponseDomainMetadataNullableFields = map[str
 }
 
 type QueryDomainsByIDIncludeDeletedResponseDomainMetadata struct {
-	CfHostnameID string                                                        `json:"cfHostnameId" url:"cfHostnameId"`
-	CfSslStatus  *string                                                       `json:"cfSslStatus,omitempty" url:"cfSslStatus,omitempty"`
-	LastError    *string                                                       `json:"lastError,omitempty" url:"lastError,omitempty"`
-	Provider     *QueryDomainsByIDIncludeDeletedResponseDomainMetadataProvider `json:"provider,omitempty" url:"provider,omitempty"`
+	CfHostnameID string `json:"cfHostnameId" url:"cfHostnameId"`
+	// Current TLS certificate provisioning status.
+	CfSslStatus *string                                                       `json:"cfSslStatus,omitempty" url:"cfSslStatus,omitempty"`
+	LastError   *string                                                       `json:"lastError,omitempty" url:"lastError,omitempty"`
+	Provider    *QueryDomainsByIDIncludeDeletedResponseDomainMetadataProvider `json:"provider,omitempty" url:"provider,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -434,6 +439,7 @@ func (q QueryDomainsByIDIncludeDeletedResponseDomainMetadataProvider) Ptr() *Que
 	return &q
 }
 
+// Current hostname verification status.
 type QueryDomainsByIDIncludeDeletedResponseStatus string
 
 const (

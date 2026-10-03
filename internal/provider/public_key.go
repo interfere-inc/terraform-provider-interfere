@@ -6,21 +6,13 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/interfere-inc/terraform-provider-interfere/internal/resource_public_key"
 	"github.com/interfere-inc/terraform-provider-interfere/internal/sdk/client"
 )
 
-type publicKeyModel struct {
-	Id             types.String `tfsdk:"id"`
-	IdempotencyKey types.String `tfsdk:"idempotency_key"`
-	WorkspaceSlug  types.String `tfsdk:"workspace_slug"`
-	SurfaceSlug    types.String `tfsdk:"surface_slug"`
-	Name           types.String `tfsdk:"name"`
-	Content        types.String `tfsdk:"content"`
-}
+type publicKeyModel = resource_public_key.PublicKeyModel
 
 type publicKeyResource struct{ client *client.Client }
 
@@ -30,18 +22,18 @@ func (r *publicKeyResource) Metadata(_ context.Context, req resource.MetadataReq
 	resp.TypeName = req.ProviderTypeName + "_public_key"
 }
 
-func (r *publicKeyResource) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.SchemaResponse) {
-	resp.Schema = schema.Schema{
-		Description: "Manage a surface's publishable key. Configuration changes replace the key and require a fresh idempotency_key. Import using workspace-slug/surface-slug/key-uuid. External rotation refreshes content; destruction revokes the key and its rotation grace-period values.",
-		Attributes: map[string]schema.Attribute{
-			"id":              schema.StringAttribute{Computed: true, PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()}},
-			"content":         schema.StringAttribute{Computed: true, Description: "Publishable credential for browser SDK configuration."},
-			"name":            schema.StringAttribute{Required: true, Validators: []validator.String{stringvalidator.LengthBetween(1, 64)}, PlanModifiers: []planmodifier.String{stringplanmodifier.RequiresReplace()}},
-			"workspace_slug":  schema.StringAttribute{Required: true, Validators: []validator.String{stringvalidator.RegexMatches(slugPattern, "Must be a workspace slug.")}, PlanModifiers: []planmodifier.String{stringplanmodifier.RequiresReplace()}},
-			"surface_slug":    schema.StringAttribute{Required: true, Validators: []validator.String{stringvalidator.RegexMatches(slugPattern, "Must be a surface slug.")}, PlanModifiers: []planmodifier.String{stringplanmodifier.RequiresReplace()}},
-			"idempotency_key": schema.StringAttribute{Required: true, Validators: []validator.String{stringvalidator.RegexMatches(uuidPattern, "Must be a UUID."), stringvalidator.NoneOf("00000000-0000-0000-0000-000000000000")}, PlanModifiers: []planmodifier.String{stringplanmodifier.RequiresReplace()}},
-		},
+func (r *publicKeyResource) Schema(ctx context.Context, _ resource.SchemaRequest, resp *resource.SchemaResponse) {
+	resp.Schema = resource_public_key.PublicKeyResourceSchema(ctx)
+	resp.Schema.Description = "Manage a surface's publishable key. Configuration changes replace the key. Creation UUIDs are generated automatically unless explicitly configured. Import using workspace-slug/surface-slug/key-uuid. External rotation refreshes content; destruction revokes the key and its rotation grace-period values."
+	attributes := resp.Schema.Attributes
+	attributes["id"] = stableString(attributes["id"])
+	for _, field := range []string{"name", "workspace_slug", "surface_slug"} {
+		attributes[field] = requiredString(attributes[field], stringplanmodifier.RequiresReplace())
 	}
+	slug := attributes["surface_slug"].(schema.StringAttribute)
+	slug.Validators = []validator.String{stringvalidator.RegexMatches(slugPattern, "Must be a surface slug.")}
+	attributes["surface_slug"] = slug
+	attributes["idempotency_key"] = creationIdentityAttribute(true)
 }
 
 func (r *publicKeyResource) Configure(_ context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse) {
@@ -61,16 +53,5 @@ func (r *publicKeyResource) Update(_ context.Context, _ resource.UpdateRequest, 
 }
 
 func (r *publicKeyResource) ModifyPlan(ctx context.Context, req resource.ModifyPlanRequest, resp *resource.ModifyPlanResponse) {
-	if req.State.Raw.IsNull() || req.Plan.Raw.IsNull() {
-		return
-	}
-	var prior, planned publicKeyModel
-	resp.Diagnostics.Append(req.State.Get(ctx, &prior)...)
-	resp.Diagnostics.Append(req.Plan.Get(ctx, &planned)...)
-	if resp.Diagnostics.HasError() || planned.IdempotencyKey.IsUnknown() || !prior.IdempotencyKey.Equal(planned.IdempotencyKey) {
-		return
-	}
-	if !prior.Name.Equal(planned.Name) || !prior.SurfaceSlug.Equal(planned.SurfaceSlug) || !prior.WorkspaceSlug.Equal(planned.WorkspaceSlug) {
-		resp.Diagnostics.AddError("New key creation identity required", "Changing public-key configuration replaces the key. Set idempotency_key to a fresh UUID before applying.")
-	}
+	planCreationIdentity(ctx, req, resp, "name", "surface_slug", "workspace_slug")
 }

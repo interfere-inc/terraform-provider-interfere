@@ -17,7 +17,7 @@ func (r *surfaceDestinationResource) write(ctx context.Context, data *surfaceDes
 	if remote.DeletedAt != nil {
 		return errors.New("The surface was deleted.")
 	}
-	if creating && (remote.DestinationIntegrationID != nil || remote.DestinationMappingID != nil) && (remote.DestinationIntegrationID == nil || remote.DestinationMappingID == nil || *remote.DestinationIntegrationID != data.IntegrationID.ValueString() || *remote.DestinationMappingID != data.MappingID.ValueString()) {
+	if creating && remote.DestinationIntegrationID != nil && (*remote.DestinationIntegrationID != data.IntegrationID.ValueString() || remote.DestinationMappingID == nil || *remote.DestinationMappingID != data.MappingID.ValueString()) {
 		return errors.New("The surface already has a different mapping. Import it before changing it.")
 	}
 	result, err := r.client.Integrations.LinkSurfaceToDestination(ctx, &sdk.LinkSurfaceToDestinationIntegrationsRequest{WorkspaceSlug: data.WorkspaceSlug.ValueString(), Args: &sdk.LinkSurfaceToDestinationIntegrationsRequestArgs{IntegrationID: data.IntegrationID.ValueString(), SurfaceSlug: data.SurfaceSlug.ValueString(), ProjectID: data.MappingID.ValueString()}})

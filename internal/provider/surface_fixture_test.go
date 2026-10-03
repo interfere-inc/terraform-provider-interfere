@@ -7,6 +7,7 @@ import (
 	"sync"
 	"testing"
 
+	"github.com/google/uuid"
 	"github.com/interfere-inc/terraform-provider-interfere/internal/sdk"
 )
 
@@ -15,21 +16,21 @@ const attemptID = "0f92eedc-cad4-46c4-8d2e-5f1bc4d61fe0"
 const surfaceSlug = "example-surface"
 
 type surfaceFixture struct {
-	mu                        sync.Mutex
-	server                    *httptest.Server
-	name                      string
-	deleted                   bool
-	tracking                  bool
-	creates, updates, deletes int
-	readBody                  any
-	readStatus                int
-	writeStatus               int
-	acknowledge               bool
+	mu                             sync.Mutex
+	server                         *httptest.Server
+	name, surfaceType              string
+	deleted                        bool
+	tracking                       bool
+	creates, updates, deletes      int
+	readBody                       any
+	readStatus, writeStatus        int
+	acknowledge, automaticIdentity bool
+	createIdentities               []string
 }
 
 func newSurfaceFixture(t *testing.T) *surfaceFixture {
 	t.Helper()
-	f := &surfaceFixture{name: "Example", acknowledge: true, tracking: true}
+	f := &surfaceFixture{name: "Example", acknowledge: true, tracking: true, surfaceType: "react"}
 	f.server = httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		f.mu.Lock()
 		defer f.mu.Unlock()
@@ -51,9 +52,10 @@ func newSurfaceFixture(t *testing.T) *surfaceFixture {
 				if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
 					t.Error(err)
 				}
-				if body.IdempotencyKey != attemptID {
+				if _, err := uuid.Parse(body.IdempotencyKey); err != nil || (!f.automaticIdentity && body.IdempotencyKey != attemptID) {
 					t.Errorf("Unexpected creation identity: %s", body.IdempotencyKey)
 				}
+				f.createIdentities = append(f.createIdentities, body.IdempotencyKey)
 				if body.APIKey == nil || len(body.APIKey.Scopes) != 1 || body.APIKey.Scopes[0] != sdk.CreateSurfaceRequestAPIKeyScopesItemReleaseWrite {
 					t.Error("Expected explicit release-only creation grants")
 					w.WriteHeader(http.StatusBadRequest)
@@ -71,7 +73,7 @@ func newSurfaceFixture(t *testing.T) *surfaceFixture {
 					write(map[string]any{"message": "secret-fixture-token", "status": f.writeStatus})
 					return
 				}
-				f.name, f.deleted = body.Name, false
+				f.name, f.deleted, f.surfaceType = body.Name, false, string(body.Type)
 				write(map[string]any{
 					"surface":   map[string]any{"id": surfaceID, "slug": surfaceSlug, "name": f.name, "type": string(body.Type)},
 					"apiKey":    map[string]any{"id": "key", "name": "Default", "secret": "must-not-enter-state"},
@@ -99,7 +101,7 @@ func newSurfaceFixture(t *testing.T) *surfaceFixture {
 				if f.deleted {
 					deletedAt = 1234567890
 				}
-				write(map[string]any{"id": surfaceID, "slug": surfaceSlug, "name": f.name, "type": "react", "deletedAt": deletedAt, "anonymousUserTracking": f.tracking, "sourceIntegrationId": nil, "sourceMappingId": nil, "sourceWorkingDirectory": nil, "destinationIntegrationId": nil, "destinationMappingId": nil})
+				write(map[string]any{"id": surfaceID, "slug": surfaceSlug, "name": f.name, "type": f.surfaceType, "deletedAt": deletedAt, "anonymousUserTracking": f.tracking, "sourceIntegrationId": nil, "sourceMappingId": nil, "sourceWorkingDirectory": nil, "destinationIntegrationId": nil, "destinationMappingId": nil})
 			},
 			"/v3/workspaces/example/actions/surfaces.setAnonymousUserTracking": func() {
 				var body sdk.SetAnonymousUserTrackingSurfacesRequest

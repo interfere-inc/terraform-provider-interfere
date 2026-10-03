@@ -1,0 +1,121 @@
+provider:
+  name: interfere
+resources:
+  workspace:
+    create:
+      path: /v3/workspaces/{workspaceSlug}/actions/organizations.updateBasics
+      method: POST
+    read: &workspace_read
+      path: /v3/workspaces/{workspaceSlug}/queries/organizations.current
+      method: POST
+    schema:
+      ignores: [args, success, slug]
+  surface:
+    create:
+      path: /v3/workspaces/{workspaceSlug}/surfaces
+      method: POST
+    read: &surface_read
+      path: /v3/workspaces/{workspaceSlug}/queries/surfaces.getBySlugIncludeDeleted
+      method: POST
+    schema:
+      ignores:
+        [
+          apiKey,
+          publicKey,
+          surface,
+          deletedAt,
+          sourceIntegrationId,
+          sourceMappingId,
+          sourceWorkingDirectory,
+          destinationIntegrationId,
+          destinationMappingId,
+        ]
+  private_key:
+    create:
+      path: /v3/workspaces/{workspaceSlug}/api-keys
+      method: POST
+    read:
+      path: /v3/workspaces/{workspaceSlug}/api-keys/{apiKeyId}
+      method: GET
+    schema:
+      ignores: [revoked, apiKey.id, apiKey.name]
+      attributes:
+        aliases:
+          apiKeyId: id
+  public_key:
+    create:
+      path: /v3/workspaces/{workspaceSlug}/surfaces/{surfaceSlug}/publicKeys
+      method: POST
+    read:
+      path: /v3/workspaces/{workspaceSlug}/surfaces/{surfaceSlug}/publicKeys/{publicKeyId}
+      method: GET
+    schema:
+      ignores: [revoked]
+      attributes:
+        aliases:
+          publicKeyId: id
+  surface_repository:
+    create:
+      path: /v3/workspaces/{workspaceSlug}/actions/integrations.linkSurfaceToRepository
+      method: POST
+    read: *surface_read
+    schema: &mapping_schema
+      ignores:
+        [
+          success,
+          name,
+          slug,
+          type,
+          anonymousUserTracking,
+          deletedAt,
+          sourceIntegrationId,
+          sourceMappingId,
+          sourceWorkingDirectory,
+          destinationIntegrationId,
+          destinationMappingId,
+        ]
+  surface_destination:
+    create:
+      path: /v3/workspaces/{workspaceSlug}/actions/integrations.linkSurfaceToDestination
+      method: POST
+    read: *surface_read
+    schema: *mapping_schema
+  tracking_domain:
+    create:
+      path: /v3/workspaces/{workspaceSlug}/actions/organizations.addProxyDomain
+      method: POST
+    read:
+      path: /v3/workspaces/{workspaceSlug}/queries/domains.byIdIncludeDeleted
+      method: POST
+    schema:
+      ignores:
+        [
+          args,
+          success,
+          type,
+          deletedAt,
+          domainMetadata.cfHostnameId,
+          domainMetadata.lastError,
+          domainMetadata.provider,
+        ]
+data_sources:
+  workspace:
+    read: *workspace_read
+    schema:
+      ignores: [slug]
+  surface:
+    read: *surface_read
+    schema:
+      ignores:
+        [
+          deletedAt,
+          sourceIntegrationId,
+          sourceMappingId,
+          sourceWorkingDirectory,
+          destinationIntegrationId,
+          destinationMappingId,
+        ]
+  integration:
+    read:
+      path: /v3/workspaces/{workspaceSlug}/queries/integrations.installations
+      method: POST

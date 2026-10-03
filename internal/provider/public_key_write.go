@@ -7,6 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/interfere-inc/terraform-provider-interfere/internal/sdk/keys"
+	"github.com/interfere-inc/terraform-provider-interfere/internal/sdk/option"
 )
 
 func (r *publicKeyResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
@@ -15,13 +16,14 @@ func (r *publicKeyResource) Create(ctx context.Context, req resource.CreateReque
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	created, err := r.client.Keys.Public.Create(ctx, &keys.CreatePublicRequest{WorkspaceSlug: data.WorkspaceSlug.ValueString(), SurfaceSlug: data.SurfaceSlug.ValueString(), IdempotencyKey: data.IdempotencyKey.ValueString(), Name: data.Name.ValueString()})
+	data.IdempotencyKey = creationIdentity(data.IdempotencyKey)
+	created, err := r.client.Keys.Public.Create(ctx, &keys.CreatePublicRequest{WorkspaceSlug: data.WorkspaceSlug.ValueString(), SurfaceSlug: data.SurfaceSlug.ValueString(), IdempotencyKey: data.IdempotencyKey.ValueString(), Name: data.Name.ValueString()}, option.WithMaxAttempts(3))
 	if err != nil {
-		resp.Diagnostics.AddError("Unable to create public key", apiError(err))
+		resp.Diagnostics.AddError("Unable to create public key", creationError(data.IdempotencyKey, apiError(err)))
 		return
 	}
 	if created == nil || created.Content == "" || created.Name != data.Name.ValueString() {
-		resp.Diagnostics.AddError("Invalid key creation response", "Retry with the same idempotency_key to recover the credential.")
+		resp.Diagnostics.AddError("Invalid key creation response", creationError(data.IdempotencyKey, "The API did not return the expected credential."))
 		return
 	}
 	data.Id = data.IdempotencyKey
