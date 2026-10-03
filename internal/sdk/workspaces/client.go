@@ -62,6 +62,67 @@ func (c *Client) Current(
     return response.Body, nil
 }
 
+// Add a tracking proxy domain to the workspace. Check domains.list and domains.proxyInUse first. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.
+// 
+// Example:
+// 
+// 	request := &sdk.AddProxyDomainWorkspacesRequest{
+// 	    WorkspaceSlug: "workspaceSlug",
+// 	    Args: &sdk.AddProxyDomainWorkspacesRequestArgs{
+// 	        ID: "id",
+// 	        Name: "name",
+// 	    },
+// 	}
+// 	client.Workspaces.AddProxyDomain(
+// 	    context.TODO(),
+// 	    request,
+// 	)
+func (c *Client) AddProxyDomain(
+    ctx context.Context,
+    request *sdk.AddProxyDomainWorkspacesRequest,
+    opts ...option.RequestOption,
+) (*sdk.MutationOrganizationsAddProxyDomainResponse, error){
+    response, err := c.WithRawResponse.AddProxyDomain(
+        ctx,
+        request,
+        opts...,
+    )
+    if err != nil {
+        return nil, err
+    }
+    return response.Body, nil
+}
+
+// Remove a tracking proxy domain. This can affect telemetry sent through that hostname. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.
+// 
+// Example:
+// 
+// 	request := &sdk.RemoveProxyDomainWorkspacesRequest{
+// 	    WorkspaceSlug: "workspaceSlug",
+// 	    Args: &sdk.RemoveProxyDomainWorkspacesRequestArgs{
+// 	        Name: "name",
+// 	    },
+// 	}
+// 	client.Workspaces.RemoveProxyDomain(
+// 	    context.TODO(),
+// 	    request,
+// 	)
+func (c *Client) RemoveProxyDomain(
+    ctx context.Context,
+    request *sdk.RemoveProxyDomainWorkspacesRequest,
+    opts ...option.RequestOption,
+) (*sdk.MutationOrganizationsRemoveProxyDomainResponse, error){
+    response, err := c.WithRawResponse.RemoveProxyDomain(
+        ctx,
+        request,
+        opts...,
+    )
+    if err != nil {
+        return nil, err
+    }
+    return response.Body, nil
+}
+
 // Update workspace name or other basic settings described by the input schema. Read workspaces.current first. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.
 // 
 // Example:

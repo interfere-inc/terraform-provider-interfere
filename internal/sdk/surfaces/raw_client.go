@@ -142,6 +142,60 @@ func (r *RawClient) Delete(
     }, nil
 }
 
+func (r *RawClient) SetAnonymousUserTracking(
+    ctx context.Context,
+    request *sdk.SetAnonymousUserTrackingSurfacesRequest,
+    opts ...option.RequestOption,
+) (*core.Response[*sdk.MutationSurfacesSetAnonymousUserTrackingResponse], error){
+    options := core.NewRequestOptions(opts...)
+    baseURL := internal.ResolveBaseURL(
+        options.BaseURL,
+        r.baseURL,
+        "",
+    )
+    endpointURL := internal.EncodeURL(
+        baseURL + "/v3/workspaces/%v/actions/surfaces.setAnonymousUserTracking",
+        request.WorkspaceSlug,
+    )
+    authHeaders, authErr := r.options.AuthHeadersForEndpoint([][]string{{"clerkSession"}})
+    if authErr != nil {
+        return nil, authErr
+    }
+    headers := internal.MergeHeaders(
+        internal.MergeHeaders(
+            r.options.ToHeader(),
+            options.ToHeader(),
+        ),
+        authHeaders,
+    )
+    headers.Add("Content-Type", "application/json")
+    var response *sdk.MutationSurfacesSetAnonymousUserTrackingResponse
+    raw, err := r.caller.Call(
+        ctx,
+        &internal.CallParams{
+            URL: endpointURL,
+            Method: http.MethodPost,
+            Headers: headers,
+            MaxAttempts: options.MaxAttempts,
+            DisableRetries: options.DisableRetries,
+            BodyProperties: options.BodyProperties,
+            QueryParameters: options.QueryParameters,
+            Client: options.HTTPClient,
+            Request: request,
+            Response: &response,
+            ErrorDecoder: internal.NewErrorDecoder(sdk.ErrorCodes),
+        },
+    )
+    if err != nil {
+        return nil, err
+    }
+    return &core.Response[*sdk.MutationSurfacesSetAnonymousUserTrackingResponse]{
+        StatusCode: raw.StatusCode,
+        Header: raw.Header,
+        Body: response,
+    }, nil
+}
+
 func (r *RawClient) UpdateName(
     ctx context.Context,
     request *sdk.UpdateNameSurfacesRequest,

@@ -95,6 +95,37 @@ func (c *Client) Delete(
     return response.Body, nil
 }
 
+// Enable or disable anonymous-user tracking for a surface. Inspect its current setting first. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.
+// 
+// Example:
+// 
+// 	request := &sdk.SetAnonymousUserTrackingSurfacesRequest{
+// 	    WorkspaceSlug: "workspaceSlug",
+// 	    Args: &sdk.SetAnonymousUserTrackingSurfacesRequestArgs{
+// 	        SurfaceSlug: "surfaceSlug",
+// 	        Enabled: true,
+// 	    },
+// 	}
+// 	client.Surfaces.SetAnonymousUserTracking(
+// 	    context.TODO(),
+// 	    request,
+// 	)
+func (c *Client) SetAnonymousUserTracking(
+    ctx context.Context,
+    request *sdk.SetAnonymousUserTrackingSurfacesRequest,
+    opts ...option.RequestOption,
+) (*sdk.MutationSurfacesSetAnonymousUserTrackingResponse, error){
+    response, err := c.WithRawResponse.SetAnonymousUserTracking(
+        ctx,
+        request,
+        opts...,
+    )
+    if err != nil {
+        return nil, err
+    }
+    return response.Body, nil
+}
+
 // Rename a surface. Resolve its ID with surfaces.list and preserve the rest of its settings. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.
 // 
 // Example:

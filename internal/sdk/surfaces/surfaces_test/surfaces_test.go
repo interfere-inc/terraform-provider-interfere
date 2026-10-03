@@ -175,6 +175,39 @@ func TestSurfacesDeleteWithWireMock(
     	})
 }
 
+func TestSurfacesSetAnonymousUserTrackingWithWireMock(
+    t *testing.T,
+) {
+    WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+    	if WireMockBaseURL == "" {
+    		WireMockBaseURL = "http://localhost:8080"
+    	}
+    client := client.NewClient(
+        option.WithBaseURL(WireMockBaseURL),
+        option.WithToken("test-token"),
+    )
+        request := &sdk.SetAnonymousUserTrackingSurfacesRequest{
+            WorkspaceSlug: "workspaceSlug",
+            Args: &sdk.SetAnonymousUserTrackingSurfacesRequestArgs{
+                SurfaceSlug: "surfaceSlug",
+                Enabled: true,
+            },
+        }
+    _, invocationErr :=     client.Surfaces.SetAnonymousUserTracking(
+            context.TODO(),
+            request,
+            option.WithHTTPHeader(
+                http.Header{"X-Test-Id": []string{"TestSurfacesSetAnonymousUserTrackingWithWireMock"}},
+            ),
+        )
+
+    require.NoError(t, invocationErr, "Client method call should succeed")
+    VerifyRequestCount(t, "TestSurfacesSetAnonymousUserTrackingWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/surfaces.setAnonymousUserTracking", nil, 1)
+    VerifyAuthHeaders(t, "TestSurfacesSetAnonymousUserTrackingWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/surfaces.setAnonymousUserTracking", map[string]string{
+    		"Authorization": `{"matches":"Bearer .*"}`,
+    	})
+}
+
 func TestSurfacesUpdateNameWithWireMock(
     t *testing.T,
 ) {

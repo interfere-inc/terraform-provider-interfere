@@ -10,6 +10,63 @@ import (
 )
 
 var (
+	addProxyDomainWorkspacesRequestFieldWorkspaceSlug = big.NewInt(1 << 0)
+	addProxyDomainWorkspacesRequestFieldArgs          = big.NewInt(1 << 1)
+)
+
+type AddProxyDomainWorkspacesRequest struct {
+	WorkspaceSlug string                               `json:"-" url:"-"`
+	Args          *AddProxyDomainWorkspacesRequestArgs `json:"args" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (a *AddProxyDomainWorkspacesRequest) require(field *big.Int) {
+	next := new(big.Int)
+	if a.explicitFields != nil {
+		next.Set(a.explicitFields)
+	}
+	next.Or(next, field)
+	a.explicitFields = next
+}
+
+// SetWorkspaceSlug sets the WorkspaceSlug field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AddProxyDomainWorkspacesRequest) SetWorkspaceSlug(workspaceSlug string) {
+	a.WorkspaceSlug = workspaceSlug
+	a.require(addProxyDomainWorkspacesRequestFieldWorkspaceSlug)
+}
+
+// SetArgs sets the Args field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AddProxyDomainWorkspacesRequest) SetArgs(args *AddProxyDomainWorkspacesRequestArgs) {
+	a.Args = args
+	a.require(addProxyDomainWorkspacesRequestFieldArgs)
+}
+
+func (a *AddProxyDomainWorkspacesRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler AddProxyDomainWorkspacesRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*a = AddProxyDomainWorkspacesRequest(body)
+	return nil
+}
+
+func (a *AddProxyDomainWorkspacesRequest) MarshalJSON() ([]byte, error) {
+	type embed AddProxyDomainWorkspacesRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
 	currentWorkspacesRequestFieldWorkspaceSlug = big.NewInt(1 << 0)
 	currentWorkspacesRequestFieldArgs          = big.NewInt(1 << 1)
 )
@@ -64,6 +121,235 @@ func (c *CurrentWorkspacesRequest) MarshalJSON() ([]byte, error) {
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
 	return json.Marshal(explicitMarshaler)
+}
+
+var (
+	removeProxyDomainWorkspacesRequestFieldWorkspaceSlug = big.NewInt(1 << 0)
+	removeProxyDomainWorkspacesRequestFieldArgs          = big.NewInt(1 << 1)
+)
+
+type RemoveProxyDomainWorkspacesRequest struct {
+	WorkspaceSlug string                                  `json:"-" url:"-"`
+	Args          *RemoveProxyDomainWorkspacesRequestArgs `json:"args" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (r *RemoveProxyDomainWorkspacesRequest) require(field *big.Int) {
+	next := new(big.Int)
+	if r.explicitFields != nil {
+		next.Set(r.explicitFields)
+	}
+	next.Or(next, field)
+	r.explicitFields = next
+}
+
+// SetWorkspaceSlug sets the WorkspaceSlug field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RemoveProxyDomainWorkspacesRequest) SetWorkspaceSlug(workspaceSlug string) {
+	r.WorkspaceSlug = workspaceSlug
+	r.require(removeProxyDomainWorkspacesRequestFieldWorkspaceSlug)
+}
+
+// SetArgs sets the Args field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RemoveProxyDomainWorkspacesRequest) SetArgs(args *RemoveProxyDomainWorkspacesRequestArgs) {
+	r.Args = args
+	r.require(removeProxyDomainWorkspacesRequestFieldArgs)
+}
+
+func (r *RemoveProxyDomainWorkspacesRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler RemoveProxyDomainWorkspacesRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*r = RemoveProxyDomainWorkspacesRequest(body)
+	return nil
+}
+
+func (r *RemoveProxyDomainWorkspacesRequest) MarshalJSON() ([]byte, error) {
+	type embed RemoveProxyDomainWorkspacesRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*r),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, r.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
+	mutationOrganizationsAddProxyDomainResponseFieldSuccess = big.NewInt(1 << 0)
+)
+
+type MutationOrganizationsAddProxyDomainResponse struct {
+	Success bool `json:"success" url:"success"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (m *MutationOrganizationsAddProxyDomainResponse) GetSuccess() bool {
+	if m == nil {
+		return false
+	}
+	return m.Success
+}
+
+func (m *MutationOrganizationsAddProxyDomainResponse) GetExtraProperties() map[string]interface{} {
+	if m == nil {
+		return nil
+	}
+	return m.extraProperties
+}
+
+func (m *MutationOrganizationsAddProxyDomainResponse) require(field *big.Int) {
+	next := new(big.Int)
+	if m.explicitFields != nil {
+		next.Set(m.explicitFields)
+	}
+	next.Or(next, field)
+	m.explicitFields = next
+}
+
+// SetSuccess sets the Success field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *MutationOrganizationsAddProxyDomainResponse) SetSuccess(success bool) {
+	m.Success = success
+	m.require(mutationOrganizationsAddProxyDomainResponseFieldSuccess)
+}
+
+func (m *MutationOrganizationsAddProxyDomainResponse) UnmarshalJSON(data []byte) error {
+	type unmarshaler MutationOrganizationsAddProxyDomainResponse
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*m = MutationOrganizationsAddProxyDomainResponse(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *m)
+	if err != nil {
+		return err
+	}
+	m.extraProperties = extraProperties
+	m.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (m *MutationOrganizationsAddProxyDomainResponse) MarshalJSON() ([]byte, error) {
+	type embed MutationOrganizationsAddProxyDomainResponse
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*m),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, m.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (m *MutationOrganizationsAddProxyDomainResponse) String() string {
+	if m == nil {
+		return "<nil>"
+	}
+	if len(m.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(m); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", m)
+}
+
+var (
+	mutationOrganizationsRemoveProxyDomainResponseFieldSuccess = big.NewInt(1 << 0)
+)
+
+type MutationOrganizationsRemoveProxyDomainResponse struct {
+	Success bool `json:"success" url:"success"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (m *MutationOrganizationsRemoveProxyDomainResponse) GetSuccess() bool {
+	if m == nil {
+		return false
+	}
+	return m.Success
+}
+
+func (m *MutationOrganizationsRemoveProxyDomainResponse) GetExtraProperties() map[string]interface{} {
+	if m == nil {
+		return nil
+	}
+	return m.extraProperties
+}
+
+func (m *MutationOrganizationsRemoveProxyDomainResponse) require(field *big.Int) {
+	next := new(big.Int)
+	if m.explicitFields != nil {
+		next.Set(m.explicitFields)
+	}
+	next.Or(next, field)
+	m.explicitFields = next
+}
+
+// SetSuccess sets the Success field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *MutationOrganizationsRemoveProxyDomainResponse) SetSuccess(success bool) {
+	m.Success = success
+	m.require(mutationOrganizationsRemoveProxyDomainResponseFieldSuccess)
+}
+
+func (m *MutationOrganizationsRemoveProxyDomainResponse) UnmarshalJSON(data []byte) error {
+	type unmarshaler MutationOrganizationsRemoveProxyDomainResponse
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*m = MutationOrganizationsRemoveProxyDomainResponse(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *m)
+	if err != nil {
+		return err
+	}
+	m.extraProperties = extraProperties
+	m.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (m *MutationOrganizationsRemoveProxyDomainResponse) MarshalJSON() ([]byte, error) {
+	type embed MutationOrganizationsRemoveProxyDomainResponse
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*m),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, m.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (m *MutationOrganizationsRemoveProxyDomainResponse) String() string {
+	if m == nil {
+		return "<nil>"
+	}
+	if len(m.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(m); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", m)
 }
 
 var (
@@ -311,6 +597,210 @@ func NewQueryOrganizationsCurrentResponseDataResidencyLocationFromString(s strin
 
 func (q QueryOrganizationsCurrentResponseDataResidencyLocation) Ptr() *QueryOrganizationsCurrentResponseDataResidencyLocation {
 	return &q
+}
+
+var (
+	addProxyDomainWorkspacesRequestArgsFieldID   = big.NewInt(1 << 0)
+	addProxyDomainWorkspacesRequestArgsFieldName = big.NewInt(1 << 1)
+)
+
+type AddProxyDomainWorkspacesRequestArgs struct {
+	ID   string `json:"id" url:"id"`
+	Name string `json:"name" url:"name"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (a *AddProxyDomainWorkspacesRequestArgs) GetID() string {
+	if a == nil {
+		return ""
+	}
+	return a.ID
+}
+
+func (a *AddProxyDomainWorkspacesRequestArgs) GetName() string {
+	if a == nil {
+		return ""
+	}
+	return a.Name
+}
+
+func (a *AddProxyDomainWorkspacesRequestArgs) GetExtraProperties() map[string]interface{} {
+	if a == nil {
+		return nil
+	}
+	return a.extraProperties
+}
+
+func (a *AddProxyDomainWorkspacesRequestArgs) require(field *big.Int) {
+	next := new(big.Int)
+	if a.explicitFields != nil {
+		next.Set(a.explicitFields)
+	}
+	next.Or(next, field)
+	a.explicitFields = next
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AddProxyDomainWorkspacesRequestArgs) SetID(id string) {
+	a.ID = id
+	a.require(addProxyDomainWorkspacesRequestArgsFieldID)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AddProxyDomainWorkspacesRequestArgs) SetName(name string) {
+	a.Name = name
+	a.require(addProxyDomainWorkspacesRequestArgsFieldName)
+}
+
+func (a *AddProxyDomainWorkspacesRequestArgs) UnmarshalJSON(data []byte) error {
+	type unmarshaler AddProxyDomainWorkspacesRequestArgs
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*a = AddProxyDomainWorkspacesRequestArgs(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *AddProxyDomainWorkspacesRequestArgs) MarshalJSON() ([]byte, error) {
+	type embed AddProxyDomainWorkspacesRequestArgs
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (a *AddProxyDomainWorkspacesRequestArgs) String() string {
+	if a == nil {
+		return "<nil>"
+	}
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
+
+var (
+	removeProxyDomainWorkspacesRequestArgsFieldID   = big.NewInt(1 << 0)
+	removeProxyDomainWorkspacesRequestArgsFieldName = big.NewInt(1 << 1)
+)
+
+type RemoveProxyDomainWorkspacesRequestArgs struct {
+	ID   *string `json:"id,omitempty" url:"id,omitempty"`
+	Name string  `json:"name" url:"name"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (r *RemoveProxyDomainWorkspacesRequestArgs) GetID() *string {
+	if r == nil {
+		return nil
+	}
+	return r.ID
+}
+
+func (r *RemoveProxyDomainWorkspacesRequestArgs) GetName() string {
+	if r == nil {
+		return ""
+	}
+	return r.Name
+}
+
+func (r *RemoveProxyDomainWorkspacesRequestArgs) GetExtraProperties() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
+	return r.extraProperties
+}
+
+func (r *RemoveProxyDomainWorkspacesRequestArgs) require(field *big.Int) {
+	next := new(big.Int)
+	if r.explicitFields != nil {
+		next.Set(r.explicitFields)
+	}
+	next.Or(next, field)
+	r.explicitFields = next
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RemoveProxyDomainWorkspacesRequestArgs) SetID(id *string) {
+	r.ID = id
+	r.require(removeProxyDomainWorkspacesRequestArgsFieldID)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RemoveProxyDomainWorkspacesRequestArgs) SetName(name string) {
+	r.Name = name
+	r.require(removeProxyDomainWorkspacesRequestArgsFieldName)
+}
+
+func (r *RemoveProxyDomainWorkspacesRequestArgs) UnmarshalJSON(data []byte) error {
+	type unmarshaler RemoveProxyDomainWorkspacesRequestArgs
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*r = RemoveProxyDomainWorkspacesRequestArgs(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *r)
+	if err != nil {
+		return err
+	}
+	r.extraProperties = extraProperties
+	r.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (r *RemoveProxyDomainWorkspacesRequestArgs) MarshalJSON() ([]byte, error) {
+	type embed RemoveProxyDomainWorkspacesRequestArgs
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*r),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, r.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (r *RemoveProxyDomainWorkspacesRequestArgs) String() string {
+	if r == nil {
+		return "<nil>"
+	}
+	if len(r.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(r); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", r)
 }
 
 var (

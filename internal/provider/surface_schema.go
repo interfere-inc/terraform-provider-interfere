@@ -13,13 +13,14 @@ import (
 
 func (r *surfaceResource) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		Description: "Manage a surface's name and framework. Import using workspace-slug/surface-slug. Creation also issues default credentials, which this resource does not store.",
+		Description: "Manage a surface's name, framework, and anonymous-user tracking. Import using workspace-slug/surface-slug. Creation also issues default credentials, which this resource does not store.",
 		Attributes: map[string]schema.Attribute{
-			"id":             schema.StringAttribute{Computed: true, PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()}},
-			"slug":           schema.StringAttribute{Computed: true, PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()}},
-			"name":           schema.StringAttribute{Required: true, Validators: []validator.String{stringvalidator.LengthBetween(1, 48)}},
-			"type":           schema.StringAttribute{Required: true, Validators: []validator.String{stringvalidator.OneOf("elysia", "nest", "nextjs", "python", "react")}, PlanModifiers: []planmodifier.String{stringplanmodifier.RequiresReplace()}},
-			"workspace_slug": schema.StringAttribute{Required: true, Validators: []validator.String{stringvalidator.RegexMatches(slugPattern, "Must be a workspace slug.")}, PlanModifiers: []planmodifier.String{stringplanmodifier.RequiresReplace()}},
+			"anonymous_user_tracking": schema.BoolAttribute{Optional: true, Computed: true, Description: "Whether to collect anonymous-user telemetry. Omit to preserve the current API setting."},
+			"id":                      schema.StringAttribute{Computed: true, PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()}},
+			"slug":                    schema.StringAttribute{Computed: true, PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()}},
+			"name":                    schema.StringAttribute{Required: true, Validators: []validator.String{stringvalidator.LengthBetween(1, 48)}},
+			"type":                    schema.StringAttribute{Required: true, Validators: []validator.String{stringvalidator.OneOf("elysia", "nest", "nextjs", "python", "react")}, PlanModifiers: []planmodifier.String{stringplanmodifier.RequiresReplace()}},
+			"workspace_slug":          schema.StringAttribute{Required: true, Validators: []validator.String{stringvalidator.RegexMatches(slugPattern, "Must be a workspace slug.")}, PlanModifiers: []planmodifier.String{stringplanmodifier.RequiresReplace()}},
 			"idempotency_key": schema.StringAttribute{
 				Required:    true,
 				Description: "Nonzero UUID for this creation attempt. Reuse it after an uncertain create result; choose a new UUID when replacing or recreating the surface.",

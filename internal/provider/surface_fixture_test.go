@@ -19,6 +19,7 @@ type surfaceFixture struct {
 	server                    *httptest.Server
 	name                      string
 	deleted                   bool
+	tracking                  bool
 	creates, updates, deletes int
 	readBody                  any
 	readStatus                int
@@ -28,7 +29,7 @@ type surfaceFixture struct {
 
 func newSurfaceFixture(t *testing.T) *surfaceFixture {
 	t.Helper()
-	f := &surfaceFixture{name: "Example", acknowledge: true}
+	f := &surfaceFixture{name: "Example", acknowledge: true, tracking: true}
 	f.server = httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		f.mu.Lock()
 		defer f.mu.Unlock()
@@ -98,7 +99,17 @@ func newSurfaceFixture(t *testing.T) *surfaceFixture {
 				if f.deleted {
 					deletedAt = 1234567890
 				}
-				write(map[string]any{"id": surfaceID, "slug": surfaceSlug, "name": f.name, "type": "react", "deletedAt": deletedAt})
+				write(map[string]any{"id": surfaceID, "slug": surfaceSlug, "name": f.name, "type": "react", "deletedAt": deletedAt, "anonymousUserTracking": f.tracking, "sourceIntegrationId": nil, "sourceMappingId": nil, "sourceWorkingDirectory": nil, "destinationIntegrationId": nil, "destinationMappingId": nil})
+			},
+			"/v3/workspaces/example/actions/surfaces.setAnonymousUserTracking": func() {
+				var body sdk.SetAnonymousUserTrackingSurfacesRequest
+				if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+					t.Error(err)
+				}
+				if f.acknowledge {
+					f.tracking = body.Args.Enabled
+				}
+				write(map[string]any{"success": f.acknowledge})
 			},
 			"/v3/workspaces/example/actions/surfaces.updateName": func() {
 				f.updates++

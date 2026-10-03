@@ -208,6 +208,63 @@ func (g *GetBySlugIncludeDeletedSurfacesRequest) MarshalJSON() ([]byte, error) {
 }
 
 var (
+	setAnonymousUserTrackingSurfacesRequestFieldWorkspaceSlug = big.NewInt(1 << 0)
+	setAnonymousUserTrackingSurfacesRequestFieldArgs          = big.NewInt(1 << 1)
+)
+
+type SetAnonymousUserTrackingSurfacesRequest struct {
+	WorkspaceSlug string                                       `json:"-" url:"-"`
+	Args          *SetAnonymousUserTrackingSurfacesRequestArgs `json:"args" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (s *SetAnonymousUserTrackingSurfacesRequest) require(field *big.Int) {
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
+	}
+	next.Or(next, field)
+	s.explicitFields = next
+}
+
+// SetWorkspaceSlug sets the WorkspaceSlug field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetAnonymousUserTrackingSurfacesRequest) SetWorkspaceSlug(workspaceSlug string) {
+	s.WorkspaceSlug = workspaceSlug
+	s.require(setAnonymousUserTrackingSurfacesRequestFieldWorkspaceSlug)
+}
+
+// SetArgs sets the Args field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetAnonymousUserTrackingSurfacesRequest) SetArgs(args *SetAnonymousUserTrackingSurfacesRequestArgs) {
+	s.Args = args
+	s.require(setAnonymousUserTrackingSurfacesRequestFieldArgs)
+}
+
+func (s *SetAnonymousUserTrackingSurfacesRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler SetAnonymousUserTrackingSurfacesRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*s = SetAnonymousUserTrackingSurfacesRequest(body)
+	return nil
+}
+
+func (s *SetAnonymousUserTrackingSurfacesRequest) MarshalJSON() ([]byte, error) {
+	type embed SetAnonymousUserTrackingSurfacesRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
 	createSurfaceResponseFieldAPIKey    = big.NewInt(1 << 0)
 	createSurfaceResponseFieldPublicKey = big.NewInt(1 << 1)
 	createSurfaceResponseFieldSurface   = big.NewInt(1 << 2)
@@ -714,6 +771,92 @@ func (m *MutationSurfacesDeleteResponse) String() string {
 }
 
 var (
+	mutationSurfacesSetAnonymousUserTrackingResponseFieldSuccess = big.NewInt(1 << 0)
+)
+
+type MutationSurfacesSetAnonymousUserTrackingResponse struct {
+	Success bool `json:"success" url:"success"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (m *MutationSurfacesSetAnonymousUserTrackingResponse) GetSuccess() bool {
+	if m == nil {
+		return false
+	}
+	return m.Success
+}
+
+func (m *MutationSurfacesSetAnonymousUserTrackingResponse) GetExtraProperties() map[string]interface{} {
+	if m == nil {
+		return nil
+	}
+	return m.extraProperties
+}
+
+func (m *MutationSurfacesSetAnonymousUserTrackingResponse) require(field *big.Int) {
+	next := new(big.Int)
+	if m.explicitFields != nil {
+		next.Set(m.explicitFields)
+	}
+	next.Or(next, field)
+	m.explicitFields = next
+}
+
+// SetSuccess sets the Success field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *MutationSurfacesSetAnonymousUserTrackingResponse) SetSuccess(success bool) {
+	m.Success = success
+	m.require(mutationSurfacesSetAnonymousUserTrackingResponseFieldSuccess)
+}
+
+func (m *MutationSurfacesSetAnonymousUserTrackingResponse) UnmarshalJSON(data []byte) error {
+	type unmarshaler MutationSurfacesSetAnonymousUserTrackingResponse
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*m = MutationSurfacesSetAnonymousUserTrackingResponse(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *m)
+	if err != nil {
+		return err
+	}
+	m.extraProperties = extraProperties
+	m.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (m *MutationSurfacesSetAnonymousUserTrackingResponse) MarshalJSON() ([]byte, error) {
+	type embed MutationSurfacesSetAnonymousUserTrackingResponse
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*m),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, m.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (m *MutationSurfacesSetAnonymousUserTrackingResponse) String() string {
+	if m == nil {
+		return "<nil>"
+	}
+	if len(m.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(m); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", m)
+}
+
+var (
 	mutationSurfacesUpdateNameResponseFieldSuccess = big.NewInt(1 << 0)
 )
 
@@ -800,24 +943,41 @@ func (m *MutationSurfacesUpdateNameResponse) String() string {
 }
 
 var (
-	querySurfacesGetBySlugIncludeDeletedResponseFieldID        = big.NewInt(1 << 0)
-	querySurfacesGetBySlugIncludeDeletedResponseFieldName      = big.NewInt(1 << 1)
-	querySurfacesGetBySlugIncludeDeletedResponseFieldSlug      = big.NewInt(1 << 2)
-	querySurfacesGetBySlugIncludeDeletedResponseFieldType      = big.NewInt(1 << 3)
-	querySurfacesGetBySlugIncludeDeletedResponseFieldDeletedAt = big.NewInt(1 << 4)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldID                       = big.NewInt(1 << 0)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldName                     = big.NewInt(1 << 1)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldSlug                     = big.NewInt(1 << 2)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldType                     = big.NewInt(1 << 3)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldDeletedAt                = big.NewInt(1 << 4)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldAnonymousUserTracking    = big.NewInt(1 << 5)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldSourceIntegrationID      = big.NewInt(1 << 6)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldSourceMappingID          = big.NewInt(1 << 7)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldSourceWorkingDirectory   = big.NewInt(1 << 8)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldDestinationIntegrationID = big.NewInt(1 << 9)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldDestinationMappingID     = big.NewInt(1 << 10)
 )
 
 // querySurfacesGetBySlugIncludeDeletedResponseNullableFields maps the wire names of QuerySurfacesGetBySlugIncludeDeletedResponse's nullable fields (required or optional) to their field bits.
 var querySurfacesGetBySlugIncludeDeletedResponseNullableFields = map[string]*big.Int{
-	"deletedAt": querySurfacesGetBySlugIncludeDeletedResponseFieldDeletedAt,
+	"deletedAt":                querySurfacesGetBySlugIncludeDeletedResponseFieldDeletedAt,
+	"sourceIntegrationId":      querySurfacesGetBySlugIncludeDeletedResponseFieldSourceIntegrationID,
+	"sourceMappingId":          querySurfacesGetBySlugIncludeDeletedResponseFieldSourceMappingID,
+	"sourceWorkingDirectory":   querySurfacesGetBySlugIncludeDeletedResponseFieldSourceWorkingDirectory,
+	"destinationIntegrationId": querySurfacesGetBySlugIncludeDeletedResponseFieldDestinationIntegrationID,
+	"destinationMappingId":     querySurfacesGetBySlugIncludeDeletedResponseFieldDestinationMappingID,
 }
 
 type QuerySurfacesGetBySlugIncludeDeletedResponse struct {
-	ID        string                                           `json:"id" url:"id"`
-	Name      string                                           `json:"name" url:"name"`
-	Slug      string                                           `json:"slug" url:"slug"`
-	Type      QuerySurfacesGetBySlugIncludeDeletedResponseType `json:"type" url:"type"`
-	DeletedAt *float64                                         `json:"deletedAt,omitempty" url:"deletedAt,omitempty"`
+	ID                       string                                           `json:"id" url:"id"`
+	Name                     string                                           `json:"name" url:"name"`
+	Slug                     string                                           `json:"slug" url:"slug"`
+	Type                     QuerySurfacesGetBySlugIncludeDeletedResponseType `json:"type" url:"type"`
+	DeletedAt                *float64                                         `json:"deletedAt,omitempty" url:"deletedAt,omitempty"`
+	AnonymousUserTracking    bool                                             `json:"anonymousUserTracking" url:"anonymousUserTracking"`
+	SourceIntegrationID      *string                                          `json:"sourceIntegrationId,omitempty" url:"sourceIntegrationId,omitempty"`
+	SourceMappingID          *string                                          `json:"sourceMappingId,omitempty" url:"sourceMappingId,omitempty"`
+	SourceWorkingDirectory   *string                                          `json:"sourceWorkingDirectory,omitempty" url:"sourceWorkingDirectory,omitempty"`
+	DestinationIntegrationID *string                                          `json:"destinationIntegrationId,omitempty" url:"destinationIntegrationId,omitempty"`
+	DestinationMappingID     *string                                          `json:"destinationMappingId,omitempty" url:"destinationMappingId,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -860,6 +1020,48 @@ func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) GetDeletedAt() *float64 {
 		return nil
 	}
 	return q.DeletedAt
+}
+
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) GetAnonymousUserTracking() bool {
+	if q == nil {
+		return false
+	}
+	return q.AnonymousUserTracking
+}
+
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) GetSourceIntegrationID() *string {
+	if q == nil {
+		return nil
+	}
+	return q.SourceIntegrationID
+}
+
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) GetSourceMappingID() *string {
+	if q == nil {
+		return nil
+	}
+	return q.SourceMappingID
+}
+
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) GetSourceWorkingDirectory() *string {
+	if q == nil {
+		return nil
+	}
+	return q.SourceWorkingDirectory
+}
+
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) GetDestinationIntegrationID() *string {
+	if q == nil {
+		return nil
+	}
+	return q.DestinationIntegrationID
+}
+
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) GetDestinationMappingID() *string {
+	if q == nil {
+		return nil
+	}
+	return q.DestinationMappingID
 }
 
 func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) GetExtraProperties() map[string]interface{} {
@@ -911,6 +1113,48 @@ func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) SetType(type_ QuerySurfac
 func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) SetDeletedAt(deletedAt *float64) {
 	q.DeletedAt = deletedAt
 	q.require(querySurfacesGetBySlugIncludeDeletedResponseFieldDeletedAt)
+}
+
+// SetAnonymousUserTracking sets the AnonymousUserTracking field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) SetAnonymousUserTracking(anonymousUserTracking bool) {
+	q.AnonymousUserTracking = anonymousUserTracking
+	q.require(querySurfacesGetBySlugIncludeDeletedResponseFieldAnonymousUserTracking)
+}
+
+// SetSourceIntegrationID sets the SourceIntegrationID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) SetSourceIntegrationID(sourceIntegrationID *string) {
+	q.SourceIntegrationID = sourceIntegrationID
+	q.require(querySurfacesGetBySlugIncludeDeletedResponseFieldSourceIntegrationID)
+}
+
+// SetSourceMappingID sets the SourceMappingID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) SetSourceMappingID(sourceMappingID *string) {
+	q.SourceMappingID = sourceMappingID
+	q.require(querySurfacesGetBySlugIncludeDeletedResponseFieldSourceMappingID)
+}
+
+// SetSourceWorkingDirectory sets the SourceWorkingDirectory field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) SetSourceWorkingDirectory(sourceWorkingDirectory *string) {
+	q.SourceWorkingDirectory = sourceWorkingDirectory
+	q.require(querySurfacesGetBySlugIncludeDeletedResponseFieldSourceWorkingDirectory)
+}
+
+// SetDestinationIntegrationID sets the DestinationIntegrationID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) SetDestinationIntegrationID(destinationIntegrationID *string) {
+	q.DestinationIntegrationID = destinationIntegrationID
+	q.require(querySurfacesGetBySlugIncludeDeletedResponseFieldDestinationIntegrationID)
+}
+
+// SetDestinationMappingID sets the DestinationMappingID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) SetDestinationMappingID(destinationMappingID *string) {
+	q.DestinationMappingID = destinationMappingID
+	q.require(querySurfacesGetBySlugIncludeDeletedResponseFieldDestinationMappingID)
 }
 
 func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) UnmarshalJSON(data []byte) error {
@@ -1403,6 +1647,108 @@ func (g *GetBySlugIncludeDeletedSurfacesRequestArgs) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", g)
+}
+
+var (
+	setAnonymousUserTrackingSurfacesRequestArgsFieldSurfaceSlug = big.NewInt(1 << 0)
+	setAnonymousUserTrackingSurfacesRequestArgsFieldEnabled     = big.NewInt(1 << 1)
+)
+
+type SetAnonymousUserTrackingSurfacesRequestArgs struct {
+	SurfaceSlug string `json:"surfaceSlug" url:"surfaceSlug"`
+	Enabled     bool   `json:"enabled" url:"enabled"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (s *SetAnonymousUserTrackingSurfacesRequestArgs) GetSurfaceSlug() string {
+	if s == nil {
+		return ""
+	}
+	return s.SurfaceSlug
+}
+
+func (s *SetAnonymousUserTrackingSurfacesRequestArgs) GetEnabled() bool {
+	if s == nil {
+		return false
+	}
+	return s.Enabled
+}
+
+func (s *SetAnonymousUserTrackingSurfacesRequestArgs) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
+	return s.extraProperties
+}
+
+func (s *SetAnonymousUserTrackingSurfacesRequestArgs) require(field *big.Int) {
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
+	}
+	next.Or(next, field)
+	s.explicitFields = next
+}
+
+// SetSurfaceSlug sets the SurfaceSlug field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetAnonymousUserTrackingSurfacesRequestArgs) SetSurfaceSlug(surfaceSlug string) {
+	s.SurfaceSlug = surfaceSlug
+	s.require(setAnonymousUserTrackingSurfacesRequestArgsFieldSurfaceSlug)
+}
+
+// SetEnabled sets the Enabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetAnonymousUserTrackingSurfacesRequestArgs) SetEnabled(enabled bool) {
+	s.Enabled = enabled
+	s.require(setAnonymousUserTrackingSurfacesRequestArgsFieldEnabled)
+}
+
+func (s *SetAnonymousUserTrackingSurfacesRequestArgs) UnmarshalJSON(data []byte) error {
+	type unmarshaler SetAnonymousUserTrackingSurfacesRequestArgs
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*s = SetAnonymousUserTrackingSurfacesRequestArgs(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+	s.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (s *SetAnonymousUserTrackingSurfacesRequestArgs) MarshalJSON() ([]byte, error) {
+	type embed SetAnonymousUserTrackingSurfacesRequestArgs
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (s *SetAnonymousUserTrackingSurfacesRequestArgs) String() string {
+	if s == nil {
+		return "<nil>"
+	}
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
 }
 
 var (

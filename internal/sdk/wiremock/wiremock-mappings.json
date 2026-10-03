@@ -1,6 +1,192 @@
 {
   "mappings": [
     {
+      "id": "3f2da888-2b08-44b3-bb96-d957b55807d2",
+      "name": "Read domains.byIdIncludeDeleted - default",
+      "request": {
+        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/queries/domains.byIdIncludeDeleted",
+        "method": "POST",
+        "pathParameters": {
+          "workspaceSlug": {
+            "equalTo": "workspaceSlug"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"type\": \"type\",\n  \"status\": \"pending\",\n  \"deletedAt\": 1.1,\n  \"domainMetadata\": {\n    \"cfHostnameId\": \"cfHostnameId\",\n    \"cfSslStatus\": \"cfSslStatus\",\n    \"lastError\": \"lastError\",\n    \"provider\": \"cloudflare\"\n  }\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "3f2da888-2b08-44b3-bb96-d957b55807d2",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "01eba5dd-3894-42f2-8aff-125844b77f27",
+      "name": "Read integrations.installations - default",
+      "request": {
+        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/queries/integrations.installations",
+        "method": "POST",
+        "pathParameters": {
+          "workspaceSlug": {
+            "equalTo": "workspaceSlug"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "[\n  {\n    \"id\": \"id\",\n    \"provider\": \"github\",\n    \"status\": \"status\"\n  }\n]",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "01eba5dd-3894-42f2-8aff-125844b77f27",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "5a072ff3-e190-4a28-a0a0-64752c154c7f",
+      "name": "Run integrations.linkSurfaceToDestination - default",
+      "request": {
+        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/actions/integrations.linkSurfaceToDestination",
+        "method": "POST",
+        "pathParameters": {
+          "workspaceSlug": {
+            "equalTo": "workspaceSlug"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"success\": true\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "5a072ff3-e190-4a28-a0a0-64752c154c7f",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "a549cb77-eaa0-4542-b7fe-b924e8a2d272",
+      "name": "Run integrations.linkSurfaceToRepository - default",
+      "request": {
+        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/actions/integrations.linkSurfaceToRepository",
+        "method": "POST",
+        "pathParameters": {
+          "workspaceSlug": {
+            "equalTo": "workspaceSlug"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"success\": true\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "a549cb77-eaa0-4542-b7fe-b924e8a2d272",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "d1494726-f2c9-4fba-9944-0ea35efce6d3",
+      "name": "Run integrations.unlinkSurfaceDestinationMapping - default",
+      "request": {
+        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/actions/integrations.unlinkSurfaceDestinationMapping",
+        "method": "POST",
+        "pathParameters": {
+          "workspaceSlug": {
+            "equalTo": "workspaceSlug"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"success\": true\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "d1494726-f2c9-4fba-9944-0ea35efce6d3",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "65363d68-b75f-4d82-9d32-eb45b9bfec9c",
+      "name": "Run integrations.unlinkSurfaceMapping - default",
+      "request": {
+        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/actions/integrations.unlinkSurfaceMapping",
+        "method": "POST",
+        "pathParameters": {
+          "workspaceSlug": {
+            "equalTo": "workspaceSlug"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"success\": true\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "65363d68-b75f-4d82-9d32-eb45b9bfec9c",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "00a0ea69-fec4-430a-8e70-660d956dd5e7",
       "name": "Read organizations.current - default",
       "request": {
@@ -20,6 +206,68 @@
         }
       },
       "uuid": "00a0ea69-fec4-430a-8e70-660d956dd5e7",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "2ed4a00b-db4d-4936-acac-70472c927602",
+      "name": "Run organizations.addProxyDomain - default",
+      "request": {
+        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/actions/organizations.addProxyDomain",
+        "method": "POST",
+        "pathParameters": {
+          "workspaceSlug": {
+            "equalTo": "workspaceSlug"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"success\": true\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "2ed4a00b-db4d-4936-acac-70472c927602",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "84df9ccd-5fee-4097-a5ce-2d02ab8296c5",
+      "name": "Run organizations.removeProxyDomain - default",
+      "request": {
+        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/actions/organizations.removeProxyDomain",
+        "method": "POST",
+        "pathParameters": {
+          "workspaceSlug": {
+            "equalTo": "workspaceSlug"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"success\": true\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "84df9ccd-5fee-4097-a5ce-2d02ab8296c5",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -76,7 +324,7 @@
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"slug\": \"slug\",\n  \"type\": \"elysia\",\n  \"deletedAt\": 1.1\n}",
+        "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"slug\": \"slug\",\n  \"type\": \"elysia\",\n  \"deletedAt\": 1.1,\n  \"anonymousUserTracking\": true,\n  \"sourceIntegrationId\": \"sourceIntegrationId\",\n  \"sourceMappingId\": \"sourceMappingId\",\n  \"sourceWorkingDirectory\": \"sourceWorkingDirectory\",\n  \"destinationIntegrationId\": \"destinationIntegrationId\",\n  \"destinationMappingId\": \"destinationMappingId\"\n}",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -113,6 +361,37 @@
         }
       },
       "uuid": "ee5c3ac7-24a8-4d23-9991-6f89c10d0a93",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "d6fa8208-9af7-4047-9d87-c1e1dc68262b",
+      "name": "Run surfaces.setAnonymousUserTracking - default",
+      "request": {
+        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/actions/surfaces.setAnonymousUserTracking",
+        "method": "POST",
+        "pathParameters": {
+          "workspaceSlug": {
+            "equalTo": "workspaceSlug"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"success\": true\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "d6fa8208-9af7-4047-9d87-c1e1dc68262b",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -395,6 +674,6 @@
     }
   ],
   "meta": {
-    "total": 12
+    "total": 21
   }
 }

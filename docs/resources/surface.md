@@ -3,21 +3,22 @@
 page_title: "interfere_surface Resource - Interfere"
 subcategory: ""
 description: |-
-  Manage a surface's name and framework. Import using workspace-slug/surface-slug. Creation also issues default credentials, which this resource does not store.
+  Manage a surface's name, framework, and anonymous-user tracking. Import using workspace-slug/surface-slug. Creation also issues default credentials, which this resource does not store.
 ---
 
 # interfere_surface (Resource)
 
-Manage a surface's name and framework. Import using workspace-slug/surface-slug. Creation also issues default credentials, which this resource does not store.
+Manage a surface's name, framework, and anonymous-user tracking. Import using workspace-slug/surface-slug. Creation also issues default credentials, which this resource does not store.
 
 ## Example Usage
 
 ```terraform
 resource "interfere_surface" "app" {
-  workspace_slug  = "example"
-  idempotency_key = "11111111-1111-4111-8111-111111111111"
-  name            = "Application"
-  type            = "react"
+  workspace_slug          = "example"
+  idempotency_key         = "11111111-1111-4111-8111-111111111111"
+  name                    = "Application"
+  type                    = "react"
+  anonymous_user_tracking = false
 }
 ```
 
@@ -31,6 +32,10 @@ resource "interfere_surface" "app" {
 - `name` (String)
 - `type` (String)
 - `workspace_slug` (String)
+
+### Optional
+
+- `anonymous_user_tracking` (Boolean) Whether to collect anonymous-user telemetry. Omit to preserve the current API setting.
 
 ### Read-Only
 
