@@ -14,7 +14,7 @@ func (r *trackingDomainResource) read(ctx context.Context, data trackingDomainMo
 	if err != nil {
 		return nil, errors.New(apiError(err))
 	}
-	if remote == nil || remote.ID != data.ID.ValueString() || remote.Name == "" || remote.Type == nil || *remote.Type != "proxy" || remote.Status == nil {
+	if remote == nil || remote.ID != data.ID.ValueString() || remote.Name == "" || remote.Type == nil || *remote.Type != "proxy" || (remote.DeletedAt == nil && remote.Status == nil) {
 		return nil, errors.New("The API returned no domain or an invalid identity. Check workspace domain permissions; Terraform state was preserved.")
 	}
 	if !data.Name.IsNull() && !data.Name.IsUnknown() && remote.Name != data.Name.ValueString() {
