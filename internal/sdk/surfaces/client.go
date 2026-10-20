@@ -165,7 +165,7 @@ func (c *Client) UpdateName(
 // 	    WorkspaceSlug: "workspaceSlug",
 // 	    APIKey: &sdk.CreateSurfaceRequestAPIKey{
 // 	        Scopes: []sdk.CreateSurfaceRequestAPIKeyScopesItem{
-// 	            sdk.CreateSurfaceRequestAPIKeyScopesItemOrgSurfacesRead,
+// 	            sdk.CreateSurfaceRequestAPIKeyScopesItemOrgTelemetryWrite,
 // 	        },
 // 	    },
 // 	    IdempotencyKey: "idempotencyKey",

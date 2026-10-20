@@ -26,6 +26,7 @@ func (r *surfaceResource) Schema(ctx context.Context, _ resource.SchemaRequest, 
 	attributes["name"] = name
 	tracking := attributes["anonymous_user_tracking"].(schema.BoolAttribute)
 	tracking.Optional = true
+	tracking.Default = nil
 	tracking.Description += " Omit to preserve the current API setting."
 	tracking.MarkdownDescription = tracking.Description
 	attributes["anonymous_user_tracking"] = tracking

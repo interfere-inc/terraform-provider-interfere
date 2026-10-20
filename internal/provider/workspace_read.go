@@ -9,7 +9,7 @@ import (
 	"github.com/interfere-inc/terraform-provider-interfere/internal/sdk"
 )
 
-func (r *workspaceResource) read(ctx context.Context, data workspaceModel) (*sdk.QueryOrganizationsCurrentResponse, error) {
+func (r *workspaceResource) read(ctx context.Context, data workspaceModel) (*sdk.QueryWorkspacesCurrentResponse, error) {
 	remote, err := r.client.Workspaces.Current(ctx, &sdk.CurrentWorkspacesRequest{WorkspaceSlug: data.WorkspaceSlug.ValueString()})
 	if err != nil {
 		return nil, errors.New(apiError(err))

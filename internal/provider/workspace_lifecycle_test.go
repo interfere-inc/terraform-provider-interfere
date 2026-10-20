@@ -29,13 +29,13 @@ func TestWorkspaceSettingsLifecycle(t *testing.T) {
 			return
 		}
 		root := "/v3/workspaces/" + slug
-		if r.URL.Path == root+"/queries/organizations.current" {
+		if r.URL.Path == root+"/queries/workspaces.current" {
 			if err := json.NewEncoder(w).Encode(map[string]any{"id": surfaceID, "name": name, "slug": slug, "dataResidencyLocation": "eu"}); err != nil {
 				t.Error(err)
 			}
 			return
 		}
-		if r.URL.Path == root+"/actions/organizations.updateBasics" {
+		if r.URL.Path == root+"/actions/workspaces.updateBasics" {
 			var input sdk.UpdateBasicsWorkspacesRequest
 			if err := json.NewDecoder(r.Body).Decode(&input); err != nil {
 				t.Error(err)

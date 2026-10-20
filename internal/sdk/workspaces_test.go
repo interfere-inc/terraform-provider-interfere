@@ -261,9 +261,9 @@ func TestSettersMarkExplicitRemoveProxyDomainWorkspacesRequest(t *testing.T) {
 
 }
 
-func TestSettersMutationOrganizationsAddProxyDomainResponse(t *testing.T) {
+func TestSettersMutationWorkspacesAddProxyDomainResponse(t *testing.T) {
 	t.Run("SetSuccess", func(t *testing.T) {
-		obj := &MutationOrganizationsAddProxyDomainResponse{}
+		obj := &MutationWorkspacesAddProxyDomainResponse{}
 		var fernTestValueSuccess bool
 		obj.SetSuccess(fernTestValueSuccess)
 		assert.Equal(t, fernTestValueSuccess, obj.Success)
@@ -272,11 +272,11 @@ func TestSettersMutationOrganizationsAddProxyDomainResponse(t *testing.T) {
 
 }
 
-func TestGettersMutationOrganizationsAddProxyDomainResponse(t *testing.T) {
+func TestGettersMutationWorkspacesAddProxyDomainResponse(t *testing.T) {
 	t.Run("GetSuccess", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &MutationOrganizationsAddProxyDomainResponse{}
+		obj := &MutationWorkspacesAddProxyDomainResponse{}
 		var expected bool
 		obj.Success = expected
 
@@ -286,7 +286,7 @@ func TestGettersMutationOrganizationsAddProxyDomainResponse(t *testing.T) {
 
 	t.Run("GetSuccess_NilReceiver", func(t *testing.T) {
 		t.Parallel()
-		var obj *MutationOrganizationsAddProxyDomainResponse
+		var obj *MutationWorkspacesAddProxyDomainResponse
 		// Should not panic - getters should handle nil receiver gracefully
 		defer func() {
 			if r := recover(); r != nil {
@@ -298,11 +298,11 @@ func TestGettersMutationOrganizationsAddProxyDomainResponse(t *testing.T) {
 
 }
 
-func TestSettersMarkExplicitMutationOrganizationsAddProxyDomainResponse(t *testing.T) {
+func TestSettersMarkExplicitMutationWorkspacesAddProxyDomainResponse(t *testing.T) {
 	t.Run("SetSuccess_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &MutationOrganizationsAddProxyDomainResponse{}
+		obj := &MutationWorkspacesAddProxyDomainResponse{}
 		var fernTestValueSuccess bool
 
 		// Act
@@ -332,9 +332,9 @@ func TestSettersMarkExplicitMutationOrganizationsAddProxyDomainResponse(t *testi
 
 }
 
-func TestSettersMutationOrganizationsRemoveProxyDomainResponse(t *testing.T) {
+func TestSettersMutationWorkspacesRemoveProxyDomainResponse(t *testing.T) {
 	t.Run("SetSuccess", func(t *testing.T) {
-		obj := &MutationOrganizationsRemoveProxyDomainResponse{}
+		obj := &MutationWorkspacesRemoveProxyDomainResponse{}
 		var fernTestValueSuccess bool
 		obj.SetSuccess(fernTestValueSuccess)
 		assert.Equal(t, fernTestValueSuccess, obj.Success)
@@ -343,11 +343,11 @@ func TestSettersMutationOrganizationsRemoveProxyDomainResponse(t *testing.T) {
 
 }
 
-func TestGettersMutationOrganizationsRemoveProxyDomainResponse(t *testing.T) {
+func TestGettersMutationWorkspacesRemoveProxyDomainResponse(t *testing.T) {
 	t.Run("GetSuccess", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &MutationOrganizationsRemoveProxyDomainResponse{}
+		obj := &MutationWorkspacesRemoveProxyDomainResponse{}
 		var expected bool
 		obj.Success = expected
 
@@ -357,7 +357,7 @@ func TestGettersMutationOrganizationsRemoveProxyDomainResponse(t *testing.T) {
 
 	t.Run("GetSuccess_NilReceiver", func(t *testing.T) {
 		t.Parallel()
-		var obj *MutationOrganizationsRemoveProxyDomainResponse
+		var obj *MutationWorkspacesRemoveProxyDomainResponse
 		// Should not panic - getters should handle nil receiver gracefully
 		defer func() {
 			if r := recover(); r != nil {
@@ -369,11 +369,11 @@ func TestGettersMutationOrganizationsRemoveProxyDomainResponse(t *testing.T) {
 
 }
 
-func TestSettersMarkExplicitMutationOrganizationsRemoveProxyDomainResponse(t *testing.T) {
+func TestSettersMarkExplicitMutationWorkspacesRemoveProxyDomainResponse(t *testing.T) {
 	t.Run("SetSuccess_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &MutationOrganizationsRemoveProxyDomainResponse{}
+		obj := &MutationWorkspacesRemoveProxyDomainResponse{}
 		var fernTestValueSuccess bool
 
 		// Act
@@ -403,9 +403,9 @@ func TestSettersMarkExplicitMutationOrganizationsRemoveProxyDomainResponse(t *te
 
 }
 
-func TestSettersMutationOrganizationsUpdateBasicsResponse(t *testing.T) {
+func TestSettersMutationWorkspacesUpdateBasicsResponse(t *testing.T) {
 	t.Run("SetSuccess", func(t *testing.T) {
-		obj := &MutationOrganizationsUpdateBasicsResponse{}
+		obj := &MutationWorkspacesUpdateBasicsResponse{}
 		var fernTestValueSuccess bool
 		obj.SetSuccess(fernTestValueSuccess)
 		assert.Equal(t, fernTestValueSuccess, obj.Success)
@@ -414,11 +414,11 @@ func TestSettersMutationOrganizationsUpdateBasicsResponse(t *testing.T) {
 
 }
 
-func TestGettersMutationOrganizationsUpdateBasicsResponse(t *testing.T) {
+func TestGettersMutationWorkspacesUpdateBasicsResponse(t *testing.T) {
 	t.Run("GetSuccess", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &MutationOrganizationsUpdateBasicsResponse{}
+		obj := &MutationWorkspacesUpdateBasicsResponse{}
 		var expected bool
 		obj.Success = expected
 
@@ -428,7 +428,7 @@ func TestGettersMutationOrganizationsUpdateBasicsResponse(t *testing.T) {
 
 	t.Run("GetSuccess_NilReceiver", func(t *testing.T) {
 		t.Parallel()
-		var obj *MutationOrganizationsUpdateBasicsResponse
+		var obj *MutationWorkspacesUpdateBasicsResponse
 		// Should not panic - getters should handle nil receiver gracefully
 		defer func() {
 			if r := recover(); r != nil {
@@ -440,11 +440,11 @@ func TestGettersMutationOrganizationsUpdateBasicsResponse(t *testing.T) {
 
 }
 
-func TestSettersMarkExplicitMutationOrganizationsUpdateBasicsResponse(t *testing.T) {
+func TestSettersMarkExplicitMutationWorkspacesUpdateBasicsResponse(t *testing.T) {
 	t.Run("SetSuccess_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &MutationOrganizationsUpdateBasicsResponse{}
+		obj := &MutationWorkspacesUpdateBasicsResponse{}
 		var fernTestValueSuccess bool
 
 		// Act
@@ -474,9 +474,9 @@ func TestSettersMarkExplicitMutationOrganizationsUpdateBasicsResponse(t *testing
 
 }
 
-func TestSettersQueryOrganizationsCurrentResponse(t *testing.T) {
+func TestSettersQueryWorkspacesCurrentResponse(t *testing.T) {
 	t.Run("SetID", func(t *testing.T) {
-		obj := &QueryOrganizationsCurrentResponse{}
+		obj := &QueryWorkspacesCurrentResponse{}
 		var fernTestValueID string
 		obj.SetID(fernTestValueID)
 		assert.Equal(t, fernTestValueID, obj.ID)
@@ -484,7 +484,7 @@ func TestSettersQueryOrganizationsCurrentResponse(t *testing.T) {
 	})
 
 	t.Run("SetName", func(t *testing.T) {
-		obj := &QueryOrganizationsCurrentResponse{}
+		obj := &QueryWorkspacesCurrentResponse{}
 		var fernTestValueName string
 		obj.SetName(fernTestValueName)
 		assert.Equal(t, fernTestValueName, obj.Name)
@@ -492,7 +492,7 @@ func TestSettersQueryOrganizationsCurrentResponse(t *testing.T) {
 	})
 
 	t.Run("SetSlug", func(t *testing.T) {
-		obj := &QueryOrganizationsCurrentResponse{}
+		obj := &QueryWorkspacesCurrentResponse{}
 		var fernTestValueSlug string
 		obj.SetSlug(fernTestValueSlug)
 		assert.Equal(t, fernTestValueSlug, obj.Slug)
@@ -500,8 +500,8 @@ func TestSettersQueryOrganizationsCurrentResponse(t *testing.T) {
 	})
 
 	t.Run("SetDataResidencyLocation", func(t *testing.T) {
-		obj := &QueryOrganizationsCurrentResponse{}
-		var fernTestValueDataResidencyLocation QueryOrganizationsCurrentResponseDataResidencyLocation
+		obj := &QueryWorkspacesCurrentResponse{}
+		var fernTestValueDataResidencyLocation QueryWorkspacesCurrentResponseDataResidencyLocation
 		obj.SetDataResidencyLocation(fernTestValueDataResidencyLocation)
 		assert.Equal(t, fernTestValueDataResidencyLocation, obj.DataResidencyLocation)
 		assert.NotNil(t, obj.explicitFields)
@@ -509,11 +509,11 @@ func TestSettersQueryOrganizationsCurrentResponse(t *testing.T) {
 
 }
 
-func TestGettersQueryOrganizationsCurrentResponse(t *testing.T) {
+func TestGettersQueryWorkspacesCurrentResponse(t *testing.T) {
 	t.Run("GetID", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &QueryOrganizationsCurrentResponse{}
+		obj := &QueryWorkspacesCurrentResponse{}
 		var expected string
 		obj.ID = expected
 
@@ -523,7 +523,7 @@ func TestGettersQueryOrganizationsCurrentResponse(t *testing.T) {
 
 	t.Run("GetID_NilReceiver", func(t *testing.T) {
 		t.Parallel()
-		var obj *QueryOrganizationsCurrentResponse
+		var obj *QueryWorkspacesCurrentResponse
 		// Should not panic - getters should handle nil receiver gracefully
 		defer func() {
 			if r := recover(); r != nil {
@@ -536,7 +536,7 @@ func TestGettersQueryOrganizationsCurrentResponse(t *testing.T) {
 	t.Run("GetName", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &QueryOrganizationsCurrentResponse{}
+		obj := &QueryWorkspacesCurrentResponse{}
 		var expected string
 		obj.Name = expected
 
@@ -546,7 +546,7 @@ func TestGettersQueryOrganizationsCurrentResponse(t *testing.T) {
 
 	t.Run("GetName_NilReceiver", func(t *testing.T) {
 		t.Parallel()
-		var obj *QueryOrganizationsCurrentResponse
+		var obj *QueryWorkspacesCurrentResponse
 		// Should not panic - getters should handle nil receiver gracefully
 		defer func() {
 			if r := recover(); r != nil {
@@ -559,7 +559,7 @@ func TestGettersQueryOrganizationsCurrentResponse(t *testing.T) {
 	t.Run("GetSlug", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &QueryOrganizationsCurrentResponse{}
+		obj := &QueryWorkspacesCurrentResponse{}
 		var expected string
 		obj.Slug = expected
 
@@ -569,7 +569,7 @@ func TestGettersQueryOrganizationsCurrentResponse(t *testing.T) {
 
 	t.Run("GetSlug_NilReceiver", func(t *testing.T) {
 		t.Parallel()
-		var obj *QueryOrganizationsCurrentResponse
+		var obj *QueryWorkspacesCurrentResponse
 		// Should not panic - getters should handle nil receiver gracefully
 		defer func() {
 			if r := recover(); r != nil {
@@ -582,8 +582,8 @@ func TestGettersQueryOrganizationsCurrentResponse(t *testing.T) {
 	t.Run("GetDataResidencyLocation", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &QueryOrganizationsCurrentResponse{}
-		var expected QueryOrganizationsCurrentResponseDataResidencyLocation
+		obj := &QueryWorkspacesCurrentResponse{}
+		var expected QueryWorkspacesCurrentResponseDataResidencyLocation
 		obj.DataResidencyLocation = expected
 
 		// Act & Assert
@@ -592,7 +592,7 @@ func TestGettersQueryOrganizationsCurrentResponse(t *testing.T) {
 
 	t.Run("GetDataResidencyLocation_NilReceiver", func(t *testing.T) {
 		t.Parallel()
-		var obj *QueryOrganizationsCurrentResponse
+		var obj *QueryWorkspacesCurrentResponse
 		// Should not panic - getters should handle nil receiver gracefully
 		defer func() {
 			if r := recover(); r != nil {
@@ -604,11 +604,11 @@ func TestGettersQueryOrganizationsCurrentResponse(t *testing.T) {
 
 }
 
-func TestSettersMarkExplicitQueryOrganizationsCurrentResponse(t *testing.T) {
+func TestSettersMarkExplicitQueryWorkspacesCurrentResponse(t *testing.T) {
 	t.Run("SetID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &QueryOrganizationsCurrentResponse{}
+		obj := &QueryWorkspacesCurrentResponse{}
 		var fernTestValueID string
 
 		// Act
@@ -639,7 +639,7 @@ func TestSettersMarkExplicitQueryOrganizationsCurrentResponse(t *testing.T) {
 	t.Run("SetName_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &QueryOrganizationsCurrentResponse{}
+		obj := &QueryWorkspacesCurrentResponse{}
 		var fernTestValueName string
 
 		// Act
@@ -670,7 +670,7 @@ func TestSettersMarkExplicitQueryOrganizationsCurrentResponse(t *testing.T) {
 	t.Run("SetSlug_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &QueryOrganizationsCurrentResponse{}
+		obj := &QueryWorkspacesCurrentResponse{}
 		var fernTestValueSlug string
 
 		// Act
@@ -701,8 +701,8 @@ func TestSettersMarkExplicitQueryOrganizationsCurrentResponse(t *testing.T) {
 	t.Run("SetDataResidencyLocation_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &QueryOrganizationsCurrentResponse{}
-		var fernTestValueDataResidencyLocation QueryOrganizationsCurrentResponseDataResidencyLocation
+		obj := &QueryWorkspacesCurrentResponse{}
+		var fernTestValueDataResidencyLocation QueryWorkspacesCurrentResponseDataResidencyLocation
 
 		// Act
 		obj.SetDataResidencyLocation(fernTestValueDataResidencyLocation)
@@ -1277,11 +1277,11 @@ func TestJSONMarshalingAddProxyDomainWorkspacesRequestArgs(t *testing.T) {
 	})
 }
 
-func TestJSONMarshalingMutationOrganizationsAddProxyDomainResponse(t *testing.T) {
+func TestJSONMarshalingMutationWorkspacesAddProxyDomainResponse(t *testing.T) {
 	t.Run("MarshalUnmarshal", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &MutationOrganizationsAddProxyDomainResponse{}
+		obj := &MutationWorkspacesAddProxyDomainResponse{}
 
 		// Act - Marshal to JSON
 		data, err := json.Marshal(obj)
@@ -1290,31 +1290,31 @@ func TestJSONMarshalingMutationOrganizationsAddProxyDomainResponse(t *testing.T)
 		assert.NotEmpty(t, data, "marshaled data should not be empty")
 
 		// Unmarshal back and verify round-trip
-		var unmarshaled MutationOrganizationsAddProxyDomainResponse
+		var unmarshaled MutationWorkspacesAddProxyDomainResponse
 		err = json.Unmarshal(data, &unmarshaled)
 		assert.NoError(t, err, "round-trip unmarshal should succeed")
 	})
 
 	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
 		t.Parallel()
-		var obj MutationOrganizationsAddProxyDomainResponse
+		var obj MutationWorkspacesAddProxyDomainResponse
 		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
 		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
 	})
 
 	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
 		t.Parallel()
-		var obj MutationOrganizationsAddProxyDomainResponse
+		var obj MutationWorkspacesAddProxyDomainResponse
 		err := json.Unmarshal([]byte(`{}`), &obj)
 		assert.NoError(t, err, "unmarshaling empty object should succeed")
 	})
 }
 
-func TestJSONMarshalingMutationOrganizationsRemoveProxyDomainResponse(t *testing.T) {
+func TestJSONMarshalingMutationWorkspacesRemoveProxyDomainResponse(t *testing.T) {
 	t.Run("MarshalUnmarshal", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &MutationOrganizationsRemoveProxyDomainResponse{}
+		obj := &MutationWorkspacesRemoveProxyDomainResponse{}
 
 		// Act - Marshal to JSON
 		data, err := json.Marshal(obj)
@@ -1323,31 +1323,31 @@ func TestJSONMarshalingMutationOrganizationsRemoveProxyDomainResponse(t *testing
 		assert.NotEmpty(t, data, "marshaled data should not be empty")
 
 		// Unmarshal back and verify round-trip
-		var unmarshaled MutationOrganizationsRemoveProxyDomainResponse
+		var unmarshaled MutationWorkspacesRemoveProxyDomainResponse
 		err = json.Unmarshal(data, &unmarshaled)
 		assert.NoError(t, err, "round-trip unmarshal should succeed")
 	})
 
 	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
 		t.Parallel()
-		var obj MutationOrganizationsRemoveProxyDomainResponse
+		var obj MutationWorkspacesRemoveProxyDomainResponse
 		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
 		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
 	})
 
 	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
 		t.Parallel()
-		var obj MutationOrganizationsRemoveProxyDomainResponse
+		var obj MutationWorkspacesRemoveProxyDomainResponse
 		err := json.Unmarshal([]byte(`{}`), &obj)
 		assert.NoError(t, err, "unmarshaling empty object should succeed")
 	})
 }
 
-func TestJSONMarshalingMutationOrganizationsUpdateBasicsResponse(t *testing.T) {
+func TestJSONMarshalingMutationWorkspacesUpdateBasicsResponse(t *testing.T) {
 	t.Run("MarshalUnmarshal", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &MutationOrganizationsUpdateBasicsResponse{}
+		obj := &MutationWorkspacesUpdateBasicsResponse{}
 
 		// Act - Marshal to JSON
 		data, err := json.Marshal(obj)
@@ -1356,31 +1356,31 @@ func TestJSONMarshalingMutationOrganizationsUpdateBasicsResponse(t *testing.T) {
 		assert.NotEmpty(t, data, "marshaled data should not be empty")
 
 		// Unmarshal back and verify round-trip
-		var unmarshaled MutationOrganizationsUpdateBasicsResponse
+		var unmarshaled MutationWorkspacesUpdateBasicsResponse
 		err = json.Unmarshal(data, &unmarshaled)
 		assert.NoError(t, err, "round-trip unmarshal should succeed")
 	})
 
 	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
 		t.Parallel()
-		var obj MutationOrganizationsUpdateBasicsResponse
+		var obj MutationWorkspacesUpdateBasicsResponse
 		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
 		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
 	})
 
 	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
 		t.Parallel()
-		var obj MutationOrganizationsUpdateBasicsResponse
+		var obj MutationWorkspacesUpdateBasicsResponse
 		err := json.Unmarshal([]byte(`{}`), &obj)
 		assert.NoError(t, err, "unmarshaling empty object should succeed")
 	})
 }
 
-func TestJSONMarshalingQueryOrganizationsCurrentResponse(t *testing.T) {
+func TestJSONMarshalingQueryWorkspacesCurrentResponse(t *testing.T) {
 	t.Run("MarshalUnmarshal", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &QueryOrganizationsCurrentResponse{}
+		obj := &QueryWorkspacesCurrentResponse{}
 
 		// Act - Marshal to JSON
 		data, err := json.Marshal(obj)
@@ -1389,21 +1389,21 @@ func TestJSONMarshalingQueryOrganizationsCurrentResponse(t *testing.T) {
 		assert.NotEmpty(t, data, "marshaled data should not be empty")
 
 		// Unmarshal back and verify round-trip
-		var unmarshaled QueryOrganizationsCurrentResponse
+		var unmarshaled QueryWorkspacesCurrentResponse
 		err = json.Unmarshal(data, &unmarshaled)
 		assert.NoError(t, err, "round-trip unmarshal should succeed")
 	})
 
 	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
 		t.Parallel()
-		var obj QueryOrganizationsCurrentResponse
+		var obj QueryWorkspacesCurrentResponse
 		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
 		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
 	})
 
 	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
 		t.Parallel()
-		var obj QueryOrganizationsCurrentResponse
+		var obj QueryWorkspacesCurrentResponse
 		err := json.Unmarshal([]byte(`{}`), &obj)
 		assert.NoError(t, err, "unmarshaling empty object should succeed")
 	})
@@ -1491,65 +1491,65 @@ func TestStringAddProxyDomainWorkspacesRequestArgs(t *testing.T) {
 	})
 }
 
-func TestStringMutationOrganizationsAddProxyDomainResponse(t *testing.T) {
+func TestStringMutationWorkspacesAddProxyDomainResponse(t *testing.T) {
 	t.Run("StringMethod", func(t *testing.T) {
 		t.Parallel()
-		obj := &MutationOrganizationsAddProxyDomainResponse{}
+		obj := &MutationWorkspacesAddProxyDomainResponse{}
 		result := obj.String()
 		assert.NotEmpty(t, result, "String() should return a non-empty representation")
 	})
 
 	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
 		t.Parallel()
-		var obj *MutationOrganizationsAddProxyDomainResponse
+		var obj *MutationWorkspacesAddProxyDomainResponse
 		result := obj.String()
 		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
 	})
 }
 
-func TestStringMutationOrganizationsRemoveProxyDomainResponse(t *testing.T) {
+func TestStringMutationWorkspacesRemoveProxyDomainResponse(t *testing.T) {
 	t.Run("StringMethod", func(t *testing.T) {
 		t.Parallel()
-		obj := &MutationOrganizationsRemoveProxyDomainResponse{}
+		obj := &MutationWorkspacesRemoveProxyDomainResponse{}
 		result := obj.String()
 		assert.NotEmpty(t, result, "String() should return a non-empty representation")
 	})
 
 	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
 		t.Parallel()
-		var obj *MutationOrganizationsRemoveProxyDomainResponse
+		var obj *MutationWorkspacesRemoveProxyDomainResponse
 		result := obj.String()
 		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
 	})
 }
 
-func TestStringMutationOrganizationsUpdateBasicsResponse(t *testing.T) {
+func TestStringMutationWorkspacesUpdateBasicsResponse(t *testing.T) {
 	t.Run("StringMethod", func(t *testing.T) {
 		t.Parallel()
-		obj := &MutationOrganizationsUpdateBasicsResponse{}
+		obj := &MutationWorkspacesUpdateBasicsResponse{}
 		result := obj.String()
 		assert.NotEmpty(t, result, "String() should return a non-empty representation")
 	})
 
 	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
 		t.Parallel()
-		var obj *MutationOrganizationsUpdateBasicsResponse
+		var obj *MutationWorkspacesUpdateBasicsResponse
 		result := obj.String()
 		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
 	})
 }
 
-func TestStringQueryOrganizationsCurrentResponse(t *testing.T) {
+func TestStringQueryWorkspacesCurrentResponse(t *testing.T) {
 	t.Run("StringMethod", func(t *testing.T) {
 		t.Parallel()
-		obj := &QueryOrganizationsCurrentResponse{}
+		obj := &QueryWorkspacesCurrentResponse{}
 		result := obj.String()
 		assert.NotEmpty(t, result, "String() should return a non-empty representation")
 	})
 
 	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
 		t.Parallel()
-		var obj *QueryOrganizationsCurrentResponse
+		var obj *QueryWorkspacesCurrentResponse
 		result := obj.String()
 		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
 	})
@@ -1587,28 +1587,28 @@ func TestStringUpdateBasicsWorkspacesRequestArgs(t *testing.T) {
 	})
 }
 
-func TestEnumQueryOrganizationsCurrentResponseDataResidencyLocation(t *testing.T) {
+func TestEnumQueryWorkspacesCurrentResponseDataResidencyLocation(t *testing.T) {
 	t.Run("NewFromString_us", func(t *testing.T) {
 		t.Parallel()
-		val, err := NewQueryOrganizationsCurrentResponseDataResidencyLocationFromString("us")
+		val, err := NewQueryWorkspacesCurrentResponseDataResidencyLocationFromString("us")
 		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, QueryOrganizationsCurrentResponseDataResidencyLocation("us"), val, "enum value should match expected wire value")
+		assert.Equal(t, QueryWorkspacesCurrentResponseDataResidencyLocation("us"), val, "enum value should match expected wire value")
 	})
 
 	t.Run("NewFromString_eu", func(t *testing.T) {
 		t.Parallel()
-		val, err := NewQueryOrganizationsCurrentResponseDataResidencyLocationFromString("eu")
+		val, err := NewQueryWorkspacesCurrentResponseDataResidencyLocationFromString("eu")
 		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, QueryOrganizationsCurrentResponseDataResidencyLocation("eu"), val, "enum value should match expected wire value")
+		assert.Equal(t, QueryWorkspacesCurrentResponseDataResidencyLocation("eu"), val, "enum value should match expected wire value")
 	})
 
 	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewQueryOrganizationsCurrentResponseDataResidencyLocationFromString("invalid_value_that_does_not_exist")
+		_, err := NewQueryWorkspacesCurrentResponseDataResidencyLocationFromString("invalid_value_that_does_not_exist")
 		assert.Error(t, err)
 	})
 
 	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewQueryOrganizationsCurrentResponseDataResidencyLocationFromString("us")
+		val, err := NewQueryWorkspacesCurrentResponseDataResidencyLocationFromString("us")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -1639,10 +1639,10 @@ func TestExtraPropertiesAddProxyDomainWorkspacesRequestArgs(t *testing.T) {
 	})
 }
 
-func TestExtraPropertiesMutationOrganizationsAddProxyDomainResponse(t *testing.T) {
+func TestExtraPropertiesMutationWorkspacesAddProxyDomainResponse(t *testing.T) {
 	t.Run("GetExtraProperties", func(t *testing.T) {
 		t.Parallel()
-		obj := &MutationOrganizationsAddProxyDomainResponse{}
+		obj := &MutationWorkspacesAddProxyDomainResponse{}
 		// Should not panic when calling GetExtraProperties()
 		defer func() {
 			if r := recover(); r != nil {
@@ -1656,16 +1656,16 @@ func TestExtraPropertiesMutationOrganizationsAddProxyDomainResponse(t *testing.T
 
 	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
 		t.Parallel()
-		var obj *MutationOrganizationsAddProxyDomainResponse
+		var obj *MutationWorkspacesAddProxyDomainResponse
 		extraProps := obj.GetExtraProperties()
 		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
 	})
 }
 
-func TestExtraPropertiesMutationOrganizationsRemoveProxyDomainResponse(t *testing.T) {
+func TestExtraPropertiesMutationWorkspacesRemoveProxyDomainResponse(t *testing.T) {
 	t.Run("GetExtraProperties", func(t *testing.T) {
 		t.Parallel()
-		obj := &MutationOrganizationsRemoveProxyDomainResponse{}
+		obj := &MutationWorkspacesRemoveProxyDomainResponse{}
 		// Should not panic when calling GetExtraProperties()
 		defer func() {
 			if r := recover(); r != nil {
@@ -1679,16 +1679,16 @@ func TestExtraPropertiesMutationOrganizationsRemoveProxyDomainResponse(t *testin
 
 	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
 		t.Parallel()
-		var obj *MutationOrganizationsRemoveProxyDomainResponse
+		var obj *MutationWorkspacesRemoveProxyDomainResponse
 		extraProps := obj.GetExtraProperties()
 		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
 	})
 }
 
-func TestExtraPropertiesMutationOrganizationsUpdateBasicsResponse(t *testing.T) {
+func TestExtraPropertiesMutationWorkspacesUpdateBasicsResponse(t *testing.T) {
 	t.Run("GetExtraProperties", func(t *testing.T) {
 		t.Parallel()
-		obj := &MutationOrganizationsUpdateBasicsResponse{}
+		obj := &MutationWorkspacesUpdateBasicsResponse{}
 		// Should not panic when calling GetExtraProperties()
 		defer func() {
 			if r := recover(); r != nil {
@@ -1702,16 +1702,16 @@ func TestExtraPropertiesMutationOrganizationsUpdateBasicsResponse(t *testing.T) 
 
 	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
 		t.Parallel()
-		var obj *MutationOrganizationsUpdateBasicsResponse
+		var obj *MutationWorkspacesUpdateBasicsResponse
 		extraProps := obj.GetExtraProperties()
 		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
 	})
 }
 
-func TestExtraPropertiesQueryOrganizationsCurrentResponse(t *testing.T) {
+func TestExtraPropertiesQueryWorkspacesCurrentResponse(t *testing.T) {
 	t.Run("GetExtraProperties", func(t *testing.T) {
 		t.Parallel()
-		obj := &QueryOrganizationsCurrentResponse{}
+		obj := &QueryWorkspacesCurrentResponse{}
 		// Should not panic when calling GetExtraProperties()
 		defer func() {
 			if r := recover(); r != nil {
@@ -1725,7 +1725,7 @@ func TestExtraPropertiesQueryOrganizationsCurrentResponse(t *testing.T) {
 
 	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
 		t.Parallel()
-		var obj *QueryOrganizationsCurrentResponse
+		var obj *QueryWorkspacesCurrentResponse
 		extraProps := obj.GetExtraProperties()
 		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
 	})

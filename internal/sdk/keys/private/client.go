@@ -45,7 +45,7 @@ func NewClient(options *core.RequestOptions) *Client {
 // 	    IdempotencyKey: "idempotencyKey",
 // 	    Name: "name",
 // 	    Scopes: []keys.CreatePrivateRequestScopesItem{
-// 	        keys.CreatePrivateRequestScopesItemOrgSurfacesRead,
+// 	        keys.CreatePrivateRequestScopesItemOrgTelemetryWrite,
 // 	    },
 // 	}
 // 	client.Keys.Private.Create(

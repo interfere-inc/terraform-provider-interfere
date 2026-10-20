@@ -2211,6 +2211,7 @@ func (r *ReadPrivateKeyResponse) String() string {
 type ReadPrivateKeyResponseScopesItem string
 
 const (
+	ReadPrivateKeyResponseScopesItemOrgTelemetryWrite             ReadPrivateKeyResponseScopesItem = "org:telemetry:write"
 	ReadPrivateKeyResponseScopesItemOrgSurfacesRead               ReadPrivateKeyResponseScopesItem = "org:surfaces:read"
 	ReadPrivateKeyResponseScopesItemOrgSurfacesWrite              ReadPrivateKeyResponseScopesItem = "org:surfaces:write"
 	ReadPrivateKeyResponseScopesItemOrgSurfacesDelete             ReadPrivateKeyResponseScopesItem = "org:surfaces:delete"
@@ -2240,6 +2241,8 @@ const (
 
 func NewReadPrivateKeyResponseScopesItemFromString(s string) (ReadPrivateKeyResponseScopesItem, error) {
 	switch s {
+	case "org:telemetry:write":
+		return ReadPrivateKeyResponseScopesItemOrgTelemetryWrite, nil
 	case "org:surfaces:read":
 		return ReadPrivateKeyResponseScopesItemOrgSurfacesRead, nil
 	case "org:surfaces:write":

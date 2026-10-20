@@ -134,8 +134,8 @@ func TestWorkspacesCurrentWithWireMock(
         )
 
     require.NoError(t, invocationErr, "Client method call should succeed")
-    VerifyRequestCount(t, "TestWorkspacesCurrentWithWireMock", "POST", "/v3/workspaces/workspaceSlug/queries/organizations.current", nil, 1)
-    VerifyAuthHeaders(t, "TestWorkspacesCurrentWithWireMock", "POST", "/v3/workspaces/workspaceSlug/queries/organizations.current", map[string]string{
+    VerifyRequestCount(t, "TestWorkspacesCurrentWithWireMock", "POST", "/v3/workspaces/workspaceSlug/queries/workspaces.current", nil, 1)
+    VerifyAuthHeaders(t, "TestWorkspacesCurrentWithWireMock", "POST", "/v3/workspaces/workspaceSlug/queries/workspaces.current", map[string]string{
     		"Authorization": `{"matches":"Bearer .*"}`,
     	})
 }
@@ -167,8 +167,8 @@ func TestWorkspacesAddProxyDomainWithWireMock(
         )
 
     require.NoError(t, invocationErr, "Client method call should succeed")
-    VerifyRequestCount(t, "TestWorkspacesAddProxyDomainWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/organizations.addProxyDomain", nil, 1)
-    VerifyAuthHeaders(t, "TestWorkspacesAddProxyDomainWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/organizations.addProxyDomain", map[string]string{
+    VerifyRequestCount(t, "TestWorkspacesAddProxyDomainWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/workspaces.addProxyDomain", nil, 1)
+    VerifyAuthHeaders(t, "TestWorkspacesAddProxyDomainWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/workspaces.addProxyDomain", map[string]string{
     		"Authorization": `{"matches":"Bearer .*"}`,
     	})
 }
@@ -199,8 +199,8 @@ func TestWorkspacesRemoveProxyDomainWithWireMock(
         )
 
     require.NoError(t, invocationErr, "Client method call should succeed")
-    VerifyRequestCount(t, "TestWorkspacesRemoveProxyDomainWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/organizations.removeProxyDomain", nil, 1)
-    VerifyAuthHeaders(t, "TestWorkspacesRemoveProxyDomainWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/organizations.removeProxyDomain", map[string]string{
+    VerifyRequestCount(t, "TestWorkspacesRemoveProxyDomainWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/workspaces.removeProxyDomain", nil, 1)
+    VerifyAuthHeaders(t, "TestWorkspacesRemoveProxyDomainWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/workspaces.removeProxyDomain", map[string]string{
     		"Authorization": `{"matches":"Bearer .*"}`,
     	})
 }
@@ -229,8 +229,8 @@ func TestWorkspacesUpdateBasicsWithWireMock(
         )
 
     require.NoError(t, invocationErr, "Client method call should succeed")
-    VerifyRequestCount(t, "TestWorkspacesUpdateBasicsWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/organizations.updateBasics", nil, 1)
-    VerifyAuthHeaders(t, "TestWorkspacesUpdateBasicsWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/organizations.updateBasics", map[string]string{
+    VerifyRequestCount(t, "TestWorkspacesUpdateBasicsWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/workspaces.updateBasics", nil, 1)
+    VerifyAuthHeaders(t, "TestWorkspacesUpdateBasicsWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/workspaces.updateBasics", map[string]string{
     		"Authorization": `{"matches":"Bearer .*"}`,
     	})
 }

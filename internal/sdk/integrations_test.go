@@ -743,7 +743,7 @@ func TestSettersMarkExplicitQueryIntegrationsInstallationsResponseItem(t *testin
 func TestSettersInstallationsIntegrationsRequestArgs(t *testing.T) {
 	t.Run("SetProviders", func(t *testing.T) {
 		obj := &InstallationsIntegrationsRequestArgs{}
-		var fernTestValueProviders []InstallationsIntegrationsRequestArgsProvidersItem
+		var fernTestValueProviders []string
 		obj.SetProviders(fernTestValueProviders)
 		assert.Equal(t, fernTestValueProviders, obj.Providers)
 		assert.NotNil(t, obj.explicitFields)
@@ -756,7 +756,7 @@ func TestGettersInstallationsIntegrationsRequestArgs(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &InstallationsIntegrationsRequestArgs{}
-		var expected []InstallationsIntegrationsRequestArgsProvidersItem
+		var expected []string
 		obj.Providers = expected
 
 		// Act & Assert
@@ -792,7 +792,7 @@ func TestSettersMarkExplicitInstallationsIntegrationsRequestArgs(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &InstallationsIntegrationsRequestArgs{}
-		var fernTestValueProviders []InstallationsIntegrationsRequestArgsProvidersItem
+		var fernTestValueProviders []string
 
 		// Act
 		obj.SetProviders(fernTestValueProviders)
@@ -822,11 +822,11 @@ func TestSettersMarkExplicitInstallationsIntegrationsRequestArgs(t *testing.T) {
 }
 
 func TestSettersLinkSurfaceToDestinationIntegrationsRequestArgs(t *testing.T) {
-	t.Run("SetIntegrationID", func(t *testing.T) {
+	t.Run("SetConnectionID", func(t *testing.T) {
 		obj := &LinkSurfaceToDestinationIntegrationsRequestArgs{}
-		var fernTestValueIntegrationID string
-		obj.SetIntegrationID(fernTestValueIntegrationID)
-		assert.Equal(t, fernTestValueIntegrationID, obj.IntegrationID)
+		var fernTestValueConnectionID string
+		obj.SetConnectionID(fernTestValueConnectionID)
+		assert.Equal(t, fernTestValueConnectionID, obj.ConnectionID)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -849,18 +849,18 @@ func TestSettersLinkSurfaceToDestinationIntegrationsRequestArgs(t *testing.T) {
 }
 
 func TestGettersLinkSurfaceToDestinationIntegrationsRequestArgs(t *testing.T) {
-	t.Run("GetIntegrationID", func(t *testing.T) {
+	t.Run("GetConnectionID", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &LinkSurfaceToDestinationIntegrationsRequestArgs{}
 		var expected string
-		obj.IntegrationID = expected
+		obj.ConnectionID = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetIntegrationID(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetConnectionID(), "getter should return the property value")
 	})
 
-	t.Run("GetIntegrationID_NilReceiver", func(t *testing.T) {
+	t.Run("GetConnectionID_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *LinkSurfaceToDestinationIntegrationsRequestArgs
 		// Should not panic - getters should handle nil receiver gracefully
@@ -869,7 +869,7 @@ func TestGettersLinkSurfaceToDestinationIntegrationsRequestArgs(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetIntegrationID() // Should return zero value
+		_ = obj.GetConnectionID() // Should return zero value
 	})
 
 	t.Run("GetProjectID", func(t *testing.T) {
@@ -921,14 +921,14 @@ func TestGettersLinkSurfaceToDestinationIntegrationsRequestArgs(t *testing.T) {
 }
 
 func TestSettersMarkExplicitLinkSurfaceToDestinationIntegrationsRequestArgs(t *testing.T) {
-	t.Run("SetIntegrationID_MarksExplicit", func(t *testing.T) {
+	t.Run("SetConnectionID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &LinkSurfaceToDestinationIntegrationsRequestArgs{}
-		var fernTestValueIntegrationID string
+		var fernTestValueConnectionID string
 
 		// Act
-		obj.SetIntegrationID(fernTestValueIntegrationID)
+		obj.SetConnectionID(fernTestValueConnectionID)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -1017,11 +1017,11 @@ func TestSettersMarkExplicitLinkSurfaceToDestinationIntegrationsRequestArgs(t *t
 }
 
 func TestSettersLinkSurfaceToRepositoryIntegrationsRequestArgs(t *testing.T) {
-	t.Run("SetIntegrationID", func(t *testing.T) {
+	t.Run("SetConnectionID", func(t *testing.T) {
 		obj := &LinkSurfaceToRepositoryIntegrationsRequestArgs{}
-		var fernTestValueIntegrationID string
-		obj.SetIntegrationID(fernTestValueIntegrationID)
-		assert.Equal(t, fernTestValueIntegrationID, obj.IntegrationID)
+		var fernTestValueConnectionID string
+		obj.SetConnectionID(fernTestValueConnectionID)
+		assert.Equal(t, fernTestValueConnectionID, obj.ConnectionID)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -1052,18 +1052,18 @@ func TestSettersLinkSurfaceToRepositoryIntegrationsRequestArgs(t *testing.T) {
 }
 
 func TestGettersLinkSurfaceToRepositoryIntegrationsRequestArgs(t *testing.T) {
-	t.Run("GetIntegrationID", func(t *testing.T) {
+	t.Run("GetConnectionID", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &LinkSurfaceToRepositoryIntegrationsRequestArgs{}
 		var expected string
-		obj.IntegrationID = expected
+		obj.ConnectionID = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetIntegrationID(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetConnectionID(), "getter should return the property value")
 	})
 
-	t.Run("GetIntegrationID_NilReceiver", func(t *testing.T) {
+	t.Run("GetConnectionID_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *LinkSurfaceToRepositoryIntegrationsRequestArgs
 		// Should not panic - getters should handle nil receiver gracefully
@@ -1072,7 +1072,7 @@ func TestGettersLinkSurfaceToRepositoryIntegrationsRequestArgs(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetIntegrationID() // Should return zero value
+		_ = obj.GetConnectionID() // Should return zero value
 	})
 
 	t.Run("GetRepositoryID", func(t *testing.T) {
@@ -1157,14 +1157,14 @@ func TestGettersLinkSurfaceToRepositoryIntegrationsRequestArgs(t *testing.T) {
 }
 
 func TestSettersMarkExplicitLinkSurfaceToRepositoryIntegrationsRequestArgs(t *testing.T) {
-	t.Run("SetIntegrationID_MarksExplicit", func(t *testing.T) {
+	t.Run("SetConnectionID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &LinkSurfaceToRepositoryIntegrationsRequestArgs{}
-		var fernTestValueIntegrationID string
+		var fernTestValueConnectionID string
 
 		// Act
-		obj.SetIntegrationID(fernTestValueIntegrationID)
+		obj.SetConnectionID(fernTestValueConnectionID)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -2126,70 +2126,6 @@ func TestStringUnlinkSurfaceMappingIntegrationsRequestArgs(t *testing.T) {
 	})
 }
 
-func TestEnumInstallationsIntegrationsRequestArgsProvidersItem(t *testing.T) {
-	t.Run("NewFromString_github", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewInstallationsIntegrationsRequestArgsProvidersItemFromString("github")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, InstallationsIntegrationsRequestArgsProvidersItem("github"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_ghe_cloud", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewInstallationsIntegrationsRequestArgsProvidersItemFromString("ghe_cloud")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, InstallationsIntegrationsRequestArgsProvidersItem("ghe_cloud"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_ghe_server", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewInstallationsIntegrationsRequestArgsProvidersItemFromString("ghe_server")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, InstallationsIntegrationsRequestArgsProvidersItem("ghe_server"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_vercel", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewInstallationsIntegrationsRequestArgsProvidersItemFromString("vercel")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, InstallationsIntegrationsRequestArgsProvidersItem("vercel"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_cloudflare", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewInstallationsIntegrationsRequestArgsProvidersItemFromString("cloudflare")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, InstallationsIntegrationsRequestArgsProvidersItem("cloudflare"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_slack", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewInstallationsIntegrationsRequestArgsProvidersItemFromString("slack")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, InstallationsIntegrationsRequestArgsProvidersItem("slack"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_cli", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewInstallationsIntegrationsRequestArgsProvidersItemFromString("cli")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, InstallationsIntegrationsRequestArgsProvidersItem("cli"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewInstallationsIntegrationsRequestArgsProvidersItemFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewInstallationsIntegrationsRequestArgsProvidersItemFromString("github")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
 func TestEnumQueryIntegrationsInstallationsResponseItemProvider(t *testing.T) {
 	t.Run("NewFromString_github", func(t *testing.T) {
 		t.Parallel()
@@ -2233,11 +2169,25 @@ func TestEnumQueryIntegrationsInstallationsResponseItemProvider(t *testing.T) {
 		assert.Equal(t, QueryIntegrationsInstallationsResponseItemProvider("slack"), val, "enum value should match expected wire value")
 	})
 
+	t.Run("NewFromString_linear", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewQueryIntegrationsInstallationsResponseItemProviderFromString("linear")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, QueryIntegrationsInstallationsResponseItemProvider("linear"), val, "enum value should match expected wire value")
+	})
+
 	t.Run("NewFromString_cli", func(t *testing.T) {
 		t.Parallel()
 		val, err := NewQueryIntegrationsInstallationsResponseItemProviderFromString("cli")
 		assert.NoError(t, err, "valid enum value should not return error")
 		assert.Equal(t, QueryIntegrationsInstallationsResponseItemProvider("cli"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_mcp", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewQueryIntegrationsInstallationsResponseItemProviderFromString("mcp")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, QueryIntegrationsInstallationsResponseItemProvider("mcp"), val, "enum value should match expected wire value")
 	})
 
 	t.Run("NewFromString_Invalid", func(t *testing.T) {

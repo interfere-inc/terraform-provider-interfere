@@ -5,6 +5,7 @@ package resource_surface
 import (
 	"context"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"regexp"
@@ -16,9 +17,11 @@ func SurfaceResourceSchema(ctx context.Context) schema.Schema {
 	return schema.Schema{
 		Attributes: map[string]schema.Attribute{
 			"anonymous_user_tracking": schema.BoolAttribute{
+				Optional:            true,
 				Computed:            true,
 				Description:         "Whether anonymous-user telemetry is collected.",
 				MarkdownDescription: "Whether anonymous-user telemetry is collected.",
+				Default:             booldefault.StaticBool(true),
 			},
 			"id": schema.StringAttribute{
 				Computed:            true,

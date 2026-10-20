@@ -60,7 +60,7 @@ func (r *integrationDataSource) Read(ctx context.Context, req datasource.ReadReq
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	items, err := r.client.Integrations.Installations(ctx, &sdk.InstallationsIntegrationsRequest{WorkspaceSlug: data.WorkspaceSlug.ValueString(), Args: &sdk.InstallationsIntegrationsRequestArgs{Providers: []sdk.InstallationsIntegrationsRequestArgsProvidersItem{sdk.InstallationsIntegrationsRequestArgsProvidersItem(data.Provider.ValueString())}}})
+	items, err := r.client.Integrations.Installations(ctx, &sdk.InstallationsIntegrationsRequest{WorkspaceSlug: data.WorkspaceSlug.ValueString(), Args: &sdk.InstallationsIntegrationsRequestArgs{Providers: []string{data.Provider.ValueString()}}})
 	if err != nil {
 		resp.Diagnostics.AddError("Unable to find integration", apiError(err))
 		return

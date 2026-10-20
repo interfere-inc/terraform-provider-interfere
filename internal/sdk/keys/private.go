@@ -184,6 +184,7 @@ func (g *GetPrivateRequest) SetAPIKeyID(apiKeyID string) {
 type CreatePrivateRequestScopesItem string
 
 const (
+	CreatePrivateRequestScopesItemOrgTelemetryWrite             CreatePrivateRequestScopesItem = "org:telemetry:write"
 	CreatePrivateRequestScopesItemOrgSurfacesRead               CreatePrivateRequestScopesItem = "org:surfaces:read"
 	CreatePrivateRequestScopesItemOrgSurfacesWrite              CreatePrivateRequestScopesItem = "org:surfaces:write"
 	CreatePrivateRequestScopesItemOrgSurfacesDelete             CreatePrivateRequestScopesItem = "org:surfaces:delete"
@@ -213,6 +214,8 @@ const (
 
 func NewCreatePrivateRequestScopesItemFromString(s string) (CreatePrivateRequestScopesItem, error) {
 	switch s {
+	case "org:telemetry:write":
+		return CreatePrivateRequestScopesItemOrgTelemetryWrite, nil
 	case "org:surfaces:read":
 		return CreatePrivateRequestScopesItemOrgSurfacesRead, nil
 	case "org:surfaces:write":

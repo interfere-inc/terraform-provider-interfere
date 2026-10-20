@@ -125,8 +125,8 @@ func TestIntegrationsInstallationsWithWireMock(
         request := &sdk.InstallationsIntegrationsRequest{
             WorkspaceSlug: "workspaceSlug",
             Args: &sdk.InstallationsIntegrationsRequestArgs{
-                Providers: []sdk.InstallationsIntegrationsRequestArgsProvidersItem{
-                    sdk.InstallationsIntegrationsRequestArgsProvidersItemGithub,
+                Providers: []string{
+                    "providers",
                 },
             },
         }
@@ -159,7 +159,7 @@ func TestIntegrationsLinkSurfaceToDestinationWithWireMock(
         request := &sdk.LinkSurfaceToDestinationIntegrationsRequest{
             WorkspaceSlug: "workspaceSlug",
             Args: &sdk.LinkSurfaceToDestinationIntegrationsRequestArgs{
-                IntegrationID: "integrationId",
+                ConnectionID: "connectionId",
                 ProjectID: "projectId",
                 SurfaceSlug: "surfaceSlug",
             },
@@ -193,7 +193,7 @@ func TestIntegrationsLinkSurfaceToRepositoryWithWireMock(
         request := &sdk.LinkSurfaceToRepositoryIntegrationsRequest{
             WorkspaceSlug: "workspaceSlug",
             Args: &sdk.LinkSurfaceToRepositoryIntegrationsRequestArgs{
-                IntegrationID: "integrationId",
+                ConnectionID: "connectionId",
                 RepositoryID: "repositoryId",
                 SurfaceSlug: "surfaceSlug",
             },

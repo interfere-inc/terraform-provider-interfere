@@ -127,7 +127,7 @@ func TestKeysPrivateCreateWithWireMock(
             IdempotencyKey: "idempotencyKey",
             Name: "name",
             Scopes: []keys.CreatePrivateRequestScopesItem{
-                keys.CreatePrivateRequestScopesItemOrgSurfacesRead,
+                keys.CreatePrivateRequestScopesItemOrgTelemetryWrite,
             },
         }
     _, invocationErr :=     client.Keys.Private.Create(

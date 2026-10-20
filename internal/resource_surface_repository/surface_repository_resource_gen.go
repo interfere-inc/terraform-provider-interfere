@@ -23,7 +23,7 @@ func SurfaceRepositoryResourceSchema(ctx context.Context) schema.Schema {
 		Attributes: map[string]schema.Attribute{
 			"args": schema.SingleNestedAttribute{
 				Attributes: map[string]schema.Attribute{
-					"integration_id": schema.StringAttribute{
+					"connection_id": schema.StringAttribute{
 						Required:            true,
 						Description:         "Identifier of the existing integration installation.",
 						MarkdownDescription: "Identifier of the existing integration installation.",
@@ -104,22 +104,22 @@ func (t ArgsType) ValueFromObject(ctx context.Context, in basetypes.ObjectValue)
 
 	attributes := in.Attributes()
 
-	integrationIdAttribute, ok := attributes["integration_id"]
+	connectionIdAttribute, ok := attributes["connection_id"]
 
 	if !ok {
 		diags.AddError(
 			"Attribute Missing",
-			`integration_id is missing from object`)
+			`connection_id is missing from object`)
 
 		return nil, diags
 	}
 
-	integrationIdVal, ok := integrationIdAttribute.(basetypes.StringValue)
+	connectionIdVal, ok := connectionIdAttribute.(basetypes.StringValue)
 
 	if !ok {
 		diags.AddError(
 			"Attribute Wrong Type",
-			fmt.Sprintf(`integration_id expected to be basetypes.StringValue, was: %T`, integrationIdAttribute))
+			fmt.Sprintf(`connection_id expected to be basetypes.StringValue, was: %T`, connectionIdAttribute))
 	}
 
 	repositoryIdAttribute, ok := attributes["repository_id"]
@@ -181,7 +181,7 @@ func (t ArgsType) ValueFromObject(ctx context.Context, in basetypes.ObjectValue)
 	}
 
 	return ArgsValue{
-		IntegrationId:    integrationIdVal,
+		ConnectionId:     connectionIdVal,
 		RepositoryId:     repositoryIdVal,
 		SurfaceSlug:      surfaceSlugVal,
 		WorkingDirectory: workingDirectoryVal,
@@ -252,22 +252,22 @@ func NewArgsValue(attributeTypes map[string]attr.Type, attributes map[string]att
 		return NewArgsValueUnknown(), diags
 	}
 
-	integrationIdAttribute, ok := attributes["integration_id"]
+	connectionIdAttribute, ok := attributes["connection_id"]
 
 	if !ok {
 		diags.AddError(
 			"Attribute Missing",
-			`integration_id is missing from object`)
+			`connection_id is missing from object`)
 
 		return NewArgsValueUnknown(), diags
 	}
 
-	integrationIdVal, ok := integrationIdAttribute.(basetypes.StringValue)
+	connectionIdVal, ok := connectionIdAttribute.(basetypes.StringValue)
 
 	if !ok {
 		diags.AddError(
 			"Attribute Wrong Type",
-			fmt.Sprintf(`integration_id expected to be basetypes.StringValue, was: %T`, integrationIdAttribute))
+			fmt.Sprintf(`connection_id expected to be basetypes.StringValue, was: %T`, connectionIdAttribute))
 	}
 
 	repositoryIdAttribute, ok := attributes["repository_id"]
@@ -329,7 +329,7 @@ func NewArgsValue(attributeTypes map[string]attr.Type, attributes map[string]att
 	}
 
 	return ArgsValue{
-		IntegrationId:    integrationIdVal,
+		ConnectionId:     connectionIdVal,
 		RepositoryId:     repositoryIdVal,
 		SurfaceSlug:      surfaceSlugVal,
 		WorkingDirectory: workingDirectoryVal,
@@ -405,7 +405,7 @@ func (t ArgsType) ValueType(ctx context.Context) attr.Value {
 var _ basetypes.ObjectValuable = ArgsValue{}
 
 type ArgsValue struct {
-	IntegrationId    basetypes.StringValue `tfsdk:"integration_id"`
+	ConnectionId     basetypes.StringValue `tfsdk:"connection_id"`
 	RepositoryId     basetypes.StringValue `tfsdk:"repository_id"`
 	SurfaceSlug      basetypes.StringValue `tfsdk:"surface_slug"`
 	WorkingDirectory basetypes.StringValue `tfsdk:"working_directory"`
@@ -418,7 +418,7 @@ func (v ArgsValue) ToTerraformValue(ctx context.Context) (tftypes.Value, error) 
 	var val tftypes.Value
 	var err error
 
-	attrTypes["integration_id"] = basetypes.StringType{}.TerraformType(ctx)
+	attrTypes["connection_id"] = basetypes.StringType{}.TerraformType(ctx)
 	attrTypes["repository_id"] = basetypes.StringType{}.TerraformType(ctx)
 	attrTypes["surface_slug"] = basetypes.StringType{}.TerraformType(ctx)
 	attrTypes["working_directory"] = basetypes.StringType{}.TerraformType(ctx)
@@ -429,13 +429,13 @@ func (v ArgsValue) ToTerraformValue(ctx context.Context) (tftypes.Value, error) 
 	case attr.ValueStateKnown:
 		vals := make(map[string]tftypes.Value, 4)
 
-		val, err = v.IntegrationId.ToTerraformValue(ctx)
+		val, err = v.ConnectionId.ToTerraformValue(ctx)
 
 		if err != nil {
 			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
 		}
 
-		vals["integration_id"] = val
+		vals["connection_id"] = val
 
 		val, err = v.RepositoryId.ToTerraformValue(ctx)
 
@@ -491,7 +491,7 @@ func (v ArgsValue) ToObjectValue(ctx context.Context) (basetypes.ObjectValue, di
 	var diags diag.Diagnostics
 
 	attributeTypes := map[string]attr.Type{
-		"integration_id":    basetypes.StringType{},
+		"connection_id":     basetypes.StringType{},
 		"repository_id":     basetypes.StringType{},
 		"surface_slug":      basetypes.StringType{},
 		"working_directory": basetypes.StringType{},
@@ -508,7 +508,7 @@ func (v ArgsValue) ToObjectValue(ctx context.Context) (basetypes.ObjectValue, di
 	objVal, diags := types.ObjectValue(
 		attributeTypes,
 		map[string]attr.Value{
-			"integration_id":    v.IntegrationId,
+			"connection_id":     v.ConnectionId,
 			"repository_id":     v.RepositoryId,
 			"surface_slug":      v.SurfaceSlug,
 			"working_directory": v.WorkingDirectory,
@@ -532,7 +532,7 @@ func (v ArgsValue) Equal(o attr.Value) bool {
 		return true
 	}
 
-	if !v.IntegrationId.Equal(other.IntegrationId) {
+	if !v.ConnectionId.Equal(other.ConnectionId) {
 		return false
 	}
 
@@ -561,7 +561,7 @@ func (v ArgsValue) Type(ctx context.Context) attr.Type {
 
 func (v ArgsValue) AttributeTypes(ctx context.Context) map[string]attr.Type {
 	return map[string]attr.Type{
-		"integration_id":    basetypes.StringType{},
+		"connection_id":     basetypes.StringType{},
 		"repository_id":     basetypes.StringType{},
 		"surface_slug":      basetypes.StringType{},
 		"working_directory": basetypes.StringType{},

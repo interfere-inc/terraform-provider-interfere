@@ -418,6 +418,13 @@ func TestSettersMarkExplicitGetPrivateRequest(t *testing.T) {
 }
 
 func TestEnumCreatePrivateRequestScopesItem(t *testing.T) {
+	t.Run("NewFromString_org_telemetry_write", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewCreatePrivateRequestScopesItemFromString("org:telemetry:write")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, CreatePrivateRequestScopesItem("org:telemetry:write"), val, "enum value should match expected wire value")
+	})
+
 	t.Run("NewFromString_org_surfaces_read", func(t *testing.T) {
 		t.Parallel()
 		val, err := NewCreatePrivateRequestScopesItemFromString("org:surfaces:read")
@@ -599,7 +606,7 @@ func TestEnumCreatePrivateRequestScopesItem(t *testing.T) {
 	})
 
 	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewCreatePrivateRequestScopesItemFromString("org:surfaces:read")
+		val, err := NewCreatePrivateRequestScopesItemFromString("org:telemetry:write")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
