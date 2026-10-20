@@ -84,7 +84,7 @@ client.Domains.ByIDIncludeDeleted(
 <dl>
 <dd>
 
-List integration installations to discover provider, connection state and installation identifiers. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation is read-only despite using POST. Permission-filtered queries may return an empty result; do not assume that proves the resource does not exist. Only use pagination arguments declared in the schema.
+Legacy alias for connections.installations. List integration installations to discover provider, connection state and installation identifiers. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation is read-only despite using POST. Permission-filtered queries may return an empty result; do not assume that proves the resource does not exist. Only use pagination arguments declared in the schema.
 </dd>
 </dl>
 </dd>
@@ -102,8 +102,8 @@ List integration installations to discover provider, connection state and instal
 request := &sdk.InstallationsIntegrationsRequest{
     WorkspaceSlug: "workspaceSlug",
     Args: &sdk.InstallationsIntegrationsRequestArgs{
-        Providers: []sdk.InstallationsIntegrationsRequestArgsProvidersItem{
-            sdk.InstallationsIntegrationsRequestArgsProvidersItemGithub,
+        Providers: []string{
+            "providers",
         },
     },
 }
@@ -175,7 +175,7 @@ Link a surface to an integration destination. Inspect the existing installation 
 request := &sdk.LinkSurfaceToDestinationIntegrationsRequest{
     WorkspaceSlug: "workspaceSlug",
     Args: &sdk.LinkSurfaceToDestinationIntegrationsRequestArgs{
-        IntegrationID: "integrationId",
+        ConnectionID: "connectionId",
         ProjectID: "projectId",
         SurfaceSlug: "surfaceSlug",
     },
@@ -248,7 +248,7 @@ Link a surface to a repository. Resolve repository and surface IDs from their li
 request := &sdk.LinkSurfaceToRepositoryIntegrationsRequest{
     WorkspaceSlug: "workspaceSlug",
     Args: &sdk.LinkSurfaceToRepositoryIntegrationsRequestArgs{
-        IntegrationID: "integrationId",
+        ConnectionID: "connectionId",
         RepositoryID: "repositoryId",
         SurfaceSlug: "surfaceSlug",
     },
@@ -434,7 +434,7 @@ client.Integrations.UnlinkSurfaceMapping(
 </details>
 
 ## Workspaces
-<details><summary><code>client.Workspaces.Current(WorkspaceSlug, request) -> *sdk.QueryOrganizationsCurrentResponse</code></summary>
+<details><summary><code>client.Workspaces.Current(WorkspaceSlug, request) -> *sdk.QueryWorkspacesCurrentResponse</code></summary>
 <dl>
 <dd>
 
@@ -502,7 +502,7 @@ client.Workspaces.Current(
 </dl>
 </details>
 
-<details><summary><code>client.Workspaces.AddProxyDomain(WorkspaceSlug, request) -> *sdk.MutationOrganizationsAddProxyDomainResponse</code></summary>
+<details><summary><code>client.Workspaces.AddProxyDomain(WorkspaceSlug, request) -> *sdk.MutationWorkspacesAddProxyDomainResponse</code></summary>
 <dl>
 <dd>
 
@@ -574,7 +574,7 @@ client.Workspaces.AddProxyDomain(
 </dl>
 </details>
 
-<details><summary><code>client.Workspaces.RemoveProxyDomain(WorkspaceSlug, request) -> *sdk.MutationOrganizationsRemoveProxyDomainResponse</code></summary>
+<details><summary><code>client.Workspaces.RemoveProxyDomain(WorkspaceSlug, request) -> *sdk.MutationWorkspacesRemoveProxyDomainResponse</code></summary>
 <dl>
 <dd>
 
@@ -645,7 +645,7 @@ client.Workspaces.RemoveProxyDomain(
 </dl>
 </details>
 
-<details><summary><code>client.Workspaces.UpdateBasics(WorkspaceSlug, request) -> *sdk.MutationOrganizationsUpdateBasicsResponse</code></summary>
+<details><summary><code>client.Workspaces.UpdateBasics(WorkspaceSlug, request) -> *sdk.MutationWorkspacesUpdateBasicsResponse</code></summary>
 <dl>
 <dd>
 
@@ -1032,7 +1032,7 @@ request := &sdk.CreateSurfaceRequest{
     WorkspaceSlug: "workspaceSlug",
     APIKey: &sdk.CreateSurfaceRequestAPIKey{
         Scopes: []sdk.CreateSurfaceRequestAPIKeyScopesItem{
-            sdk.CreateSurfaceRequestAPIKeyScopesItemOrgSurfacesRead,
+            sdk.CreateSurfaceRequestAPIKeyScopesItemOrgTelemetryWrite,
         },
     },
     IdempotencyKey: "idempotencyKey",
@@ -1058,6 +1058,14 @@ client.Surfaces.CreateSurface(
 <dd>
 
 **workspaceSlug:** `string` — Workspace URL slug, using lowercase letters, numbers, and hyphens.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**anonymousUserTracking:** `*bool` — Whether anonymous-user telemetry is collected.
     
 </dd>
 </dl>
@@ -1134,7 +1142,7 @@ request := &keys.CreatePrivateRequest{
     IdempotencyKey: "idempotencyKey",
     Name: "name",
     Scopes: []keys.CreatePrivateRequestScopesItem{
-        keys.CreatePrivateRequestScopesItemOrgSurfacesRead,
+        keys.CreatePrivateRequestScopesItemOrgTelemetryWrite,
     },
 }
 client.Keys.Private.Create(

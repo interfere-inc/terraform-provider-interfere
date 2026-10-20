@@ -57,9 +57,9 @@ func newConfigFixture(t *testing.T) *configFixture {
 				if body.Args["surfaceSlug"] != surfaceSlug {
 					t.Error("Wrong surface")
 				}
-				write(map[string]any{"id": surfaceID, "slug": surfaceSlug, "name": "Example", "type": "react", "deletedAt": nil, "anonymousUserTracking": true, "sourceIntegrationId": f.source, "sourceMappingId": f.repository, "sourceWorkingDirectory": f.directory, "destinationIntegrationId": f.destination, "destinationMappingId": f.project})
+				write(map[string]any{"id": surfaceID, "slug": surfaceSlug, "name": "Example", "type": "react", "deletedAt": nil, "anonymousUserTracking": true, "sourceConnectionId": f.source, "sourceMappingId": f.repository, "sourceWorkingDirectory": f.directory, "destinationConnectionId": f.destination, "destinationMappingId": f.project})
 			},
-			"queries/organizations.current": func() {
+			"queries/workspaces.current": func() {
 				write(map[string]any{"id": surfaceID, "slug": "example", "name": "Example", "dataResidencyLocation": "us"})
 			},
 			"queries/integrations.installations": func() { write(f.integrations) },
@@ -79,7 +79,7 @@ func newConfigFixture(t *testing.T) *configFixture {
 			},
 			"actions/integrations.linkSurfaceToRepository": func() {
 				if f.acknowledge {
-					f.source = body.Args["integrationId"]
+					f.source = body.Args["connectionId"]
 					f.repository = body.Args["repositoryId"]
 					f.directory = body.Args["workingDirectory"]
 				}
@@ -87,7 +87,7 @@ func newConfigFixture(t *testing.T) *configFixture {
 			},
 			"actions/integrations.linkSurfaceToDestination": func() {
 				if f.acknowledge {
-					f.destination = body.Args["integrationId"]
+					f.destination = body.Args["connectionId"]
 					f.project = body.Args["projectId"]
 				}
 				write(map[string]any{"success": f.acknowledge})
@@ -107,7 +107,7 @@ func newConfigFixture(t *testing.T) *configFixture {
 				}
 				write(map[string]any{"success": f.acknowledge})
 			},
-			"actions/organizations.addProxyDomain": func() {
+			"actions/workspaces.addProxyDomain": func() {
 				id, ok := body.Args["id"].(string)
 				if _, err := uuid.Parse(id); err != nil || !ok {
 					t.Error("Wrong domain creation")
@@ -121,7 +121,7 @@ func newConfigFixture(t *testing.T) *configFixture {
 				}
 				write(map[string]any{"success": f.acknowledge})
 			},
-			"actions/organizations.removeProxyDomain": func() {
+			"actions/workspaces.removeProxyDomain": func() {
 				if body.Args["name"] != f.domainName || body.Args["id"] != f.domainID {
 					t.Error("Wrong domain removal")
 				}

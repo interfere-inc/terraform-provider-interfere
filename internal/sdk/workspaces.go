@@ -184,10 +184,10 @@ func (r *RemoveProxyDomainWorkspacesRequest) MarshalJSON() ([]byte, error) {
 }
 
 var (
-	mutationOrganizationsAddProxyDomainResponseFieldSuccess = big.NewInt(1 << 0)
+	mutationWorkspacesAddProxyDomainResponseFieldSuccess = big.NewInt(1 << 0)
 )
 
-type MutationOrganizationsAddProxyDomainResponse struct {
+type MutationWorkspacesAddProxyDomainResponse struct {
 	Success bool `json:"success" url:"success"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -197,21 +197,21 @@ type MutationOrganizationsAddProxyDomainResponse struct {
 	rawJSON         json.RawMessage
 }
 
-func (m *MutationOrganizationsAddProxyDomainResponse) GetSuccess() bool {
+func (m *MutationWorkspacesAddProxyDomainResponse) GetSuccess() bool {
 	if m == nil {
 		return false
 	}
 	return m.Success
 }
 
-func (m *MutationOrganizationsAddProxyDomainResponse) GetExtraProperties() map[string]interface{} {
+func (m *MutationWorkspacesAddProxyDomainResponse) GetExtraProperties() map[string]interface{} {
 	if m == nil {
 		return nil
 	}
 	return m.extraProperties
 }
 
-func (m *MutationOrganizationsAddProxyDomainResponse) require(field *big.Int) {
+func (m *MutationWorkspacesAddProxyDomainResponse) require(field *big.Int) {
 	next := new(big.Int)
 	if m.explicitFields != nil {
 		next.Set(m.explicitFields)
@@ -222,18 +222,18 @@ func (m *MutationOrganizationsAddProxyDomainResponse) require(field *big.Int) {
 
 // SetSuccess sets the Success field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (m *MutationOrganizationsAddProxyDomainResponse) SetSuccess(success bool) {
+func (m *MutationWorkspacesAddProxyDomainResponse) SetSuccess(success bool) {
 	m.Success = success
-	m.require(mutationOrganizationsAddProxyDomainResponseFieldSuccess)
+	m.require(mutationWorkspacesAddProxyDomainResponseFieldSuccess)
 }
 
-func (m *MutationOrganizationsAddProxyDomainResponse) UnmarshalJSON(data []byte) error {
-	type unmarshaler MutationOrganizationsAddProxyDomainResponse
+func (m *MutationWorkspacesAddProxyDomainResponse) UnmarshalJSON(data []byte) error {
+	type unmarshaler MutationWorkspacesAddProxyDomainResponse
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*m = MutationOrganizationsAddProxyDomainResponse(value)
+	*m = MutationWorkspacesAddProxyDomainResponse(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *m)
 	if err != nil {
 		return err
@@ -243,8 +243,8 @@ func (m *MutationOrganizationsAddProxyDomainResponse) UnmarshalJSON(data []byte)
 	return nil
 }
 
-func (m *MutationOrganizationsAddProxyDomainResponse) MarshalJSON() ([]byte, error) {
-	type embed MutationOrganizationsAddProxyDomainResponse
+func (m *MutationWorkspacesAddProxyDomainResponse) MarshalJSON() ([]byte, error) {
+	type embed MutationWorkspacesAddProxyDomainResponse
 	var marshaler = struct {
 		embed
 	}{
@@ -254,7 +254,7 @@ func (m *MutationOrganizationsAddProxyDomainResponse) MarshalJSON() ([]byte, err
 	return json.Marshal(explicitMarshaler)
 }
 
-func (m *MutationOrganizationsAddProxyDomainResponse) String() string {
+func (m *MutationWorkspacesAddProxyDomainResponse) String() string {
 	if m == nil {
 		return "<nil>"
 	}
@@ -270,10 +270,10 @@ func (m *MutationOrganizationsAddProxyDomainResponse) String() string {
 }
 
 var (
-	mutationOrganizationsRemoveProxyDomainResponseFieldSuccess = big.NewInt(1 << 0)
+	mutationWorkspacesRemoveProxyDomainResponseFieldSuccess = big.NewInt(1 << 0)
 )
 
-type MutationOrganizationsRemoveProxyDomainResponse struct {
+type MutationWorkspacesRemoveProxyDomainResponse struct {
 	Success bool `json:"success" url:"success"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -283,21 +283,21 @@ type MutationOrganizationsRemoveProxyDomainResponse struct {
 	rawJSON         json.RawMessage
 }
 
-func (m *MutationOrganizationsRemoveProxyDomainResponse) GetSuccess() bool {
+func (m *MutationWorkspacesRemoveProxyDomainResponse) GetSuccess() bool {
 	if m == nil {
 		return false
 	}
 	return m.Success
 }
 
-func (m *MutationOrganizationsRemoveProxyDomainResponse) GetExtraProperties() map[string]interface{} {
+func (m *MutationWorkspacesRemoveProxyDomainResponse) GetExtraProperties() map[string]interface{} {
 	if m == nil {
 		return nil
 	}
 	return m.extraProperties
 }
 
-func (m *MutationOrganizationsRemoveProxyDomainResponse) require(field *big.Int) {
+func (m *MutationWorkspacesRemoveProxyDomainResponse) require(field *big.Int) {
 	next := new(big.Int)
 	if m.explicitFields != nil {
 		next.Set(m.explicitFields)
@@ -308,18 +308,18 @@ func (m *MutationOrganizationsRemoveProxyDomainResponse) require(field *big.Int)
 
 // SetSuccess sets the Success field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (m *MutationOrganizationsRemoveProxyDomainResponse) SetSuccess(success bool) {
+func (m *MutationWorkspacesRemoveProxyDomainResponse) SetSuccess(success bool) {
 	m.Success = success
-	m.require(mutationOrganizationsRemoveProxyDomainResponseFieldSuccess)
+	m.require(mutationWorkspacesRemoveProxyDomainResponseFieldSuccess)
 }
 
-func (m *MutationOrganizationsRemoveProxyDomainResponse) UnmarshalJSON(data []byte) error {
-	type unmarshaler MutationOrganizationsRemoveProxyDomainResponse
+func (m *MutationWorkspacesRemoveProxyDomainResponse) UnmarshalJSON(data []byte) error {
+	type unmarshaler MutationWorkspacesRemoveProxyDomainResponse
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*m = MutationOrganizationsRemoveProxyDomainResponse(value)
+	*m = MutationWorkspacesRemoveProxyDomainResponse(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *m)
 	if err != nil {
 		return err
@@ -329,8 +329,8 @@ func (m *MutationOrganizationsRemoveProxyDomainResponse) UnmarshalJSON(data []by
 	return nil
 }
 
-func (m *MutationOrganizationsRemoveProxyDomainResponse) MarshalJSON() ([]byte, error) {
-	type embed MutationOrganizationsRemoveProxyDomainResponse
+func (m *MutationWorkspacesRemoveProxyDomainResponse) MarshalJSON() ([]byte, error) {
+	type embed MutationWorkspacesRemoveProxyDomainResponse
 	var marshaler = struct {
 		embed
 	}{
@@ -340,7 +340,7 @@ func (m *MutationOrganizationsRemoveProxyDomainResponse) MarshalJSON() ([]byte, 
 	return json.Marshal(explicitMarshaler)
 }
 
-func (m *MutationOrganizationsRemoveProxyDomainResponse) String() string {
+func (m *MutationWorkspacesRemoveProxyDomainResponse) String() string {
 	if m == nil {
 		return "<nil>"
 	}
@@ -356,10 +356,10 @@ func (m *MutationOrganizationsRemoveProxyDomainResponse) String() string {
 }
 
 var (
-	mutationOrganizationsUpdateBasicsResponseFieldSuccess = big.NewInt(1 << 0)
+	mutationWorkspacesUpdateBasicsResponseFieldSuccess = big.NewInt(1 << 0)
 )
 
-type MutationOrganizationsUpdateBasicsResponse struct {
+type MutationWorkspacesUpdateBasicsResponse struct {
 	Success bool `json:"success" url:"success"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -369,21 +369,21 @@ type MutationOrganizationsUpdateBasicsResponse struct {
 	rawJSON         json.RawMessage
 }
 
-func (m *MutationOrganizationsUpdateBasicsResponse) GetSuccess() bool {
+func (m *MutationWorkspacesUpdateBasicsResponse) GetSuccess() bool {
 	if m == nil {
 		return false
 	}
 	return m.Success
 }
 
-func (m *MutationOrganizationsUpdateBasicsResponse) GetExtraProperties() map[string]interface{} {
+func (m *MutationWorkspacesUpdateBasicsResponse) GetExtraProperties() map[string]interface{} {
 	if m == nil {
 		return nil
 	}
 	return m.extraProperties
 }
 
-func (m *MutationOrganizationsUpdateBasicsResponse) require(field *big.Int) {
+func (m *MutationWorkspacesUpdateBasicsResponse) require(field *big.Int) {
 	next := new(big.Int)
 	if m.explicitFields != nil {
 		next.Set(m.explicitFields)
@@ -394,18 +394,18 @@ func (m *MutationOrganizationsUpdateBasicsResponse) require(field *big.Int) {
 
 // SetSuccess sets the Success field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (m *MutationOrganizationsUpdateBasicsResponse) SetSuccess(success bool) {
+func (m *MutationWorkspacesUpdateBasicsResponse) SetSuccess(success bool) {
 	m.Success = success
-	m.require(mutationOrganizationsUpdateBasicsResponseFieldSuccess)
+	m.require(mutationWorkspacesUpdateBasicsResponseFieldSuccess)
 }
 
-func (m *MutationOrganizationsUpdateBasicsResponse) UnmarshalJSON(data []byte) error {
-	type unmarshaler MutationOrganizationsUpdateBasicsResponse
+func (m *MutationWorkspacesUpdateBasicsResponse) UnmarshalJSON(data []byte) error {
+	type unmarshaler MutationWorkspacesUpdateBasicsResponse
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*m = MutationOrganizationsUpdateBasicsResponse(value)
+	*m = MutationWorkspacesUpdateBasicsResponse(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *m)
 	if err != nil {
 		return err
@@ -415,8 +415,8 @@ func (m *MutationOrganizationsUpdateBasicsResponse) UnmarshalJSON(data []byte) e
 	return nil
 }
 
-func (m *MutationOrganizationsUpdateBasicsResponse) MarshalJSON() ([]byte, error) {
-	type embed MutationOrganizationsUpdateBasicsResponse
+func (m *MutationWorkspacesUpdateBasicsResponse) MarshalJSON() ([]byte, error) {
+	type embed MutationWorkspacesUpdateBasicsResponse
 	var marshaler = struct {
 		embed
 	}{
@@ -426,7 +426,7 @@ func (m *MutationOrganizationsUpdateBasicsResponse) MarshalJSON() ([]byte, error
 	return json.Marshal(explicitMarshaler)
 }
 
-func (m *MutationOrganizationsUpdateBasicsResponse) String() string {
+func (m *MutationWorkspacesUpdateBasicsResponse) String() string {
 	if m == nil {
 		return "<nil>"
 	}
@@ -442,13 +442,13 @@ func (m *MutationOrganizationsUpdateBasicsResponse) String() string {
 }
 
 var (
-	queryOrganizationsCurrentResponseFieldID                    = big.NewInt(1 << 0)
-	queryOrganizationsCurrentResponseFieldName                  = big.NewInt(1 << 1)
-	queryOrganizationsCurrentResponseFieldSlug                  = big.NewInt(1 << 2)
-	queryOrganizationsCurrentResponseFieldDataResidencyLocation = big.NewInt(1 << 3)
+	queryWorkspacesCurrentResponseFieldID                    = big.NewInt(1 << 0)
+	queryWorkspacesCurrentResponseFieldName                  = big.NewInt(1 << 1)
+	queryWorkspacesCurrentResponseFieldSlug                  = big.NewInt(1 << 2)
+	queryWorkspacesCurrentResponseFieldDataResidencyLocation = big.NewInt(1 << 3)
 )
 
-type QueryOrganizationsCurrentResponse struct {
+type QueryWorkspacesCurrentResponse struct {
 	// Unique workspace identifier.
 	ID string `json:"id" url:"id"`
 	// Display name of the workspace.
@@ -456,7 +456,7 @@ type QueryOrganizationsCurrentResponse struct {
 	// Workspace URL slug, using lowercase letters, numbers, and hyphens.
 	Slug string `json:"slug" url:"slug"`
 	// Region where workspace data is stored. Set when the workspace is created.
-	DataResidencyLocation QueryOrganizationsCurrentResponseDataResidencyLocation `json:"dataResidencyLocation" url:"dataResidencyLocation"`
+	DataResidencyLocation QueryWorkspacesCurrentResponseDataResidencyLocation `json:"dataResidencyLocation" url:"dataResidencyLocation"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -466,42 +466,42 @@ type QueryOrganizationsCurrentResponse struct {
 	rawJSON json.RawMessage
 }
 
-func (q *QueryOrganizationsCurrentResponse) GetID() string {
+func (q *QueryWorkspacesCurrentResponse) GetID() string {
 	if q == nil {
 		return ""
 	}
 	return q.ID
 }
 
-func (q *QueryOrganizationsCurrentResponse) GetName() string {
+func (q *QueryWorkspacesCurrentResponse) GetName() string {
 	if q == nil {
 		return ""
 	}
 	return q.Name
 }
 
-func (q *QueryOrganizationsCurrentResponse) GetSlug() string {
+func (q *QueryWorkspacesCurrentResponse) GetSlug() string {
 	if q == nil {
 		return ""
 	}
 	return q.Slug
 }
 
-func (q *QueryOrganizationsCurrentResponse) GetDataResidencyLocation() QueryOrganizationsCurrentResponseDataResidencyLocation {
+func (q *QueryWorkspacesCurrentResponse) GetDataResidencyLocation() QueryWorkspacesCurrentResponseDataResidencyLocation {
 	if q == nil {
 		return ""
 	}
 	return q.DataResidencyLocation
 }
 
-func (q *QueryOrganizationsCurrentResponse) GetExtraProperties() map[string]interface{} {
+func (q *QueryWorkspacesCurrentResponse) GetExtraProperties() map[string]interface{} {
 	if q == nil {
 		return nil
 	}
 	return q.ExtraProperties
 }
 
-func (q *QueryOrganizationsCurrentResponse) require(field *big.Int) {
+func (q *QueryWorkspacesCurrentResponse) require(field *big.Int) {
 	next := new(big.Int)
 	if q.explicitFields != nil {
 		next.Set(q.explicitFields)
@@ -512,34 +512,34 @@ func (q *QueryOrganizationsCurrentResponse) require(field *big.Int) {
 
 // SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (q *QueryOrganizationsCurrentResponse) SetID(id string) {
+func (q *QueryWorkspacesCurrentResponse) SetID(id string) {
 	q.ID = id
-	q.require(queryOrganizationsCurrentResponseFieldID)
+	q.require(queryWorkspacesCurrentResponseFieldID)
 }
 
 // SetName sets the Name field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (q *QueryOrganizationsCurrentResponse) SetName(name string) {
+func (q *QueryWorkspacesCurrentResponse) SetName(name string) {
 	q.Name = name
-	q.require(queryOrganizationsCurrentResponseFieldName)
+	q.require(queryWorkspacesCurrentResponseFieldName)
 }
 
 // SetSlug sets the Slug field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (q *QueryOrganizationsCurrentResponse) SetSlug(slug string) {
+func (q *QueryWorkspacesCurrentResponse) SetSlug(slug string) {
 	q.Slug = slug
-	q.require(queryOrganizationsCurrentResponseFieldSlug)
+	q.require(queryWorkspacesCurrentResponseFieldSlug)
 }
 
 // SetDataResidencyLocation sets the DataResidencyLocation field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (q *QueryOrganizationsCurrentResponse) SetDataResidencyLocation(dataResidencyLocation QueryOrganizationsCurrentResponseDataResidencyLocation) {
+func (q *QueryWorkspacesCurrentResponse) SetDataResidencyLocation(dataResidencyLocation QueryWorkspacesCurrentResponseDataResidencyLocation) {
 	q.DataResidencyLocation = dataResidencyLocation
-	q.require(queryOrganizationsCurrentResponseFieldDataResidencyLocation)
+	q.require(queryWorkspacesCurrentResponseFieldDataResidencyLocation)
 }
 
-func (q *QueryOrganizationsCurrentResponse) UnmarshalJSON(data []byte) error {
-	type embed QueryOrganizationsCurrentResponse
+func (q *QueryWorkspacesCurrentResponse) UnmarshalJSON(data []byte) error {
+	type embed QueryWorkspacesCurrentResponse
 	var unmarshaler = struct {
 		embed
 	}{
@@ -548,7 +548,7 @@ func (q *QueryOrganizationsCurrentResponse) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	*q = QueryOrganizationsCurrentResponse(unmarshaler.embed)
+	*q = QueryWorkspacesCurrentResponse(unmarshaler.embed)
 	extraProperties, err := internal.ExtractExtraProperties(data, *q)
 	if err != nil {
 		return err
@@ -558,8 +558,8 @@ func (q *QueryOrganizationsCurrentResponse) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (q *QueryOrganizationsCurrentResponse) MarshalJSON() ([]byte, error) {
-	type embed QueryOrganizationsCurrentResponse
+func (q *QueryWorkspacesCurrentResponse) MarshalJSON() ([]byte, error) {
+	type embed QueryWorkspacesCurrentResponse
 	var marshaler = struct {
 		embed
 	}{
@@ -569,7 +569,7 @@ func (q *QueryOrganizationsCurrentResponse) MarshalJSON() ([]byte, error) {
 	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, q.ExtraProperties)
 }
 
-func (q *QueryOrganizationsCurrentResponse) String() string {
+func (q *QueryWorkspacesCurrentResponse) String() string {
 	if q == nil {
 		return "<nil>"
 	}
@@ -585,25 +585,25 @@ func (q *QueryOrganizationsCurrentResponse) String() string {
 }
 
 // Region where workspace data is stored. Set when the workspace is created.
-type QueryOrganizationsCurrentResponseDataResidencyLocation string
+type QueryWorkspacesCurrentResponseDataResidencyLocation string
 
 const (
-	QueryOrganizationsCurrentResponseDataResidencyLocationUs QueryOrganizationsCurrentResponseDataResidencyLocation = "us"
-	QueryOrganizationsCurrentResponseDataResidencyLocationEu QueryOrganizationsCurrentResponseDataResidencyLocation = "eu"
+	QueryWorkspacesCurrentResponseDataResidencyLocationUs QueryWorkspacesCurrentResponseDataResidencyLocation = "us"
+	QueryWorkspacesCurrentResponseDataResidencyLocationEu QueryWorkspacesCurrentResponseDataResidencyLocation = "eu"
 )
 
-func NewQueryOrganizationsCurrentResponseDataResidencyLocationFromString(s string) (QueryOrganizationsCurrentResponseDataResidencyLocation, error) {
+func NewQueryWorkspacesCurrentResponseDataResidencyLocationFromString(s string) (QueryWorkspacesCurrentResponseDataResidencyLocation, error) {
 	switch s {
 	case "us":
-		return QueryOrganizationsCurrentResponseDataResidencyLocationUs, nil
+		return QueryWorkspacesCurrentResponseDataResidencyLocationUs, nil
 	case "eu":
-		return QueryOrganizationsCurrentResponseDataResidencyLocationEu, nil
+		return QueryWorkspacesCurrentResponseDataResidencyLocationEu, nil
 	}
-	var t QueryOrganizationsCurrentResponseDataResidencyLocation
+	var t QueryWorkspacesCurrentResponseDataResidencyLocation
 	return "", fmt.Errorf("%s is not a valid %T", s, t)
 }
 
-func (q QueryOrganizationsCurrentResponseDataResidencyLocation) Ptr() *QueryOrganizationsCurrentResponseDataResidencyLocation {
+func (q QueryWorkspacesCurrentResponseDataResidencyLocation) Ptr() *QueryWorkspacesCurrentResponseDataResidencyLocation {
 	return &q
 }
 

@@ -204,7 +204,9 @@
                 "vercel",
                 "cloudflare",
                 "slack",
-                "cli"
+                "linear",
+                "cli",
+                "mcp"
               ],
               "type": "string",
               "description": "Installed integration provider."
@@ -222,7 +224,7 @@
           "additionalProperties": true
         }
       },
-      "Query_organizations_currentResponse": {
+      "Query_workspaces_currentResponse": {
         "anyOf": [
           {
             "type": "object",
@@ -308,7 +310,7 @@
                 "type": "boolean",
                 "description": "Whether anonymous-user telemetry is collected."
               },
-              "sourceIntegrationId": {
+              "sourceConnectionId": {
                 "anyOf": [
                   {
                     "type": "string"
@@ -338,7 +340,7 @@
                   }
                 ]
               },
-              "destinationIntegrationId": {
+              "destinationConnectionId": {
                 "anyOf": [
                   {
                     "type": "string"
@@ -366,10 +368,10 @@
               "type",
               "deletedAt",
               "anonymousUserTracking",
-              "sourceIntegrationId",
+              "sourceConnectionId",
               "sourceMappingId",
               "sourceWorkingDirectory",
-              "destinationIntegrationId",
+              "destinationConnectionId",
               "destinationMappingId"
             ],
             "additionalProperties": true
@@ -427,7 +429,7 @@
           "success"
         ]
       },
-      "Mutation_organizations_addProxyDomainResponse": {
+      "Mutation_workspaces_addProxyDomainResponse": {
         "type": "object",
         "properties": {
           "success": {
@@ -439,7 +441,7 @@
           "success"
         ]
       },
-      "Mutation_organizations_removeProxyDomainResponse": {
+      "Mutation_workspaces_removeProxyDomainResponse": {
         "type": "object",
         "properties": {
           "success": {
@@ -451,7 +453,7 @@
           "success"
         ]
       },
-      "Mutation_organizations_updateBasicsResponse": {
+      "Mutation_workspaces_updateBasicsResponse": {
         "type": "object",
         "properties": {
           "success": {
@@ -562,6 +564,7 @@
             "minItems": 1,
             "items": {
               "enum": [
+                "org:telemetry:write",
                 "org:surfaces:read",
                 "org:surfaces:write",
                 "org:surfaces:delete",
@@ -1103,7 +1106,7 @@
       "post": {
         "operationId": "query_integrations_installations",
         "summary": "Read integrations.installations",
-        "description": "List integration installations to discover provider, connection state and installation identifiers. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation is read-only despite using POST. Permission-filtered queries may return an empty result; do not assume that proves the resource does not exist. Only use pagination arguments declared in the schema.",
+        "description": "Legacy alias for connections.installations. List integration installations to discover provider, connection state and installation identifiers. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation is read-only despite using POST. Permission-filtered queries may return an empty result; do not assume that proves the resource does not exist. Only use pagination arguments declared in the schema.",
         "tags": [
           "Workspaces"
         ],
@@ -1132,16 +1135,9 @@
                       "providers": {
                         "type": "array",
                         "items": {
-                          "enum": [
-                            "github",
-                            "ghe_cloud",
-                            "ghe_server",
-                            "vercel",
-                            "cloudflare",
-                            "slack",
-                            "cli"
-                          ],
-                          "type": "string"
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 64
                         }
                       }
                     },
@@ -1409,10 +1405,10 @@
         ]
       }
     },
-    "/v3/workspaces/{workspaceSlug}/queries/organizations.current": {
+    "/v3/workspaces/{workspaceSlug}/queries/workspaces.current": {
       "post": {
-        "operationId": "query_organizations_current",
-        "summary": "Read organizations.current",
+        "operationId": "query_workspaces_current",
+        "summary": "Read workspaces.current",
         "description": "Read the authenticated workspace's current details and settings. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation is read-only despite using POST. Permission-filtered queries may return an empty result; do not assume that proves the resource does not exist. Only use pagination arguments declared in the schema.",
         "tags": [
           "Workspaces"
@@ -1450,7 +1446,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Query_organizations_currentResponse"
+                  "$ref": "#/components/schemas/Query_workspaces_currentResponse"
                 }
               }
             }
@@ -2026,7 +2022,7 @@
                   "args": {
                     "type": "object",
                     "properties": {
-                      "integrationId": {
+                      "connectionId": {
                         "type": "string",
                         "format": "uuid",
                         "description": "Identifier of the existing integration installation."
@@ -2042,7 +2038,7 @@
                       }
                     },
                     "required": [
-                      "integrationId",
+                      "connectionId",
                       "projectId",
                       "surfaceSlug"
                     ]
@@ -2337,7 +2333,7 @@
                   "args": {
                     "type": "object",
                     "properties": {
-                      "integrationId": {
+                      "connectionId": {
                         "type": "string",
                         "format": "uuid",
                         "description": "Identifier of the existing integration installation."
@@ -2364,7 +2360,7 @@
                       }
                     },
                     "required": [
-                      "integrationId",
+                      "connectionId",
                       "repositoryId",
                       "surfaceSlug"
                     ]
@@ -3229,10 +3225,10 @@
         ]
       }
     },
-    "/v3/workspaces/{workspaceSlug}/actions/organizations.addProxyDomain": {
+    "/v3/workspaces/{workspaceSlug}/actions/workspaces.addProxyDomain": {
       "post": {
-        "operationId": "mutation_organizations_addProxyDomain",
-        "summary": "Run organizations.addProxyDomain",
+        "operationId": "mutation_workspaces_addProxyDomain",
+        "summary": "Run workspaces.addProxyDomain",
         "description": "Add a tracking proxy domain to the workspace. Check domains.list and domains.proxyInUse first. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.",
         "tags": [
           "Workspaces"
@@ -3288,7 +3284,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Mutation_organizations_addProxyDomainResponse"
+                  "$ref": "#/components/schemas/Mutation_workspaces_addProxyDomainResponse"
                 }
               }
             }
@@ -3534,10 +3530,10 @@
         ]
       }
     },
-    "/v3/workspaces/{workspaceSlug}/actions/organizations.removeProxyDomain": {
+    "/v3/workspaces/{workspaceSlug}/actions/workspaces.removeProxyDomain": {
       "post": {
-        "operationId": "mutation_organizations_removeProxyDomain",
-        "summary": "Run organizations.removeProxyDomain",
+        "operationId": "mutation_workspaces_removeProxyDomain",
+        "summary": "Run workspaces.removeProxyDomain",
         "description": "Remove a tracking proxy domain. This can affect telemetry sent through that hostname. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.",
         "tags": [
           "Workspaces"
@@ -3591,7 +3587,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Mutation_organizations_removeProxyDomainResponse"
+                  "$ref": "#/components/schemas/Mutation_workspaces_removeProxyDomainResponse"
                 }
               }
             }
@@ -3837,10 +3833,10 @@
         ]
       }
     },
-    "/v3/workspaces/{workspaceSlug}/actions/organizations.updateBasics": {
+    "/v3/workspaces/{workspaceSlug}/actions/workspaces.updateBasics": {
       "post": {
-        "operationId": "mutation_organizations_updateBasics",
-        "summary": "Run organizations.updateBasics",
+        "operationId": "mutation_workspaces_updateBasics",
+        "summary": "Run workspaces.updateBasics",
         "description": "Update workspace name or other basic settings described by the input schema. Read workspaces.current first. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.",
         "tags": [
           "Workspaces"
@@ -3893,7 +3889,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Mutation_organizations_updateBasicsResponse"
+                  "$ref": "#/components/schemas/Mutation_workspaces_updateBasicsResponse"
                 }
               }
             }
@@ -5096,6 +5092,7 @@
                     "minItems": 1,
                     "items": {
                       "enum": [
+                        "org:telemetry:write",
                         "org:surfaces:read",
                         "org:surfaces:write",
                         "org:surfaces:delete",
@@ -6143,6 +6140,11 @@
               "schema": {
                 "type": "object",
                 "properties": {
+                  "anonymousUserTracking": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Whether anonymous-user telemetry is collected."
+                  },
                   "apiKey": {
                     "type": "object",
                     "properties": {
@@ -6151,6 +6153,7 @@
                         "minItems": 1,
                         "items": {
                           "enum": [
+                            "org:telemetry:write",
                             "org:surfaces:read",
                             "org:surfaces:write",
                             "org:surfaces:delete",

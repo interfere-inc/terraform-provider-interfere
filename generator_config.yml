@@ -3,10 +3,10 @@ provider:
 resources:
   workspace:
     create:
-      path: /v3/workspaces/{workspaceSlug}/actions/organizations.updateBasics
+      path: /v3/workspaces/{workspaceSlug}/actions/workspaces.updateBasics
       method: POST
     read: &workspace_read
-      path: /v3/workspaces/{workspaceSlug}/queries/organizations.current
+      path: /v3/workspaces/{workspaceSlug}/queries/workspaces.current
       method: POST
     schema:
       ignores: [args, success, slug]
@@ -24,10 +24,10 @@ resources:
           publicKey,
           surface,
           deletedAt,
-          sourceIntegrationId,
+          sourceConnectionId,
           sourceMappingId,
           sourceWorkingDirectory,
-          destinationIntegrationId,
+          destinationConnectionId,
           destinationMappingId,
         ]
   private_key:
@@ -68,10 +68,10 @@ resources:
           type,
           anonymousUserTracking,
           deletedAt,
-          sourceIntegrationId,
+          sourceConnectionId,
           sourceMappingId,
           sourceWorkingDirectory,
-          destinationIntegrationId,
+          destinationConnectionId,
           destinationMappingId,
         ]
   surface_destination:
@@ -82,7 +82,7 @@ resources:
     schema: *mapping_schema
   tracking_domain:
     create:
-      path: /v3/workspaces/{workspaceSlug}/actions/organizations.addProxyDomain
+      path: /v3/workspaces/{workspaceSlug}/actions/workspaces.addProxyDomain
       method: POST
     read:
       path: /v3/workspaces/{workspaceSlug}/queries/domains.byIdIncludeDeleted
@@ -109,10 +109,10 @@ data_sources:
       ignores:
         [
           deletedAt,
-          sourceIntegrationId,
+          sourceConnectionId,
           sourceMappingId,
           sourceWorkingDirectory,
-          destinationIntegrationId,
+          destinationConnectionId,
           destinationMappingId,
         ]
   integration:

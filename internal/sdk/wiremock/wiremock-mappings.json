@@ -187,10 +187,10 @@
       }
     },
     {
-      "id": "00a0ea69-fec4-430a-8e70-660d956dd5e7",
-      "name": "Read organizations.current - default",
+      "id": "ee7dab92-fcc6-4a2c-9d53-b69b0acd8559",
+      "name": "Read workspaces.current - default",
       "request": {
-        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/queries/organizations.current",
+        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/queries/workspaces.current",
         "method": "POST",
         "pathParameters": {
           "workspaceSlug": {
@@ -205,7 +205,7 @@
           "Content-Type": "application/json"
         }
       },
-      "uuid": "00a0ea69-fec4-430a-8e70-660d956dd5e7",
+      "uuid": "ee7dab92-fcc6-4a2c-9d53-b69b0acd8559",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -218,10 +218,10 @@
       }
     },
     {
-      "id": "2ed4a00b-db4d-4936-acac-70472c927602",
-      "name": "Run organizations.addProxyDomain - default",
+      "id": "32180a70-7461-4d00-ad0a-c026ea93b239",
+      "name": "Run workspaces.addProxyDomain - default",
       "request": {
-        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/actions/organizations.addProxyDomain",
+        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/actions/workspaces.addProxyDomain",
         "method": "POST",
         "pathParameters": {
           "workspaceSlug": {
@@ -236,7 +236,7 @@
           "Content-Type": "application/json"
         }
       },
-      "uuid": "2ed4a00b-db4d-4936-acac-70472c927602",
+      "uuid": "32180a70-7461-4d00-ad0a-c026ea93b239",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -249,10 +249,10 @@
       }
     },
     {
-      "id": "84df9ccd-5fee-4097-a5ce-2d02ab8296c5",
-      "name": "Run organizations.removeProxyDomain - default",
+      "id": "42235bd4-861b-48ac-88a4-f5016c922720",
+      "name": "Run workspaces.removeProxyDomain - default",
       "request": {
-        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/actions/organizations.removeProxyDomain",
+        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/actions/workspaces.removeProxyDomain",
         "method": "POST",
         "pathParameters": {
           "workspaceSlug": {
@@ -267,7 +267,7 @@
           "Content-Type": "application/json"
         }
       },
-      "uuid": "84df9ccd-5fee-4097-a5ce-2d02ab8296c5",
+      "uuid": "42235bd4-861b-48ac-88a4-f5016c922720",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -280,10 +280,10 @@
       }
     },
     {
-      "id": "b2272cba-f315-44ac-9a51-0ea6affbc368",
-      "name": "Run organizations.updateBasics - default",
+      "id": "a8a77a24-49d4-4b2e-a7d8-37a959690bef",
+      "name": "Run workspaces.updateBasics - default",
       "request": {
-        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/actions/organizations.updateBasics",
+        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/actions/workspaces.updateBasics",
         "method": "POST",
         "pathParameters": {
           "workspaceSlug": {
@@ -298,7 +298,7 @@
           "Content-Type": "application/json"
         }
       },
-      "uuid": "b2272cba-f315-44ac-9a51-0ea6affbc368",
+      "uuid": "a8a77a24-49d4-4b2e-a7d8-37a959690bef",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -324,7 +324,7 @@
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"slug\": \"slug\",\n  \"type\": \"elysia\",\n  \"deletedAt\": 1.1,\n  \"anonymousUserTracking\": true,\n  \"sourceIntegrationId\": \"sourceIntegrationId\",\n  \"sourceMappingId\": \"sourceMappingId\",\n  \"sourceWorkingDirectory\": \"sourceWorkingDirectory\",\n  \"destinationIntegrationId\": \"destinationIntegrationId\",\n  \"destinationMappingId\": \"destinationMappingId\"\n}",
+        "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"slug\": \"slug\",\n  \"type\": \"elysia\",\n  \"deletedAt\": 1.1,\n  \"anonymousUserTracking\": true,\n  \"sourceConnectionId\": \"sourceConnectionId\",\n  \"sourceMappingId\": \"sourceMappingId\",\n  \"sourceWorkingDirectory\": \"sourceWorkingDirectory\",\n  \"destinationConnectionId\": \"destinationConnectionId\",\n  \"destinationMappingId\": \"destinationMappingId\"\n}",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -513,7 +513,7 @@
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"id\": \"id\",\n  \"version\": \"version\",\n  \"name\": \"name\",\n  \"surfaceSlug\": \"surfaceSlug\",\n  \"scopes\": [\n    \"org:surfaces:read\"\n  ],\n  \"secondsUntilExpiration\": 1,\n  \"expiresAt\": 1,\n  \"revoked\": true\n}",
+        "body": "{\n  \"id\": \"id\",\n  \"version\": \"version\",\n  \"name\": \"name\",\n  \"surfaceSlug\": \"surfaceSlug\",\n  \"scopes\": [\n    \"org:telemetry:write\"\n  ],\n  \"secondsUntilExpiration\": 1,\n  \"expiresAt\": 1,\n  \"revoked\": true\n}",
         "headers": {
           "Content-Type": "application/json"
         }

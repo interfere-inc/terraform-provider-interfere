@@ -17,10 +17,10 @@ func (r *surfaceDestinationResource) write(ctx context.Context, data *surfaceDes
 	if remote.DeletedAt != nil {
 		return errors.New("The surface was deleted.")
 	}
-	if creating && remote.DestinationIntegrationID != nil && (*remote.DestinationIntegrationID != data.IntegrationID.ValueString() || remote.DestinationMappingID == nil || *remote.DestinationMappingID != data.MappingID.ValueString()) {
+	if creating && remote.DestinationConnectionID != nil && (*remote.DestinationConnectionID != data.IntegrationID.ValueString() || remote.DestinationMappingID == nil || *remote.DestinationMappingID != data.MappingID.ValueString()) {
 		return errors.New("The surface already has a different mapping. Import it before changing it.")
 	}
-	result, err := r.client.Integrations.LinkSurfaceToDestination(ctx, &sdk.LinkSurfaceToDestinationIntegrationsRequest{WorkspaceSlug: data.WorkspaceSlug.ValueString(), Args: &sdk.LinkSurfaceToDestinationIntegrationsRequestArgs{IntegrationID: data.IntegrationID.ValueString(), SurfaceSlug: data.SurfaceSlug.ValueString(), ProjectID: data.MappingID.ValueString()}})
+	result, err := r.client.Integrations.LinkSurfaceToDestination(ctx, &sdk.LinkSurfaceToDestinationIntegrationsRequest{WorkspaceSlug: data.WorkspaceSlug.ValueString(), Args: &sdk.LinkSurfaceToDestinationIntegrationsRequestArgs{ConnectionID: data.IntegrationID.ValueString(), SurfaceSlug: data.SurfaceSlug.ValueString(), ProjectID: data.MappingID.ValueString()}})
 	if err != nil {
 		return errors.New(apiError(err))
 	}
@@ -68,10 +68,10 @@ func (r *surfaceDestinationResource) Delete(ctx context.Context, req resource.De
 		resp.Diagnostics.AddError("Unable to delete mapping", err.Error())
 		return
 	}
-	if remote.DeletedAt != nil || (remote.DestinationIntegrationID == nil && remote.DestinationMappingID == nil) {
+	if remote.DeletedAt != nil || (remote.DestinationConnectionID == nil && remote.DestinationMappingID == nil) {
 		return
 	}
-	if remote.DestinationIntegrationID == nil || remote.DestinationMappingID == nil || *remote.DestinationIntegrationID != data.IntegrationID.ValueString() || *remote.DestinationMappingID != data.MappingID.ValueString() {
+	if remote.DestinationConnectionID == nil || remote.DestinationMappingID == nil || *remote.DestinationConnectionID != data.IntegrationID.ValueString() || *remote.DestinationMappingID != data.MappingID.ValueString() {
 		resp.Diagnostics.AddError("Mapping changed", "Refresh the plan before unlinking a changed mapping.")
 		return
 	}

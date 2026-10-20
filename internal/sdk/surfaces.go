@@ -10,18 +10,21 @@ import (
 )
 
 var (
-	createSurfaceRequestFieldWorkspaceSlug  = big.NewInt(1 << 0)
-	createSurfaceRequestFieldAPIKey         = big.NewInt(1 << 1)
-	createSurfaceRequestFieldIdempotencyKey = big.NewInt(1 << 2)
-	createSurfaceRequestFieldName           = big.NewInt(1 << 3)
-	createSurfaceRequestFieldType           = big.NewInt(1 << 4)
+	createSurfaceRequestFieldWorkspaceSlug         = big.NewInt(1 << 0)
+	createSurfaceRequestFieldAnonymousUserTracking = big.NewInt(1 << 1)
+	createSurfaceRequestFieldAPIKey                = big.NewInt(1 << 2)
+	createSurfaceRequestFieldIdempotencyKey        = big.NewInt(1 << 3)
+	createSurfaceRequestFieldName                  = big.NewInt(1 << 4)
+	createSurfaceRequestFieldType                  = big.NewInt(1 << 5)
 )
 
 type CreateSurfaceRequest struct {
 	// Workspace URL slug, using lowercase letters, numbers, and hyphens.
-	WorkspaceSlug  string                      `json:"-" url:"-"`
-	APIKey         *CreateSurfaceRequestAPIKey `json:"apiKey" url:"-"`
-	IdempotencyKey string                      `json:"idempotencyKey" url:"-"`
+	WorkspaceSlug string `json:"-" url:"-"`
+	// Whether anonymous-user telemetry is collected.
+	AnonymousUserTracking *bool                       `json:"anonymousUserTracking,omitempty" url:"-"`
+	APIKey                *CreateSurfaceRequestAPIKey `json:"apiKey" url:"-"`
+	IdempotencyKey        string                      `json:"idempotencyKey" url:"-"`
 	// Display name of the surface.
 	Name string `json:"name" url:"-"`
 	// Application framework used by the surface.
@@ -45,6 +48,13 @@ func (c *CreateSurfaceRequest) require(field *big.Int) {
 func (c *CreateSurfaceRequest) SetWorkspaceSlug(workspaceSlug string) {
 	c.WorkspaceSlug = workspaceSlug
 	c.require(createSurfaceRequestFieldWorkspaceSlug)
+}
+
+// SetAnonymousUserTracking sets the AnonymousUserTracking field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateSurfaceRequest) SetAnonymousUserTracking(anonymousUserTracking *bool) {
+	c.AnonymousUserTracking = anonymousUserTracking
+	c.require(createSurfaceRequestFieldAnonymousUserTracking)
 }
 
 // SetAPIKey sets the APIKey field and marks it as non-optional;
@@ -954,27 +964,27 @@ func (m *MutationSurfacesUpdateNameResponse) String() string {
 }
 
 var (
-	querySurfacesGetBySlugIncludeDeletedResponseFieldID                       = big.NewInt(1 << 0)
-	querySurfacesGetBySlugIncludeDeletedResponseFieldName                     = big.NewInt(1 << 1)
-	querySurfacesGetBySlugIncludeDeletedResponseFieldSlug                     = big.NewInt(1 << 2)
-	querySurfacesGetBySlugIncludeDeletedResponseFieldType                     = big.NewInt(1 << 3)
-	querySurfacesGetBySlugIncludeDeletedResponseFieldDeletedAt                = big.NewInt(1 << 4)
-	querySurfacesGetBySlugIncludeDeletedResponseFieldAnonymousUserTracking    = big.NewInt(1 << 5)
-	querySurfacesGetBySlugIncludeDeletedResponseFieldSourceIntegrationID      = big.NewInt(1 << 6)
-	querySurfacesGetBySlugIncludeDeletedResponseFieldSourceMappingID          = big.NewInt(1 << 7)
-	querySurfacesGetBySlugIncludeDeletedResponseFieldSourceWorkingDirectory   = big.NewInt(1 << 8)
-	querySurfacesGetBySlugIncludeDeletedResponseFieldDestinationIntegrationID = big.NewInt(1 << 9)
-	querySurfacesGetBySlugIncludeDeletedResponseFieldDestinationMappingID     = big.NewInt(1 << 10)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldID                      = big.NewInt(1 << 0)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldName                    = big.NewInt(1 << 1)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldSlug                    = big.NewInt(1 << 2)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldType                    = big.NewInt(1 << 3)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldDeletedAt               = big.NewInt(1 << 4)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldAnonymousUserTracking   = big.NewInt(1 << 5)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldSourceConnectionID      = big.NewInt(1 << 6)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldSourceMappingID         = big.NewInt(1 << 7)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldSourceWorkingDirectory  = big.NewInt(1 << 8)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldDestinationConnectionID = big.NewInt(1 << 9)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldDestinationMappingID    = big.NewInt(1 << 10)
 )
 
 // querySurfacesGetBySlugIncludeDeletedResponseNullableFields maps the wire names of QuerySurfacesGetBySlugIncludeDeletedResponse's nullable fields (required or optional) to their field bits.
 var querySurfacesGetBySlugIncludeDeletedResponseNullableFields = map[string]*big.Int{
-	"deletedAt":                querySurfacesGetBySlugIncludeDeletedResponseFieldDeletedAt,
-	"sourceIntegrationId":      querySurfacesGetBySlugIncludeDeletedResponseFieldSourceIntegrationID,
-	"sourceMappingId":          querySurfacesGetBySlugIncludeDeletedResponseFieldSourceMappingID,
-	"sourceWorkingDirectory":   querySurfacesGetBySlugIncludeDeletedResponseFieldSourceWorkingDirectory,
-	"destinationIntegrationId": querySurfacesGetBySlugIncludeDeletedResponseFieldDestinationIntegrationID,
-	"destinationMappingId":     querySurfacesGetBySlugIncludeDeletedResponseFieldDestinationMappingID,
+	"deletedAt":               querySurfacesGetBySlugIncludeDeletedResponseFieldDeletedAt,
+	"sourceConnectionId":      querySurfacesGetBySlugIncludeDeletedResponseFieldSourceConnectionID,
+	"sourceMappingId":         querySurfacesGetBySlugIncludeDeletedResponseFieldSourceMappingID,
+	"sourceWorkingDirectory":  querySurfacesGetBySlugIncludeDeletedResponseFieldSourceWorkingDirectory,
+	"destinationConnectionId": querySurfacesGetBySlugIncludeDeletedResponseFieldDestinationConnectionID,
+	"destinationMappingId":    querySurfacesGetBySlugIncludeDeletedResponseFieldDestinationMappingID,
 }
 
 type QuerySurfacesGetBySlugIncludeDeletedResponse struct {
@@ -988,12 +998,12 @@ type QuerySurfacesGetBySlugIncludeDeletedResponse struct {
 	Type      QuerySurfacesGetBySlugIncludeDeletedResponseType `json:"type" url:"type"`
 	DeletedAt *float64                                         `json:"deletedAt,omitempty" url:"deletedAt,omitempty"`
 	// Whether anonymous-user telemetry is collected.
-	AnonymousUserTracking    bool    `json:"anonymousUserTracking" url:"anonymousUserTracking"`
-	SourceIntegrationID      *string `json:"sourceIntegrationId,omitempty" url:"sourceIntegrationId,omitempty"`
-	SourceMappingID          *string `json:"sourceMappingId,omitempty" url:"sourceMappingId,omitempty"`
-	SourceWorkingDirectory   *string `json:"sourceWorkingDirectory,omitempty" url:"sourceWorkingDirectory,omitempty"`
-	DestinationIntegrationID *string `json:"destinationIntegrationId,omitempty" url:"destinationIntegrationId,omitempty"`
-	DestinationMappingID     *string `json:"destinationMappingId,omitempty" url:"destinationMappingId,omitempty"`
+	AnonymousUserTracking   bool    `json:"anonymousUserTracking" url:"anonymousUserTracking"`
+	SourceConnectionID      *string `json:"sourceConnectionId,omitempty" url:"sourceConnectionId,omitempty"`
+	SourceMappingID         *string `json:"sourceMappingId,omitempty" url:"sourceMappingId,omitempty"`
+	SourceWorkingDirectory  *string `json:"sourceWorkingDirectory,omitempty" url:"sourceWorkingDirectory,omitempty"`
+	DestinationConnectionID *string `json:"destinationConnectionId,omitempty" url:"destinationConnectionId,omitempty"`
+	DestinationMappingID    *string `json:"destinationMappingId,omitempty" url:"destinationMappingId,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -1045,11 +1055,11 @@ func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) GetAnonymousUserTracking(
 	return q.AnonymousUserTracking
 }
 
-func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) GetSourceIntegrationID() *string {
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) GetSourceConnectionID() *string {
 	if q == nil {
 		return nil
 	}
-	return q.SourceIntegrationID
+	return q.SourceConnectionID
 }
 
 func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) GetSourceMappingID() *string {
@@ -1066,11 +1076,11 @@ func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) GetSourceWorkingDirectory
 	return q.SourceWorkingDirectory
 }
 
-func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) GetDestinationIntegrationID() *string {
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) GetDestinationConnectionID() *string {
 	if q == nil {
 		return nil
 	}
-	return q.DestinationIntegrationID
+	return q.DestinationConnectionID
 }
 
 func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) GetDestinationMappingID() *string {
@@ -1138,11 +1148,11 @@ func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) SetAnonymousUserTracking(
 	q.require(querySurfacesGetBySlugIncludeDeletedResponseFieldAnonymousUserTracking)
 }
 
-// SetSourceIntegrationID sets the SourceIntegrationID field and marks it as non-optional;
+// SetSourceConnectionID sets the SourceConnectionID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) SetSourceIntegrationID(sourceIntegrationID *string) {
-	q.SourceIntegrationID = sourceIntegrationID
-	q.require(querySurfacesGetBySlugIncludeDeletedResponseFieldSourceIntegrationID)
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) SetSourceConnectionID(sourceConnectionID *string) {
+	q.SourceConnectionID = sourceConnectionID
+	q.require(querySurfacesGetBySlugIncludeDeletedResponseFieldSourceConnectionID)
 }
 
 // SetSourceMappingID sets the SourceMappingID field and marks it as non-optional;
@@ -1159,11 +1169,11 @@ func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) SetSourceWorkingDirectory
 	q.require(querySurfacesGetBySlugIncludeDeletedResponseFieldSourceWorkingDirectory)
 }
 
-// SetDestinationIntegrationID sets the DestinationIntegrationID field and marks it as non-optional;
+// SetDestinationConnectionID sets the DestinationConnectionID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) SetDestinationIntegrationID(destinationIntegrationID *string) {
-	q.DestinationIntegrationID = destinationIntegrationID
-	q.require(querySurfacesGetBySlugIncludeDeletedResponseFieldDestinationIntegrationID)
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) SetDestinationConnectionID(destinationConnectionID *string) {
+	q.DestinationConnectionID = destinationConnectionID
+	q.require(querySurfacesGetBySlugIncludeDeletedResponseFieldDestinationConnectionID)
 }
 
 // SetDestinationMappingID sets the DestinationMappingID field and marks it as non-optional;
@@ -1377,6 +1387,7 @@ func (c *CreateSurfaceRequestAPIKey) String() string {
 type CreateSurfaceRequestAPIKeyScopesItem string
 
 const (
+	CreateSurfaceRequestAPIKeyScopesItemOrgTelemetryWrite             CreateSurfaceRequestAPIKeyScopesItem = "org:telemetry:write"
 	CreateSurfaceRequestAPIKeyScopesItemOrgSurfacesRead               CreateSurfaceRequestAPIKeyScopesItem = "org:surfaces:read"
 	CreateSurfaceRequestAPIKeyScopesItemOrgSurfacesWrite              CreateSurfaceRequestAPIKeyScopesItem = "org:surfaces:write"
 	CreateSurfaceRequestAPIKeyScopesItemOrgSurfacesDelete             CreateSurfaceRequestAPIKeyScopesItem = "org:surfaces:delete"
@@ -1406,6 +1417,8 @@ const (
 
 func NewCreateSurfaceRequestAPIKeyScopesItemFromString(s string) (CreateSurfaceRequestAPIKeyScopesItem, error) {
 	switch s {
+	case "org:telemetry:write":
+		return CreateSurfaceRequestAPIKeyScopesItemOrgTelemetryWrite, nil
 	case "org:surfaces:read":
 		return CreateSurfaceRequestAPIKeyScopesItemOrgSurfacesRead, nil
 	case "org:surfaces:write":

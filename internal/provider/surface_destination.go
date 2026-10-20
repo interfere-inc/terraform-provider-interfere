@@ -44,6 +44,8 @@ func (r *surfaceDestinationResource) Schema(ctx context.Context, _ resource.Sche
 	resp.Schema.Description = "Manage a surface's destination mapping through an existing integration. Import with workspace-slug/surface-slug. Destroy unlinks the mapping without deleting the surface or integration."
 	attributes := resp.Schema.Attributes
 	flattenAttributes(attributes, "args")
+	attributes["integration_id"] = attributes["connection_id"]
+	delete(attributes, "connection_id")
 	attributes["id"] = stableString(attributes["id"])
 	for _, field := range []string{"workspace_slug", "surface_slug"} {
 		attributes[field] = requiredString(attributes[field], stringplanmodifier.RequiresReplace())
@@ -67,7 +69,7 @@ func (r *surfaceDestinationResource) ImportState(ctx context.Context, req resour
 		resp.Diagnostics.AddError("Unable to import mapping", err.Error())
 		return
 	}
-	if remote.DeletedAt != nil || remote.DestinationIntegrationID == nil || remote.DestinationMappingID == nil {
+	if remote.DeletedAt != nil || remote.DestinationConnectionID == nil || remote.DestinationMappingID == nil {
 		resp.Diagnostics.AddError("Mapping not found", "Only an active mapping can be imported.")
 		return
 	}

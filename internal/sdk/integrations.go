@@ -665,7 +665,9 @@ const (
 	QueryIntegrationsInstallationsResponseItemProviderVercel     QueryIntegrationsInstallationsResponseItemProvider = "vercel"
 	QueryIntegrationsInstallationsResponseItemProviderCloudflare QueryIntegrationsInstallationsResponseItemProvider = "cloudflare"
 	QueryIntegrationsInstallationsResponseItemProviderSlack      QueryIntegrationsInstallationsResponseItemProvider = "slack"
+	QueryIntegrationsInstallationsResponseItemProviderLinear     QueryIntegrationsInstallationsResponseItemProvider = "linear"
 	QueryIntegrationsInstallationsResponseItemProviderCli        QueryIntegrationsInstallationsResponseItemProvider = "cli"
+	QueryIntegrationsInstallationsResponseItemProviderMcp        QueryIntegrationsInstallationsResponseItemProvider = "mcp"
 )
 
 func NewQueryIntegrationsInstallationsResponseItemProviderFromString(s string) (QueryIntegrationsInstallationsResponseItemProvider, error) {
@@ -682,8 +684,12 @@ func NewQueryIntegrationsInstallationsResponseItemProviderFromString(s string) (
 		return QueryIntegrationsInstallationsResponseItemProviderCloudflare, nil
 	case "slack":
 		return QueryIntegrationsInstallationsResponseItemProviderSlack, nil
+	case "linear":
+		return QueryIntegrationsInstallationsResponseItemProviderLinear, nil
 	case "cli":
 		return QueryIntegrationsInstallationsResponseItemProviderCli, nil
+	case "mcp":
+		return QueryIntegrationsInstallationsResponseItemProviderMcp, nil
 	}
 	var t QueryIntegrationsInstallationsResponseItemProvider
 	return "", fmt.Errorf("%s is not a valid %T", s, t)
@@ -698,7 +704,7 @@ var (
 )
 
 type InstallationsIntegrationsRequestArgs struct {
-	Providers []InstallationsIntegrationsRequestArgsProvidersItem `json:"providers" url:"providers"`
+	Providers []string `json:"providers" url:"providers"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -707,7 +713,7 @@ type InstallationsIntegrationsRequestArgs struct {
 	rawJSON         json.RawMessage
 }
 
-func (i *InstallationsIntegrationsRequestArgs) GetProviders() []InstallationsIntegrationsRequestArgsProvidersItem {
+func (i *InstallationsIntegrationsRequestArgs) GetProviders() []string {
 	if i == nil {
 		return nil
 	}
@@ -732,7 +738,7 @@ func (i *InstallationsIntegrationsRequestArgs) require(field *big.Int) {
 
 // SetProviders sets the Providers field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (i *InstallationsIntegrationsRequestArgs) SetProviders(providers []InstallationsIntegrationsRequestArgsProvidersItem) {
+func (i *InstallationsIntegrationsRequestArgs) SetProviders(providers []string) {
 	i.Providers = providers
 	i.require(installationsIntegrationsRequestArgsFieldProviders)
 }
@@ -779,52 +785,15 @@ func (i *InstallationsIntegrationsRequestArgs) String() string {
 	return fmt.Sprintf("%#v", i)
 }
 
-type InstallationsIntegrationsRequestArgsProvidersItem string
-
-const (
-	InstallationsIntegrationsRequestArgsProvidersItemGithub     InstallationsIntegrationsRequestArgsProvidersItem = "github"
-	InstallationsIntegrationsRequestArgsProvidersItemGheCloud   InstallationsIntegrationsRequestArgsProvidersItem = "ghe_cloud"
-	InstallationsIntegrationsRequestArgsProvidersItemGheServer  InstallationsIntegrationsRequestArgsProvidersItem = "ghe_server"
-	InstallationsIntegrationsRequestArgsProvidersItemVercel     InstallationsIntegrationsRequestArgsProvidersItem = "vercel"
-	InstallationsIntegrationsRequestArgsProvidersItemCloudflare InstallationsIntegrationsRequestArgsProvidersItem = "cloudflare"
-	InstallationsIntegrationsRequestArgsProvidersItemSlack      InstallationsIntegrationsRequestArgsProvidersItem = "slack"
-	InstallationsIntegrationsRequestArgsProvidersItemCli        InstallationsIntegrationsRequestArgsProvidersItem = "cli"
-)
-
-func NewInstallationsIntegrationsRequestArgsProvidersItemFromString(s string) (InstallationsIntegrationsRequestArgsProvidersItem, error) {
-	switch s {
-	case "github":
-		return InstallationsIntegrationsRequestArgsProvidersItemGithub, nil
-	case "ghe_cloud":
-		return InstallationsIntegrationsRequestArgsProvidersItemGheCloud, nil
-	case "ghe_server":
-		return InstallationsIntegrationsRequestArgsProvidersItemGheServer, nil
-	case "vercel":
-		return InstallationsIntegrationsRequestArgsProvidersItemVercel, nil
-	case "cloudflare":
-		return InstallationsIntegrationsRequestArgsProvidersItemCloudflare, nil
-	case "slack":
-		return InstallationsIntegrationsRequestArgsProvidersItemSlack, nil
-	case "cli":
-		return InstallationsIntegrationsRequestArgsProvidersItemCli, nil
-	}
-	var t InstallationsIntegrationsRequestArgsProvidersItem
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (i InstallationsIntegrationsRequestArgsProvidersItem) Ptr() *InstallationsIntegrationsRequestArgsProvidersItem {
-	return &i
-}
-
 var (
-	linkSurfaceToDestinationIntegrationsRequestArgsFieldIntegrationID = big.NewInt(1 << 0)
-	linkSurfaceToDestinationIntegrationsRequestArgsFieldProjectID     = big.NewInt(1 << 1)
-	linkSurfaceToDestinationIntegrationsRequestArgsFieldSurfaceSlug   = big.NewInt(1 << 2)
+	linkSurfaceToDestinationIntegrationsRequestArgsFieldConnectionID = big.NewInt(1 << 0)
+	linkSurfaceToDestinationIntegrationsRequestArgsFieldProjectID    = big.NewInt(1 << 1)
+	linkSurfaceToDestinationIntegrationsRequestArgsFieldSurfaceSlug  = big.NewInt(1 << 2)
 )
 
 type LinkSurfaceToDestinationIntegrationsRequestArgs struct {
 	// Identifier of the existing integration installation.
-	IntegrationID string `json:"integrationId" url:"integrationId"`
+	ConnectionID string `json:"connectionId" url:"connectionId"`
 	// Destination project identifier exposed by the integration.
 	ProjectID string `json:"projectId" url:"projectId"`
 	// Surface URL slug, using lowercase letters, numbers, and hyphens.
@@ -837,11 +806,11 @@ type LinkSurfaceToDestinationIntegrationsRequestArgs struct {
 	rawJSON         json.RawMessage
 }
 
-func (l *LinkSurfaceToDestinationIntegrationsRequestArgs) GetIntegrationID() string {
+func (l *LinkSurfaceToDestinationIntegrationsRequestArgs) GetConnectionID() string {
 	if l == nil {
 		return ""
 	}
-	return l.IntegrationID
+	return l.ConnectionID
 }
 
 func (l *LinkSurfaceToDestinationIntegrationsRequestArgs) GetProjectID() string {
@@ -874,11 +843,11 @@ func (l *LinkSurfaceToDestinationIntegrationsRequestArgs) require(field *big.Int
 	l.explicitFields = next
 }
 
-// SetIntegrationID sets the IntegrationID field and marks it as non-optional;
+// SetConnectionID sets the ConnectionID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (l *LinkSurfaceToDestinationIntegrationsRequestArgs) SetIntegrationID(integrationID string) {
-	l.IntegrationID = integrationID
-	l.require(linkSurfaceToDestinationIntegrationsRequestArgsFieldIntegrationID)
+func (l *LinkSurfaceToDestinationIntegrationsRequestArgs) SetConnectionID(connectionID string) {
+	l.ConnectionID = connectionID
+	l.require(linkSurfaceToDestinationIntegrationsRequestArgsFieldConnectionID)
 }
 
 // SetProjectID sets the ProjectID field and marks it as non-optional;
@@ -938,7 +907,7 @@ func (l *LinkSurfaceToDestinationIntegrationsRequestArgs) String() string {
 }
 
 var (
-	linkSurfaceToRepositoryIntegrationsRequestArgsFieldIntegrationID    = big.NewInt(1 << 0)
+	linkSurfaceToRepositoryIntegrationsRequestArgsFieldConnectionID     = big.NewInt(1 << 0)
 	linkSurfaceToRepositoryIntegrationsRequestArgsFieldRepositoryID     = big.NewInt(1 << 1)
 	linkSurfaceToRepositoryIntegrationsRequestArgsFieldSurfaceSlug      = big.NewInt(1 << 2)
 	linkSurfaceToRepositoryIntegrationsRequestArgsFieldWorkingDirectory = big.NewInt(1 << 3)
@@ -951,7 +920,7 @@ var linkSurfaceToRepositoryIntegrationsRequestArgsNullableFields = map[string]*b
 
 type LinkSurfaceToRepositoryIntegrationsRequestArgs struct {
 	// Identifier of the existing integration installation.
-	IntegrationID string `json:"integrationId" url:"integrationId"`
+	ConnectionID string `json:"connectionId" url:"connectionId"`
 	// Repository identifier exposed by the integration.
 	RepositoryID string `json:"repositoryId" url:"repositoryId"`
 	// Surface URL slug, using lowercase letters, numbers, and hyphens.
@@ -966,11 +935,11 @@ type LinkSurfaceToRepositoryIntegrationsRequestArgs struct {
 	rawJSON         json.RawMessage
 }
 
-func (l *LinkSurfaceToRepositoryIntegrationsRequestArgs) GetIntegrationID() string {
+func (l *LinkSurfaceToRepositoryIntegrationsRequestArgs) GetConnectionID() string {
 	if l == nil {
 		return ""
 	}
-	return l.IntegrationID
+	return l.ConnectionID
 }
 
 func (l *LinkSurfaceToRepositoryIntegrationsRequestArgs) GetRepositoryID() string {
@@ -1010,11 +979,11 @@ func (l *LinkSurfaceToRepositoryIntegrationsRequestArgs) require(field *big.Int)
 	l.explicitFields = next
 }
 
-// SetIntegrationID sets the IntegrationID field and marks it as non-optional;
+// SetConnectionID sets the ConnectionID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (l *LinkSurfaceToRepositoryIntegrationsRequestArgs) SetIntegrationID(integrationID string) {
-	l.IntegrationID = integrationID
-	l.require(linkSurfaceToRepositoryIntegrationsRequestArgsFieldIntegrationID)
+func (l *LinkSurfaceToRepositoryIntegrationsRequestArgs) SetConnectionID(connectionID string) {
+	l.ConnectionID = connectionID
+	l.require(linkSurfaceToRepositoryIntegrationsRequestArgsFieldConnectionID)
 }
 
 // SetRepositoryID sets the RepositoryID field and marks it as non-optional;

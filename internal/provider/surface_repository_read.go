@@ -14,7 +14,7 @@ func (r *surfaceRepositoryResource) read(ctx context.Context, data surfaceReposi
 
 func (data *surfaceRepositoryModel) refresh(remote *sdk.QuerySurfacesGetBySlugIncludeDeletedResponse) {
 	data.ID = types.StringValue(remote.ID)
-	data.IntegrationID = types.StringPointerValue(remote.SourceIntegrationID)
+	data.IntegrationID = types.StringPointerValue(remote.SourceConnectionID)
 	data.MappingID = types.StringPointerValue(remote.SourceMappingID)
 	data.WorkingDirectory = types.StringPointerValue(remote.SourceWorkingDirectory)
 }
@@ -30,11 +30,11 @@ func (r *surfaceRepositoryResource) Read(ctx context.Context, req resource.ReadR
 		resp.Diagnostics.AddError("Unable to read mapping", err.Error())
 		return
 	}
-	if remote.DeletedAt != nil || (remote.SourceIntegrationID == nil && remote.SourceMappingID == nil) {
+	if remote.DeletedAt != nil || (remote.SourceConnectionID == nil && remote.SourceMappingID == nil) {
 		resp.State.RemoveResource(ctx)
 		return
 	}
-	if remote.SourceIntegrationID == nil || remote.SourceMappingID == nil {
+	if remote.SourceConnectionID == nil || remote.SourceMappingID == nil {
 		resp.Diagnostics.AddError("Invalid mapping", "The API returned an incomplete mapping. State was preserved.")
 		return
 	}

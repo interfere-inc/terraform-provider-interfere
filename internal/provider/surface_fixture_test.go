@@ -101,7 +101,7 @@ func newSurfaceFixture(t *testing.T) *surfaceFixture {
 				if f.deleted {
 					deletedAt = 1234567890
 				}
-				write(map[string]any{"id": surfaceID, "slug": surfaceSlug, "name": f.name, "type": f.surfaceType, "deletedAt": deletedAt, "anonymousUserTracking": f.tracking, "sourceIntegrationId": nil, "sourceMappingId": nil, "sourceWorkingDirectory": nil, "destinationIntegrationId": nil, "destinationMappingId": nil})
+				write(map[string]any{"id": surfaceID, "slug": surfaceSlug, "name": f.name, "type": f.surfaceType, "deletedAt": deletedAt, "anonymousUserTracking": f.tracking, "sourceConnectionId": nil, "sourceMappingId": nil, "sourceWorkingDirectory": nil, "destinationConnectionId": nil, "destinationMappingId": nil})
 			},
 			"/v3/workspaces/example/actions/surfaces.setAnonymousUserTracking": func() {
 				var body sdk.SetAnonymousUserTrackingSurfacesRequest

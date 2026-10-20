@@ -50,7 +50,7 @@ func (c *Client) Current(
     ctx context.Context,
     request *sdk.CurrentWorkspacesRequest,
     opts ...option.RequestOption,
-) (*sdk.QueryOrganizationsCurrentResponse, error){
+) (*sdk.QueryWorkspacesCurrentResponse, error){
     response, err := c.WithRawResponse.Current(
         ctx,
         request,
@@ -81,7 +81,7 @@ func (c *Client) AddProxyDomain(
     ctx context.Context,
     request *sdk.AddProxyDomainWorkspacesRequest,
     opts ...option.RequestOption,
-) (*sdk.MutationOrganizationsAddProxyDomainResponse, error){
+) (*sdk.MutationWorkspacesAddProxyDomainResponse, error){
     response, err := c.WithRawResponse.AddProxyDomain(
         ctx,
         request,
@@ -111,7 +111,7 @@ func (c *Client) RemoveProxyDomain(
     ctx context.Context,
     request *sdk.RemoveProxyDomainWorkspacesRequest,
     opts ...option.RequestOption,
-) (*sdk.MutationOrganizationsRemoveProxyDomainResponse, error){
+) (*sdk.MutationWorkspacesRemoveProxyDomainResponse, error){
     response, err := c.WithRawResponse.RemoveProxyDomain(
         ctx,
         request,
@@ -139,7 +139,7 @@ func (c *Client) UpdateBasics(
     ctx context.Context,
     request *sdk.UpdateBasicsWorkspacesRequest,
     opts ...option.RequestOption,
-) (*sdk.MutationOrganizationsUpdateBasicsResponse, error){
+) (*sdk.MutationWorkspacesUpdateBasicsResponse, error){
     response, err := c.WithRawResponse.UpdateBasics(
         ctx,
         request,

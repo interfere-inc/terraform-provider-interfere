@@ -35,15 +35,15 @@ func NewClient(options *core.RequestOptions) *Client {
     }
 }
 
-// List integration installations to discover provider, connection state and installation identifiers. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation is read-only despite using POST. Permission-filtered queries may return an empty result; do not assume that proves the resource does not exist. Only use pagination arguments declared in the schema.
+// Legacy alias for connections.installations. List integration installations to discover provider, connection state and installation identifiers. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation is read-only despite using POST. Permission-filtered queries may return an empty result; do not assume that proves the resource does not exist. Only use pagination arguments declared in the schema.
 // 
 // Example:
 // 
 // 	request := &sdk.InstallationsIntegrationsRequest{
 // 	    WorkspaceSlug: "workspaceSlug",
 // 	    Args: &sdk.InstallationsIntegrationsRequestArgs{
-// 	        Providers: []sdk.InstallationsIntegrationsRequestArgsProvidersItem{
-// 	            sdk.InstallationsIntegrationsRequestArgsProvidersItemGithub,
+// 	        Providers: []string{
+// 	            "providers",
 // 	        },
 // 	    },
 // 	}
@@ -74,7 +74,7 @@ func (c *Client) Installations(
 // 	request := &sdk.LinkSurfaceToDestinationIntegrationsRequest{
 // 	    WorkspaceSlug: "workspaceSlug",
 // 	    Args: &sdk.LinkSurfaceToDestinationIntegrationsRequestArgs{
-// 	        IntegrationID: "integrationId",
+// 	        ConnectionID: "connectionId",
 // 	        ProjectID: "projectId",
 // 	        SurfaceSlug: "surfaceSlug",
 // 	    },
@@ -106,7 +106,7 @@ func (c *Client) LinkSurfaceToDestination(
 // 	request := &sdk.LinkSurfaceToRepositoryIntegrationsRequest{
 // 	    WorkspaceSlug: "workspaceSlug",
 // 	    Args: &sdk.LinkSurfaceToRepositoryIntegrationsRequestArgs{
-// 	        IntegrationID: "integrationId",
+// 	        ConnectionID: "connectionId",
 // 	        RepositoryID: "repositoryId",
 // 	        SurfaceSlug: "surfaceSlug",
 // 	    },

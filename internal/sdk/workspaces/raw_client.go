@@ -37,7 +37,7 @@ func (r *RawClient) Current(
     ctx context.Context,
     request *sdk.CurrentWorkspacesRequest,
     opts ...option.RequestOption,
-) (*core.Response[*sdk.QueryOrganizationsCurrentResponse], error){
+) (*core.Response[*sdk.QueryWorkspacesCurrentResponse], error){
     options := core.NewRequestOptions(opts...)
     baseURL := internal.ResolveBaseURL(
         options.BaseURL,
@@ -45,7 +45,7 @@ func (r *RawClient) Current(
         "",
     )
     endpointURL := internal.EncodeURL(
-        baseURL + "/v3/workspaces/%v/queries/organizations.current",
+        baseURL + "/v3/workspaces/%v/queries/workspaces.current",
         request.WorkspaceSlug,
     )
     authHeaders, authErr := r.options.AuthHeadersForEndpoint([][]string{{"clerkSession"}})
@@ -60,7 +60,7 @@ func (r *RawClient) Current(
         authHeaders,
     )
     headers.Add("Content-Type", "application/json")
-    var response *sdk.QueryOrganizationsCurrentResponse
+    var response *sdk.QueryWorkspacesCurrentResponse
     raw, err := r.caller.Call(
         ctx,
         &internal.CallParams{
@@ -81,7 +81,7 @@ func (r *RawClient) Current(
     if err != nil {
         return nil, err
     }
-    return &core.Response[*sdk.QueryOrganizationsCurrentResponse]{
+    return &core.Response[*sdk.QueryWorkspacesCurrentResponse]{
         StatusCode: raw.StatusCode,
         Header: raw.Header,
         Body: response,
@@ -92,7 +92,7 @@ func (r *RawClient) AddProxyDomain(
     ctx context.Context,
     request *sdk.AddProxyDomainWorkspacesRequest,
     opts ...option.RequestOption,
-) (*core.Response[*sdk.MutationOrganizationsAddProxyDomainResponse], error){
+) (*core.Response[*sdk.MutationWorkspacesAddProxyDomainResponse], error){
     options := core.NewRequestOptions(opts...)
     baseURL := internal.ResolveBaseURL(
         options.BaseURL,
@@ -100,7 +100,7 @@ func (r *RawClient) AddProxyDomain(
         "",
     )
     endpointURL := internal.EncodeURL(
-        baseURL + "/v3/workspaces/%v/actions/organizations.addProxyDomain",
+        baseURL + "/v3/workspaces/%v/actions/workspaces.addProxyDomain",
         request.WorkspaceSlug,
     )
     authHeaders, authErr := r.options.AuthHeadersForEndpoint([][]string{{"clerkSession"}})
@@ -115,7 +115,7 @@ func (r *RawClient) AddProxyDomain(
         authHeaders,
     )
     headers.Add("Content-Type", "application/json")
-    var response *sdk.MutationOrganizationsAddProxyDomainResponse
+    var response *sdk.MutationWorkspacesAddProxyDomainResponse
     raw, err := r.caller.Call(
         ctx,
         &internal.CallParams{
@@ -135,7 +135,7 @@ func (r *RawClient) AddProxyDomain(
     if err != nil {
         return nil, err
     }
-    return &core.Response[*sdk.MutationOrganizationsAddProxyDomainResponse]{
+    return &core.Response[*sdk.MutationWorkspacesAddProxyDomainResponse]{
         StatusCode: raw.StatusCode,
         Header: raw.Header,
         Body: response,
@@ -146,7 +146,7 @@ func (r *RawClient) RemoveProxyDomain(
     ctx context.Context,
     request *sdk.RemoveProxyDomainWorkspacesRequest,
     opts ...option.RequestOption,
-) (*core.Response[*sdk.MutationOrganizationsRemoveProxyDomainResponse], error){
+) (*core.Response[*sdk.MutationWorkspacesRemoveProxyDomainResponse], error){
     options := core.NewRequestOptions(opts...)
     baseURL := internal.ResolveBaseURL(
         options.BaseURL,
@@ -154,7 +154,7 @@ func (r *RawClient) RemoveProxyDomain(
         "",
     )
     endpointURL := internal.EncodeURL(
-        baseURL + "/v3/workspaces/%v/actions/organizations.removeProxyDomain",
+        baseURL + "/v3/workspaces/%v/actions/workspaces.removeProxyDomain",
         request.WorkspaceSlug,
     )
     authHeaders, authErr := r.options.AuthHeadersForEndpoint([][]string{{"clerkSession"}})
@@ -169,7 +169,7 @@ func (r *RawClient) RemoveProxyDomain(
         authHeaders,
     )
     headers.Add("Content-Type", "application/json")
-    var response *sdk.MutationOrganizationsRemoveProxyDomainResponse
+    var response *sdk.MutationWorkspacesRemoveProxyDomainResponse
     raw, err := r.caller.Call(
         ctx,
         &internal.CallParams{
@@ -189,7 +189,7 @@ func (r *RawClient) RemoveProxyDomain(
     if err != nil {
         return nil, err
     }
-    return &core.Response[*sdk.MutationOrganizationsRemoveProxyDomainResponse]{
+    return &core.Response[*sdk.MutationWorkspacesRemoveProxyDomainResponse]{
         StatusCode: raw.StatusCode,
         Header: raw.Header,
         Body: response,
@@ -200,7 +200,7 @@ func (r *RawClient) UpdateBasics(
     ctx context.Context,
     request *sdk.UpdateBasicsWorkspacesRequest,
     opts ...option.RequestOption,
-) (*core.Response[*sdk.MutationOrganizationsUpdateBasicsResponse], error){
+) (*core.Response[*sdk.MutationWorkspacesUpdateBasicsResponse], error){
     options := core.NewRequestOptions(opts...)
     baseURL := internal.ResolveBaseURL(
         options.BaseURL,
@@ -208,7 +208,7 @@ func (r *RawClient) UpdateBasics(
         "",
     )
     endpointURL := internal.EncodeURL(
-        baseURL + "/v3/workspaces/%v/actions/organizations.updateBasics",
+        baseURL + "/v3/workspaces/%v/actions/workspaces.updateBasics",
         request.WorkspaceSlug,
     )
     authHeaders, authErr := r.options.AuthHeadersForEndpoint([][]string{{"clerkSession"}})
@@ -223,7 +223,7 @@ func (r *RawClient) UpdateBasics(
         authHeaders,
     )
     headers.Add("Content-Type", "application/json")
-    var response *sdk.MutationOrganizationsUpdateBasicsResponse
+    var response *sdk.MutationWorkspacesUpdateBasicsResponse
     raw, err := r.caller.Call(
         ctx,
         &internal.CallParams{
@@ -243,7 +243,7 @@ func (r *RawClient) UpdateBasics(
     if err != nil {
         return nil, err
     }
-    return &core.Response[*sdk.MutationOrganizationsUpdateBasicsResponse]{
+    return &core.Response[*sdk.MutationWorkspacesUpdateBasicsResponse]{
         StatusCode: raw.StatusCode,
         Header: raw.Header,
         Body: response,
