@@ -64,6 +64,9 @@ func (r *surfaceRepositoryResource) Delete(ctx context.Context, req resource.Del
 		return
 	}
 	remote, err := r.read(ctx, data)
+	if errors.Is(err, errResourceNotFound) {
+		return
+	}
 	if err != nil {
 		resp.Diagnostics.AddError("Unable to delete mapping", err.Error())
 		return

@@ -1382,35 +1382,11 @@ func TestSettersMarkExplicitMutationSurfacesUpdateNameResponse(t *testing.T) {
 }
 
 func TestSettersQuerySurfacesGetBySlugIncludeDeletedResponse(t *testing.T) {
-	t.Run("SetID", func(t *testing.T) {
+	t.Run("SetCreatedAt", func(t *testing.T) {
 		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
-		var fernTestValueID string
-		obj.SetID(fernTestValueID)
-		assert.Equal(t, fernTestValueID, obj.ID)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetName", func(t *testing.T) {
-		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
-		var fernTestValueName string
-		obj.SetName(fernTestValueName)
-		assert.Equal(t, fernTestValueName, obj.Name)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetSlug", func(t *testing.T) {
-		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
-		var fernTestValueSlug string
-		obj.SetSlug(fernTestValueSlug)
-		assert.Equal(t, fernTestValueSlug, obj.Slug)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
-		var fernTestValueType QuerySurfacesGetBySlugIncludeDeletedResponseType
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
+		var fernTestValueCreatedAt float64
+		obj.SetCreatedAt(fernTestValueCreatedAt)
+		assert.Equal(t, fernTestValueCreatedAt, obj.CreatedAt)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -1422,35 +1398,19 @@ func TestSettersQuerySurfacesGetBySlugIncludeDeletedResponse(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetUpdatedAt", func(t *testing.T) {
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		var fernTestValueUpdatedAt float64
+		obj.SetUpdatedAt(fernTestValueUpdatedAt)
+		assert.Equal(t, fernTestValueUpdatedAt, obj.UpdatedAt)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetAnonymousUserTracking", func(t *testing.T) {
 		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
 		var fernTestValueAnonymousUserTracking bool
 		obj.SetAnonymousUserTracking(fernTestValueAnonymousUserTracking)
 		assert.Equal(t, fernTestValueAnonymousUserTracking, obj.AnonymousUserTracking)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetSourceConnectionID", func(t *testing.T) {
-		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
-		var fernTestValueSourceConnectionID *string
-		obj.SetSourceConnectionID(fernTestValueSourceConnectionID)
-		assert.Equal(t, fernTestValueSourceConnectionID, obj.SourceConnectionID)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetSourceMappingID", func(t *testing.T) {
-		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
-		var fernTestValueSourceMappingID *string
-		obj.SetSourceMappingID(fernTestValueSourceMappingID)
-		assert.Equal(t, fernTestValueSourceMappingID, obj.SourceMappingID)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetSourceWorkingDirectory", func(t *testing.T) {
-		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
-		var fernTestValueSourceWorkingDirectory *string
-		obj.SetSourceWorkingDirectory(fernTestValueSourceWorkingDirectory)
-		assert.Equal(t, fernTestValueSourceWorkingDirectory, obj.SourceWorkingDirectory)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -1470,21 +1430,165 @@ func TestSettersQuerySurfacesGetBySlugIncludeDeletedResponse(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetDestinationMappingLabel", func(t *testing.T) {
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		var fernTestValueDestinationMappingLabel *string
+		obj.SetDestinationMappingLabel(fernTestValueDestinationMappingLabel)
+		assert.Equal(t, fernTestValueDestinationMappingLabel, obj.DestinationMappingLabel)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetDestinationMappingURL", func(t *testing.T) {
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		var fernTestValueDestinationMappingURL *string
+		obj.SetDestinationMappingURL(fernTestValueDestinationMappingURL)
+		assert.Equal(t, fernTestValueDestinationMappingURL, obj.DestinationMappingURL)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetEnvironmentFiltering", func(t *testing.T) {
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		var fernTestValueEnvironmentFiltering bool
+		obj.SetEnvironmentFiltering(fernTestValueEnvironmentFiltering)
+		assert.Equal(t, fernTestValueEnvironmentFiltering, obj.EnvironmentFiltering)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetID", func(t *testing.T) {
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		var fernTestValueID string
+		obj.SetID(fernTestValueID)
+		assert.Equal(t, fernTestValueID, obj.ID)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetName", func(t *testing.T) {
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		var fernTestValueName string
+		obj.SetName(fernTestValueName)
+		assert.Equal(t, fernTestValueName, obj.Name)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetOnboardedAt", func(t *testing.T) {
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		var fernTestValueOnboardedAt *float64
+		obj.SetOnboardedAt(fernTestValueOnboardedAt)
+		assert.Equal(t, fernTestValueOnboardedAt, obj.OnboardedAt)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetOrganizationID", func(t *testing.T) {
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		var fernTestValueOrganizationID string
+		obj.SetOrganizationID(fernTestValueOrganizationID)
+		assert.Equal(t, fernTestValueOrganizationID, obj.OrganizationID)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetPrimaryEnvironmentID", func(t *testing.T) {
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		var fernTestValuePrimaryEnvironmentID *string
+		obj.SetPrimaryEnvironmentID(fernTestValuePrimaryEnvironmentID)
+		assert.Equal(t, fernTestValuePrimaryEnvironmentID, obj.PrimaryEnvironmentID)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetPrimaryEnvironmentName", func(t *testing.T) {
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		var fernTestValuePrimaryEnvironmentName *string
+		obj.SetPrimaryEnvironmentName(fernTestValuePrimaryEnvironmentName)
+		assert.Equal(t, fernTestValuePrimaryEnvironmentName, obj.PrimaryEnvironmentName)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetSdkConfig", func(t *testing.T) {
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		var fernTestValueSdkConfig *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig
+		obj.SetSdkConfig(fernTestValueSdkConfig)
+		assert.Equal(t, fernTestValueSdkConfig, obj.SdkConfig)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetSlug", func(t *testing.T) {
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		var fernTestValueSlug string
+		obj.SetSlug(fernTestValueSlug)
+		assert.Equal(t, fernTestValueSlug, obj.Slug)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetSourceDatasourceID", func(t *testing.T) {
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		var fernTestValueSourceDatasourceID *string
+		obj.SetSourceDatasourceID(fernTestValueSourceDatasourceID)
+		assert.Equal(t, fernTestValueSourceDatasourceID, obj.SourceDatasourceID)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetSourceConnectionID", func(t *testing.T) {
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		var fernTestValueSourceConnectionID *string
+		obj.SetSourceConnectionID(fernTestValueSourceConnectionID)
+		assert.Equal(t, fernTestValueSourceConnectionID, obj.SourceConnectionID)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetSourceMappingID", func(t *testing.T) {
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		var fernTestValueSourceMappingID *string
+		obj.SetSourceMappingID(fernTestValueSourceMappingID)
+		assert.Equal(t, fernTestValueSourceMappingID, obj.SourceMappingID)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetSourceMappingLabel", func(t *testing.T) {
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		var fernTestValueSourceMappingLabel *string
+		obj.SetSourceMappingLabel(fernTestValueSourceMappingLabel)
+		assert.Equal(t, fernTestValueSourceMappingLabel, obj.SourceMappingLabel)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetSourceMappingURL", func(t *testing.T) {
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		var fernTestValueSourceMappingURL *string
+		obj.SetSourceMappingURL(fernTestValueSourceMappingURL)
+		assert.Equal(t, fernTestValueSourceMappingURL, obj.SourceMappingURL)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetSourceWorkingDirectory", func(t *testing.T) {
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		var fernTestValueSourceWorkingDirectory *string
+		obj.SetSourceWorkingDirectory(fernTestValueSourceWorkingDirectory)
+		assert.Equal(t, fernTestValueSourceWorkingDirectory, obj.SourceWorkingDirectory)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetType", func(t *testing.T) {
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		var fernTestValueType QuerySurfacesGetBySlugIncludeDeletedResponseType
+		obj.SetType(fernTestValueType)
+		assert.Equal(t, fernTestValueType, obj.Type)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 }
 
 func TestGettersQuerySurfacesGetBySlugIncludeDeletedResponse(t *testing.T) {
-	t.Run("GetID", func(t *testing.T) {
+	t.Run("GetCreatedAt", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
-		var expected string
-		obj.ID = expected
+		var expected float64
+		obj.CreatedAt = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetID(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetCreatedAt(), "getter should return the property value")
 	})
 
-	t.Run("GetID_NilReceiver", func(t *testing.T) {
+	t.Run("GetCreatedAt_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *QuerySurfacesGetBySlugIncludeDeletedResponse
 		// Should not panic - getters should handle nil receiver gracefully
@@ -1493,76 +1597,7 @@ func TestGettersQuerySurfacesGetBySlugIncludeDeletedResponse(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetID() // Should return zero value
-	})
-
-	t.Run("GetName", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
-		var expected string
-		obj.Name = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetName(), "getter should return the property value")
-	})
-
-	t.Run("GetName_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *QuerySurfacesGetBySlugIncludeDeletedResponse
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetName() // Should return zero value
-	})
-
-	t.Run("GetSlug", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
-		var expected string
-		obj.Slug = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetSlug(), "getter should return the property value")
-	})
-
-	t.Run("GetSlug_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *QuerySurfacesGetBySlugIncludeDeletedResponse
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetSlug() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
-		var expected QuerySurfacesGetBySlugIncludeDeletedResponseType
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *QuerySurfacesGetBySlugIncludeDeletedResponse
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
+		_ = obj.GetCreatedAt() // Should return zero value
 	})
 
 	t.Run("GetDeletedAt", func(t *testing.T) {
@@ -1598,6 +1633,29 @@ func TestGettersQuerySurfacesGetBySlugIncludeDeletedResponse(t *testing.T) {
 		_ = obj.GetDeletedAt() // Should return zero value
 	})
 
+	t.Run("GetUpdatedAt", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		var expected float64
+		obj.UpdatedAt = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetUpdatedAt(), "getter should return the property value")
+	})
+
+	t.Run("GetUpdatedAt_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *QuerySurfacesGetBySlugIncludeDeletedResponse
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetUpdatedAt() // Should return zero value
+	})
+
 	t.Run("GetAnonymousUserTracking", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -1619,105 +1677,6 @@ func TestGettersQuerySurfacesGetBySlugIncludeDeletedResponse(t *testing.T) {
 			}
 		}()
 		_ = obj.GetAnonymousUserTracking() // Should return zero value
-	})
-
-	t.Run("GetSourceConnectionID", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
-		var expected *string
-		obj.SourceConnectionID = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetSourceConnectionID(), "getter should return the property value")
-	})
-
-	t.Run("GetSourceConnectionID_NilValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
-		obj.SourceConnectionID = nil
-
-		// Act & Assert
-		assert.Nil(t, obj.GetSourceConnectionID(), "getter should return nil when property is nil")
-	})
-
-	t.Run("GetSourceConnectionID_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *QuerySurfacesGetBySlugIncludeDeletedResponse
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetSourceConnectionID() // Should return zero value
-	})
-
-	t.Run("GetSourceMappingID", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
-		var expected *string
-		obj.SourceMappingID = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetSourceMappingID(), "getter should return the property value")
-	})
-
-	t.Run("GetSourceMappingID_NilValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
-		obj.SourceMappingID = nil
-
-		// Act & Assert
-		assert.Nil(t, obj.GetSourceMappingID(), "getter should return nil when property is nil")
-	})
-
-	t.Run("GetSourceMappingID_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *QuerySurfacesGetBySlugIncludeDeletedResponse
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetSourceMappingID() // Should return zero value
-	})
-
-	t.Run("GetSourceWorkingDirectory", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
-		var expected *string
-		obj.SourceWorkingDirectory = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetSourceWorkingDirectory(), "getter should return the property value")
-	})
-
-	t.Run("GetSourceWorkingDirectory_NilValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
-		obj.SourceWorkingDirectory = nil
-
-		// Act & Assert
-		assert.Nil(t, obj.GetSourceWorkingDirectory(), "getter should return nil when property is nil")
-	})
-
-	t.Run("GetSourceWorkingDirectory_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *QuerySurfacesGetBySlugIncludeDeletedResponse
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetSourceWorkingDirectory() // Should return zero value
 	})
 
 	t.Run("GetDestinationConnectionID", func(t *testing.T) {
@@ -1786,9 +1745,822 @@ func TestGettersQuerySurfacesGetBySlugIncludeDeletedResponse(t *testing.T) {
 		_ = obj.GetDestinationMappingID() // Should return zero value
 	})
 
+	t.Run("GetDestinationMappingLabel", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		var expected *string
+		obj.DestinationMappingLabel = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetDestinationMappingLabel(), "getter should return the property value")
+	})
+
+	t.Run("GetDestinationMappingLabel_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		obj.DestinationMappingLabel = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetDestinationMappingLabel(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetDestinationMappingLabel_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *QuerySurfacesGetBySlugIncludeDeletedResponse
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetDestinationMappingLabel() // Should return zero value
+	})
+
+	t.Run("GetDestinationMappingURL", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		var expected *string
+		obj.DestinationMappingURL = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetDestinationMappingURL(), "getter should return the property value")
+	})
+
+	t.Run("GetDestinationMappingURL_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		obj.DestinationMappingURL = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetDestinationMappingURL(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetDestinationMappingURL_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *QuerySurfacesGetBySlugIncludeDeletedResponse
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetDestinationMappingURL() // Should return zero value
+	})
+
+	t.Run("GetEnvironmentFiltering", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		var expected bool
+		obj.EnvironmentFiltering = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetEnvironmentFiltering(), "getter should return the property value")
+	})
+
+	t.Run("GetEnvironmentFiltering_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *QuerySurfacesGetBySlugIncludeDeletedResponse
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetEnvironmentFiltering() // Should return zero value
+	})
+
+	t.Run("GetID", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		var expected string
+		obj.ID = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetID(), "getter should return the property value")
+	})
+
+	t.Run("GetID_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *QuerySurfacesGetBySlugIncludeDeletedResponse
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetID() // Should return zero value
+	})
+
+	t.Run("GetName", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		var expected string
+		obj.Name = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetName(), "getter should return the property value")
+	})
+
+	t.Run("GetName_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *QuerySurfacesGetBySlugIncludeDeletedResponse
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetName() // Should return zero value
+	})
+
+	t.Run("GetOnboardedAt", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		var expected *float64
+		obj.OnboardedAt = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetOnboardedAt(), "getter should return the property value")
+	})
+
+	t.Run("GetOnboardedAt_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		obj.OnboardedAt = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetOnboardedAt(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetOnboardedAt_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *QuerySurfacesGetBySlugIncludeDeletedResponse
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetOnboardedAt() // Should return zero value
+	})
+
+	t.Run("GetOrganizationID", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		var expected string
+		obj.OrganizationID = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetOrganizationID(), "getter should return the property value")
+	})
+
+	t.Run("GetOrganizationID_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *QuerySurfacesGetBySlugIncludeDeletedResponse
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetOrganizationID() // Should return zero value
+	})
+
+	t.Run("GetPrimaryEnvironmentID", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		var expected *string
+		obj.PrimaryEnvironmentID = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetPrimaryEnvironmentID(), "getter should return the property value")
+	})
+
+	t.Run("GetPrimaryEnvironmentID_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		obj.PrimaryEnvironmentID = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetPrimaryEnvironmentID(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetPrimaryEnvironmentID_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *QuerySurfacesGetBySlugIncludeDeletedResponse
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetPrimaryEnvironmentID() // Should return zero value
+	})
+
+	t.Run("GetPrimaryEnvironmentName", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		var expected *string
+		obj.PrimaryEnvironmentName = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetPrimaryEnvironmentName(), "getter should return the property value")
+	})
+
+	t.Run("GetPrimaryEnvironmentName_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		obj.PrimaryEnvironmentName = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetPrimaryEnvironmentName(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetPrimaryEnvironmentName_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *QuerySurfacesGetBySlugIncludeDeletedResponse
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetPrimaryEnvironmentName() // Should return zero value
+	})
+
+	t.Run("GetSdkConfig", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		var expected *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig
+		obj.SdkConfig = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetSdkConfig(), "getter should return the property value")
+	})
+
+	t.Run("GetSdkConfig_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		obj.SdkConfig = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetSdkConfig(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetSdkConfig_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *QuerySurfacesGetBySlugIncludeDeletedResponse
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetSdkConfig() // Should return zero value
+	})
+
+	t.Run("GetSlug", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		var expected string
+		obj.Slug = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetSlug(), "getter should return the property value")
+	})
+
+	t.Run("GetSlug_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *QuerySurfacesGetBySlugIncludeDeletedResponse
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetSlug() // Should return zero value
+	})
+
+	t.Run("GetSourceDatasourceID", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		var expected *string
+		obj.SourceDatasourceID = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetSourceDatasourceID(), "getter should return the property value")
+	})
+
+	t.Run("GetSourceDatasourceID_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		obj.SourceDatasourceID = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetSourceDatasourceID(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetSourceDatasourceID_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *QuerySurfacesGetBySlugIncludeDeletedResponse
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetSourceDatasourceID() // Should return zero value
+	})
+
+	t.Run("GetSourceConnectionID", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		var expected *string
+		obj.SourceConnectionID = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetSourceConnectionID(), "getter should return the property value")
+	})
+
+	t.Run("GetSourceConnectionID_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		obj.SourceConnectionID = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetSourceConnectionID(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetSourceConnectionID_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *QuerySurfacesGetBySlugIncludeDeletedResponse
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetSourceConnectionID() // Should return zero value
+	})
+
+	t.Run("GetSourceMappingID", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		var expected *string
+		obj.SourceMappingID = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetSourceMappingID(), "getter should return the property value")
+	})
+
+	t.Run("GetSourceMappingID_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		obj.SourceMappingID = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetSourceMappingID(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetSourceMappingID_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *QuerySurfacesGetBySlugIncludeDeletedResponse
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetSourceMappingID() // Should return zero value
+	})
+
+	t.Run("GetSourceMappingLabel", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		var expected *string
+		obj.SourceMappingLabel = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetSourceMappingLabel(), "getter should return the property value")
+	})
+
+	t.Run("GetSourceMappingLabel_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		obj.SourceMappingLabel = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetSourceMappingLabel(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetSourceMappingLabel_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *QuerySurfacesGetBySlugIncludeDeletedResponse
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetSourceMappingLabel() // Should return zero value
+	})
+
+	t.Run("GetSourceMappingURL", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		var expected *string
+		obj.SourceMappingURL = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetSourceMappingURL(), "getter should return the property value")
+	})
+
+	t.Run("GetSourceMappingURL_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		obj.SourceMappingURL = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetSourceMappingURL(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetSourceMappingURL_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *QuerySurfacesGetBySlugIncludeDeletedResponse
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetSourceMappingURL() // Should return zero value
+	})
+
+	t.Run("GetSourceWorkingDirectory", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		var expected *string
+		obj.SourceWorkingDirectory = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetSourceWorkingDirectory(), "getter should return the property value")
+	})
+
+	t.Run("GetSourceWorkingDirectory_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		obj.SourceWorkingDirectory = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetSourceWorkingDirectory(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetSourceWorkingDirectory_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *QuerySurfacesGetBySlugIncludeDeletedResponse
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetSourceWorkingDirectory() // Should return zero value
+	})
+
+	t.Run("GetType", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		var expected QuerySurfacesGetBySlugIncludeDeletedResponseType
+		obj.Type = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
+	})
+
+	t.Run("GetType_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *QuerySurfacesGetBySlugIncludeDeletedResponse
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetType() // Should return zero value
+	})
+
 }
 
 func TestSettersMarkExplicitQuerySurfacesGetBySlugIncludeDeletedResponse(t *testing.T) {
+	t.Run("SetCreatedAt_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		var fernTestValueCreatedAt float64
+
+		// Act
+		obj.SetCreatedAt(fernTestValueCreatedAt)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetDeletedAt_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		var fernTestValueDeletedAt *float64
+
+		// Act
+		obj.SetDeletedAt(fernTestValueDeletedAt)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetUpdatedAt_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		var fernTestValueUpdatedAt float64
+
+		// Act
+		obj.SetUpdatedAt(fernTestValueUpdatedAt)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAnonymousUserTracking_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		var fernTestValueAnonymousUserTracking bool
+
+		// Act
+		obj.SetAnonymousUserTracking(fernTestValueAnonymousUserTracking)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetDestinationConnectionID_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		var fernTestValueDestinationConnectionID *string
+
+		// Act
+		obj.SetDestinationConnectionID(fernTestValueDestinationConnectionID)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetDestinationMappingID_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		var fernTestValueDestinationMappingID *string
+
+		// Act
+		obj.SetDestinationMappingID(fernTestValueDestinationMappingID)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetDestinationMappingLabel_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		var fernTestValueDestinationMappingLabel *string
+
+		// Act
+		obj.SetDestinationMappingLabel(fernTestValueDestinationMappingLabel)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetDestinationMappingURL_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		var fernTestValueDestinationMappingURL *string
+
+		// Act
+		obj.SetDestinationMappingURL(fernTestValueDestinationMappingURL)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetEnvironmentFiltering_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		var fernTestValueEnvironmentFiltering bool
+
+		// Act
+		obj.SetEnvironmentFiltering(fernTestValueEnvironmentFiltering)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 	t.Run("SetID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -1851,6 +2623,161 @@ func TestSettersMarkExplicitQuerySurfacesGetBySlugIncludeDeletedResponse(t *test
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+	t.Run("SetOnboardedAt_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		var fernTestValueOnboardedAt *float64
+
+		// Act
+		obj.SetOnboardedAt(fernTestValueOnboardedAt)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetOrganizationID_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		var fernTestValueOrganizationID string
+
+		// Act
+		obj.SetOrganizationID(fernTestValueOrganizationID)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetPrimaryEnvironmentID_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		var fernTestValuePrimaryEnvironmentID *string
+
+		// Act
+		obj.SetPrimaryEnvironmentID(fernTestValuePrimaryEnvironmentID)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetPrimaryEnvironmentName_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		var fernTestValuePrimaryEnvironmentName *string
+
+		// Act
+		obj.SetPrimaryEnvironmentName(fernTestValuePrimaryEnvironmentName)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetSdkConfig_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		var fernTestValueSdkConfig *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig
+
+		// Act
+		obj.SetSdkConfig(fernTestValueSdkConfig)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 	t.Run("SetSlug_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -1882,76 +2809,14 @@ func TestSettersMarkExplicitQuerySurfacesGetBySlugIncludeDeletedResponse(t *test
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
+	t.Run("SetSourceDatasourceID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
-		var fernTestValueType QuerySurfacesGetBySlugIncludeDeletedResponseType
+		var fernTestValueSourceDatasourceID *string
 
 		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetDeletedAt_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
-		var fernTestValueDeletedAt *float64
-
-		// Act
-		obj.SetDeletedAt(fernTestValueDeletedAt)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetAnonymousUserTracking_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
-		var fernTestValueAnonymousUserTracking bool
-
-		// Act
-		obj.SetAnonymousUserTracking(fernTestValueAnonymousUserTracking)
+		obj.SetSourceDatasourceID(fernTestValueSourceDatasourceID)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -2037,6 +2902,68 @@ func TestSettersMarkExplicitQuerySurfacesGetBySlugIncludeDeletedResponse(t *test
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+	t.Run("SetSourceMappingLabel_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		var fernTestValueSourceMappingLabel *string
+
+		// Act
+		obj.SetSourceMappingLabel(fernTestValueSourceMappingLabel)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetSourceMappingURL_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		var fernTestValueSourceMappingURL *string
+
+		// Act
+		obj.SetSourceMappingURL(fernTestValueSourceMappingURL)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 	t.Run("SetSourceWorkingDirectory_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -2068,14 +2995,14 @@ func TestSettersMarkExplicitQuerySurfacesGetBySlugIncludeDeletedResponse(t *test
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetDestinationConnectionID_MarksExplicit", func(t *testing.T) {
+	t.Run("SetType_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
-		var fernTestValueDestinationConnectionID *string
+		var fernTestValueType QuerySurfacesGetBySlugIncludeDeletedResponseType
 
 		// Act
-		obj.SetDestinationConnectionID(fernTestValueDestinationConnectionID)
+		obj.SetType(fernTestValueType)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -2099,14 +3026,649 @@ func TestSettersMarkExplicitQuerySurfacesGetBySlugIncludeDeletedResponse(t *test
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetDestinationMappingID_MarksExplicit", func(t *testing.T) {
+}
+
+func TestSettersQuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig(t *testing.T) {
+	t.Run("SetPlugins", func(t *testing.T) {
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig{}
+		var fernTestValuePlugins *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins
+		obj.SetPlugins(fernTestValuePlugins)
+		assert.Equal(t, fernTestValuePlugins, obj.Plugins)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetServerTracing", func(t *testing.T) {
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig{}
+		var fernTestValueServerTracing *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigServerTracing
+		obj.SetServerTracing(fernTestValueServerTracing)
+		assert.Equal(t, fernTestValueServerTracing, obj.ServerTracing)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetLogSourcing", func(t *testing.T) {
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig{}
+		var fernTestValueLogSourcing *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigLogSourcing
+		obj.SetLogSourcing(fernTestValueLogSourcing)
+		assert.Equal(t, fernTestValueLogSourcing, obj.LogSourcing)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersQuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig(t *testing.T) {
+	t.Run("GetPlugins", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
-		var fernTestValueDestinationMappingID *string
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig{}
+		var expected *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins
+		obj.Plugins = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetPlugins(), "getter should return the property value")
+	})
+
+	t.Run("GetPlugins_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig{}
+		obj.Plugins = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetPlugins(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetPlugins_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetPlugins() // Should return zero value
+	})
+
+	t.Run("GetServerTracing", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig{}
+		var expected *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigServerTracing
+		obj.ServerTracing = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetServerTracing(), "getter should return the property value")
+	})
+
+	t.Run("GetServerTracing_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig{}
+		obj.ServerTracing = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetServerTracing(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetServerTracing_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetServerTracing() // Should return zero value
+	})
+
+	t.Run("GetLogSourcing", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig{}
+		var expected *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigLogSourcing
+		obj.LogSourcing = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetLogSourcing(), "getter should return the property value")
+	})
+
+	t.Run("GetLogSourcing_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig{}
+		obj.LogSourcing = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetLogSourcing(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetLogSourcing_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetLogSourcing() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitQuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig(t *testing.T) {
+	t.Run("SetPlugins_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig{}
+		var fernTestValuePlugins *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins
 
 		// Act
-		obj.SetDestinationMappingID(fernTestValueDestinationMappingID)
+		obj.SetPlugins(fernTestValuePlugins)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetServerTracing_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig{}
+		var fernTestValueServerTracing *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigServerTracing
+
+		// Act
+		obj.SetServerTracing(fernTestValueServerTracing)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetLogSourcing_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig{}
+		var fernTestValueLogSourcing *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigLogSourcing
+
+		// Act
+		obj.SetLogSourcing(fernTestValueLogSourcing)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersQuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins(t *testing.T) {
+	t.Run("SetErrors", func(t *testing.T) {
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins{}
+		var fernTestValueErrors *bool
+		obj.SetErrors(fernTestValueErrors)
+		assert.Equal(t, fernTestValueErrors, obj.Errors)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetDevice", func(t *testing.T) {
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins{}
+		var fernTestValueDevice *bool
+		obj.SetDevice(fernTestValueDevice)
+		assert.Equal(t, fernTestValueDevice, obj.Device)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetPageEvents", func(t *testing.T) {
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins{}
+		var fernTestValuePageEvents *bool
+		obj.SetPageEvents(fernTestValuePageEvents)
+		assert.Equal(t, fernTestValuePageEvents, obj.PageEvents)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetRageClick", func(t *testing.T) {
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins{}
+		var fernTestValueRageClick *bool
+		obj.SetRageClick(fernTestValueRageClick)
+		assert.Equal(t, fernTestValueRageClick, obj.RageClick)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetReplay", func(t *testing.T) {
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins{}
+		var fernTestValueReplay *bool
+		obj.SetReplay(fernTestValueReplay)
+		assert.Equal(t, fernTestValueReplay, obj.Replay)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetLogs", func(t *testing.T) {
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins{}
+		var fernTestValueLogs *bool
+		obj.SetLogs(fernTestValueLogs)
+		assert.Equal(t, fernTestValueLogs, obj.Logs)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersQuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins(t *testing.T) {
+	t.Run("GetErrors", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins{}
+		var expected *bool
+		obj.Errors = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetErrors(), "getter should return the property value")
+	})
+
+	t.Run("GetErrors_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins{}
+		obj.Errors = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetErrors(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetErrors_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetErrors() // Should return zero value
+	})
+
+	t.Run("GetDevice", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins{}
+		var expected *bool
+		obj.Device = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetDevice(), "getter should return the property value")
+	})
+
+	t.Run("GetDevice_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins{}
+		obj.Device = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetDevice(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetDevice_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetDevice() // Should return zero value
+	})
+
+	t.Run("GetPageEvents", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins{}
+		var expected *bool
+		obj.PageEvents = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetPageEvents(), "getter should return the property value")
+	})
+
+	t.Run("GetPageEvents_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins{}
+		obj.PageEvents = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetPageEvents(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetPageEvents_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetPageEvents() // Should return zero value
+	})
+
+	t.Run("GetRageClick", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins{}
+		var expected *bool
+		obj.RageClick = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetRageClick(), "getter should return the property value")
+	})
+
+	t.Run("GetRageClick_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins{}
+		obj.RageClick = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetRageClick(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetRageClick_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetRageClick() // Should return zero value
+	})
+
+	t.Run("GetReplay", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins{}
+		var expected *bool
+		obj.Replay = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetReplay(), "getter should return the property value")
+	})
+
+	t.Run("GetReplay_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins{}
+		obj.Replay = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetReplay(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetReplay_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetReplay() // Should return zero value
+	})
+
+	t.Run("GetLogs", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins{}
+		var expected *bool
+		obj.Logs = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetLogs(), "getter should return the property value")
+	})
+
+	t.Run("GetLogs_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins{}
+		obj.Logs = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetLogs(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetLogs_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetLogs() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitQuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins(t *testing.T) {
+	t.Run("SetErrors_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins{}
+		var fernTestValueErrors *bool
+
+		// Act
+		obj.SetErrors(fernTestValueErrors)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetDevice_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins{}
+		var fernTestValueDevice *bool
+
+		// Act
+		obj.SetDevice(fernTestValueDevice)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetPageEvents_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins{}
+		var fernTestValuePageEvents *bool
+
+		// Act
+		obj.SetPageEvents(fernTestValuePageEvents)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetRageClick_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins{}
+		var fernTestValueRageClick *bool
+
+		// Act
+		obj.SetRageClick(fernTestValueRageClick)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetReplay_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins{}
+		var fernTestValueReplay *bool
+
+		// Act
+		obj.SetReplay(fernTestValueReplay)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetLogs_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins{}
+		var fernTestValueLogs *bool
+
+		// Act
+		obj.SetLogs(fernTestValueLogs)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -3107,6 +4669,72 @@ func TestJSONMarshalingQuerySurfacesGetBySlugIncludeDeletedResponse(t *testing.T
 	})
 }
 
+func TestJSONMarshalingQuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingQuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
 func TestJSONMarshalingSetAnonymousUserTrackingSurfacesRequestArgs(t *testing.T) {
 	t.Run("MarshalUnmarshal", func(t *testing.T) {
 		t.Parallel()
@@ -3219,11 +4847,20 @@ func TestRequiredNullableRoundTripCreateSurfaceRequestAPIKey(t *testing.T) {
 func TestRequiredNullableRoundTripQuerySurfacesGetBySlugIncludeDeletedResponse(t *testing.T) {
 	requiredNullableKeys := []string{
 		"deletedAt",
-		"sourceConnectionId",
-		"sourceMappingId",
-		"sourceWorkingDirectory",
 		"destinationConnectionId",
 		"destinationMappingId",
+		"destinationMappingLabel",
+		"destinationMappingUrl",
+		"onboardedAt",
+		"primaryEnvironmentId",
+		"primaryEnvironmentName",
+		"sdkConfig",
+		"sourceDatasourceId",
+		"sourceConnectionId",
+		"sourceMappingId",
+		"sourceMappingLabel",
+		"sourceMappingUrl",
+		"sourceWorkingDirectory",
 	}
 	marshalToMap := func(t *testing.T, obj *QuerySurfacesGetBySlugIncludeDeletedResponse) map[string]json.RawMessage {
 		data, err := json.Marshal(obj)
@@ -3236,7 +4873,7 @@ func TestRequiredNullableRoundTripQuerySurfacesGetBySlugIncludeDeletedResponse(t
 	t.Run("NullPreserved", func(t *testing.T) {
 		t.Parallel()
 		var obj QuerySurfacesGetBySlugIncludeDeletedResponse
-		require.NoError(t, json.Unmarshal([]byte(`{"deletedAt":null,"sourceConnectionId":null,"sourceMappingId":null,"sourceWorkingDirectory":null,"destinationConnectionId":null,"destinationMappingId":null}`), &obj))
+		require.NoError(t, json.Unmarshal([]byte(`{"deletedAt":null,"destinationConnectionId":null,"destinationMappingId":null,"destinationMappingLabel":null,"destinationMappingUrl":null,"onboardedAt":null,"primaryEnvironmentId":null,"primaryEnvironmentName":null,"sdkConfig":null,"sourceDatasourceId":null,"sourceConnectionId":null,"sourceMappingId":null,"sourceMappingLabel":null,"sourceMappingUrl":null,"sourceWorkingDirectory":null}`), &obj))
 		result := marshalToMap(t, &obj)
 		for _, key := range requiredNullableKeys {
 			value, ok := result[key]
@@ -3419,6 +5056,38 @@ func TestStringQuerySurfacesGetBySlugIncludeDeletedResponse(t *testing.T) {
 	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *QuerySurfacesGetBySlugIncludeDeletedResponse
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringQuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringQuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins
 		result := obj.String()
 		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
 	})
@@ -3775,6 +5444,64 @@ func TestEnumCreateSurfaceResponseSurfaceType(t *testing.T) {
 	})
 }
 
+func TestEnumQuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigLogSourcing(t *testing.T) {
+	t.Run("NewFromString_sdk", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewQuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigLogSourcingFromString("sdk")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigLogSourcing("sdk"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_drain", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewQuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigLogSourcingFromString("drain")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigLogSourcing("drain"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewQuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigLogSourcingFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewQuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigLogSourcingFromString("sdk")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumQuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigServerTracing(t *testing.T) {
+	t.Run("NewFromString_full", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewQuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigServerTracingFromString("full")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigServerTracing("full"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_drain", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewQuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigServerTracingFromString("drain")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigServerTracing("drain"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewQuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigServerTracingFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewQuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigServerTracingFromString("full")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
 func TestEnumQuerySurfacesGetBySlugIncludeDeletedResponseType(t *testing.T) {
 	t.Run("NewFromString_elysia", func(t *testing.T) {
 		t.Parallel()
@@ -4050,6 +5777,52 @@ func TestExtraPropertiesQuerySurfacesGetBySlugIncludeDeletedResponse(t *testing.
 	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *QuerySurfacesGetBySlugIncludeDeletedResponse
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesQuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesQuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins
 		extraProps := obj.GetExtraProperties()
 		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
 	})

@@ -37,7 +37,7 @@ func (r *RawClient) Installations(
     ctx context.Context,
     request *sdk.InstallationsIntegrationsRequest,
     opts ...option.RequestOption,
-) (*core.Response[sdk.QueryIntegrationsInstallationsResponse], error){
+) (*core.Response[sdk.QueryIntegrationsInstallationsResponse], error) {
     options := core.NewRequestOptions(opts...)
     baseURL := internal.ResolveBaseURL(
         options.BaseURL,
@@ -48,16 +48,9 @@ func (r *RawClient) Installations(
         baseURL + "/v3/workspaces/%v/queries/integrations.installations",
         request.WorkspaceSlug,
     )
-    authHeaders, authErr := r.options.AuthHeadersForEndpoint([][]string{{"clerkSession"}})
-    if authErr != nil {
-        return nil, authErr
-    }
     headers := internal.MergeHeaders(
-        internal.MergeHeaders(
-            r.options.ToHeader(),
-            options.ToHeader(),
-        ),
-        authHeaders,
+        r.options.ToHeader(),
+        options.ToHeader(),
     )
     headers.Add("Content-Type", "application/json")
     var response sdk.QueryIntegrationsInstallationsResponse
@@ -91,7 +84,7 @@ func (r *RawClient) LinkSurfaceToDestination(
     ctx context.Context,
     request *sdk.LinkSurfaceToDestinationIntegrationsRequest,
     opts ...option.RequestOption,
-) (*core.Response[*sdk.MutationIntegrationsLinkSurfaceToDestinationResponse], error){
+) (*core.Response[*sdk.MutationIntegrationsLinkSurfaceToDestinationResponse], error) {
     options := core.NewRequestOptions(opts...)
     baseURL := internal.ResolveBaseURL(
         options.BaseURL,
@@ -102,16 +95,9 @@ func (r *RawClient) LinkSurfaceToDestination(
         baseURL + "/v3/workspaces/%v/actions/integrations.linkSurfaceToDestination",
         request.WorkspaceSlug,
     )
-    authHeaders, authErr := r.options.AuthHeadersForEndpoint([][]string{{"clerkSession"}})
-    if authErr != nil {
-        return nil, authErr
-    }
     headers := internal.MergeHeaders(
-        internal.MergeHeaders(
-            r.options.ToHeader(),
-            options.ToHeader(),
-        ),
-        authHeaders,
+        r.options.ToHeader(),
+        options.ToHeader(),
     )
     headers.Add("Content-Type", "application/json")
     var response *sdk.MutationIntegrationsLinkSurfaceToDestinationResponse
@@ -145,7 +131,7 @@ func (r *RawClient) LinkSurfaceToRepository(
     ctx context.Context,
     request *sdk.LinkSurfaceToRepositoryIntegrationsRequest,
     opts ...option.RequestOption,
-) (*core.Response[*sdk.MutationIntegrationsLinkSurfaceToRepositoryResponse], error){
+) (*core.Response[*sdk.MutationIntegrationsLinkSurfaceToRepositoryResponse], error) {
     options := core.NewRequestOptions(opts...)
     baseURL := internal.ResolveBaseURL(
         options.BaseURL,
@@ -156,16 +142,9 @@ func (r *RawClient) LinkSurfaceToRepository(
         baseURL + "/v3/workspaces/%v/actions/integrations.linkSurfaceToRepository",
         request.WorkspaceSlug,
     )
-    authHeaders, authErr := r.options.AuthHeadersForEndpoint([][]string{{"clerkSession"}})
-    if authErr != nil {
-        return nil, authErr
-    }
     headers := internal.MergeHeaders(
-        internal.MergeHeaders(
-            r.options.ToHeader(),
-            options.ToHeader(),
-        ),
-        authHeaders,
+        r.options.ToHeader(),
+        options.ToHeader(),
     )
     headers.Add("Content-Type", "application/json")
     var response *sdk.MutationIntegrationsLinkSurfaceToRepositoryResponse
@@ -199,7 +178,7 @@ func (r *RawClient) UnlinkSurfaceDestinationMapping(
     ctx context.Context,
     request *sdk.UnlinkSurfaceDestinationMappingIntegrationsRequest,
     opts ...option.RequestOption,
-) (*core.Response[*sdk.MutationIntegrationsUnlinkSurfaceDestinationMappingResponse], error){
+) (*core.Response[*sdk.MutationIntegrationsUnlinkSurfaceDestinationMappingResponse], error) {
     options := core.NewRequestOptions(opts...)
     baseURL := internal.ResolveBaseURL(
         options.BaseURL,
@@ -210,16 +189,9 @@ func (r *RawClient) UnlinkSurfaceDestinationMapping(
         baseURL + "/v3/workspaces/%v/actions/integrations.unlinkSurfaceDestinationMapping",
         request.WorkspaceSlug,
     )
-    authHeaders, authErr := r.options.AuthHeadersForEndpoint([][]string{{"clerkSession"}})
-    if authErr != nil {
-        return nil, authErr
-    }
     headers := internal.MergeHeaders(
-        internal.MergeHeaders(
-            r.options.ToHeader(),
-            options.ToHeader(),
-        ),
-        authHeaders,
+        r.options.ToHeader(),
+        options.ToHeader(),
     )
     headers.Add("Content-Type", "application/json")
     var response *sdk.MutationIntegrationsUnlinkSurfaceDestinationMappingResponse
@@ -253,7 +225,7 @@ func (r *RawClient) UnlinkSurfaceMapping(
     ctx context.Context,
     request *sdk.UnlinkSurfaceMappingIntegrationsRequest,
     opts ...option.RequestOption,
-) (*core.Response[*sdk.MutationIntegrationsUnlinkSurfaceMappingResponse], error){
+) (*core.Response[*sdk.MutationIntegrationsUnlinkSurfaceMappingResponse], error) {
     options := core.NewRequestOptions(opts...)
     baseURL := internal.ResolveBaseURL(
         options.BaseURL,
@@ -264,16 +236,9 @@ func (r *RawClient) UnlinkSurfaceMapping(
         baseURL + "/v3/workspaces/%v/actions/integrations.unlinkSurfaceMapping",
         request.WorkspaceSlug,
     )
-    authHeaders, authErr := r.options.AuthHeadersForEndpoint([][]string{{"clerkSession"}})
-    if authErr != nil {
-        return nil, authErr
-    }
     headers := internal.MergeHeaders(
-        internal.MergeHeaders(
-            r.options.ToHeader(),
-            options.ToHeader(),
-        ),
-        authHeaders,
+        r.options.ToHeader(),
+        options.ToHeader(),
     )
     headers.Add("Content-Type", "application/json")
     var response *sdk.MutationIntegrationsUnlinkSurfaceMappingResponse

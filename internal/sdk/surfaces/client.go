@@ -35,7 +35,7 @@ func NewClient(options *core.RequestOptions) *Client {
     }
 }
 
-// Read a surface by slug even if deleted. Use only when investigating historical references; prefer surfaces.get for active resources. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation is read-only despite using POST. Permission-filtered queries may return an empty result; do not assume that proves the resource does not exist. Only use pagination arguments declared in the schema.
+// Read a surface by slug even if deleted. Use only when investigating historical references; prefer surfaces.get for active resources. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation is read-only despite using POST. Requires org:surfaces:read; insufficient permission returns an access-denied error. An authorized read with no matching resource returns WORKSPACE_RESOURCE_NOT_FOUND (404). Only use pagination arguments declared in the schema.
 // 
 // Example:
 // 
@@ -45,7 +45,7 @@ func NewClient(options *core.RequestOptions) *Client {
 // 	        SurfaceSlug: "surfaceSlug",
 // 	    },
 // 	}
-// 	client.Surfaces.GetBySlugIncludeDeleted(
+// 	_, err := client.Surfaces.GetBySlugIncludeDeleted(
 // 	    context.TODO(),
 // 	    request,
 // 	)
@@ -53,7 +53,7 @@ func (c *Client) GetBySlugIncludeDeleted(
     ctx context.Context,
     request *sdk.GetBySlugIncludeDeletedSurfacesRequest,
     opts ...option.RequestOption,
-) (*sdk.QuerySurfacesGetBySlugIncludeDeletedResponse, error){
+) (*sdk.QuerySurfacesGetBySlugIncludeDeletedResponse, error) {
     response, err := c.WithRawResponse.GetBySlugIncludeDeleted(
         ctx,
         request,
@@ -75,7 +75,7 @@ func (c *Client) GetBySlugIncludeDeleted(
 // 	        SurfaceSlug: "surfaceSlug",
 // 	    },
 // 	}
-// 	client.Surfaces.Delete(
+// 	_, err := client.Surfaces.Delete(
 // 	    context.TODO(),
 // 	    request,
 // 	)
@@ -83,7 +83,7 @@ func (c *Client) Delete(
     ctx context.Context,
     request *sdk.DeleteSurfacesRequest,
     opts ...option.RequestOption,
-) (*sdk.MutationSurfacesDeleteResponse, error){
+) (*sdk.MutationSurfacesDeleteResponse, error) {
     response, err := c.WithRawResponse.Delete(
         ctx,
         request,
@@ -106,7 +106,7 @@ func (c *Client) Delete(
 // 	        Enabled: true,
 // 	    },
 // 	}
-// 	client.Surfaces.SetAnonymousUserTracking(
+// 	_, err := client.Surfaces.SetAnonymousUserTracking(
 // 	    context.TODO(),
 // 	    request,
 // 	)
@@ -114,7 +114,7 @@ func (c *Client) SetAnonymousUserTracking(
     ctx context.Context,
     request *sdk.SetAnonymousUserTrackingSurfacesRequest,
     opts ...option.RequestOption,
-) (*sdk.MutationSurfacesSetAnonymousUserTrackingResponse, error){
+) (*sdk.MutationSurfacesSetAnonymousUserTrackingResponse, error) {
     response, err := c.WithRawResponse.SetAnonymousUserTracking(
         ctx,
         request,
@@ -137,7 +137,7 @@ func (c *Client) SetAnonymousUserTracking(
 // 	        SurfaceSlug: "surfaceSlug",
 // 	    },
 // 	}
-// 	client.Surfaces.UpdateName(
+// 	_, err := client.Surfaces.UpdateName(
 // 	    context.TODO(),
 // 	    request,
 // 	)
@@ -145,7 +145,7 @@ func (c *Client) UpdateName(
     ctx context.Context,
     request *sdk.UpdateNameSurfacesRequest,
     opts ...option.RequestOption,
-) (*sdk.MutationSurfacesUpdateNameResponse, error){
+) (*sdk.MutationSurfacesUpdateNameResponse, error) {
     response, err := c.WithRawResponse.UpdateName(
         ctx,
         request,
@@ -172,7 +172,7 @@ func (c *Client) UpdateName(
 // 	    Name: "name",
 // 	    Type: sdk.CreateSurfaceRequestTypeElysia,
 // 	}
-// 	client.Surfaces.CreateSurface(
+// 	_, err := client.Surfaces.CreateSurface(
 // 	    context.TODO(),
 // 	    request,
 // 	)
@@ -180,7 +180,7 @@ func (c *Client) CreateSurface(
     ctx context.Context,
     request *sdk.CreateSurfaceRequest,
     opts ...option.RequestOption,
-) (*sdk.CreateSurfaceResponse, error){
+) (*sdk.CreateSurfaceResponse, error) {
     response, err := c.WithRawResponse.CreateSurface(
         ctx,
         request,

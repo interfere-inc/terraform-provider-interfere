@@ -85,6 +85,6 @@ func (r *integrationDataSource) Read(ctx context.Context, req datasource.ReadReq
 		return
 	}
 	data.ID = types.StringValue(selected.ID)
-	data.Status = types.StringValue(selected.Status)
+	data.Status = types.StringValue(string(selected.Status))
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }

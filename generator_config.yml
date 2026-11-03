@@ -1,121 +1,218 @@
 provider:
-  name: interfere
+  name: "interfere"
 resources:
   workspace:
     create:
-      path: /v3/workspaces/{workspaceSlug}/actions/workspaces.updateBasics
-      method: POST
+      path: "/v3/workspaces/{workspaceSlug}/actions/workspaces.updateBasics"
+      method: "POST"
     read: &workspace_read
-      path: /v3/workspaces/{workspaceSlug}/queries/workspaces.current
-      method: POST
-    schema:
-      ignores: [args, success, slug]
+      path: "/v3/workspaces/{workspaceSlug}/queries/workspaces.current"
+      method: "POST"
+    schema: &workspace_schema
+      ignores:
+        [
+          "args",
+          "success",
+          "slug",
+          "allowMemberWorkspaceCreation",
+          "clerkOrgId",
+          "clerkUpdatedAt",
+          "demoResetAt",
+          "demoResetStatus",
+          "demoWorkspace",
+          "enabledAuthMethods",
+          "imageUrl",
+          "impersonationExpiresAt",
+          "impersonationGranted",
+          "onboardingCompletedAt",
+          "residencyPolicy",
+          "stripeCustomerId",
+          "createdAt",
+          "deletedAt",
+          "updatedAt",
+        ]
+      attributes:
+        overrides:
+          id:
+            description: "Unique workspace identifier."
+          name:
+            description: "Display name of the workspace."
+          dataResidencyLocation:
+            description: "Region where workspace data is stored. Set when the workspace is created."
   surface:
     create:
-      path: /v3/workspaces/{workspaceSlug}/surfaces
-      method: POST
+      path: "/v3/workspaces/{workspaceSlug}/surfaces"
+      method: "POST"
     read: &surface_read
-      path: /v3/workspaces/{workspaceSlug}/queries/surfaces.getBySlugIncludeDeleted
-      method: POST
-    schema:
+      path: "/v3/workspaces/{workspaceSlug}/queries/surfaces.getBySlugIncludeDeleted"
+      method: "POST"
+    schema: &surface_schema
       ignores:
         [
-          apiKey,
-          publicKey,
-          surface,
-          deletedAt,
-          sourceConnectionId,
-          sourceMappingId,
-          sourceWorkingDirectory,
-          destinationConnectionId,
-          destinationMappingId,
+          "apiKey",
+          "publicKey",
+          "surface",
+          "deletedAt",
+          "sourceConnectionId",
+          "sourceMappingId",
+          "sourceWorkingDirectory",
+          "destinationConnectionId",
+          "destinationMappingId",
+          "createdAt",
+          "updatedAt",
+          "destinationMappingLabel",
+          "destinationMappingUrl",
+          "environmentFiltering",
+          "onboardedAt",
+          "organizationId",
+          "primaryEnvironmentId",
+          "primaryEnvironmentName",
+          "sdkConfig",
+          "sourceDatasourceId",
+          "sourceMappingLabel",
+          "sourceMappingUrl",
         ]
+      attributes:
+        overrides:
+          id:
+            description: "Unique surface identifier."
+          name:
+            description: "Display name of the surface."
+          slug:
+            description: "Surface URL slug, using lowercase letters, numbers, and hyphens."
+          type:
+            description: "Application framework used by the surface."
+          anonymousUserTracking:
+            description: "Whether anonymous-user telemetry is collected."
   private_key:
     create:
-      path: /v3/workspaces/{workspaceSlug}/api-keys
-      method: POST
+      path: "/v3/workspaces/{workspaceSlug}/api-keys"
+      method: "POST"
     read:
-      path: /v3/workspaces/{workspaceSlug}/api-keys/{apiKeyId}
-      method: GET
+      path: "/v3/workspaces/{workspaceSlug}/api-keys/{apiKeyId}"
+      method: "GET"
     schema:
-      ignores: [revoked, apiKey.id, apiKey.name]
+      ignores: ["revoked", "apiKey.id", "apiKey.name"]
       attributes:
         aliases:
-          apiKeyId: id
+          apiKeyId: "id"
   public_key:
     create:
-      path: /v3/workspaces/{workspaceSlug}/surfaces/{surfaceSlug}/publicKeys
-      method: POST
+      path: "/v3/workspaces/{workspaceSlug}/surfaces/{surfaceSlug}/publicKeys"
+      method: "POST"
     read:
-      path: /v3/workspaces/{workspaceSlug}/surfaces/{surfaceSlug}/publicKeys/{publicKeyId}
-      method: GET
+      path: "/v3/workspaces/{workspaceSlug}/surfaces/{surfaceSlug}/publicKeys/{publicKeyId}"
+      method: "GET"
     schema:
-      ignores: [revoked]
+      ignores: ["revoked"]
       attributes:
         aliases:
-          publicKeyId: id
+          publicKeyId: "id"
   surface_repository:
     create:
-      path: /v3/workspaces/{workspaceSlug}/actions/integrations.linkSurfaceToRepository
-      method: POST
+      path: "/v3/workspaces/{workspaceSlug}/actions/integrations.linkSurfaceToRepository"
+      method: "POST"
     read: *surface_read
-    schema: &mapping_schema
+    schema: &surface_repository_schema
       ignores:
         [
-          success,
-          name,
-          slug,
-          type,
-          anonymousUserTracking,
-          deletedAt,
-          sourceConnectionId,
-          sourceMappingId,
-          sourceWorkingDirectory,
-          destinationConnectionId,
-          destinationMappingId,
+          "success",
+          "name",
+          "slug",
+          "type",
+          "anonymousUserTracking",
+          "deletedAt",
+          "sourceConnectionId",
+          "sourceMappingId",
+          "sourceWorkingDirectory",
+          "destinationConnectionId",
+          "destinationMappingId",
+          "createdAt",
+          "updatedAt",
+          "destinationMappingLabel",
+          "destinationMappingUrl",
+          "environmentFiltering",
+          "onboardedAt",
+          "organizationId",
+          "primaryEnvironmentId",
+          "primaryEnvironmentName",
+          "sdkConfig",
+          "sourceDatasourceId",
+          "sourceMappingLabel",
+          "sourceMappingUrl",
         ]
+      attributes:
+        overrides:
+          id:
+            description: "Unique surface identifier."
   surface_destination:
     create:
-      path: /v3/workspaces/{workspaceSlug}/actions/integrations.linkSurfaceToDestination
-      method: POST
+      path: "/v3/workspaces/{workspaceSlug}/actions/integrations.linkSurfaceToDestination"
+      method: "POST"
     read: *surface_read
-    schema: *mapping_schema
+    schema: *surface_repository_schema
   tracking_domain:
     create:
-      path: /v3/workspaces/{workspaceSlug}/actions/workspaces.addProxyDomain
-      method: POST
+      path: "/v3/workspaces/{workspaceSlug}/actions/workspaces.addProxyDomain"
+      method: "POST"
     read:
-      path: /v3/workspaces/{workspaceSlug}/queries/domains.byIdIncludeDeleted
-      method: POST
+      path: "/v3/workspaces/{workspaceSlug}/queries/domains.byIdIncludeDeleted"
+      method: "POST"
     schema:
       ignores:
         [
-          args,
-          success,
-          type,
-          deletedAt,
-          domainMetadata.cfHostnameId,
-          domainMetadata.lastError,
-          domainMetadata.provider,
+          "args",
+          "success",
+          "type",
+          "deletedAt",
+          "domainMetadata.cfHostnameId",
+          "domainMetadata.lastError",
+          "domainMetadata.provider",
+          "affiliationEmailAddress",
+          "clerkDomainId",
+          "enrollmentMode",
+          "organizationId",
+          "verifiedAt",
+          "createdAt",
+          "updatedAt",
         ]
+      attributes:
+        overrides:
+          id:
+            description: "Unique tracking domain identifier."
+          name:
+            description: "Lowercase fully qualified tracking hostname, without a trailing dot."
+          status:
+            description: "Current hostname verification status."
 data_sources:
   workspace:
     read: *workspace_read
-    schema:
-      ignores: [slug]
+    schema: *workspace_schema
   surface:
     read: *surface_read
+    schema: *surface_schema
+  integration:
+    read:
+      path: "/v3/workspaces/{workspaceSlug}/queries/integrations.installations"
+      method: "POST"
     schema:
       ignores:
         [
-          deletedAt,
-          sourceConnectionId,
-          sourceMappingId,
-          sourceWorkingDirectory,
-          destinationConnectionId,
-          destinationMappingId,
+          "enabledByUserId",
+          "externalAccountId",
+          "organizationId",
+          "providerMetadata",
+          "statusReason",
+          "createdAt",
+          "deletedAt",
+          "updatedAt",
+          "enabledBy",
         ]
-  integration:
-    read:
-      path: /v3/workspaces/{workspaceSlug}/queries/integrations.installations
-      method: POST
+      attributes:
+        overrides:
+          integration.id:
+            description: "Unique integration installation identifier."
+          integration.provider:
+            description: "Installed integration provider."
+          integration.status:
+            description: "Current integration installation status."

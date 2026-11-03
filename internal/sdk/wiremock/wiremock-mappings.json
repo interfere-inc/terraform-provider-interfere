@@ -6,6 +6,11 @@
       "request": {
         "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/queries/domains.byIdIncludeDeleted",
         "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        },
         "pathParameters": {
           "workspaceSlug": {
             "equalTo": "workspaceSlug"
@@ -14,7 +19,7 @@
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"type\": \"type\",\n  \"status\": \"pending\",\n  \"deletedAt\": 1.1,\n  \"domainMetadata\": {\n    \"cfHostnameId\": \"cfHostnameId\",\n    \"cfSslStatus\": \"cfSslStatus\",\n    \"lastError\": \"lastError\",\n    \"provider\": \"cloudflare\"\n  }\n}",
+        "body": "{\n  \"affiliationEmailAddress\": \"affiliationEmailAddress\",\n  \"clerkDomainId\": \"clerkDomainId\",\n  \"domainMetadata\": {\n    \"cfHostnameId\": \"cfHostnameId\",\n    \"cfSslStatus\": \"cfSslStatus\",\n    \"lastError\": \"lastError\",\n    \"provider\": \"cloudflare\"\n  },\n  \"enrollmentMode\": \"enrollmentMode\",\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"organizationId\": \"organizationId\",\n  \"status\": \"pending\",\n  \"type\": \"clerk\",\n  \"verifiedAt\": 1.1,\n  \"createdAt\": 1.1,\n  \"deletedAt\": 1.1,\n  \"updatedAt\": 1.1\n}",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -37,6 +42,11 @@
       "request": {
         "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/queries/integrations.installations",
         "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        },
         "pathParameters": {
           "workspaceSlug": {
             "equalTo": "workspaceSlug"
@@ -45,7 +55,7 @@
       },
       "response": {
         "status": 200,
-        "body": "[\n  {\n    \"id\": \"id\",\n    \"provider\": \"github\",\n    \"status\": \"status\"\n  }\n]",
+        "body": "[\n  {\n    \"enabledByUserId\": \"enabledByUserId\",\n    \"externalAccountId\": \"externalAccountId\",\n    \"id\": \"id\",\n    \"organizationId\": \"organizationId\",\n    \"provider\": \"github\",\n    \"providerMetadata\": {\n      \"provider\": \"opentelemetry\",\n      \"name\": \"name\",\n      \"installationUrl\": \"installationUrl\"\n    },\n    \"status\": \"connected\",\n    \"statusReason\": \"provider_suspended\",\n    \"createdAt\": 1.1,\n    \"deletedAt\": 1.1,\n    \"updatedAt\": 1.1,\n    \"enabledBy\": {\n      \"createdAt\": 1.1,\n      \"deletedAt\": 1.1,\n      \"updatedAt\": 1.1,\n      \"clerkUserId\": \"clerkUserId\",\n      \"deactivatedAt\": 1.1,\n      \"department\": \"department\",\n      \"displayName\": \"displayName\",\n      \"emailPrimary\": \"emailPrimary\",\n      \"firstName\": \"firstName\",\n      \"id\": \"id\",\n      \"imageUrl\": \"imageUrl\",\n      \"initials\": \"initials\",\n      \"lastName\": \"lastName\",\n      \"locale\": \"locale\",\n      \"source\": \"clerk\",\n      \"timezone\": \"timezone\",\n      \"title\": \"title\"\n    }\n  }\n]",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -68,6 +78,11 @@
       "request": {
         "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/actions/integrations.linkSurfaceToDestination",
         "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        },
         "pathParameters": {
           "workspaceSlug": {
             "equalTo": "workspaceSlug"
@@ -99,6 +114,11 @@
       "request": {
         "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/actions/integrations.linkSurfaceToRepository",
         "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        },
         "pathParameters": {
           "workspaceSlug": {
             "equalTo": "workspaceSlug"
@@ -130,6 +150,11 @@
       "request": {
         "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/actions/integrations.unlinkSurfaceDestinationMapping",
         "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        },
         "pathParameters": {
           "workspaceSlug": {
             "equalTo": "workspaceSlug"
@@ -161,6 +186,11 @@
       "request": {
         "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/actions/integrations.unlinkSurfaceMapping",
         "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        },
         "pathParameters": {
           "workspaceSlug": {
             "equalTo": "workspaceSlug"
@@ -192,6 +222,11 @@
       "request": {
         "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/queries/workspaces.current",
         "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        },
         "pathParameters": {
           "workspaceSlug": {
             "equalTo": "workspaceSlug"
@@ -200,7 +235,7 @@
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"slug\": \"slug\",\n  \"dataResidencyLocation\": \"us\"\n}",
+        "body": "{\n  \"allowMemberWorkspaceCreation\": true,\n  \"clerkOrgId\": \"clerkOrgId\",\n  \"clerkUpdatedAt\": 1.1,\n  \"dataResidencyLocation\": \"us\",\n  \"demoResetAt\": 1.1,\n  \"demoResetStatus\": \"RUNNING\",\n  \"demoWorkspace\": true,\n  \"enabledAuthMethods\": [\n    \"enterprise_sso\"\n  ],\n  \"id\": \"id\",\n  \"imageUrl\": \"imageUrl\",\n  \"impersonationExpiresAt\": 1.1,\n  \"impersonationGranted\": true,\n  \"name\": \"name\",\n  \"onboardingCompletedAt\": 1.1,\n  \"residencyPolicy\": \"any\",\n  \"slug\": \"slug\",\n  \"stripeCustomerId\": \"stripeCustomerId\",\n  \"createdAt\": 1.1,\n  \"deletedAt\": 1.1,\n  \"updatedAt\": 1.1\n}",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -223,6 +258,11 @@
       "request": {
         "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/actions/workspaces.addProxyDomain",
         "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        },
         "pathParameters": {
           "workspaceSlug": {
             "equalTo": "workspaceSlug"
@@ -254,6 +294,11 @@
       "request": {
         "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/actions/workspaces.removeProxyDomain",
         "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        },
         "pathParameters": {
           "workspaceSlug": {
             "equalTo": "workspaceSlug"
@@ -285,6 +330,11 @@
       "request": {
         "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/actions/workspaces.updateBasics",
         "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        },
         "pathParameters": {
           "workspaceSlug": {
             "equalTo": "workspaceSlug"
@@ -316,6 +366,11 @@
       "request": {
         "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/queries/surfaces.getBySlugIncludeDeleted",
         "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        },
         "pathParameters": {
           "workspaceSlug": {
             "equalTo": "workspaceSlug"
@@ -324,7 +379,7 @@
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"slug\": \"slug\",\n  \"type\": \"elysia\",\n  \"deletedAt\": 1.1,\n  \"anonymousUserTracking\": true,\n  \"sourceConnectionId\": \"sourceConnectionId\",\n  \"sourceMappingId\": \"sourceMappingId\",\n  \"sourceWorkingDirectory\": \"sourceWorkingDirectory\",\n  \"destinationConnectionId\": \"destinationConnectionId\",\n  \"destinationMappingId\": \"destinationMappingId\"\n}",
+        "body": "{\n  \"createdAt\": 1.1,\n  \"deletedAt\": 1.1,\n  \"updatedAt\": 1.1,\n  \"anonymousUserTracking\": true,\n  \"destinationConnectionId\": \"destinationConnectionId\",\n  \"destinationMappingId\": \"destinationMappingId\",\n  \"destinationMappingLabel\": \"destinationMappingLabel\",\n  \"destinationMappingUrl\": \"destinationMappingUrl\",\n  \"environmentFiltering\": true,\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"onboardedAt\": 1.1,\n  \"organizationId\": \"organizationId\",\n  \"primaryEnvironmentId\": \"primaryEnvironmentId\",\n  \"primaryEnvironmentName\": \"primaryEnvironmentName\",\n  \"sdkConfig\": {\n    \"plugins\": {\n      \"errors\": true,\n      \"device\": true,\n      \"pageEvents\": true,\n      \"rageClick\": true,\n      \"replay\": true,\n      \"logs\": true\n    },\n    \"serverTracing\": \"full\",\n    \"logSourcing\": \"sdk\"\n  },\n  \"slug\": \"slug\",\n  \"sourceDatasourceId\": \"sourceDatasourceId\",\n  \"sourceConnectionId\": \"sourceConnectionId\",\n  \"sourceMappingId\": \"sourceMappingId\",\n  \"sourceMappingLabel\": \"sourceMappingLabel\",\n  \"sourceMappingUrl\": \"sourceMappingUrl\",\n  \"sourceWorkingDirectory\": \"sourceWorkingDirectory\",\n  \"type\": \"elysia\"\n}",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -347,6 +402,11 @@
       "request": {
         "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/actions/surfaces.delete",
         "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        },
         "pathParameters": {
           "workspaceSlug": {
             "equalTo": "workspaceSlug"
@@ -378,6 +438,11 @@
       "request": {
         "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/actions/surfaces.setAnonymousUserTracking",
         "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        },
         "pathParameters": {
           "workspaceSlug": {
             "equalTo": "workspaceSlug"
@@ -409,6 +474,11 @@
       "request": {
         "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/actions/surfaces.updateName",
         "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        },
         "pathParameters": {
           "workspaceSlug": {
             "equalTo": "workspaceSlug"
@@ -440,6 +510,11 @@
       "request": {
         "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/surfaces",
         "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        },
         "pathParameters": {
           "workspaceSlug": {
             "equalTo": "workspaceSlug"
@@ -471,6 +546,11 @@
       "request": {
         "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/api-keys",
         "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        },
         "pathParameters": {
           "workspaceSlug": {
             "equalTo": "workspaceSlug"
@@ -502,6 +582,11 @@
       "request": {
         "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/api-keys/{apiKeyId}",
         "method": "GET",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        },
         "pathParameters": {
           "workspaceSlug": {
             "equalTo": "workspaceSlug"
@@ -536,6 +621,11 @@
       "request": {
         "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/api-keys/{apiKeyId}",
         "method": "DELETE",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        },
         "pathParameters": {
           "workspaceSlug": {
             "equalTo": "workspaceSlug"
@@ -570,6 +660,11 @@
       "request": {
         "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/surfaces/{surfaceSlug}/publicKeys",
         "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        },
         "pathParameters": {
           "workspaceSlug": {
             "equalTo": "workspaceSlug"
@@ -604,6 +699,11 @@
       "request": {
         "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/surfaces/{surfaceSlug}/publicKeys/{publicKeyId}",
         "method": "GET",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        },
         "pathParameters": {
           "workspaceSlug": {
             "equalTo": "workspaceSlug"
@@ -641,6 +741,11 @@
       "request": {
         "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/surfaces/{surfaceSlug}/publicKeys/{publicKeyId}",
         "method": "DELETE",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        },
         "pathParameters": {
           "workspaceSlug": {
             "equalTo": "workspaceSlug"

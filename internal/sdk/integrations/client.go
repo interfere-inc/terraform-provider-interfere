@@ -47,7 +47,7 @@ func NewClient(options *core.RequestOptions) *Client {
 // 	        },
 // 	    },
 // 	}
-// 	client.Integrations.Installations(
+// 	_, err := client.Integrations.Installations(
 // 	    context.TODO(),
 // 	    request,
 // 	)
@@ -55,7 +55,7 @@ func (c *Client) Installations(
     ctx context.Context,
     request *sdk.InstallationsIntegrationsRequest,
     opts ...option.RequestOption,
-) (sdk.QueryIntegrationsInstallationsResponse, error){
+) (sdk.QueryIntegrationsInstallationsResponse, error) {
     response, err := c.WithRawResponse.Installations(
         ctx,
         request,
@@ -79,7 +79,7 @@ func (c *Client) Installations(
 // 	        SurfaceSlug: "surfaceSlug",
 // 	    },
 // 	}
-// 	client.Integrations.LinkSurfaceToDestination(
+// 	_, err := client.Integrations.LinkSurfaceToDestination(
 // 	    context.TODO(),
 // 	    request,
 // 	)
@@ -87,7 +87,7 @@ func (c *Client) LinkSurfaceToDestination(
     ctx context.Context,
     request *sdk.LinkSurfaceToDestinationIntegrationsRequest,
     opts ...option.RequestOption,
-) (*sdk.MutationIntegrationsLinkSurfaceToDestinationResponse, error){
+) (*sdk.MutationIntegrationsLinkSurfaceToDestinationResponse, error) {
     response, err := c.WithRawResponse.LinkSurfaceToDestination(
         ctx,
         request,
@@ -111,7 +111,7 @@ func (c *Client) LinkSurfaceToDestination(
 // 	        SurfaceSlug: "surfaceSlug",
 // 	    },
 // 	}
-// 	client.Integrations.LinkSurfaceToRepository(
+// 	_, err := client.Integrations.LinkSurfaceToRepository(
 // 	    context.TODO(),
 // 	    request,
 // 	)
@@ -119,7 +119,7 @@ func (c *Client) LinkSurfaceToRepository(
     ctx context.Context,
     request *sdk.LinkSurfaceToRepositoryIntegrationsRequest,
     opts ...option.RequestOption,
-) (*sdk.MutationIntegrationsLinkSurfaceToRepositoryResponse, error){
+) (*sdk.MutationIntegrationsLinkSurfaceToRepositoryResponse, error) {
     response, err := c.WithRawResponse.LinkSurfaceToRepository(
         ctx,
         request,
@@ -141,7 +141,7 @@ func (c *Client) LinkSurfaceToRepository(
 // 	        SurfaceSlug: "surfaceSlug",
 // 	    },
 // 	}
-// 	client.Integrations.UnlinkSurfaceDestinationMapping(
+// 	_, err := client.Integrations.UnlinkSurfaceDestinationMapping(
 // 	    context.TODO(),
 // 	    request,
 // 	)
@@ -149,7 +149,7 @@ func (c *Client) UnlinkSurfaceDestinationMapping(
     ctx context.Context,
     request *sdk.UnlinkSurfaceDestinationMappingIntegrationsRequest,
     opts ...option.RequestOption,
-) (*sdk.MutationIntegrationsUnlinkSurfaceDestinationMappingResponse, error){
+) (*sdk.MutationIntegrationsUnlinkSurfaceDestinationMappingResponse, error) {
     response, err := c.WithRawResponse.UnlinkSurfaceDestinationMapping(
         ctx,
         request,
@@ -171,7 +171,7 @@ func (c *Client) UnlinkSurfaceDestinationMapping(
 // 	        SurfaceSlug: "surfaceSlug",
 // 	    },
 // 	}
-// 	client.Integrations.UnlinkSurfaceMapping(
+// 	_, err := client.Integrations.UnlinkSurfaceMapping(
 // 	    context.TODO(),
 // 	    request,
 // 	)
@@ -179,7 +179,7 @@ func (c *Client) UnlinkSurfaceMapping(
     ctx context.Context,
     request *sdk.UnlinkSurfaceMappingIntegrationsRequest,
     opts ...option.RequestOption,
-) (*sdk.MutationIntegrationsUnlinkSurfaceMappingResponse, error){
+) (*sdk.MutationIntegrationsUnlinkSurfaceMappingResponse, error) {
     response, err := c.WithRawResponse.UnlinkSurfaceMapping(
         ctx,
         request,

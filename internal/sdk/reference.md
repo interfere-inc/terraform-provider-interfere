@@ -12,7 +12,7 @@
 <dl>
 <dd>
 
-Read a tracking domain by ID, including its deletion marker. Requires workspace domain read permission; null can also indicate insufficient access. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation is read-only despite using POST. Permission-filtered queries may return an empty result; do not assume that proves the resource does not exist. Only use pagination arguments declared in the schema.
+Read a tracking domain by ID, including its deletion marker. Requires workspace domain read permission; null can also indicate insufficient access. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation is read-only despite using POST. Requires org:workspace_domains:read; insufficient permission returns an access-denied error. An authorized read with no matching resource returns WORKSPACE_RESOURCE_NOT_FOUND (404). Only use pagination arguments declared in the schema.
 </dd>
 </dl>
 </dd>
@@ -33,7 +33,7 @@ request := &sdk.ByIDIncludeDeletedDomainsRequest{
         DomainID: "domainId",
     },
 }
-client.Domains.ByIDIncludeDeleted(
+_, err := client.Domains.ByIDIncludeDeleted(
     context.TODO(),
     request,
 )
@@ -107,7 +107,7 @@ request := &sdk.InstallationsIntegrationsRequest{
         },
     },
 }
-client.Integrations.Installations(
+_, err := client.Integrations.Installations(
     context.TODO(),
     request,
 )
@@ -180,7 +180,7 @@ request := &sdk.LinkSurfaceToDestinationIntegrationsRequest{
         SurfaceSlug: "surfaceSlug",
     },
 }
-client.Integrations.LinkSurfaceToDestination(
+_, err := client.Integrations.LinkSurfaceToDestination(
     context.TODO(),
     request,
 )
@@ -253,7 +253,7 @@ request := &sdk.LinkSurfaceToRepositoryIntegrationsRequest{
         SurfaceSlug: "surfaceSlug",
     },
 }
-client.Integrations.LinkSurfaceToRepository(
+_, err := client.Integrations.LinkSurfaceToRepository(
     context.TODO(),
     request,
 )
@@ -324,7 +324,7 @@ request := &sdk.UnlinkSurfaceDestinationMappingIntegrationsRequest{
         SurfaceSlug: "surfaceSlug",
     },
 }
-client.Integrations.UnlinkSurfaceDestinationMapping(
+_, err := client.Integrations.UnlinkSurfaceDestinationMapping(
     context.TODO(),
     request,
 )
@@ -395,7 +395,7 @@ request := &sdk.UnlinkSurfaceMappingIntegrationsRequest{
         SurfaceSlug: "surfaceSlug",
     },
 }
-client.Integrations.UnlinkSurfaceMapping(
+_, err := client.Integrations.UnlinkSurfaceMapping(
     context.TODO(),
     request,
 )
@@ -446,7 +446,7 @@ client.Integrations.UnlinkSurfaceMapping(
 <dl>
 <dd>
 
-Read the authenticated workspace's current details and settings. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation is read-only despite using POST. Permission-filtered queries may return an empty result; do not assume that proves the resource does not exist. Only use pagination arguments declared in the schema.
+Read the authenticated workspace's current details and settings. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation is read-only despite using POST. Requires org:workspace_basics:read; insufficient permission returns an access-denied error. An authorized read with no matching resource returns WORKSPACE_RESOURCE_NOT_FOUND (404). Only use pagination arguments declared in the schema.
 </dd>
 </dl>
 </dd>
@@ -464,7 +464,7 @@ Read the authenticated workspace's current details and settings. Pass the worksp
 request := &sdk.CurrentWorkspacesRequest{
     WorkspaceSlug: "workspaceSlug",
 }
-client.Workspaces.Current(
+_, err := client.Workspaces.Current(
     context.TODO(),
     request,
 )
@@ -536,7 +536,7 @@ request := &sdk.AddProxyDomainWorkspacesRequest{
         Name: "name",
     },
 }
-client.Workspaces.AddProxyDomain(
+_, err := client.Workspaces.AddProxyDomain(
     context.TODO(),
     request,
 )
@@ -607,7 +607,7 @@ request := &sdk.RemoveProxyDomainWorkspacesRequest{
         Name: "name",
     },
 }
-client.Workspaces.RemoveProxyDomain(
+_, err := client.Workspaces.RemoveProxyDomain(
     context.TODO(),
     request,
 )
@@ -676,7 +676,7 @@ request := &sdk.UpdateBasicsWorkspacesRequest{
     WorkspaceSlug: "workspaceSlug",
     Args: &sdk.UpdateBasicsWorkspacesRequestArgs{},
 }
-client.Workspaces.UpdateBasics(
+_, err := client.Workspaces.UpdateBasics(
     context.TODO(),
     request,
 )
@@ -727,7 +727,7 @@ client.Workspaces.UpdateBasics(
 <dl>
 <dd>
 
-Read a surface by slug even if deleted. Use only when investigating historical references; prefer surfaces.get for active resources. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation is read-only despite using POST. Permission-filtered queries may return an empty result; do not assume that proves the resource does not exist. Only use pagination arguments declared in the schema.
+Read a surface by slug even if deleted. Use only when investigating historical references; prefer surfaces.get for active resources. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation is read-only despite using POST. Requires org:surfaces:read; insufficient permission returns an access-denied error. An authorized read with no matching resource returns WORKSPACE_RESOURCE_NOT_FOUND (404). Only use pagination arguments declared in the schema.
 </dd>
 </dl>
 </dd>
@@ -748,7 +748,7 @@ request := &sdk.GetBySlugIncludeDeletedSurfacesRequest{
         SurfaceSlug: "surfaceSlug",
     },
 }
-client.Surfaces.GetBySlugIncludeDeleted(
+_, err := client.Surfaces.GetBySlugIncludeDeleted(
     context.TODO(),
     request,
 )
@@ -819,7 +819,7 @@ request := &sdk.DeleteSurfacesRequest{
         SurfaceSlug: "surfaceSlug",
     },
 }
-client.Surfaces.Delete(
+_, err := client.Surfaces.Delete(
     context.TODO(),
     request,
 )
@@ -891,7 +891,7 @@ request := &sdk.SetAnonymousUserTrackingSurfacesRequest{
         Enabled: true,
     },
 }
-client.Surfaces.SetAnonymousUserTracking(
+_, err := client.Surfaces.SetAnonymousUserTracking(
     context.TODO(),
     request,
 )
@@ -963,7 +963,7 @@ request := &sdk.UpdateNameSurfacesRequest{
         SurfaceSlug: "surfaceSlug",
     },
 }
-client.Surfaces.UpdateName(
+_, err := client.Surfaces.UpdateName(
     context.TODO(),
     request,
 )
@@ -1039,7 +1039,7 @@ request := &sdk.CreateSurfaceRequest{
     Name: "name",
     Type: sdk.CreateSurfaceRequestTypeElysia,
 }
-client.Surfaces.CreateSurface(
+_, err := client.Surfaces.CreateSurface(
     context.TODO(),
     request,
 )
@@ -1145,7 +1145,7 @@ request := &keys.CreatePrivateRequest{
         keys.CreatePrivateRequestScopesItemOrgTelemetryWrite,
     },
 }
-client.Keys.Private.Create(
+_, err := client.Keys.Private.Create(
     context.TODO(),
     request,
 )
@@ -1246,7 +1246,7 @@ request := &keys.GetPrivateRequest{
     WorkspaceSlug: "workspaceSlug",
     APIKeyID: "apiKeyId",
 }
-client.Keys.Private.Get(
+_, err := client.Keys.Private.Get(
     context.TODO(),
     request,
 )
@@ -1315,7 +1315,7 @@ request := &keys.DeletePrivateRequest{
     WorkspaceSlug: "workspaceSlug",
     APIKeyID: "apiKeyId",
 }
-client.Keys.Private.Delete(
+_, err := client.Keys.Private.Delete(
     context.TODO(),
     request,
 )
@@ -1387,7 +1387,7 @@ request := &keys.CreatePublicRequest{
     IdempotencyKey: "idempotencyKey",
     Name: "name",
 }
-client.Keys.Public.Create(
+_, err := client.Keys.Public.Create(
     context.TODO(),
     request,
 )
@@ -1473,7 +1473,7 @@ request := &keys.GetPublicRequest{
     SurfaceSlug: "surfaceSlug",
     PublicKeyID: "publicKeyId",
 }
-client.Keys.Public.Get(
+_, err := client.Keys.Public.Get(
     context.TODO(),
     request,
 )
@@ -1551,7 +1551,7 @@ request := &keys.DeletePublicRequest{
     SurfaceSlug: "surfaceSlug",
     PublicKeyID: "publicKeyId",
 }
-client.Keys.Public.Delete(
+_, err := client.Keys.Public.Delete(
     context.TODO(),
     request,
 )

@@ -964,81 +964,89 @@ func (m *MutationSurfacesUpdateNameResponse) String() string {
 }
 
 var (
-	querySurfacesGetBySlugIncludeDeletedResponseFieldID                      = big.NewInt(1 << 0)
-	querySurfacesGetBySlugIncludeDeletedResponseFieldName                    = big.NewInt(1 << 1)
-	querySurfacesGetBySlugIncludeDeletedResponseFieldSlug                    = big.NewInt(1 << 2)
-	querySurfacesGetBySlugIncludeDeletedResponseFieldType                    = big.NewInt(1 << 3)
-	querySurfacesGetBySlugIncludeDeletedResponseFieldDeletedAt               = big.NewInt(1 << 4)
-	querySurfacesGetBySlugIncludeDeletedResponseFieldAnonymousUserTracking   = big.NewInt(1 << 5)
-	querySurfacesGetBySlugIncludeDeletedResponseFieldSourceConnectionID      = big.NewInt(1 << 6)
-	querySurfacesGetBySlugIncludeDeletedResponseFieldSourceMappingID         = big.NewInt(1 << 7)
-	querySurfacesGetBySlugIncludeDeletedResponseFieldSourceWorkingDirectory  = big.NewInt(1 << 8)
-	querySurfacesGetBySlugIncludeDeletedResponseFieldDestinationConnectionID = big.NewInt(1 << 9)
-	querySurfacesGetBySlugIncludeDeletedResponseFieldDestinationMappingID    = big.NewInt(1 << 10)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldCreatedAt               = big.NewInt(1 << 0)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldDeletedAt               = big.NewInt(1 << 1)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldUpdatedAt               = big.NewInt(1 << 2)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldAnonymousUserTracking   = big.NewInt(1 << 3)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldDestinationConnectionID = big.NewInt(1 << 4)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldDestinationMappingID    = big.NewInt(1 << 5)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldDestinationMappingLabel = big.NewInt(1 << 6)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldDestinationMappingURL   = big.NewInt(1 << 7)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldEnvironmentFiltering    = big.NewInt(1 << 8)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldID                      = big.NewInt(1 << 9)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldName                    = big.NewInt(1 << 10)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldOnboardedAt             = big.NewInt(1 << 11)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldOrganizationID          = big.NewInt(1 << 12)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldPrimaryEnvironmentID    = big.NewInt(1 << 13)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldPrimaryEnvironmentName  = big.NewInt(1 << 14)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldSdkConfig               = big.NewInt(1 << 15)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldSlug                    = big.NewInt(1 << 16)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldSourceDatasourceID      = big.NewInt(1 << 17)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldSourceConnectionID      = big.NewInt(1 << 18)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldSourceMappingID         = big.NewInt(1 << 19)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldSourceMappingLabel      = big.NewInt(1 << 20)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldSourceMappingURL        = big.NewInt(1 << 21)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldSourceWorkingDirectory  = big.NewInt(1 << 22)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldType                    = big.NewInt(1 << 23)
 )
 
 // querySurfacesGetBySlugIncludeDeletedResponseNullableFields maps the wire names of QuerySurfacesGetBySlugIncludeDeletedResponse's nullable fields (required or optional) to their field bits.
 var querySurfacesGetBySlugIncludeDeletedResponseNullableFields = map[string]*big.Int{
 	"deletedAt":               querySurfacesGetBySlugIncludeDeletedResponseFieldDeletedAt,
-	"sourceConnectionId":      querySurfacesGetBySlugIncludeDeletedResponseFieldSourceConnectionID,
-	"sourceMappingId":         querySurfacesGetBySlugIncludeDeletedResponseFieldSourceMappingID,
-	"sourceWorkingDirectory":  querySurfacesGetBySlugIncludeDeletedResponseFieldSourceWorkingDirectory,
 	"destinationConnectionId": querySurfacesGetBySlugIncludeDeletedResponseFieldDestinationConnectionID,
 	"destinationMappingId":    querySurfacesGetBySlugIncludeDeletedResponseFieldDestinationMappingID,
+	"destinationMappingLabel": querySurfacesGetBySlugIncludeDeletedResponseFieldDestinationMappingLabel,
+	"destinationMappingUrl":   querySurfacesGetBySlugIncludeDeletedResponseFieldDestinationMappingURL,
+	"onboardedAt":             querySurfacesGetBySlugIncludeDeletedResponseFieldOnboardedAt,
+	"primaryEnvironmentId":    querySurfacesGetBySlugIncludeDeletedResponseFieldPrimaryEnvironmentID,
+	"primaryEnvironmentName":  querySurfacesGetBySlugIncludeDeletedResponseFieldPrimaryEnvironmentName,
+	"sdkConfig":               querySurfacesGetBySlugIncludeDeletedResponseFieldSdkConfig,
+	"sourceDatasourceId":      querySurfacesGetBySlugIncludeDeletedResponseFieldSourceDatasourceID,
+	"sourceConnectionId":      querySurfacesGetBySlugIncludeDeletedResponseFieldSourceConnectionID,
+	"sourceMappingId":         querySurfacesGetBySlugIncludeDeletedResponseFieldSourceMappingID,
+	"sourceMappingLabel":      querySurfacesGetBySlugIncludeDeletedResponseFieldSourceMappingLabel,
+	"sourceMappingUrl":        querySurfacesGetBySlugIncludeDeletedResponseFieldSourceMappingURL,
+	"sourceWorkingDirectory":  querySurfacesGetBySlugIncludeDeletedResponseFieldSourceWorkingDirectory,
 }
 
 type QuerySurfacesGetBySlugIncludeDeletedResponse struct {
-	// Unique surface identifier.
-	ID string `json:"id" url:"id"`
-	// Display name of the surface.
-	Name string `json:"name" url:"name"`
-	// Surface URL slug, using lowercase letters, numbers, and hyphens.
-	Slug string `json:"slug" url:"slug"`
-	// Application framework used by the surface.
-	Type      QuerySurfacesGetBySlugIncludeDeletedResponseType `json:"type" url:"type"`
-	DeletedAt *float64                                         `json:"deletedAt,omitempty" url:"deletedAt,omitempty"`
-	// Whether anonymous-user telemetry is collected.
-	AnonymousUserTracking   bool    `json:"anonymousUserTracking" url:"anonymousUserTracking"`
-	SourceConnectionID      *string `json:"sourceConnectionId,omitempty" url:"sourceConnectionId,omitempty"`
-	SourceMappingID         *string `json:"sourceMappingId,omitempty" url:"sourceMappingId,omitempty"`
-	SourceWorkingDirectory  *string `json:"sourceWorkingDirectory,omitempty" url:"sourceWorkingDirectory,omitempty"`
-	DestinationConnectionID *string `json:"destinationConnectionId,omitempty" url:"destinationConnectionId,omitempty"`
-	DestinationMappingID    *string `json:"destinationMappingId,omitempty" url:"destinationMappingId,omitempty"`
+	CreatedAt               float64                                                `json:"createdAt" url:"createdAt"`
+	DeletedAt               *float64                                               `json:"deletedAt,omitempty" url:"deletedAt,omitempty"`
+	UpdatedAt               float64                                                `json:"updatedAt" url:"updatedAt"`
+	AnonymousUserTracking   bool                                                   `json:"anonymousUserTracking" url:"anonymousUserTracking"`
+	DestinationConnectionID *string                                                `json:"destinationConnectionId,omitempty" url:"destinationConnectionId,omitempty"`
+	DestinationMappingID    *string                                                `json:"destinationMappingId,omitempty" url:"destinationMappingId,omitempty"`
+	DestinationMappingLabel *string                                                `json:"destinationMappingLabel,omitempty" url:"destinationMappingLabel,omitempty"`
+	DestinationMappingURL   *string                                                `json:"destinationMappingUrl,omitempty" url:"destinationMappingUrl,omitempty"`
+	EnvironmentFiltering    bool                                                   `json:"environmentFiltering" url:"environmentFiltering"`
+	ID                      string                                                 `json:"id" url:"id"`
+	Name                    string                                                 `json:"name" url:"name"`
+	OnboardedAt             *float64                                               `json:"onboardedAt,omitempty" url:"onboardedAt,omitempty"`
+	OrganizationID          string                                                 `json:"organizationId" url:"organizationId"`
+	PrimaryEnvironmentID    *string                                                `json:"primaryEnvironmentId,omitempty" url:"primaryEnvironmentId,omitempty"`
+	PrimaryEnvironmentName  *string                                                `json:"primaryEnvironmentName,omitempty" url:"primaryEnvironmentName,omitempty"`
+	SdkConfig               *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig `json:"sdkConfig,omitempty" url:"sdkConfig,omitempty"`
+	Slug                    string                                                 `json:"slug" url:"slug"`
+	SourceDatasourceID      *string                                                `json:"sourceDatasourceId,omitempty" url:"sourceDatasourceId,omitempty"`
+	SourceConnectionID      *string                                                `json:"sourceConnectionId,omitempty" url:"sourceConnectionId,omitempty"`
+	SourceMappingID         *string                                                `json:"sourceMappingId,omitempty" url:"sourceMappingId,omitempty"`
+	SourceMappingLabel      *string                                                `json:"sourceMappingLabel,omitempty" url:"sourceMappingLabel,omitempty"`
+	SourceMappingURL        *string                                                `json:"sourceMappingUrl,omitempty" url:"sourceMappingUrl,omitempty"`
+	SourceWorkingDirectory  *string                                                `json:"sourceWorkingDirectory,omitempty" url:"sourceWorkingDirectory,omitempty"`
+	Type                    QuerySurfacesGetBySlugIncludeDeletedResponseType       `json:"type" url:"type"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 
-	ExtraProperties map[string]interface{} `json:"-" url:"-"`
-
-	rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
 }
 
-func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) GetID() string {
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) GetCreatedAt() float64 {
 	if q == nil {
-		return ""
+		return 0
 	}
-	return q.ID
-}
-
-func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) GetName() string {
-	if q == nil {
-		return ""
-	}
-	return q.Name
-}
-
-func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) GetSlug() string {
-	if q == nil {
-		return ""
-	}
-	return q.Slug
-}
-
-func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) GetType() QuerySurfacesGetBySlugIncludeDeletedResponseType {
-	if q == nil {
-		return ""
-	}
-	return q.Type
+	return q.CreatedAt
 }
 
 func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) GetDeletedAt() *float64 {
@@ -1048,32 +1056,18 @@ func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) GetDeletedAt() *float64 {
 	return q.DeletedAt
 }
 
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) GetUpdatedAt() float64 {
+	if q == nil {
+		return 0
+	}
+	return q.UpdatedAt
+}
+
 func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) GetAnonymousUserTracking() bool {
 	if q == nil {
 		return false
 	}
 	return q.AnonymousUserTracking
-}
-
-func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) GetSourceConnectionID() *string {
-	if q == nil {
-		return nil
-	}
-	return q.SourceConnectionID
-}
-
-func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) GetSourceMappingID() *string {
-	if q == nil {
-		return nil
-	}
-	return q.SourceMappingID
-}
-
-func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) GetSourceWorkingDirectory() *string {
-	if q == nil {
-		return nil
-	}
-	return q.SourceWorkingDirectory
 }
 
 func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) GetDestinationConnectionID() *string {
@@ -1090,11 +1084,137 @@ func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) GetDestinationMappingID()
 	return q.DestinationMappingID
 }
 
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) GetDestinationMappingLabel() *string {
+	if q == nil {
+		return nil
+	}
+	return q.DestinationMappingLabel
+}
+
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) GetDestinationMappingURL() *string {
+	if q == nil {
+		return nil
+	}
+	return q.DestinationMappingURL
+}
+
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) GetEnvironmentFiltering() bool {
+	if q == nil {
+		return false
+	}
+	return q.EnvironmentFiltering
+}
+
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) GetID() string {
+	if q == nil {
+		return ""
+	}
+	return q.ID
+}
+
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) GetName() string {
+	if q == nil {
+		return ""
+	}
+	return q.Name
+}
+
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) GetOnboardedAt() *float64 {
+	if q == nil {
+		return nil
+	}
+	return q.OnboardedAt
+}
+
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) GetOrganizationID() string {
+	if q == nil {
+		return ""
+	}
+	return q.OrganizationID
+}
+
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) GetPrimaryEnvironmentID() *string {
+	if q == nil {
+		return nil
+	}
+	return q.PrimaryEnvironmentID
+}
+
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) GetPrimaryEnvironmentName() *string {
+	if q == nil {
+		return nil
+	}
+	return q.PrimaryEnvironmentName
+}
+
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) GetSdkConfig() *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig {
+	if q == nil {
+		return nil
+	}
+	return q.SdkConfig
+}
+
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) GetSlug() string {
+	if q == nil {
+		return ""
+	}
+	return q.Slug
+}
+
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) GetSourceDatasourceID() *string {
+	if q == nil {
+		return nil
+	}
+	return q.SourceDatasourceID
+}
+
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) GetSourceConnectionID() *string {
+	if q == nil {
+		return nil
+	}
+	return q.SourceConnectionID
+}
+
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) GetSourceMappingID() *string {
+	if q == nil {
+		return nil
+	}
+	return q.SourceMappingID
+}
+
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) GetSourceMappingLabel() *string {
+	if q == nil {
+		return nil
+	}
+	return q.SourceMappingLabel
+}
+
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) GetSourceMappingURL() *string {
+	if q == nil {
+		return nil
+	}
+	return q.SourceMappingURL
+}
+
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) GetSourceWorkingDirectory() *string {
+	if q == nil {
+		return nil
+	}
+	return q.SourceWorkingDirectory
+}
+
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) GetType() QuerySurfacesGetBySlugIncludeDeletedResponseType {
+	if q == nil {
+		return ""
+	}
+	return q.Type
+}
+
 func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) GetExtraProperties() map[string]interface{} {
 	if q == nil {
 		return nil
 	}
-	return q.ExtraProperties
+	return q.extraProperties
 }
 
 func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) require(field *big.Int) {
@@ -1106,32 +1226,11 @@ func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) require(field *big.Int) {
 	q.explicitFields = next
 }
 
-// SetID sets the ID field and marks it as non-optional;
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) SetID(id string) {
-	q.ID = id
-	q.require(querySurfacesGetBySlugIncludeDeletedResponseFieldID)
-}
-
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) SetName(name string) {
-	q.Name = name
-	q.require(querySurfacesGetBySlugIncludeDeletedResponseFieldName)
-}
-
-// SetSlug sets the Slug field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) SetSlug(slug string) {
-	q.Slug = slug
-	q.require(querySurfacesGetBySlugIncludeDeletedResponseFieldSlug)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) SetType(type_ QuerySurfacesGetBySlugIncludeDeletedResponseType) {
-	q.Type = type_
-	q.require(querySurfacesGetBySlugIncludeDeletedResponseFieldType)
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) SetCreatedAt(createdAt float64) {
+	q.CreatedAt = createdAt
+	q.require(querySurfacesGetBySlugIncludeDeletedResponseFieldCreatedAt)
 }
 
 // SetDeletedAt sets the DeletedAt field and marks it as non-optional;
@@ -1141,32 +1240,18 @@ func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) SetDeletedAt(deletedAt *f
 	q.require(querySurfacesGetBySlugIncludeDeletedResponseFieldDeletedAt)
 }
 
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) SetUpdatedAt(updatedAt float64) {
+	q.UpdatedAt = updatedAt
+	q.require(querySurfacesGetBySlugIncludeDeletedResponseFieldUpdatedAt)
+}
+
 // SetAnonymousUserTracking sets the AnonymousUserTracking field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) SetAnonymousUserTracking(anonymousUserTracking bool) {
 	q.AnonymousUserTracking = anonymousUserTracking
 	q.require(querySurfacesGetBySlugIncludeDeletedResponseFieldAnonymousUserTracking)
-}
-
-// SetSourceConnectionID sets the SourceConnectionID field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) SetSourceConnectionID(sourceConnectionID *string) {
-	q.SourceConnectionID = sourceConnectionID
-	q.require(querySurfacesGetBySlugIncludeDeletedResponseFieldSourceConnectionID)
-}
-
-// SetSourceMappingID sets the SourceMappingID field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) SetSourceMappingID(sourceMappingID *string) {
-	q.SourceMappingID = sourceMappingID
-	q.require(querySurfacesGetBySlugIncludeDeletedResponseFieldSourceMappingID)
-}
-
-// SetSourceWorkingDirectory sets the SourceWorkingDirectory field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) SetSourceWorkingDirectory(sourceWorkingDirectory *string) {
-	q.SourceWorkingDirectory = sourceWorkingDirectory
-	q.require(querySurfacesGetBySlugIncludeDeletedResponseFieldSourceWorkingDirectory)
 }
 
 // SetDestinationConnectionID sets the DestinationConnectionID field and marks it as non-optional;
@@ -1183,22 +1268,144 @@ func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) SetDestinationMappingID(d
 	q.require(querySurfacesGetBySlugIncludeDeletedResponseFieldDestinationMappingID)
 }
 
+// SetDestinationMappingLabel sets the DestinationMappingLabel field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) SetDestinationMappingLabel(destinationMappingLabel *string) {
+	q.DestinationMappingLabel = destinationMappingLabel
+	q.require(querySurfacesGetBySlugIncludeDeletedResponseFieldDestinationMappingLabel)
+}
+
+// SetDestinationMappingURL sets the DestinationMappingURL field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) SetDestinationMappingURL(destinationMappingURL *string) {
+	q.DestinationMappingURL = destinationMappingURL
+	q.require(querySurfacesGetBySlugIncludeDeletedResponseFieldDestinationMappingURL)
+}
+
+// SetEnvironmentFiltering sets the EnvironmentFiltering field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) SetEnvironmentFiltering(environmentFiltering bool) {
+	q.EnvironmentFiltering = environmentFiltering
+	q.require(querySurfacesGetBySlugIncludeDeletedResponseFieldEnvironmentFiltering)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) SetID(id string) {
+	q.ID = id
+	q.require(querySurfacesGetBySlugIncludeDeletedResponseFieldID)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) SetName(name string) {
+	q.Name = name
+	q.require(querySurfacesGetBySlugIncludeDeletedResponseFieldName)
+}
+
+// SetOnboardedAt sets the OnboardedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) SetOnboardedAt(onboardedAt *float64) {
+	q.OnboardedAt = onboardedAt
+	q.require(querySurfacesGetBySlugIncludeDeletedResponseFieldOnboardedAt)
+}
+
+// SetOrganizationID sets the OrganizationID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) SetOrganizationID(organizationID string) {
+	q.OrganizationID = organizationID
+	q.require(querySurfacesGetBySlugIncludeDeletedResponseFieldOrganizationID)
+}
+
+// SetPrimaryEnvironmentID sets the PrimaryEnvironmentID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) SetPrimaryEnvironmentID(primaryEnvironmentID *string) {
+	q.PrimaryEnvironmentID = primaryEnvironmentID
+	q.require(querySurfacesGetBySlugIncludeDeletedResponseFieldPrimaryEnvironmentID)
+}
+
+// SetPrimaryEnvironmentName sets the PrimaryEnvironmentName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) SetPrimaryEnvironmentName(primaryEnvironmentName *string) {
+	q.PrimaryEnvironmentName = primaryEnvironmentName
+	q.require(querySurfacesGetBySlugIncludeDeletedResponseFieldPrimaryEnvironmentName)
+}
+
+// SetSdkConfig sets the SdkConfig field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) SetSdkConfig(sdkConfig *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig) {
+	q.SdkConfig = sdkConfig
+	q.require(querySurfacesGetBySlugIncludeDeletedResponseFieldSdkConfig)
+}
+
+// SetSlug sets the Slug field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) SetSlug(slug string) {
+	q.Slug = slug
+	q.require(querySurfacesGetBySlugIncludeDeletedResponseFieldSlug)
+}
+
+// SetSourceDatasourceID sets the SourceDatasourceID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) SetSourceDatasourceID(sourceDatasourceID *string) {
+	q.SourceDatasourceID = sourceDatasourceID
+	q.require(querySurfacesGetBySlugIncludeDeletedResponseFieldSourceDatasourceID)
+}
+
+// SetSourceConnectionID sets the SourceConnectionID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) SetSourceConnectionID(sourceConnectionID *string) {
+	q.SourceConnectionID = sourceConnectionID
+	q.require(querySurfacesGetBySlugIncludeDeletedResponseFieldSourceConnectionID)
+}
+
+// SetSourceMappingID sets the SourceMappingID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) SetSourceMappingID(sourceMappingID *string) {
+	q.SourceMappingID = sourceMappingID
+	q.require(querySurfacesGetBySlugIncludeDeletedResponseFieldSourceMappingID)
+}
+
+// SetSourceMappingLabel sets the SourceMappingLabel field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) SetSourceMappingLabel(sourceMappingLabel *string) {
+	q.SourceMappingLabel = sourceMappingLabel
+	q.require(querySurfacesGetBySlugIncludeDeletedResponseFieldSourceMappingLabel)
+}
+
+// SetSourceMappingURL sets the SourceMappingURL field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) SetSourceMappingURL(sourceMappingURL *string) {
+	q.SourceMappingURL = sourceMappingURL
+	q.require(querySurfacesGetBySlugIncludeDeletedResponseFieldSourceMappingURL)
+}
+
+// SetSourceWorkingDirectory sets the SourceWorkingDirectory field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) SetSourceWorkingDirectory(sourceWorkingDirectory *string) {
+	q.SourceWorkingDirectory = sourceWorkingDirectory
+	q.require(querySurfacesGetBySlugIncludeDeletedResponseFieldSourceWorkingDirectory)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) SetType(type_ QuerySurfacesGetBySlugIncludeDeletedResponseType) {
+	q.Type = type_
+	q.require(querySurfacesGetBySlugIncludeDeletedResponseFieldType)
+}
+
 func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) UnmarshalJSON(data []byte) error {
-	type embed QuerySurfacesGetBySlugIncludeDeletedResponse
-	var unmarshaler = struct {
-		embed
-	}{
-		embed: embed(*q),
-	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+	type unmarshaler QuerySurfacesGetBySlugIncludeDeletedResponse
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*q = QuerySurfacesGetBySlugIncludeDeletedResponse(unmarshaler.embed)
+	*q = QuerySurfacesGetBySlugIncludeDeletedResponse(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *q)
 	if err != nil {
 		return err
 	}
-	q.ExtraProperties = extraProperties
+	q.extraProperties = extraProperties
 	presentFields, err := internal.ExplicitFieldsFromJSON(data, querySurfacesGetBySlugIncludeDeletedResponseNullableFields)
 	if err != nil {
 		return err
@@ -1218,7 +1425,7 @@ func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) MarshalJSON() ([]byte, er
 		embed: embed(*q),
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, q.explicitFields)
-	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, q.ExtraProperties)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) String() string {
@@ -1236,7 +1443,334 @@ func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) String() string {
 	return fmt.Sprintf("%#v", q)
 }
 
-// Application framework used by the surface.
+var (
+	querySurfacesGetBySlugIncludeDeletedResponseSdkConfigFieldPlugins       = big.NewInt(1 << 0)
+	querySurfacesGetBySlugIncludeDeletedResponseSdkConfigFieldServerTracing = big.NewInt(1 << 1)
+	querySurfacesGetBySlugIncludeDeletedResponseSdkConfigFieldLogSourcing   = big.NewInt(1 << 2)
+)
+
+type QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig struct {
+	Plugins       *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins       `json:"plugins,omitempty" url:"plugins,omitempty"`
+	ServerTracing *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigServerTracing `json:"serverTracing,omitempty" url:"serverTracing,omitempty"`
+	LogSourcing   *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigLogSourcing   `json:"logSourcing,omitempty" url:"logSourcing,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig) GetPlugins() *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins {
+	if q == nil {
+		return nil
+	}
+	return q.Plugins
+}
+
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig) GetServerTracing() *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigServerTracing {
+	if q == nil {
+		return nil
+	}
+	return q.ServerTracing
+}
+
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig) GetLogSourcing() *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigLogSourcing {
+	if q == nil {
+		return nil
+	}
+	return q.LogSourcing
+}
+
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig) GetExtraProperties() map[string]interface{} {
+	if q == nil {
+		return nil
+	}
+	return q.extraProperties
+}
+
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig) require(field *big.Int) {
+	next := new(big.Int)
+	if q.explicitFields != nil {
+		next.Set(q.explicitFields)
+	}
+	next.Or(next, field)
+	q.explicitFields = next
+}
+
+// SetPlugins sets the Plugins field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig) SetPlugins(plugins *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins) {
+	q.Plugins = plugins
+	q.require(querySurfacesGetBySlugIncludeDeletedResponseSdkConfigFieldPlugins)
+}
+
+// SetServerTracing sets the ServerTracing field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig) SetServerTracing(serverTracing *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigServerTracing) {
+	q.ServerTracing = serverTracing
+	q.require(querySurfacesGetBySlugIncludeDeletedResponseSdkConfigFieldServerTracing)
+}
+
+// SetLogSourcing sets the LogSourcing field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig) SetLogSourcing(logSourcing *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigLogSourcing) {
+	q.LogSourcing = logSourcing
+	q.require(querySurfacesGetBySlugIncludeDeletedResponseSdkConfigFieldLogSourcing)
+}
+
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig) UnmarshalJSON(data []byte) error {
+	type unmarshaler QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*q = QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *q)
+	if err != nil {
+		return err
+	}
+	q.extraProperties = extraProperties
+	q.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig) MarshalJSON() ([]byte, error) {
+	type embed QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*q),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, q.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig) String() string {
+	if q == nil {
+		return "<nil>"
+	}
+	if len(q.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(q.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(q); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", q)
+}
+
+type QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigLogSourcing string
+
+const (
+	QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigLogSourcingSdk   QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigLogSourcing = "sdk"
+	QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigLogSourcingDrain QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigLogSourcing = "drain"
+)
+
+func NewQuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigLogSourcingFromString(s string) (QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigLogSourcing, error) {
+	switch s {
+	case "sdk":
+		return QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigLogSourcingSdk, nil
+	case "drain":
+		return QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigLogSourcingDrain, nil
+	}
+	var t QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigLogSourcing
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (q QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigLogSourcing) Ptr() *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigLogSourcing {
+	return &q
+}
+
+var (
+	querySurfacesGetBySlugIncludeDeletedResponseSdkConfigPluginsFieldErrors     = big.NewInt(1 << 0)
+	querySurfacesGetBySlugIncludeDeletedResponseSdkConfigPluginsFieldDevice     = big.NewInt(1 << 1)
+	querySurfacesGetBySlugIncludeDeletedResponseSdkConfigPluginsFieldPageEvents = big.NewInt(1 << 2)
+	querySurfacesGetBySlugIncludeDeletedResponseSdkConfigPluginsFieldRageClick  = big.NewInt(1 << 3)
+	querySurfacesGetBySlugIncludeDeletedResponseSdkConfigPluginsFieldReplay     = big.NewInt(1 << 4)
+	querySurfacesGetBySlugIncludeDeletedResponseSdkConfigPluginsFieldLogs       = big.NewInt(1 << 5)
+)
+
+type QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins struct {
+	Errors     *bool `json:"errors,omitempty" url:"errors,omitempty"`
+	Device     *bool `json:"device,omitempty" url:"device,omitempty"`
+	PageEvents *bool `json:"pageEvents,omitempty" url:"pageEvents,omitempty"`
+	RageClick  *bool `json:"rageClick,omitempty" url:"rageClick,omitempty"`
+	Replay     *bool `json:"replay,omitempty" url:"replay,omitempty"`
+	Logs       *bool `json:"logs,omitempty" url:"logs,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins) GetErrors() *bool {
+	if q == nil {
+		return nil
+	}
+	return q.Errors
+}
+
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins) GetDevice() *bool {
+	if q == nil {
+		return nil
+	}
+	return q.Device
+}
+
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins) GetPageEvents() *bool {
+	if q == nil {
+		return nil
+	}
+	return q.PageEvents
+}
+
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins) GetRageClick() *bool {
+	if q == nil {
+		return nil
+	}
+	return q.RageClick
+}
+
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins) GetReplay() *bool {
+	if q == nil {
+		return nil
+	}
+	return q.Replay
+}
+
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins) GetLogs() *bool {
+	if q == nil {
+		return nil
+	}
+	return q.Logs
+}
+
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins) GetExtraProperties() map[string]interface{} {
+	if q == nil {
+		return nil
+	}
+	return q.extraProperties
+}
+
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins) require(field *big.Int) {
+	next := new(big.Int)
+	if q.explicitFields != nil {
+		next.Set(q.explicitFields)
+	}
+	next.Or(next, field)
+	q.explicitFields = next
+}
+
+// SetErrors sets the Errors field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins) SetErrors(errors *bool) {
+	q.Errors = errors
+	q.require(querySurfacesGetBySlugIncludeDeletedResponseSdkConfigPluginsFieldErrors)
+}
+
+// SetDevice sets the Device field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins) SetDevice(device *bool) {
+	q.Device = device
+	q.require(querySurfacesGetBySlugIncludeDeletedResponseSdkConfigPluginsFieldDevice)
+}
+
+// SetPageEvents sets the PageEvents field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins) SetPageEvents(pageEvents *bool) {
+	q.PageEvents = pageEvents
+	q.require(querySurfacesGetBySlugIncludeDeletedResponseSdkConfigPluginsFieldPageEvents)
+}
+
+// SetRageClick sets the RageClick field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins) SetRageClick(rageClick *bool) {
+	q.RageClick = rageClick
+	q.require(querySurfacesGetBySlugIncludeDeletedResponseSdkConfigPluginsFieldRageClick)
+}
+
+// SetReplay sets the Replay field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins) SetReplay(replay *bool) {
+	q.Replay = replay
+	q.require(querySurfacesGetBySlugIncludeDeletedResponseSdkConfigPluginsFieldReplay)
+}
+
+// SetLogs sets the Logs field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins) SetLogs(logs *bool) {
+	q.Logs = logs
+	q.require(querySurfacesGetBySlugIncludeDeletedResponseSdkConfigPluginsFieldLogs)
+}
+
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins) UnmarshalJSON(data []byte) error {
+	type unmarshaler QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*q = QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *q)
+	if err != nil {
+		return err
+	}
+	q.extraProperties = extraProperties
+	q.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins) MarshalJSON() ([]byte, error) {
+	type embed QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*q),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, q.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins) String() string {
+	if q == nil {
+		return "<nil>"
+	}
+	if len(q.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(q.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(q); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", q)
+}
+
+type QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigServerTracing string
+
+const (
+	QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigServerTracingFull  QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigServerTracing = "full"
+	QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigServerTracingDrain QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigServerTracing = "drain"
+)
+
+func NewQuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigServerTracingFromString(s string) (QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigServerTracing, error) {
+	switch s {
+	case "full":
+		return QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigServerTracingFull, nil
+	case "drain":
+		return QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigServerTracingDrain, nil
+	}
+	var t QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigServerTracing
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (q QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigServerTracing) Ptr() *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigServerTracing {
+	return &q
+}
+
 type QuerySurfacesGetBySlugIncludeDeletedResponseType string
 
 const (

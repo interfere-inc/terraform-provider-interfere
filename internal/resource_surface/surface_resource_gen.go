@@ -36,7 +36,7 @@ func SurfaceResourceSchema(ctx context.Context) schema.Schema {
 				Description:         "Display name of the surface.",
 				MarkdownDescription: "Display name of the surface.",
 				Validators: []validator.String{
-					stringvalidator.LengthBetween(1, 255),
+					stringvalidator.LengthBetween(1, 48),
 				},
 			},
 			"slug": schema.StringAttribute{

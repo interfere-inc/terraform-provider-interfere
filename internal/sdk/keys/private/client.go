@@ -48,7 +48,7 @@ func NewClient(options *core.RequestOptions) *Client {
 // 	        keys.CreatePrivateRequestScopesItemOrgTelemetryWrite,
 // 	    },
 // 	}
-// 	client.Keys.Private.Create(
+// 	_, err := client.Keys.Private.Create(
 // 	    context.TODO(),
 // 	    request,
 // 	)
@@ -56,7 +56,7 @@ func (c *Client) Create(
     ctx context.Context,
     request *keys.CreatePrivateRequest,
     opts ...option.RequestOption,
-) (*sdk.CreateWorkspaceAPIKeyResponse, error){
+) (*sdk.CreateWorkspaceAPIKeyResponse, error) {
     response, err := c.WithRawResponse.Create(
         ctx,
         request,
@@ -76,7 +76,7 @@ func (c *Client) Create(
 // 	    WorkspaceSlug: "workspaceSlug",
 // 	    APIKeyID: "apiKeyId",
 // 	}
-// 	client.Keys.Private.Get(
+// 	_, err := client.Keys.Private.Get(
 // 	    context.TODO(),
 // 	    request,
 // 	)
@@ -84,7 +84,7 @@ func (c *Client) Get(
     ctx context.Context,
     request *keys.GetPrivateRequest,
     opts ...option.RequestOption,
-) (*sdk.ReadPrivateKeyResponse, error){
+) (*sdk.ReadPrivateKeyResponse, error) {
     response, err := c.WithRawResponse.Get(
         ctx,
         request,
@@ -104,7 +104,7 @@ func (c *Client) Get(
 // 	    WorkspaceSlug: "workspaceSlug",
 // 	    APIKeyID: "apiKeyId",
 // 	}
-// 	client.Keys.Private.Delete(
+// 	_, err := client.Keys.Private.Delete(
 // 	    context.TODO(),
 // 	    request,
 // 	)
@@ -112,7 +112,7 @@ func (c *Client) Delete(
     ctx context.Context,
     request *keys.DeletePrivateRequest,
     opts ...option.RequestOption,
-) (*sdk.RevokeWorkspaceAPIKeyResponse, error){
+) (*sdk.RevokeWorkspaceAPIKeyResponse, error) {
     response, err := c.WithRawResponse.Delete(
         ctx,
         request,

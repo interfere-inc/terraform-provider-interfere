@@ -3,10 +3,8 @@
 package core
 
 import (
-	fmt "fmt"
 	http "net/http"
 	url "net/url"
-	strings "strings"
 )
 
 // RequestOption adapts the behavior of the client or an individual request.
@@ -53,64 +51,14 @@ func NewRequestOptions(opts ...RequestOption) *RequestOptions {
 // for the request(s).
 func (r *RequestOptions) ToHeader() http.Header {
 	header := r.cloneHeader()
+	if r.Token != "" {
+		header.Set("Authorization", "Bearer "+r.Token)
+	} else if r.TokenFunc != nil {
+		if token, err := r.TokenFunc(); err == nil && token != "" {
+			header.Set("Authorization", "Bearer "+token)
+		}
+	}
 	return header
-}
-
-// AuthHeadersForEndpoint returns the auth headers to apply for an endpoint,
-// given the endpoint's static security requirements. It routes to the first
-// requirement whose schemes all have credentials available (OR across the
-// list, AND within a requirement).
-func (r *RequestOptions) AuthHeadersForEndpoint(security [][]string) (http.Header, error) {
-	if len(security) == 0 {
-		return make(http.Header), nil
-	}
-	availableAuthHeaders := make(map[string]http.Header)
-	token := r.Token
-	if token == "" && r.TokenFunc != nil {
-		if value, err := r.TokenFunc(); err == nil {
-			token = value
-		}
-	}
-	if token != "" {
-		tokenHeaders := make(http.Header)
-		tokenHeaders.Set("Authorization", "Bearer "+token)
-		availableAuthHeaders["clerkSession"] = tokenHeaders
-	}
-	for _, requirement := range security {
-		satisfied := true
-		for _, schemeKey := range requirement {
-			if _, ok := availableAuthHeaders[schemeKey]; !ok {
-				satisfied = false
-				break
-			}
-		}
-		if !satisfied {
-			continue
-		}
-		combined := make(http.Header)
-		for _, schemeKey := range requirement {
-			for name, values := range availableAuthHeaders[schemeKey] {
-				for _, value := range values {
-					combined.Set(name, value)
-				}
-			}
-		}
-		return combined, nil
-	}
-	missing := make([]string, 0, len(security))
-	for _, requirement := range security {
-		var missingSchemes []string
-		for _, schemeKey := range requirement {
-			if _, ok := availableAuthHeaders[schemeKey]; !ok {
-				missingSchemes = append(missingSchemes, schemeKey)
-			}
-		}
-		missing = append(missing, strings.Join(missingSchemes, " AND "))
-	}
-	return nil, fmt.Errorf(
-		"no authentication credentials provided that satisfy the endpoint's security requirements; please provide credentials for: %s",
-		strings.Join(missing, " OR "),
-	)
 }
 
 func (r *RequestOptions) cloneHeader() http.Header {

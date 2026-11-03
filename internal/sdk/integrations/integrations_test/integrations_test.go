@@ -77,40 +77,6 @@ func VerifyRequestCount(
     require.Equal(t, expected, len(result.Requests))
 }
 
-func VerifyAuthHeaders(
-    t *testing.T,
-    testId string,
-    method string,
-    urlPath string,
-    headerMatchers map[string]string,
-) {
-    wiremockURL := os.Getenv("WIREMOCK_URL")
-    	if wiremockURL == "" {
-    		wiremockURL = "http://localhost:8080"
-    	}
-    	WiremockAdminURL := wiremockURL + "/__admin"
-    var reqBody bytes.Buffer
-    reqBody.WriteString(`{"method":"`)
-    reqBody.WriteString(method)
-    reqBody.WriteString(`","urlPath":"`)
-    reqBody.WriteString(urlPath)
-    reqBody.WriteString(`","headers":{"X-Test-Id":{"equalTo":"`)
-    reqBody.WriteString(testId)
-    reqBody.WriteString(`"}`)
-    for name, matcher := range headerMatchers {
-        reqBody.WriteString(`,"`)
-        reqBody.WriteString(name)
-        reqBody.WriteString(`":`)
-        reqBody.WriteString(matcher)
-    }
-    reqBody.WriteString(`}}`)
-    resp, err := http.Post(WiremockAdminURL+"/requests/find", "application/json", &reqBody)
-    require.NoError(t, err)
-    var result struct { Requests []interface{} `json:"requests"` }
-    json.NewDecoder(resp.Body).Decode(&result)
-    require.Equal(t, 1, len(result.Requests), "expected exactly one request with the routed auth headers for "+testId)
-}
-
 func TestIntegrationsInstallationsWithWireMock(
     t *testing.T,
 ) {
@@ -140,9 +106,6 @@ func TestIntegrationsInstallationsWithWireMock(
 
     require.NoError(t, invocationErr, "Client method call should succeed")
     VerifyRequestCount(t, "TestIntegrationsInstallationsWithWireMock", "POST", "/v3/workspaces/workspaceSlug/queries/integrations.installations", nil, 1)
-    VerifyAuthHeaders(t, "TestIntegrationsInstallationsWithWireMock", "POST", "/v3/workspaces/workspaceSlug/queries/integrations.installations", map[string]string{
-    		"Authorization": `{"matches":"Bearer .*"}`,
-    	})
 }
 
 func TestIntegrationsLinkSurfaceToDestinationWithWireMock(
@@ -174,9 +137,6 @@ func TestIntegrationsLinkSurfaceToDestinationWithWireMock(
 
     require.NoError(t, invocationErr, "Client method call should succeed")
     VerifyRequestCount(t, "TestIntegrationsLinkSurfaceToDestinationWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/integrations.linkSurfaceToDestination", nil, 1)
-    VerifyAuthHeaders(t, "TestIntegrationsLinkSurfaceToDestinationWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/integrations.linkSurfaceToDestination", map[string]string{
-    		"Authorization": `{"matches":"Bearer .*"}`,
-    	})
 }
 
 func TestIntegrationsLinkSurfaceToRepositoryWithWireMock(
@@ -208,9 +168,6 @@ func TestIntegrationsLinkSurfaceToRepositoryWithWireMock(
 
     require.NoError(t, invocationErr, "Client method call should succeed")
     VerifyRequestCount(t, "TestIntegrationsLinkSurfaceToRepositoryWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/integrations.linkSurfaceToRepository", nil, 1)
-    VerifyAuthHeaders(t, "TestIntegrationsLinkSurfaceToRepositoryWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/integrations.linkSurfaceToRepository", map[string]string{
-    		"Authorization": `{"matches":"Bearer .*"}`,
-    	})
 }
 
 func TestIntegrationsUnlinkSurfaceDestinationMappingWithWireMock(
@@ -240,9 +197,6 @@ func TestIntegrationsUnlinkSurfaceDestinationMappingWithWireMock(
 
     require.NoError(t, invocationErr, "Client method call should succeed")
     VerifyRequestCount(t, "TestIntegrationsUnlinkSurfaceDestinationMappingWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/integrations.unlinkSurfaceDestinationMapping", nil, 1)
-    VerifyAuthHeaders(t, "TestIntegrationsUnlinkSurfaceDestinationMappingWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/integrations.unlinkSurfaceDestinationMapping", map[string]string{
-    		"Authorization": `{"matches":"Bearer .*"}`,
-    	})
 }
 
 func TestIntegrationsUnlinkSurfaceMappingWithWireMock(
@@ -272,9 +226,6 @@ func TestIntegrationsUnlinkSurfaceMappingWithWireMock(
 
     require.NoError(t, invocationErr, "Client method call should succeed")
     VerifyRequestCount(t, "TestIntegrationsUnlinkSurfaceMappingWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/integrations.unlinkSurfaceMapping", nil, 1)
-    VerifyAuthHeaders(t, "TestIntegrationsUnlinkSurfaceMappingWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/integrations.unlinkSurfaceMapping", map[string]string{
-    		"Authorization": `{"matches":"Bearer .*"}`,
-    	})
 }
 
 

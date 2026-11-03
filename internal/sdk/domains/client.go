@@ -35,7 +35,7 @@ func NewClient(options *core.RequestOptions) *Client {
     }
 }
 
-// Read a tracking domain by ID, including its deletion marker. Requires workspace domain read permission; null can also indicate insufficient access. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation is read-only despite using POST. Permission-filtered queries may return an empty result; do not assume that proves the resource does not exist. Only use pagination arguments declared in the schema.
+// Read a tracking domain by ID, including its deletion marker. Requires workspace domain read permission; null can also indicate insufficient access. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation is read-only despite using POST. Requires org:workspace_domains:read; insufficient permission returns an access-denied error. An authorized read with no matching resource returns WORKSPACE_RESOURCE_NOT_FOUND (404). Only use pagination arguments declared in the schema.
 // 
 // Example:
 // 
@@ -45,7 +45,7 @@ func NewClient(options *core.RequestOptions) *Client {
 // 	        DomainID: "domainId",
 // 	    },
 // 	}
-// 	client.Domains.ByIDIncludeDeleted(
+// 	_, err := client.Domains.ByIDIncludeDeleted(
 // 	    context.TODO(),
 // 	    request,
 // 	)
@@ -53,7 +53,7 @@ func (c *Client) ByIDIncludeDeleted(
     ctx context.Context,
     request *sdk.ByIDIncludeDeletedDomainsRequest,
     opts ...option.RequestOption,
-) (*sdk.QueryDomainsByIDIncludeDeletedResponse, error){
+) (*sdk.QueryDomainsByIDIncludeDeletedResponse, error) {
     response, err := c.WithRawResponse.ByIDIncludeDeleted(
         ctx,
         request,

@@ -12,7 +12,7 @@ import (
 func (r *workspaceResource) read(ctx context.Context, data workspaceModel) (*sdk.QueryWorkspacesCurrentResponse, error) {
 	remote, err := r.client.Workspaces.Current(ctx, &sdk.CurrentWorkspacesRequest{WorkspaceSlug: data.WorkspaceSlug.ValueString()})
 	if err != nil {
-		return nil, errors.New(apiError(err))
+		return nil, resourceReadError(err)
 	}
 	if remote == nil || remote.ID == "" || remote.Name == "" || remote.Slug != data.WorkspaceSlug.ValueString() || remote.DataResidencyLocation == "" {
 		return nil, errors.New("The API returned no workspace or an invalid workspace identity. Verify access; Terraform state was preserved.")
@@ -30,6 +30,10 @@ func (r *workspaceResource) Read(ctx context.Context, req resource.ReadRequest, 
 		return
 	}
 	remote, err := r.read(ctx, data)
+	if errors.Is(err, errResourceNotFound) {
+		resp.State.RemoveResource(ctx)
+		return
+	}
 	if err != nil {
 		resp.Diagnostics.AddError("Unable to read workspace", err.Error())
 		return

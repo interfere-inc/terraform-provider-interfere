@@ -10,32 +10,32 @@ import (
 
 
 var ErrorCodes internal.ErrorCodes = internal.ErrorCodes{
-    400: func(apiError *core.APIError) error{
+    400: func(apiError *core.APIError) error {
         return &sdk.BadRequestError{
             APIError: apiError,
         }
     },
-    401: func(apiError *core.APIError) error{
+    401: func(apiError *core.APIError) error {
         return &sdk.UnauthorizedError{
             APIError: apiError,
         }
     },
-    403: func(apiError *core.APIError) error{
+    403: func(apiError *core.APIError) error {
         return &sdk.ForbiddenError{
             APIError: apiError,
         }
     },
-    409: func(apiError *core.APIError) error{
+    409: func(apiError *core.APIError) error {
         return &sdk.ConflictError{
             APIError: apiError,
         }
     },
-    503: func(apiError *core.APIError) error{
+    503: func(apiError *core.APIError) error {
         return &sdk.ServiceUnavailableError{
             APIError: apiError,
         }
     },
-    404: func(apiError *core.APIError) error{
+    404: func(apiError *core.APIError) error {
         return &sdk.NotFoundError{
             APIError: apiError,
         }

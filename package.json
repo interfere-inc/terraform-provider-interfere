@@ -10,6 +10,6 @@
   },
   "devDependencies": {
     "@changesets/cli": "3.0.3",
-    "fern-api": "https://github.com/skve/fern/releases/download/pr-17949-ffdd423/fern-api-5.143.1-pr.17949.ffdd423.tgz"
+    "fern-api": "5.193.2"
   }
 }
