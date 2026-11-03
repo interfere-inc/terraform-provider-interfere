@@ -6,3 +6,4 @@ dist/
 internal/sdk/
 openapi.json
 fern/.fern/
+node_modules/
