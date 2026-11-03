@@ -371,6 +371,18 @@
                       ],
                       "type": "string"
                     },
+                    "oauthScopes": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "requiredOAuthScopes": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
                     "readToolNames": {
                       "type": "array",
                       "maxItems": 100,
@@ -463,6 +475,24 @@
                       ]
                     },
                     "repositories": {
+                      "type": "object",
+                      "propertyNames": {
+                        "type": "string"
+                      },
+                      "additionalProperties": {
+                        "type": "string"
+                      }
+                    },
+                    "permissions": {
+                      "type": "object",
+                      "propertyNames": {
+                        "type": "string"
+                      },
+                      "additionalProperties": {
+                        "type": "string"
+                      }
+                    },
+                    "requiredPermissions": {
                       "type": "object",
                       "propertyNames": {
                         "type": "string"
@@ -630,6 +660,24 @@
                         "type": "string"
                       }
                     },
+                    "permissions": {
+                      "type": "object",
+                      "propertyNames": {
+                        "type": "string"
+                      },
+                      "additionalProperties": {
+                        "type": "string"
+                      }
+                    },
+                    "requiredPermissions": {
+                      "type": "object",
+                      "propertyNames": {
+                        "type": "string"
+                      },
+                      "additionalProperties": {
+                        "type": "string"
+                      }
+                    },
                     "provider": {
                       "const": "ghe_cloud"
                     },
@@ -781,6 +829,24 @@
                       ]
                     },
                     "repositories": {
+                      "type": "object",
+                      "propertyNames": {
+                        "type": "string"
+                      },
+                      "additionalProperties": {
+                        "type": "string"
+                      }
+                    },
+                    "permissions": {
+                      "type": "object",
+                      "propertyNames": {
+                        "type": "string"
+                      },
+                      "additionalProperties": {
+                        "type": "string"
+                      }
+                    },
+                    "requiredPermissions": {
                       "type": "object",
                       "propertyNames": {
                         "type": "string"
@@ -962,6 +1028,15 @@
                     },
                     "provider": {
                       "const": "vercel"
+                    },
+                    "oauthScopes": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "consentCheckedAt": {
+                      "type": "number"
                     }
                   },
                   "required": [
@@ -1038,6 +1113,15 @@
                     },
                     "provider": {
                       "const": "vercel"
+                    },
+                    "oauthScopes": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "consentCheckedAt": {
+                      "type": "number"
                     }
                   },
                   "required": [
@@ -2063,6 +2147,13 @@
                     "enum": [
                       "sdk",
                       "drain"
+                    ],
+                    "type": "string"
+                  },
+                  "platform": {
+                    "enum": [
+                      "vercel",
+                      "cloudflare"
                     ],
                     "type": "string"
                   }

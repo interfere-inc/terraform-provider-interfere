@@ -1447,12 +1447,14 @@ var (
 	querySurfacesGetBySlugIncludeDeletedResponseSdkConfigFieldPlugins       = big.NewInt(1 << 0)
 	querySurfacesGetBySlugIncludeDeletedResponseSdkConfigFieldServerTracing = big.NewInt(1 << 1)
 	querySurfacesGetBySlugIncludeDeletedResponseSdkConfigFieldLogSourcing   = big.NewInt(1 << 2)
+	querySurfacesGetBySlugIncludeDeletedResponseSdkConfigFieldPlatform      = big.NewInt(1 << 3)
 )
 
 type QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig struct {
 	Plugins       *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins       `json:"plugins,omitempty" url:"plugins,omitempty"`
 	ServerTracing *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigServerTracing `json:"serverTracing,omitempty" url:"serverTracing,omitempty"`
 	LogSourcing   *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigLogSourcing   `json:"logSourcing,omitempty" url:"logSourcing,omitempty"`
+	Platform      *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlatform      `json:"platform,omitempty" url:"platform,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -1480,6 +1482,13 @@ func (q *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig) GetLogSourcing()
 		return nil
 	}
 	return q.LogSourcing
+}
+
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig) GetPlatform() *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlatform {
+	if q == nil {
+		return nil
+	}
+	return q.Platform
 }
 
 func (q *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig) GetExtraProperties() map[string]interface{} {
@@ -1517,6 +1526,13 @@ func (q *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig) SetServerTracing
 func (q *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig) SetLogSourcing(logSourcing *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigLogSourcing) {
 	q.LogSourcing = logSourcing
 	q.require(querySurfacesGetBySlugIncludeDeletedResponseSdkConfigFieldLogSourcing)
+}
+
+// SetPlatform sets the Platform field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig) SetPlatform(platform *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlatform) {
+	q.Platform = platform
+	q.require(querySurfacesGetBySlugIncludeDeletedResponseSdkConfigFieldPlatform)
 }
 
 func (q *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig) UnmarshalJSON(data []byte) error {
@@ -1580,6 +1596,28 @@ func NewQuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigLogSourcingFromStri
 }
 
 func (q QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigLogSourcing) Ptr() *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigLogSourcing {
+	return &q
+}
+
+type QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlatform string
+
+const (
+	QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlatformVercel     QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlatform = "vercel"
+	QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlatformCloudflare QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlatform = "cloudflare"
+)
+
+func NewQuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlatformFromString(s string) (QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlatform, error) {
+	switch s {
+	case "vercel":
+		return QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlatformVercel, nil
+	case "cloudflare":
+		return QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlatformCloudflare, nil
+	}
+	var t QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlatform
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (q QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlatform) Ptr() *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlatform {
 	return &q
 }
 
