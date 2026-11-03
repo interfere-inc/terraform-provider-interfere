@@ -3053,6 +3053,14 @@ func TestSettersQuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig(t *testing
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetPlatform", func(t *testing.T) {
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig{}
+		var fernTestValuePlatform *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlatform
+		obj.SetPlatform(fernTestValuePlatform)
+		assert.Equal(t, fernTestValuePlatform, obj.Platform)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 }
 
 func TestGettersQuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig(t *testing.T) {
@@ -3155,6 +3163,39 @@ func TestGettersQuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig(t *testing
 		_ = obj.GetLogSourcing() // Should return zero value
 	})
 
+	t.Run("GetPlatform", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig{}
+		var expected *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlatform
+		obj.Platform = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetPlatform(), "getter should return the property value")
+	})
+
+	t.Run("GetPlatform_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig{}
+		obj.Platform = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetPlatform(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetPlatform_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetPlatform() // Should return zero value
+	})
+
 }
 
 func TestSettersMarkExplicitQuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig(t *testing.T) {
@@ -3228,6 +3269,37 @@ func TestSettersMarkExplicitQuerySurfacesGetBySlugIncludeDeletedResponseSdkConfi
 
 		// Act
 		obj.SetLogSourcing(fernTestValueLogSourcing)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetPlatform_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig{}
+		var fernTestValuePlatform *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlatform
+
+		// Act
+		obj.SetPlatform(fernTestValuePlatform)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -5466,6 +5538,35 @@ func TestEnumQuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigLogSourcing(t 
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewQuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigLogSourcingFromString("sdk")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumQuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlatform(t *testing.T) {
+	t.Run("NewFromString_vercel", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewQuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlatformFromString("vercel")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlatform("vercel"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_cloudflare", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewQuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlatformFromString("cloudflare")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlatform("cloudflare"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewQuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlatformFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewQuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlatformFromString("vercel")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)

@@ -1338,7 +1338,7 @@ func (q *QueryIntegrationsInstallationsResponseItemProviderMetadata) UnmarshalJS
 			return nil
 		}
 	}
-	if internal.MatchesObjectKeys(data, []string{"provider", "endpoint", "authentication", "readToolNames", "resourceUris", "connectionRevision", "name", "installationUrl"}, []string{"provider", "endpoint", "authentication", "readToolNames", "resourceUris", "connectionRevision", "name"}) {
+	if internal.MatchesObjectKeys(data, []string{"provider", "endpoint", "authentication", "oauthScopes", "requiredOAuthScopes", "readToolNames", "resourceUris", "connectionRevision", "name", "installationUrl"}, []string{"provider", "endpoint", "authentication", "readToolNames", "resourceUris", "connectionRevision", "name"}) {
 		valueQueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication := new(QueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication)
 		if err := json.Unmarshal(data, &valueQueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication); err == nil {
 			q.typ = "QueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication"
@@ -1346,7 +1346,7 @@ func (q *QueryIntegrationsInstallationsResponseItemProviderMetadata) UnmarshalJS
 			return nil
 		}
 	}
-	if internal.MatchesObjectKeys(data, []string{"accountType", "avatarUrl", "flavor", "host", "installationUrl", "repositories", "provider", "repositoryDiscoveryRequestedAt", "repositoryScans"}, []string{"accountType", "repositories", "provider"}) {
+	if internal.MatchesObjectKeys(data, []string{"accountType", "avatarUrl", "flavor", "host", "installationUrl", "repositories", "permissions", "requiredPermissions", "provider", "repositoryDiscoveryRequestedAt", "repositoryScans"}, []string{"accountType", "repositories", "provider"}) {
 		valueQueryIntegrationsInstallationsResponseItemProviderMetadataTwo := new(QueryIntegrationsInstallationsResponseItemProviderMetadataTwo)
 		if err := json.Unmarshal(data, &valueQueryIntegrationsInstallationsResponseItemProviderMetadataTwo); err == nil {
 			q.typ = "QueryIntegrationsInstallationsResponseItemProviderMetadataTwo"
@@ -1354,7 +1354,7 @@ func (q *QueryIntegrationsInstallationsResponseItemProviderMetadata) UnmarshalJS
 			return nil
 		}
 	}
-	if internal.MatchesObjectKeys(data, []string{"accountType", "avatarUrl", "flavor", "host", "installationUrl", "repositories", "provider", "repositoryDiscoveryRequestedAt", "repositoryScans"}, []string{"accountType", "repositories", "provider"}) {
+	if internal.MatchesObjectKeys(data, []string{"accountType", "avatarUrl", "flavor", "host", "installationUrl", "repositories", "permissions", "requiredPermissions", "provider", "repositoryDiscoveryRequestedAt", "repositoryScans"}, []string{"accountType", "repositories", "provider"}) {
 		valueQueryIntegrationsInstallationsResponseItemProviderMetadataThree := new(QueryIntegrationsInstallationsResponseItemProviderMetadataThree)
 		if err := json.Unmarshal(data, &valueQueryIntegrationsInstallationsResponseItemProviderMetadataThree); err == nil {
 			q.typ = "QueryIntegrationsInstallationsResponseItemProviderMetadataThree"
@@ -1362,7 +1362,7 @@ func (q *QueryIntegrationsInstallationsResponseItemProviderMetadata) UnmarshalJS
 			return nil
 		}
 	}
-	if internal.MatchesObjectKeys(data, []string{"accountType", "avatarUrl", "flavor", "host", "installationUrl", "repositories", "provider", "repositoryDiscoveryRequestedAt", "repositoryScans"}, []string{"accountType", "repositories", "provider"}) {
+	if internal.MatchesObjectKeys(data, []string{"accountType", "avatarUrl", "flavor", "host", "installationUrl", "repositories", "permissions", "requiredPermissions", "provider", "repositoryDiscoveryRequestedAt", "repositoryScans"}, []string{"accountType", "repositories", "provider"}) {
 		valueQueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL := new(QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL)
 		if err := json.Unmarshal(data, &valueQueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL); err == nil {
 			q.typ = "QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL"
@@ -1370,7 +1370,7 @@ func (q *QueryIntegrationsInstallationsResponseItemProviderMetadata) UnmarshalJS
 			return nil
 		}
 	}
-	if internal.MatchesObjectKeys(data, []string{"avatar", "installationUrl", "name", "projects", "accountType", "id", "slug", "provider"}, []string{"accountType", "id", "slug", "provider"}) {
+	if internal.MatchesObjectKeys(data, []string{"avatar", "installationUrl", "name", "projects", "accountType", "id", "slug", "provider", "oauthScopes", "consentCheckedAt"}, []string{"accountType", "id", "slug", "provider"}) {
 		valueQueryIntegrationsInstallationsResponseItemProviderMetadataSlug := new(QueryIntegrationsInstallationsResponseItemProviderMetadataSlug)
 		if err := json.Unmarshal(data, &valueQueryIntegrationsInstallationsResponseItemProviderMetadataSlug); err == nil {
 			q.typ = "QueryIntegrationsInstallationsResponseItemProviderMetadataSlug"
@@ -1378,7 +1378,7 @@ func (q *QueryIntegrationsInstallationsResponseItemProviderMetadata) UnmarshalJS
 			return nil
 		}
 	}
-	if internal.MatchesObjectKeys(data, []string{"avatar", "installationUrl", "name", "projects", "accountType", "email", "id", "username", "provider"}, []string{"accountType", "email", "id", "username", "provider"}) {
+	if internal.MatchesObjectKeys(data, []string{"avatar", "installationUrl", "name", "projects", "accountType", "email", "id", "username", "provider", "oauthScopes", "consentCheckedAt"}, []string{"accountType", "email", "id", "username", "provider"}) {
 		valueQueryIntegrationsInstallationsResponseItemProviderMetadataEmail := new(QueryIntegrationsInstallationsResponseItemProviderMetadataEmail)
 		if err := json.Unmarshal(data, &valueQueryIntegrationsInstallationsResponseItemProviderMetadataEmail); err == nil {
 			q.typ = "QueryIntegrationsInstallationsResponseItemProviderMetadataEmail"
@@ -2785,14 +2785,16 @@ func (q QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWork
 }
 
 var (
-	queryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationFieldProvider           = big.NewInt(1 << 0)
-	queryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationFieldEndpoint           = big.NewInt(1 << 1)
-	queryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationFieldAuthentication     = big.NewInt(1 << 2)
-	queryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationFieldReadToolNames      = big.NewInt(1 << 3)
-	queryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationFieldResourceURIs       = big.NewInt(1 << 4)
-	queryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationFieldConnectionRevision = big.NewInt(1 << 5)
-	queryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationFieldName               = big.NewInt(1 << 6)
-	queryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationFieldInstallationURL    = big.NewInt(1 << 7)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationFieldProvider            = big.NewInt(1 << 0)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationFieldEndpoint            = big.NewInt(1 << 1)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationFieldAuthentication      = big.NewInt(1 << 2)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationFieldOauthScopes         = big.NewInt(1 << 3)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationFieldRequiredOAuthScopes = big.NewInt(1 << 4)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationFieldReadToolNames       = big.NewInt(1 << 5)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationFieldResourceURIs        = big.NewInt(1 << 6)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationFieldConnectionRevision  = big.NewInt(1 << 7)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationFieldName                = big.NewInt(1 << 8)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationFieldInstallationURL     = big.NewInt(1 << 9)
 )
 
 // queryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationNullableFields maps the wire names of QueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication's nullable fields (required or optional) to their field bits.
@@ -2801,14 +2803,16 @@ var queryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationNull
 }
 
 type QueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication struct {
-	Provider           QueryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationProvider       `json:"provider" url:"provider"`
-	Endpoint           string                                                                                 `json:"endpoint" url:"endpoint"`
-	Authentication     QueryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationAuthentication `json:"authentication" url:"authentication"`
-	ReadToolNames      []string                                                                               `json:"readToolNames" url:"readToolNames"`
-	ResourceURIs       []string                                                                               `json:"resourceUris" url:"resourceUris"`
-	ConnectionRevision int                                                                                    `json:"connectionRevision" url:"connectionRevision"`
-	Name               string                                                                                 `json:"name" url:"name"`
-	InstallationURL    *string                                                                                `json:"installationUrl,omitempty" url:"installationUrl,omitempty"`
+	Provider            QueryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationProvider       `json:"provider" url:"provider"`
+	Endpoint            string                                                                                 `json:"endpoint" url:"endpoint"`
+	Authentication      QueryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationAuthentication `json:"authentication" url:"authentication"`
+	OauthScopes         []string                                                                               `json:"oauthScopes,omitempty" url:"oauthScopes,omitempty"`
+	RequiredOAuthScopes []string                                                                               `json:"requiredOAuthScopes,omitempty" url:"requiredOAuthScopes,omitempty"`
+	ReadToolNames       []string                                                                               `json:"readToolNames" url:"readToolNames"`
+	ResourceURIs        []string                                                                               `json:"resourceUris" url:"resourceUris"`
+	ConnectionRevision  int                                                                                    `json:"connectionRevision" url:"connectionRevision"`
+	Name                string                                                                                 `json:"name" url:"name"`
+	InstallationURL     *string                                                                                `json:"installationUrl,omitempty" url:"installationUrl,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -2836,6 +2840,20 @@ func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAuthenticatio
 		return ""
 	}
 	return q.Authentication
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication) GetOauthScopes() []string {
+	if q == nil {
+		return nil
+	}
+	return q.OauthScopes
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication) GetRequiredOAuthScopes() []string {
+	if q == nil {
+		return nil
+	}
+	return q.RequiredOAuthScopes
 }
 
 func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication) GetReadToolNames() []string {
@@ -2908,6 +2926,20 @@ func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAuthenticatio
 func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication) SetAuthentication(authentication QueryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationAuthentication) {
 	q.Authentication = authentication
 	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationFieldAuthentication)
+}
+
+// SetOauthScopes sets the OauthScopes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication) SetOauthScopes(oauthScopes []string) {
+	q.OauthScopes = oauthScopes
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationFieldOauthScopes)
+}
+
+// SetRequiredOAuthScopes sets the RequiredOAuthScopes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication) SetRequiredOAuthScopes(requiredOAuthScopes []string) {
+	q.RequiredOAuthScopes = requiredOAuthScopes
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationFieldRequiredOAuthScopes)
 }
 
 // SetReadToolNames sets the ReadToolNames field and marks it as non-optional;
@@ -3045,9 +3077,11 @@ var (
 	queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLFieldHost                           = big.NewInt(1 << 3)
 	queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLFieldInstallationURL                = big.NewInt(1 << 4)
 	queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLFieldRepositories                   = big.NewInt(1 << 5)
-	queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLFieldProvider                       = big.NewInt(1 << 6)
-	queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLFieldRepositoryDiscoveryRequestedAt = big.NewInt(1 << 7)
-	queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLFieldRepositoryScans                = big.NewInt(1 << 8)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLFieldPermissions                    = big.NewInt(1 << 6)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLFieldRequiredPermissions            = big.NewInt(1 << 7)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLFieldProvider                       = big.NewInt(1 << 8)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLFieldRepositoryDiscoveryRequestedAt = big.NewInt(1 << 9)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLFieldRepositoryScans                = big.NewInt(1 << 10)
 )
 
 // queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLNullableFields maps the wire names of QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL's nullable fields (required or optional) to their field bits.
@@ -3064,6 +3098,8 @@ type QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL struct 
 	Host                           *string                                                                                             `json:"host,omitempty" url:"host,omitempty"`
 	InstallationURL                *string                                                                                             `json:"installationUrl,omitempty" url:"installationUrl,omitempty"`
 	Repositories                   map[string]string                                                                                   `json:"repositories" url:"repositories"`
+	Permissions                    map[string]string                                                                                   `json:"permissions,omitempty" url:"permissions,omitempty"`
+	RequiredPermissions            map[string]string                                                                                   `json:"requiredPermissions,omitempty" url:"requiredPermissions,omitempty"`
 	Provider                       QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLProvider                         `json:"provider" url:"provider"`
 	RepositoryDiscoveryRequestedAt *int                                                                                                `json:"repositoryDiscoveryRequestedAt,omitempty" url:"repositoryDiscoveryRequestedAt,omitempty"`
 	RepositoryScans                map[string]*QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValue `json:"repositoryScans,omitempty" url:"repositoryScans,omitempty"`
@@ -3115,6 +3151,20 @@ func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL) Ge
 		return nil
 	}
 	return q.Repositories
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL) GetPermissions() map[string]string {
+	if q == nil {
+		return nil
+	}
+	return q.Permissions
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL) GetRequiredPermissions() map[string]string {
+	if q == nil {
+		return nil
+	}
+	return q.RequiredPermissions
 }
 
 func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL) GetProvider() QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLProvider {
@@ -3194,6 +3244,20 @@ func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL) Se
 func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL) SetRepositories(repositories map[string]string) {
 	q.Repositories = repositories
 	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLFieldRepositories)
+}
+
+// SetPermissions sets the Permissions field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL) SetPermissions(permissions map[string]string) {
+	q.Permissions = permissions
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLFieldPermissions)
+}
+
+// SetRequiredPermissions sets the RequiredPermissions field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL) SetRequiredPermissions(requiredPermissions map[string]string) {
+	q.RequiredPermissions = requiredPermissions
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLFieldRequiredPermissions)
 }
 
 // SetProvider sets the Provider field and marks it as non-optional;
@@ -4006,15 +4070,17 @@ func (q QueryIntegrationsInstallationsResponseItemProviderMetadataChatRoutingPro
 }
 
 var (
-	queryIntegrationsInstallationsResponseItemProviderMetadataEmailFieldAvatar          = big.NewInt(1 << 0)
-	queryIntegrationsInstallationsResponseItemProviderMetadataEmailFieldInstallationURL = big.NewInt(1 << 1)
-	queryIntegrationsInstallationsResponseItemProviderMetadataEmailFieldName            = big.NewInt(1 << 2)
-	queryIntegrationsInstallationsResponseItemProviderMetadataEmailFieldProjects        = big.NewInt(1 << 3)
-	queryIntegrationsInstallationsResponseItemProviderMetadataEmailFieldAccountType     = big.NewInt(1 << 4)
-	queryIntegrationsInstallationsResponseItemProviderMetadataEmailFieldEmail           = big.NewInt(1 << 5)
-	queryIntegrationsInstallationsResponseItemProviderMetadataEmailFieldID              = big.NewInt(1 << 6)
-	queryIntegrationsInstallationsResponseItemProviderMetadataEmailFieldUsername        = big.NewInt(1 << 7)
-	queryIntegrationsInstallationsResponseItemProviderMetadataEmailFieldProvider        = big.NewInt(1 << 8)
+	queryIntegrationsInstallationsResponseItemProviderMetadataEmailFieldAvatar           = big.NewInt(1 << 0)
+	queryIntegrationsInstallationsResponseItemProviderMetadataEmailFieldInstallationURL  = big.NewInt(1 << 1)
+	queryIntegrationsInstallationsResponseItemProviderMetadataEmailFieldName             = big.NewInt(1 << 2)
+	queryIntegrationsInstallationsResponseItemProviderMetadataEmailFieldProjects         = big.NewInt(1 << 3)
+	queryIntegrationsInstallationsResponseItemProviderMetadataEmailFieldAccountType      = big.NewInt(1 << 4)
+	queryIntegrationsInstallationsResponseItemProviderMetadataEmailFieldEmail            = big.NewInt(1 << 5)
+	queryIntegrationsInstallationsResponseItemProviderMetadataEmailFieldID               = big.NewInt(1 << 6)
+	queryIntegrationsInstallationsResponseItemProviderMetadataEmailFieldUsername         = big.NewInt(1 << 7)
+	queryIntegrationsInstallationsResponseItemProviderMetadataEmailFieldProvider         = big.NewInt(1 << 8)
+	queryIntegrationsInstallationsResponseItemProviderMetadataEmailFieldOauthScopes      = big.NewInt(1 << 9)
+	queryIntegrationsInstallationsResponseItemProviderMetadataEmailFieldConsentCheckedAt = big.NewInt(1 << 10)
 )
 
 // queryIntegrationsInstallationsResponseItemProviderMetadataEmailNullableFields maps the wire names of QueryIntegrationsInstallationsResponseItemProviderMetadataEmail's nullable fields (required or optional) to their field bits.
@@ -4025,15 +4091,17 @@ var queryIntegrationsInstallationsResponseItemProviderMetadataEmailNullableField
 }
 
 type QueryIntegrationsInstallationsResponseItemProviderMetadataEmail struct {
-	Avatar          *string                                                                    `json:"avatar,omitempty" url:"avatar,omitempty"`
-	InstallationURL *string                                                                    `json:"installationUrl,omitempty" url:"installationUrl,omitempty"`
-	Name            *string                                                                    `json:"name,omitempty" url:"name,omitempty"`
-	Projects        map[string]*string                                                         `json:"projects,omitempty" url:"projects,omitempty"`
-	AccountType     QueryIntegrationsInstallationsResponseItemProviderMetadataEmailAccountType `json:"accountType" url:"accountType"`
-	Email           string                                                                     `json:"email" url:"email"`
-	ID              string                                                                     `json:"id" url:"id"`
-	Username        string                                                                     `json:"username" url:"username"`
-	Provider        QueryIntegrationsInstallationsResponseItemProviderMetadataEmailProvider    `json:"provider" url:"provider"`
+	Avatar           *string                                                                    `json:"avatar,omitempty" url:"avatar,omitempty"`
+	InstallationURL  *string                                                                    `json:"installationUrl,omitempty" url:"installationUrl,omitempty"`
+	Name             *string                                                                    `json:"name,omitempty" url:"name,omitempty"`
+	Projects         map[string]*string                                                         `json:"projects,omitempty" url:"projects,omitempty"`
+	AccountType      QueryIntegrationsInstallationsResponseItemProviderMetadataEmailAccountType `json:"accountType" url:"accountType"`
+	Email            string                                                                     `json:"email" url:"email"`
+	ID               string                                                                     `json:"id" url:"id"`
+	Username         string                                                                     `json:"username" url:"username"`
+	Provider         QueryIntegrationsInstallationsResponseItemProviderMetadataEmailProvider    `json:"provider" url:"provider"`
+	OauthScopes      []string                                                                   `json:"oauthScopes,omitempty" url:"oauthScopes,omitempty"`
+	ConsentCheckedAt *float64                                                                   `json:"consentCheckedAt,omitempty" url:"consentCheckedAt,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -4103,6 +4171,20 @@ func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataEmail) GetPro
 		return ""
 	}
 	return q.Provider
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataEmail) GetOauthScopes() []string {
+	if q == nil {
+		return nil
+	}
+	return q.OauthScopes
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataEmail) GetConsentCheckedAt() *float64 {
+	if q == nil {
+		return nil
+	}
+	return q.ConsentCheckedAt
 }
 
 func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataEmail) GetExtraProperties() map[string]interface{} {
@@ -4182,6 +4264,20 @@ func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataEmail) SetUse
 func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataEmail) SetProvider(provider QueryIntegrationsInstallationsResponseItemProviderMetadataEmailProvider) {
 	q.Provider = provider
 	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataEmailFieldProvider)
+}
+
+// SetOauthScopes sets the OauthScopes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataEmail) SetOauthScopes(oauthScopes []string) {
+	q.OauthScopes = oauthScopes
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataEmailFieldOauthScopes)
+}
+
+// SetConsentCheckedAt sets the ConsentCheckedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataEmail) SetConsentCheckedAt(consentCheckedAt *float64) {
+	q.ConsentCheckedAt = consentCheckedAt
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataEmailFieldConsentCheckedAt)
 }
 
 func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataEmail) UnmarshalJSON(data []byte) error {
@@ -4405,14 +4501,16 @@ func (q QueryIntegrationsInstallationsResponseItemProviderMetadataNineProvider) 
 }
 
 var (
-	queryIntegrationsInstallationsResponseItemProviderMetadataSlugFieldAvatar          = big.NewInt(1 << 0)
-	queryIntegrationsInstallationsResponseItemProviderMetadataSlugFieldInstallationURL = big.NewInt(1 << 1)
-	queryIntegrationsInstallationsResponseItemProviderMetadataSlugFieldName            = big.NewInt(1 << 2)
-	queryIntegrationsInstallationsResponseItemProviderMetadataSlugFieldProjects        = big.NewInt(1 << 3)
-	queryIntegrationsInstallationsResponseItemProviderMetadataSlugFieldAccountType     = big.NewInt(1 << 4)
-	queryIntegrationsInstallationsResponseItemProviderMetadataSlugFieldID              = big.NewInt(1 << 5)
-	queryIntegrationsInstallationsResponseItemProviderMetadataSlugFieldSlug            = big.NewInt(1 << 6)
-	queryIntegrationsInstallationsResponseItemProviderMetadataSlugFieldProvider        = big.NewInt(1 << 7)
+	queryIntegrationsInstallationsResponseItemProviderMetadataSlugFieldAvatar           = big.NewInt(1 << 0)
+	queryIntegrationsInstallationsResponseItemProviderMetadataSlugFieldInstallationURL  = big.NewInt(1 << 1)
+	queryIntegrationsInstallationsResponseItemProviderMetadataSlugFieldName             = big.NewInt(1 << 2)
+	queryIntegrationsInstallationsResponseItemProviderMetadataSlugFieldProjects         = big.NewInt(1 << 3)
+	queryIntegrationsInstallationsResponseItemProviderMetadataSlugFieldAccountType      = big.NewInt(1 << 4)
+	queryIntegrationsInstallationsResponseItemProviderMetadataSlugFieldID               = big.NewInt(1 << 5)
+	queryIntegrationsInstallationsResponseItemProviderMetadataSlugFieldSlug             = big.NewInt(1 << 6)
+	queryIntegrationsInstallationsResponseItemProviderMetadataSlugFieldProvider         = big.NewInt(1 << 7)
+	queryIntegrationsInstallationsResponseItemProviderMetadataSlugFieldOauthScopes      = big.NewInt(1 << 8)
+	queryIntegrationsInstallationsResponseItemProviderMetadataSlugFieldConsentCheckedAt = big.NewInt(1 << 9)
 )
 
 // queryIntegrationsInstallationsResponseItemProviderMetadataSlugNullableFields maps the wire names of QueryIntegrationsInstallationsResponseItemProviderMetadataSlug's nullable fields (required or optional) to their field bits.
@@ -4423,14 +4521,16 @@ var queryIntegrationsInstallationsResponseItemProviderMetadataSlugNullableFields
 }
 
 type QueryIntegrationsInstallationsResponseItemProviderMetadataSlug struct {
-	Avatar          *string                                                                   `json:"avatar,omitempty" url:"avatar,omitempty"`
-	InstallationURL *string                                                                   `json:"installationUrl,omitempty" url:"installationUrl,omitempty"`
-	Name            *string                                                                   `json:"name,omitempty" url:"name,omitempty"`
-	Projects        map[string]*string                                                        `json:"projects,omitempty" url:"projects,omitempty"`
-	AccountType     QueryIntegrationsInstallationsResponseItemProviderMetadataSlugAccountType `json:"accountType" url:"accountType"`
-	ID              string                                                                    `json:"id" url:"id"`
-	Slug            string                                                                    `json:"slug" url:"slug"`
-	Provider        QueryIntegrationsInstallationsResponseItemProviderMetadataSlugProvider    `json:"provider" url:"provider"`
+	Avatar           *string                                                                   `json:"avatar,omitempty" url:"avatar,omitempty"`
+	InstallationURL  *string                                                                   `json:"installationUrl,omitempty" url:"installationUrl,omitempty"`
+	Name             *string                                                                   `json:"name,omitempty" url:"name,omitempty"`
+	Projects         map[string]*string                                                        `json:"projects,omitempty" url:"projects,omitempty"`
+	AccountType      QueryIntegrationsInstallationsResponseItemProviderMetadataSlugAccountType `json:"accountType" url:"accountType"`
+	ID               string                                                                    `json:"id" url:"id"`
+	Slug             string                                                                    `json:"slug" url:"slug"`
+	Provider         QueryIntegrationsInstallationsResponseItemProviderMetadataSlugProvider    `json:"provider" url:"provider"`
+	OauthScopes      []string                                                                  `json:"oauthScopes,omitempty" url:"oauthScopes,omitempty"`
+	ConsentCheckedAt *float64                                                                  `json:"consentCheckedAt,omitempty" url:"consentCheckedAt,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -4493,6 +4593,20 @@ func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataSlug) GetProv
 		return ""
 	}
 	return q.Provider
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataSlug) GetOauthScopes() []string {
+	if q == nil {
+		return nil
+	}
+	return q.OauthScopes
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataSlug) GetConsentCheckedAt() *float64 {
+	if q == nil {
+		return nil
+	}
+	return q.ConsentCheckedAt
 }
 
 func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataSlug) GetExtraProperties() map[string]interface{} {
@@ -4565,6 +4679,20 @@ func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataSlug) SetSlug
 func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataSlug) SetProvider(provider QueryIntegrationsInstallationsResponseItemProviderMetadataSlugProvider) {
 	q.Provider = provider
 	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataSlugFieldProvider)
+}
+
+// SetOauthScopes sets the OauthScopes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataSlug) SetOauthScopes(oauthScopes []string) {
+	q.OauthScopes = oauthScopes
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataSlugFieldOauthScopes)
+}
+
+// SetConsentCheckedAt sets the ConsentCheckedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataSlug) SetConsentCheckedAt(consentCheckedAt *float64) {
+	q.ConsentCheckedAt = consentCheckedAt
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataSlugFieldConsentCheckedAt)
 }
 
 func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataSlug) UnmarshalJSON(data []byte) error {
@@ -4661,9 +4789,11 @@ var (
 	queryIntegrationsInstallationsResponseItemProviderMetadataThreeFieldHost                           = big.NewInt(1 << 3)
 	queryIntegrationsInstallationsResponseItemProviderMetadataThreeFieldInstallationURL                = big.NewInt(1 << 4)
 	queryIntegrationsInstallationsResponseItemProviderMetadataThreeFieldRepositories                   = big.NewInt(1 << 5)
-	queryIntegrationsInstallationsResponseItemProviderMetadataThreeFieldProvider                       = big.NewInt(1 << 6)
-	queryIntegrationsInstallationsResponseItemProviderMetadataThreeFieldRepositoryDiscoveryRequestedAt = big.NewInt(1 << 7)
-	queryIntegrationsInstallationsResponseItemProviderMetadataThreeFieldRepositoryScans                = big.NewInt(1 << 8)
+	queryIntegrationsInstallationsResponseItemProviderMetadataThreeFieldPermissions                    = big.NewInt(1 << 6)
+	queryIntegrationsInstallationsResponseItemProviderMetadataThreeFieldRequiredPermissions            = big.NewInt(1 << 7)
+	queryIntegrationsInstallationsResponseItemProviderMetadataThreeFieldProvider                       = big.NewInt(1 << 8)
+	queryIntegrationsInstallationsResponseItemProviderMetadataThreeFieldRepositoryDiscoveryRequestedAt = big.NewInt(1 << 9)
+	queryIntegrationsInstallationsResponseItemProviderMetadataThreeFieldRepositoryScans                = big.NewInt(1 << 10)
 )
 
 // queryIntegrationsInstallationsResponseItemProviderMetadataThreeNullableFields maps the wire names of QueryIntegrationsInstallationsResponseItemProviderMetadataThree's nullable fields (required or optional) to their field bits.
@@ -4680,6 +4810,8 @@ type QueryIntegrationsInstallationsResponseItemProviderMetadataThree struct {
 	Host                           *string                                                                                         `json:"host,omitempty" url:"host,omitempty"`
 	InstallationURL                *string                                                                                         `json:"installationUrl,omitempty" url:"installationUrl,omitempty"`
 	Repositories                   map[string]string                                                                               `json:"repositories" url:"repositories"`
+	Permissions                    map[string]string                                                                               `json:"permissions,omitempty" url:"permissions,omitempty"`
+	RequiredPermissions            map[string]string                                                                               `json:"requiredPermissions,omitempty" url:"requiredPermissions,omitempty"`
 	Provider                       QueryIntegrationsInstallationsResponseItemProviderMetadataThreeProvider                         `json:"provider" url:"provider"`
 	RepositoryDiscoveryRequestedAt *int                                                                                            `json:"repositoryDiscoveryRequestedAt,omitempty" url:"repositoryDiscoveryRequestedAt,omitempty"`
 	RepositoryScans                map[string]*QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValue `json:"repositoryScans,omitempty" url:"repositoryScans,omitempty"`
@@ -4731,6 +4863,20 @@ func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThree) GetRep
 		return nil
 	}
 	return q.Repositories
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThree) GetPermissions() map[string]string {
+	if q == nil {
+		return nil
+	}
+	return q.Permissions
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThree) GetRequiredPermissions() map[string]string {
+	if q == nil {
+		return nil
+	}
+	return q.RequiredPermissions
 }
 
 func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThree) GetProvider() QueryIntegrationsInstallationsResponseItemProviderMetadataThreeProvider {
@@ -4810,6 +4956,20 @@ func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThree) SetIns
 func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThree) SetRepositories(repositories map[string]string) {
 	q.Repositories = repositories
 	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataThreeFieldRepositories)
+}
+
+// SetPermissions sets the Permissions field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThree) SetPermissions(permissions map[string]string) {
+	q.Permissions = permissions
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataThreeFieldPermissions)
+}
+
+// SetRequiredPermissions sets the RequiredPermissions field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThree) SetRequiredPermissions(requiredPermissions map[string]string) {
+	q.RequiredPermissions = requiredPermissions
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataThreeFieldRequiredPermissions)
 }
 
 // SetProvider sets the Provider field and marks it as non-optional;
@@ -5329,9 +5489,11 @@ var (
 	queryIntegrationsInstallationsResponseItemProviderMetadataTwoFieldHost                           = big.NewInt(1 << 3)
 	queryIntegrationsInstallationsResponseItemProviderMetadataTwoFieldInstallationURL                = big.NewInt(1 << 4)
 	queryIntegrationsInstallationsResponseItemProviderMetadataTwoFieldRepositories                   = big.NewInt(1 << 5)
-	queryIntegrationsInstallationsResponseItemProviderMetadataTwoFieldProvider                       = big.NewInt(1 << 6)
-	queryIntegrationsInstallationsResponseItemProviderMetadataTwoFieldRepositoryDiscoveryRequestedAt = big.NewInt(1 << 7)
-	queryIntegrationsInstallationsResponseItemProviderMetadataTwoFieldRepositoryScans                = big.NewInt(1 << 8)
+	queryIntegrationsInstallationsResponseItemProviderMetadataTwoFieldPermissions                    = big.NewInt(1 << 6)
+	queryIntegrationsInstallationsResponseItemProviderMetadataTwoFieldRequiredPermissions            = big.NewInt(1 << 7)
+	queryIntegrationsInstallationsResponseItemProviderMetadataTwoFieldProvider                       = big.NewInt(1 << 8)
+	queryIntegrationsInstallationsResponseItemProviderMetadataTwoFieldRepositoryDiscoveryRequestedAt = big.NewInt(1 << 9)
+	queryIntegrationsInstallationsResponseItemProviderMetadataTwoFieldRepositoryScans                = big.NewInt(1 << 10)
 )
 
 // queryIntegrationsInstallationsResponseItemProviderMetadataTwoNullableFields maps the wire names of QueryIntegrationsInstallationsResponseItemProviderMetadataTwo's nullable fields (required or optional) to their field bits.
@@ -5348,6 +5510,8 @@ type QueryIntegrationsInstallationsResponseItemProviderMetadataTwo struct {
 	Host                           *string                                                                                       `json:"host,omitempty" url:"host,omitempty"`
 	InstallationURL                *string                                                                                       `json:"installationUrl,omitempty" url:"installationUrl,omitempty"`
 	Repositories                   map[string]string                                                                             `json:"repositories" url:"repositories"`
+	Permissions                    map[string]string                                                                             `json:"permissions,omitempty" url:"permissions,omitempty"`
+	RequiredPermissions            map[string]string                                                                             `json:"requiredPermissions,omitempty" url:"requiredPermissions,omitempty"`
 	Provider                       QueryIntegrationsInstallationsResponseItemProviderMetadataTwoProvider                         `json:"provider" url:"provider"`
 	RepositoryDiscoveryRequestedAt *int                                                                                          `json:"repositoryDiscoveryRequestedAt,omitempty" url:"repositoryDiscoveryRequestedAt,omitempty"`
 	RepositoryScans                map[string]*QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValue `json:"repositoryScans,omitempty" url:"repositoryScans,omitempty"`
@@ -5399,6 +5563,20 @@ func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwo) GetRepos
 		return nil
 	}
 	return q.Repositories
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwo) GetPermissions() map[string]string {
+	if q == nil {
+		return nil
+	}
+	return q.Permissions
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwo) GetRequiredPermissions() map[string]string {
+	if q == nil {
+		return nil
+	}
+	return q.RequiredPermissions
 }
 
 func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwo) GetProvider() QueryIntegrationsInstallationsResponseItemProviderMetadataTwoProvider {
@@ -5478,6 +5656,20 @@ func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwo) SetInsta
 func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwo) SetRepositories(repositories map[string]string) {
 	q.Repositories = repositories
 	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataTwoFieldRepositories)
+}
+
+// SetPermissions sets the Permissions field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwo) SetPermissions(permissions map[string]string) {
+	q.Permissions = permissions
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataTwoFieldPermissions)
+}
+
+// SetRequiredPermissions sets the RequiredPermissions field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwo) SetRequiredPermissions(requiredPermissions map[string]string) {
+	q.RequiredPermissions = requiredPermissions
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataTwoFieldRequiredPermissions)
 }
 
 // SetProvider sets the Provider field and marks it as non-optional;
