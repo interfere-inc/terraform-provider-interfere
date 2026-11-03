@@ -37,7 +37,7 @@ func (r *RawClient) ByIDIncludeDeleted(
     ctx context.Context,
     request *sdk.ByIDIncludeDeletedDomainsRequest,
     opts ...option.RequestOption,
-) (*core.Response[*sdk.QueryDomainsByIDIncludeDeletedResponse], error){
+) (*core.Response[*sdk.QueryDomainsByIDIncludeDeletedResponse], error) {
     options := core.NewRequestOptions(opts...)
     baseURL := internal.ResolveBaseURL(
         options.BaseURL,
@@ -48,16 +48,9 @@ func (r *RawClient) ByIDIncludeDeleted(
         baseURL + "/v3/workspaces/%v/queries/domains.byIdIncludeDeleted",
         request.WorkspaceSlug,
     )
-    authHeaders, authErr := r.options.AuthHeadersForEndpoint([][]string{{"clerkSession"}})
-    if authErr != nil {
-        return nil, authErr
-    }
     headers := internal.MergeHeaders(
-        internal.MergeHeaders(
-            r.options.ToHeader(),
-            options.ToHeader(),
-        ),
-        authHeaders,
+        r.options.ToHeader(),
+        options.ToHeader(),
     )
     headers.Add("Content-Type", "application/json")
     var response *sdk.QueryDomainsByIDIncludeDeletedResponse
@@ -74,7 +67,6 @@ func (r *RawClient) ByIDIncludeDeleted(
             Client: options.HTTPClient,
             Request: request,
             Response: &response,
-            ResponseIsOptional: true,
             ErrorDecoder: internal.NewErrorDecoder(sdk.ErrorCodes),
         },
     )

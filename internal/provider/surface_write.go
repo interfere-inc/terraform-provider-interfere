@@ -2,6 +2,7 @@ package provider
 
 import (
 	"context"
+	"errors"
 
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -92,6 +93,9 @@ func (r *surfaceResource) Delete(ctx context.Context, req resource.DeleteRequest
 		return
 	}
 	remote, err := r.read(ctx, data)
+	if errors.Is(err, errResourceNotFound) {
+		return
+	}
 	if err != nil {
 		resp.Diagnostics.AddError("Unable to delete surface", err.Error())
 		return

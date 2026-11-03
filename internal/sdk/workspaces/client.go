@@ -35,14 +35,14 @@ func NewClient(options *core.RequestOptions) *Client {
     }
 }
 
-// Read the authenticated workspace's current details and settings. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation is read-only despite using POST. Permission-filtered queries may return an empty result; do not assume that proves the resource does not exist. Only use pagination arguments declared in the schema.
+// Read the authenticated workspace's current details and settings. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation is read-only despite using POST. Requires org:workspace_basics:read; insufficient permission returns an access-denied error. An authorized read with no matching resource returns WORKSPACE_RESOURCE_NOT_FOUND (404). Only use pagination arguments declared in the schema.
 // 
 // Example:
 // 
 // 	request := &sdk.CurrentWorkspacesRequest{
 // 	    WorkspaceSlug: "workspaceSlug",
 // 	}
-// 	client.Workspaces.Current(
+// 	_, err := client.Workspaces.Current(
 // 	    context.TODO(),
 // 	    request,
 // 	)
@@ -50,7 +50,7 @@ func (c *Client) Current(
     ctx context.Context,
     request *sdk.CurrentWorkspacesRequest,
     opts ...option.RequestOption,
-) (*sdk.QueryWorkspacesCurrentResponse, error){
+) (*sdk.QueryWorkspacesCurrentResponse, error) {
     response, err := c.WithRawResponse.Current(
         ctx,
         request,
@@ -73,7 +73,7 @@ func (c *Client) Current(
 // 	        Name: "name",
 // 	    },
 // 	}
-// 	client.Workspaces.AddProxyDomain(
+// 	_, err := client.Workspaces.AddProxyDomain(
 // 	    context.TODO(),
 // 	    request,
 // 	)
@@ -81,7 +81,7 @@ func (c *Client) AddProxyDomain(
     ctx context.Context,
     request *sdk.AddProxyDomainWorkspacesRequest,
     opts ...option.RequestOption,
-) (*sdk.MutationWorkspacesAddProxyDomainResponse, error){
+) (*sdk.MutationWorkspacesAddProxyDomainResponse, error) {
     response, err := c.WithRawResponse.AddProxyDomain(
         ctx,
         request,
@@ -103,7 +103,7 @@ func (c *Client) AddProxyDomain(
 // 	        Name: "name",
 // 	    },
 // 	}
-// 	client.Workspaces.RemoveProxyDomain(
+// 	_, err := client.Workspaces.RemoveProxyDomain(
 // 	    context.TODO(),
 // 	    request,
 // 	)
@@ -111,7 +111,7 @@ func (c *Client) RemoveProxyDomain(
     ctx context.Context,
     request *sdk.RemoveProxyDomainWorkspacesRequest,
     opts ...option.RequestOption,
-) (*sdk.MutationWorkspacesRemoveProxyDomainResponse, error){
+) (*sdk.MutationWorkspacesRemoveProxyDomainResponse, error) {
     response, err := c.WithRawResponse.RemoveProxyDomain(
         ctx,
         request,
@@ -131,7 +131,7 @@ func (c *Client) RemoveProxyDomain(
 // 	    WorkspaceSlug: "workspaceSlug",
 // 	    Args: &sdk.UpdateBasicsWorkspacesRequestArgs{},
 // 	}
-// 	client.Workspaces.UpdateBasics(
+// 	_, err := client.Workspaces.UpdateBasics(
 // 	    context.TODO(),
 // 	    request,
 // 	)
@@ -139,7 +139,7 @@ func (c *Client) UpdateBasics(
     ctx context.Context,
     request *sdk.UpdateBasicsWorkspacesRequest,
     opts ...option.RequestOption,
-) (*sdk.MutationWorkspacesUpdateBasicsResponse, error){
+) (*sdk.MutationWorkspacesUpdateBasicsResponse, error) {
     response, err := c.WithRawResponse.UpdateBasics(
         ctx,
         request,

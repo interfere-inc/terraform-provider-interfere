@@ -530,25 +530,61 @@ func (m *MutationIntegrationsUnlinkSurfaceMappingResponse) String() string {
 type QueryIntegrationsInstallationsResponse = []*QueryIntegrationsInstallationsResponseItem
 
 var (
-	queryIntegrationsInstallationsResponseItemFieldID       = big.NewInt(1 << 0)
-	queryIntegrationsInstallationsResponseItemFieldProvider = big.NewInt(1 << 1)
-	queryIntegrationsInstallationsResponseItemFieldStatus   = big.NewInt(1 << 2)
+	queryIntegrationsInstallationsResponseItemFieldEnabledByUserID   = big.NewInt(1 << 0)
+	queryIntegrationsInstallationsResponseItemFieldExternalAccountID = big.NewInt(1 << 1)
+	queryIntegrationsInstallationsResponseItemFieldID                = big.NewInt(1 << 2)
+	queryIntegrationsInstallationsResponseItemFieldOrganizationID    = big.NewInt(1 << 3)
+	queryIntegrationsInstallationsResponseItemFieldProvider          = big.NewInt(1 << 4)
+	queryIntegrationsInstallationsResponseItemFieldProviderMetadata  = big.NewInt(1 << 5)
+	queryIntegrationsInstallationsResponseItemFieldStatus            = big.NewInt(1 << 6)
+	queryIntegrationsInstallationsResponseItemFieldStatusReason      = big.NewInt(1 << 7)
+	queryIntegrationsInstallationsResponseItemFieldCreatedAt         = big.NewInt(1 << 8)
+	queryIntegrationsInstallationsResponseItemFieldDeletedAt         = big.NewInt(1 << 9)
+	queryIntegrationsInstallationsResponseItemFieldUpdatedAt         = big.NewInt(1 << 10)
+	queryIntegrationsInstallationsResponseItemFieldEnabledBy         = big.NewInt(1 << 11)
 )
 
+// queryIntegrationsInstallationsResponseItemNullableFields maps the wire names of QueryIntegrationsInstallationsResponseItem's nullable fields (required or optional) to their field bits.
+var queryIntegrationsInstallationsResponseItemNullableFields = map[string]*big.Int{
+	"enabledByUserId": queryIntegrationsInstallationsResponseItemFieldEnabledByUserID,
+	"statusReason":    queryIntegrationsInstallationsResponseItemFieldStatusReason,
+	"deletedAt":       queryIntegrationsInstallationsResponseItemFieldDeletedAt,
+	"enabledBy":       queryIntegrationsInstallationsResponseItemFieldEnabledBy,
+}
+
 type QueryIntegrationsInstallationsResponseItem struct {
-	// Unique integration installation identifier.
-	ID string `json:"id" url:"id"`
-	// Installed integration provider.
-	Provider QueryIntegrationsInstallationsResponseItemProvider `json:"provider" url:"provider"`
-	// Current integration installation status.
-	Status string `json:"status" url:"status"`
+	EnabledByUserID   *string                                                     `json:"enabledByUserId,omitempty" url:"enabledByUserId,omitempty"`
+	ExternalAccountID string                                                      `json:"externalAccountId" url:"externalAccountId"`
+	ID                string                                                      `json:"id" url:"id"`
+	OrganizationID    string                                                      `json:"organizationId" url:"organizationId"`
+	Provider          QueryIntegrationsInstallationsResponseItemProvider          `json:"provider" url:"provider"`
+	ProviderMetadata  *QueryIntegrationsInstallationsResponseItemProviderMetadata `json:"providerMetadata" url:"providerMetadata"`
+	Status            QueryIntegrationsInstallationsResponseItemStatus            `json:"status" url:"status"`
+	StatusReason      *QueryIntegrationsInstallationsResponseItemStatusReason     `json:"statusReason,omitempty" url:"statusReason,omitempty"`
+	CreatedAt         float64                                                     `json:"createdAt" url:"createdAt"`
+	DeletedAt         *float64                                                    `json:"deletedAt,omitempty" url:"deletedAt,omitempty"`
+	UpdatedAt         float64                                                     `json:"updatedAt" url:"updatedAt"`
+	EnabledBy         *QueryIntegrationsInstallationsResponseItemEnabledBy        `json:"enabledBy,omitempty" url:"enabledBy,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 
-	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
 
-	rawJSON json.RawMessage
+func (q *QueryIntegrationsInstallationsResponseItem) GetEnabledByUserID() *string {
+	if q == nil {
+		return nil
+	}
+	return q.EnabledByUserID
+}
+
+func (q *QueryIntegrationsInstallationsResponseItem) GetExternalAccountID() string {
+	if q == nil {
+		return ""
+	}
+	return q.ExternalAccountID
 }
 
 func (q *QueryIntegrationsInstallationsResponseItem) GetID() string {
@@ -558,6 +594,13 @@ func (q *QueryIntegrationsInstallationsResponseItem) GetID() string {
 	return q.ID
 }
 
+func (q *QueryIntegrationsInstallationsResponseItem) GetOrganizationID() string {
+	if q == nil {
+		return ""
+	}
+	return q.OrganizationID
+}
+
 func (q *QueryIntegrationsInstallationsResponseItem) GetProvider() QueryIntegrationsInstallationsResponseItemProvider {
 	if q == nil {
 		return ""
@@ -565,18 +608,60 @@ func (q *QueryIntegrationsInstallationsResponseItem) GetProvider() QueryIntegrat
 	return q.Provider
 }
 
-func (q *QueryIntegrationsInstallationsResponseItem) GetStatus() string {
+func (q *QueryIntegrationsInstallationsResponseItem) GetProviderMetadata() *QueryIntegrationsInstallationsResponseItemProviderMetadata {
+	if q == nil {
+		return nil
+	}
+	return q.ProviderMetadata
+}
+
+func (q *QueryIntegrationsInstallationsResponseItem) GetStatus() QueryIntegrationsInstallationsResponseItemStatus {
 	if q == nil {
 		return ""
 	}
 	return q.Status
 }
 
+func (q *QueryIntegrationsInstallationsResponseItem) GetStatusReason() *QueryIntegrationsInstallationsResponseItemStatusReason {
+	if q == nil {
+		return nil
+	}
+	return q.StatusReason
+}
+
+func (q *QueryIntegrationsInstallationsResponseItem) GetCreatedAt() float64 {
+	if q == nil {
+		return 0
+	}
+	return q.CreatedAt
+}
+
+func (q *QueryIntegrationsInstallationsResponseItem) GetDeletedAt() *float64 {
+	if q == nil {
+		return nil
+	}
+	return q.DeletedAt
+}
+
+func (q *QueryIntegrationsInstallationsResponseItem) GetUpdatedAt() float64 {
+	if q == nil {
+		return 0
+	}
+	return q.UpdatedAt
+}
+
+func (q *QueryIntegrationsInstallationsResponseItem) GetEnabledBy() *QueryIntegrationsInstallationsResponseItemEnabledBy {
+	if q == nil {
+		return nil
+	}
+	return q.EnabledBy
+}
+
 func (q *QueryIntegrationsInstallationsResponseItem) GetExtraProperties() map[string]interface{} {
 	if q == nil {
 		return nil
 	}
-	return q.ExtraProperties
+	return q.extraProperties
 }
 
 func (q *QueryIntegrationsInstallationsResponseItem) require(field *big.Int) {
@@ -588,11 +673,32 @@ func (q *QueryIntegrationsInstallationsResponseItem) require(field *big.Int) {
 	q.explicitFields = next
 }
 
+// SetEnabledByUserID sets the EnabledByUserID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItem) SetEnabledByUserID(enabledByUserID *string) {
+	q.EnabledByUserID = enabledByUserID
+	q.require(queryIntegrationsInstallationsResponseItemFieldEnabledByUserID)
+}
+
+// SetExternalAccountID sets the ExternalAccountID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItem) SetExternalAccountID(externalAccountID string) {
+	q.ExternalAccountID = externalAccountID
+	q.require(queryIntegrationsInstallationsResponseItemFieldExternalAccountID)
+}
+
 // SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (q *QueryIntegrationsInstallationsResponseItem) SetID(id string) {
 	q.ID = id
 	q.require(queryIntegrationsInstallationsResponseItemFieldID)
+}
+
+// SetOrganizationID sets the OrganizationID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItem) SetOrganizationID(organizationID string) {
+	q.OrganizationID = organizationID
+	q.require(queryIntegrationsInstallationsResponseItemFieldOrganizationID)
 }
 
 // SetProvider sets the Provider field and marks it as non-optional;
@@ -602,29 +708,74 @@ func (q *QueryIntegrationsInstallationsResponseItem) SetProvider(provider QueryI
 	q.require(queryIntegrationsInstallationsResponseItemFieldProvider)
 }
 
+// SetProviderMetadata sets the ProviderMetadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItem) SetProviderMetadata(providerMetadata *QueryIntegrationsInstallationsResponseItemProviderMetadata) {
+	q.ProviderMetadata = providerMetadata
+	q.require(queryIntegrationsInstallationsResponseItemFieldProviderMetadata)
+}
+
 // SetStatus sets the Status field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (q *QueryIntegrationsInstallationsResponseItem) SetStatus(status string) {
+func (q *QueryIntegrationsInstallationsResponseItem) SetStatus(status QueryIntegrationsInstallationsResponseItemStatus) {
 	q.Status = status
 	q.require(queryIntegrationsInstallationsResponseItemFieldStatus)
 }
 
+// SetStatusReason sets the StatusReason field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItem) SetStatusReason(statusReason *QueryIntegrationsInstallationsResponseItemStatusReason) {
+	q.StatusReason = statusReason
+	q.require(queryIntegrationsInstallationsResponseItemFieldStatusReason)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItem) SetCreatedAt(createdAt float64) {
+	q.CreatedAt = createdAt
+	q.require(queryIntegrationsInstallationsResponseItemFieldCreatedAt)
+}
+
+// SetDeletedAt sets the DeletedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItem) SetDeletedAt(deletedAt *float64) {
+	q.DeletedAt = deletedAt
+	q.require(queryIntegrationsInstallationsResponseItemFieldDeletedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItem) SetUpdatedAt(updatedAt float64) {
+	q.UpdatedAt = updatedAt
+	q.require(queryIntegrationsInstallationsResponseItemFieldUpdatedAt)
+}
+
+// SetEnabledBy sets the EnabledBy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItem) SetEnabledBy(enabledBy *QueryIntegrationsInstallationsResponseItemEnabledBy) {
+	q.EnabledBy = enabledBy
+	q.require(queryIntegrationsInstallationsResponseItemFieldEnabledBy)
+}
+
 func (q *QueryIntegrationsInstallationsResponseItem) UnmarshalJSON(data []byte) error {
-	type embed QueryIntegrationsInstallationsResponseItem
-	var unmarshaler = struct {
-		embed
-	}{
-		embed: embed(*q),
-	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+	type unmarshaler QueryIntegrationsInstallationsResponseItem
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*q = QueryIntegrationsInstallationsResponseItem(unmarshaler.embed)
+	*q = QueryIntegrationsInstallationsResponseItem(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *q)
 	if err != nil {
 		return err
 	}
-	q.ExtraProperties = extraProperties
+	q.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, queryIntegrationsInstallationsResponseItemNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		q.require(presentFields)
+	}
 	q.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -637,7 +788,7 @@ func (q *QueryIntegrationsInstallationsResponseItem) MarshalJSON() ([]byte, erro
 		embed: embed(*q),
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, q.explicitFields)
-	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, q.ExtraProperties)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (q *QueryIntegrationsInstallationsResponseItem) String() string {
@@ -655,19 +806,403 @@ func (q *QueryIntegrationsInstallationsResponseItem) String() string {
 	return fmt.Sprintf("%#v", q)
 }
 
-// Installed integration provider.
+var (
+	queryIntegrationsInstallationsResponseItemEnabledByFieldCreatedAt     = big.NewInt(1 << 0)
+	queryIntegrationsInstallationsResponseItemEnabledByFieldDeletedAt     = big.NewInt(1 << 1)
+	queryIntegrationsInstallationsResponseItemEnabledByFieldUpdatedAt     = big.NewInt(1 << 2)
+	queryIntegrationsInstallationsResponseItemEnabledByFieldClerkUserID   = big.NewInt(1 << 3)
+	queryIntegrationsInstallationsResponseItemEnabledByFieldDeactivatedAt = big.NewInt(1 << 4)
+	queryIntegrationsInstallationsResponseItemEnabledByFieldDepartment    = big.NewInt(1 << 5)
+	queryIntegrationsInstallationsResponseItemEnabledByFieldDisplayName   = big.NewInt(1 << 6)
+	queryIntegrationsInstallationsResponseItemEnabledByFieldEmailPrimary  = big.NewInt(1 << 7)
+	queryIntegrationsInstallationsResponseItemEnabledByFieldFirstName     = big.NewInt(1 << 8)
+	queryIntegrationsInstallationsResponseItemEnabledByFieldID            = big.NewInt(1 << 9)
+	queryIntegrationsInstallationsResponseItemEnabledByFieldImageURL      = big.NewInt(1 << 10)
+	queryIntegrationsInstallationsResponseItemEnabledByFieldInitials      = big.NewInt(1 << 11)
+	queryIntegrationsInstallationsResponseItemEnabledByFieldLastName      = big.NewInt(1 << 12)
+	queryIntegrationsInstallationsResponseItemEnabledByFieldLocale        = big.NewInt(1 << 13)
+	queryIntegrationsInstallationsResponseItemEnabledByFieldSource        = big.NewInt(1 << 14)
+	queryIntegrationsInstallationsResponseItemEnabledByFieldTimezone      = big.NewInt(1 << 15)
+	queryIntegrationsInstallationsResponseItemEnabledByFieldTitle         = big.NewInt(1 << 16)
+)
+
+// queryIntegrationsInstallationsResponseItemEnabledByNullableFields maps the wire names of QueryIntegrationsInstallationsResponseItemEnabledBy's nullable fields (required or optional) to their field bits.
+var queryIntegrationsInstallationsResponseItemEnabledByNullableFields = map[string]*big.Int{
+	"deletedAt":     queryIntegrationsInstallationsResponseItemEnabledByFieldDeletedAt,
+	"deactivatedAt": queryIntegrationsInstallationsResponseItemEnabledByFieldDeactivatedAt,
+	"department":    queryIntegrationsInstallationsResponseItemEnabledByFieldDepartment,
+	"firstName":     queryIntegrationsInstallationsResponseItemEnabledByFieldFirstName,
+	"imageUrl":      queryIntegrationsInstallationsResponseItemEnabledByFieldImageURL,
+	"lastName":      queryIntegrationsInstallationsResponseItemEnabledByFieldLastName,
+	"locale":        queryIntegrationsInstallationsResponseItemEnabledByFieldLocale,
+	"timezone":      queryIntegrationsInstallationsResponseItemEnabledByFieldTimezone,
+	"title":         queryIntegrationsInstallationsResponseItemEnabledByFieldTitle,
+}
+
+type QueryIntegrationsInstallationsResponseItemEnabledBy struct {
+	CreatedAt     float64                                                   `json:"createdAt" url:"createdAt"`
+	DeletedAt     *float64                                                  `json:"deletedAt,omitempty" url:"deletedAt,omitempty"`
+	UpdatedAt     float64                                                   `json:"updatedAt" url:"updatedAt"`
+	ClerkUserID   string                                                    `json:"clerkUserId" url:"clerkUserId"`
+	DeactivatedAt *float64                                                  `json:"deactivatedAt,omitempty" url:"deactivatedAt,omitempty"`
+	Department    *string                                                   `json:"department,omitempty" url:"department,omitempty"`
+	DisplayName   string                                                    `json:"displayName" url:"displayName"`
+	EmailPrimary  string                                                    `json:"emailPrimary" url:"emailPrimary"`
+	FirstName     *string                                                   `json:"firstName,omitempty" url:"firstName,omitempty"`
+	ID            string                                                    `json:"id" url:"id"`
+	ImageURL      *string                                                   `json:"imageUrl,omitempty" url:"imageUrl,omitempty"`
+	Initials      string                                                    `json:"initials" url:"initials"`
+	LastName      *string                                                   `json:"lastName,omitempty" url:"lastName,omitempty"`
+	Locale        *string                                                   `json:"locale,omitempty" url:"locale,omitempty"`
+	Source        QueryIntegrationsInstallationsResponseItemEnabledBySource `json:"source" url:"source"`
+	Timezone      *string                                                   `json:"timezone,omitempty" url:"timezone,omitempty"`
+	Title         *string                                                   `json:"title,omitempty" url:"title,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemEnabledBy) GetCreatedAt() float64 {
+	if q == nil {
+		return 0
+	}
+	return q.CreatedAt
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemEnabledBy) GetDeletedAt() *float64 {
+	if q == nil {
+		return nil
+	}
+	return q.DeletedAt
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemEnabledBy) GetUpdatedAt() float64 {
+	if q == nil {
+		return 0
+	}
+	return q.UpdatedAt
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemEnabledBy) GetClerkUserID() string {
+	if q == nil {
+		return ""
+	}
+	return q.ClerkUserID
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemEnabledBy) GetDeactivatedAt() *float64 {
+	if q == nil {
+		return nil
+	}
+	return q.DeactivatedAt
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemEnabledBy) GetDepartment() *string {
+	if q == nil {
+		return nil
+	}
+	return q.Department
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemEnabledBy) GetDisplayName() string {
+	if q == nil {
+		return ""
+	}
+	return q.DisplayName
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemEnabledBy) GetEmailPrimary() string {
+	if q == nil {
+		return ""
+	}
+	return q.EmailPrimary
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemEnabledBy) GetFirstName() *string {
+	if q == nil {
+		return nil
+	}
+	return q.FirstName
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemEnabledBy) GetID() string {
+	if q == nil {
+		return ""
+	}
+	return q.ID
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemEnabledBy) GetImageURL() *string {
+	if q == nil {
+		return nil
+	}
+	return q.ImageURL
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemEnabledBy) GetInitials() string {
+	if q == nil {
+		return ""
+	}
+	return q.Initials
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemEnabledBy) GetLastName() *string {
+	if q == nil {
+		return nil
+	}
+	return q.LastName
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemEnabledBy) GetLocale() *string {
+	if q == nil {
+		return nil
+	}
+	return q.Locale
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemEnabledBy) GetSource() QueryIntegrationsInstallationsResponseItemEnabledBySource {
+	if q == nil {
+		return ""
+	}
+	return q.Source
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemEnabledBy) GetTimezone() *string {
+	if q == nil {
+		return nil
+	}
+	return q.Timezone
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemEnabledBy) GetTitle() *string {
+	if q == nil {
+		return nil
+	}
+	return q.Title
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemEnabledBy) GetExtraProperties() map[string]interface{} {
+	if q == nil {
+		return nil
+	}
+	return q.extraProperties
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemEnabledBy) require(field *big.Int) {
+	next := new(big.Int)
+	if q.explicitFields != nil {
+		next.Set(q.explicitFields)
+	}
+	next.Or(next, field)
+	q.explicitFields = next
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemEnabledBy) SetCreatedAt(createdAt float64) {
+	q.CreatedAt = createdAt
+	q.require(queryIntegrationsInstallationsResponseItemEnabledByFieldCreatedAt)
+}
+
+// SetDeletedAt sets the DeletedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemEnabledBy) SetDeletedAt(deletedAt *float64) {
+	q.DeletedAt = deletedAt
+	q.require(queryIntegrationsInstallationsResponseItemEnabledByFieldDeletedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemEnabledBy) SetUpdatedAt(updatedAt float64) {
+	q.UpdatedAt = updatedAt
+	q.require(queryIntegrationsInstallationsResponseItemEnabledByFieldUpdatedAt)
+}
+
+// SetClerkUserID sets the ClerkUserID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemEnabledBy) SetClerkUserID(clerkUserID string) {
+	q.ClerkUserID = clerkUserID
+	q.require(queryIntegrationsInstallationsResponseItemEnabledByFieldClerkUserID)
+}
+
+// SetDeactivatedAt sets the DeactivatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemEnabledBy) SetDeactivatedAt(deactivatedAt *float64) {
+	q.DeactivatedAt = deactivatedAt
+	q.require(queryIntegrationsInstallationsResponseItemEnabledByFieldDeactivatedAt)
+}
+
+// SetDepartment sets the Department field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemEnabledBy) SetDepartment(department *string) {
+	q.Department = department
+	q.require(queryIntegrationsInstallationsResponseItemEnabledByFieldDepartment)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemEnabledBy) SetDisplayName(displayName string) {
+	q.DisplayName = displayName
+	q.require(queryIntegrationsInstallationsResponseItemEnabledByFieldDisplayName)
+}
+
+// SetEmailPrimary sets the EmailPrimary field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemEnabledBy) SetEmailPrimary(emailPrimary string) {
+	q.EmailPrimary = emailPrimary
+	q.require(queryIntegrationsInstallationsResponseItemEnabledByFieldEmailPrimary)
+}
+
+// SetFirstName sets the FirstName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemEnabledBy) SetFirstName(firstName *string) {
+	q.FirstName = firstName
+	q.require(queryIntegrationsInstallationsResponseItemEnabledByFieldFirstName)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemEnabledBy) SetID(id string) {
+	q.ID = id
+	q.require(queryIntegrationsInstallationsResponseItemEnabledByFieldID)
+}
+
+// SetImageURL sets the ImageURL field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemEnabledBy) SetImageURL(imageURL *string) {
+	q.ImageURL = imageURL
+	q.require(queryIntegrationsInstallationsResponseItemEnabledByFieldImageURL)
+}
+
+// SetInitials sets the Initials field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemEnabledBy) SetInitials(initials string) {
+	q.Initials = initials
+	q.require(queryIntegrationsInstallationsResponseItemEnabledByFieldInitials)
+}
+
+// SetLastName sets the LastName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemEnabledBy) SetLastName(lastName *string) {
+	q.LastName = lastName
+	q.require(queryIntegrationsInstallationsResponseItemEnabledByFieldLastName)
+}
+
+// SetLocale sets the Locale field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemEnabledBy) SetLocale(locale *string) {
+	q.Locale = locale
+	q.require(queryIntegrationsInstallationsResponseItemEnabledByFieldLocale)
+}
+
+// SetSource sets the Source field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemEnabledBy) SetSource(source QueryIntegrationsInstallationsResponseItemEnabledBySource) {
+	q.Source = source
+	q.require(queryIntegrationsInstallationsResponseItemEnabledByFieldSource)
+}
+
+// SetTimezone sets the Timezone field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemEnabledBy) SetTimezone(timezone *string) {
+	q.Timezone = timezone
+	q.require(queryIntegrationsInstallationsResponseItemEnabledByFieldTimezone)
+}
+
+// SetTitle sets the Title field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemEnabledBy) SetTitle(title *string) {
+	q.Title = title
+	q.require(queryIntegrationsInstallationsResponseItemEnabledByFieldTitle)
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemEnabledBy) UnmarshalJSON(data []byte) error {
+	type unmarshaler QueryIntegrationsInstallationsResponseItemEnabledBy
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*q = QueryIntegrationsInstallationsResponseItemEnabledBy(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *q)
+	if err != nil {
+		return err
+	}
+	q.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, queryIntegrationsInstallationsResponseItemEnabledByNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		q.require(presentFields)
+	}
+	q.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemEnabledBy) MarshalJSON() ([]byte, error) {
+	type embed QueryIntegrationsInstallationsResponseItemEnabledBy
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*q),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, q.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemEnabledBy) String() string {
+	if q == nil {
+		return "<nil>"
+	}
+	if len(q.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(q.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(q); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", q)
+}
+
+type QueryIntegrationsInstallationsResponseItemEnabledBySource string
+
+const (
+	QueryIntegrationsInstallationsResponseItemEnabledBySourceClerk     QueryIntegrationsInstallationsResponseItemEnabledBySource = "clerk"
+	QueryIntegrationsInstallationsResponseItemEnabledBySourceClerkSCIM QueryIntegrationsInstallationsResponseItemEnabledBySource = "clerk_scim"
+)
+
+func NewQueryIntegrationsInstallationsResponseItemEnabledBySourceFromString(s string) (QueryIntegrationsInstallationsResponseItemEnabledBySource, error) {
+	switch s {
+	case "clerk":
+		return QueryIntegrationsInstallationsResponseItemEnabledBySourceClerk, nil
+	case "clerk_scim":
+		return QueryIntegrationsInstallationsResponseItemEnabledBySourceClerkSCIM, nil
+	}
+	var t QueryIntegrationsInstallationsResponseItemEnabledBySource
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (q QueryIntegrationsInstallationsResponseItemEnabledBySource) Ptr() *QueryIntegrationsInstallationsResponseItemEnabledBySource {
+	return &q
+}
+
 type QueryIntegrationsInstallationsResponseItemProvider string
 
 const (
-	QueryIntegrationsInstallationsResponseItemProviderGithub     QueryIntegrationsInstallationsResponseItemProvider = "github"
-	QueryIntegrationsInstallationsResponseItemProviderGheCloud   QueryIntegrationsInstallationsResponseItemProvider = "ghe_cloud"
-	QueryIntegrationsInstallationsResponseItemProviderGheServer  QueryIntegrationsInstallationsResponseItemProvider = "ghe_server"
-	QueryIntegrationsInstallationsResponseItemProviderVercel     QueryIntegrationsInstallationsResponseItemProvider = "vercel"
-	QueryIntegrationsInstallationsResponseItemProviderCloudflare QueryIntegrationsInstallationsResponseItemProvider = "cloudflare"
-	QueryIntegrationsInstallationsResponseItemProviderSlack      QueryIntegrationsInstallationsResponseItemProvider = "slack"
-	QueryIntegrationsInstallationsResponseItemProviderLinear     QueryIntegrationsInstallationsResponseItemProvider = "linear"
-	QueryIntegrationsInstallationsResponseItemProviderCli        QueryIntegrationsInstallationsResponseItemProvider = "cli"
-	QueryIntegrationsInstallationsResponseItemProviderMcp        QueryIntegrationsInstallationsResponseItemProvider = "mcp"
+	QueryIntegrationsInstallationsResponseItemProviderGithub        QueryIntegrationsInstallationsResponseItemProvider = "github"
+	QueryIntegrationsInstallationsResponseItemProviderGheCloud      QueryIntegrationsInstallationsResponseItemProvider = "ghe_cloud"
+	QueryIntegrationsInstallationsResponseItemProviderGheServer     QueryIntegrationsInstallationsResponseItemProvider = "ghe_server"
+	QueryIntegrationsInstallationsResponseItemProviderVercel        QueryIntegrationsInstallationsResponseItemProvider = "vercel"
+	QueryIntegrationsInstallationsResponseItemProviderCloudflare    QueryIntegrationsInstallationsResponseItemProvider = "cloudflare"
+	QueryIntegrationsInstallationsResponseItemProviderSlack         QueryIntegrationsInstallationsResponseItemProvider = "slack"
+	QueryIntegrationsInstallationsResponseItemProviderCli           QueryIntegrationsInstallationsResponseItemProvider = "cli"
+	QueryIntegrationsInstallationsResponseItemProviderMcp           QueryIntegrationsInstallationsResponseItemProvider = "mcp"
+	QueryIntegrationsInstallationsResponseItemProviderOpentelemetry QueryIntegrationsInstallationsResponseItemProvider = "opentelemetry"
+	QueryIntegrationsInstallationsResponseItemProviderLinear        QueryIntegrationsInstallationsResponseItemProvider = "linear"
 )
 
 func NewQueryIntegrationsInstallationsResponseItemProviderFromString(s string) (QueryIntegrationsInstallationsResponseItemProvider, error) {
@@ -684,18 +1219,4991 @@ func NewQueryIntegrationsInstallationsResponseItemProviderFromString(s string) (
 		return QueryIntegrationsInstallationsResponseItemProviderCloudflare, nil
 	case "slack":
 		return QueryIntegrationsInstallationsResponseItemProviderSlack, nil
-	case "linear":
-		return QueryIntegrationsInstallationsResponseItemProviderLinear, nil
 	case "cli":
 		return QueryIntegrationsInstallationsResponseItemProviderCli, nil
 	case "mcp":
 		return QueryIntegrationsInstallationsResponseItemProviderMcp, nil
+	case "opentelemetry":
+		return QueryIntegrationsInstallationsResponseItemProviderOpentelemetry, nil
+	case "linear":
+		return QueryIntegrationsInstallationsResponseItemProviderLinear, nil
 	}
 	var t QueryIntegrationsInstallationsResponseItemProvider
 	return "", fmt.Errorf("%s is not a valid %T", s, t)
 }
 
 func (q QueryIntegrationsInstallationsResponseItemProvider) Ptr() *QueryIntegrationsInstallationsResponseItemProvider {
+	return &q
+}
+
+type QueryIntegrationsInstallationsResponseItemProviderMetadata struct {
+	QueryIntegrationsInstallationsResponseItemProviderMetadataZero              *QueryIntegrationsInstallationsResponseItemProviderMetadataZero
+	QueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication    *QueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication
+	QueryIntegrationsInstallationsResponseItemProviderMetadataTwo               *QueryIntegrationsInstallationsResponseItemProviderMetadataTwo
+	QueryIntegrationsInstallationsResponseItemProviderMetadataThree             *QueryIntegrationsInstallationsResponseItemProviderMetadataThree
+	QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL         *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL
+	QueryIntegrationsInstallationsResponseItemProviderMetadataSlug              *QueryIntegrationsInstallationsResponseItemProviderMetadataSlug
+	QueryIntegrationsInstallationsResponseItemProviderMetadataEmail             *QueryIntegrationsInstallationsResponseItemProviderMetadataEmail
+	QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers *QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers
+	QueryIntegrationsInstallationsResponseItemProviderMetadataChatRouting       *QueryIntegrationsInstallationsResponseItemProviderMetadataChatRouting
+	QueryIntegrationsInstallationsResponseItemProviderMetadataNine              *QueryIntegrationsInstallationsResponseItemProviderMetadataNine
+	QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID         *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID
+
+	typ string
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadata) GetQueryIntegrationsInstallationsResponseItemProviderMetadataZero() *QueryIntegrationsInstallationsResponseItemProviderMetadataZero {
+	if q == nil {
+		return nil
+	}
+	return q.QueryIntegrationsInstallationsResponseItemProviderMetadataZero
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadata) GetQueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication() *QueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication {
+	if q == nil {
+		return nil
+	}
+	return q.QueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadata) GetQueryIntegrationsInstallationsResponseItemProviderMetadataTwo() *QueryIntegrationsInstallationsResponseItemProviderMetadataTwo {
+	if q == nil {
+		return nil
+	}
+	return q.QueryIntegrationsInstallationsResponseItemProviderMetadataTwo
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadata) GetQueryIntegrationsInstallationsResponseItemProviderMetadataThree() *QueryIntegrationsInstallationsResponseItemProviderMetadataThree {
+	if q == nil {
+		return nil
+	}
+	return q.QueryIntegrationsInstallationsResponseItemProviderMetadataThree
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadata) GetQueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL() *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL {
+	if q == nil {
+		return nil
+	}
+	return q.QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadata) GetQueryIntegrationsInstallationsResponseItemProviderMetadataSlug() *QueryIntegrationsInstallationsResponseItemProviderMetadataSlug {
+	if q == nil {
+		return nil
+	}
+	return q.QueryIntegrationsInstallationsResponseItemProviderMetadataSlug
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadata) GetQueryIntegrationsInstallationsResponseItemProviderMetadataEmail() *QueryIntegrationsInstallationsResponseItemProviderMetadataEmail {
+	if q == nil {
+		return nil
+	}
+	return q.QueryIntegrationsInstallationsResponseItemProviderMetadataEmail
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadata) GetQueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers() *QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers {
+	if q == nil {
+		return nil
+	}
+	return q.QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadata) GetQueryIntegrationsInstallationsResponseItemProviderMetadataChatRouting() *QueryIntegrationsInstallationsResponseItemProviderMetadataChatRouting {
+	if q == nil {
+		return nil
+	}
+	return q.QueryIntegrationsInstallationsResponseItemProviderMetadataChatRouting
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadata) GetQueryIntegrationsInstallationsResponseItemProviderMetadataNine() *QueryIntegrationsInstallationsResponseItemProviderMetadataNine {
+	if q == nil {
+		return nil
+	}
+	return q.QueryIntegrationsInstallationsResponseItemProviderMetadataNine
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadata) GetQueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID() *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID {
+	if q == nil {
+		return nil
+	}
+	return q.QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadata) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"provider", "name", "installationUrl"}, []string{"provider", "name"}) {
+		valueQueryIntegrationsInstallationsResponseItemProviderMetadataZero := new(QueryIntegrationsInstallationsResponseItemProviderMetadataZero)
+		if err := json.Unmarshal(data, &valueQueryIntegrationsInstallationsResponseItemProviderMetadataZero); err == nil {
+			q.typ = "QueryIntegrationsInstallationsResponseItemProviderMetadataZero"
+			q.QueryIntegrationsInstallationsResponseItemProviderMetadataZero = valueQueryIntegrationsInstallationsResponseItemProviderMetadataZero
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"provider", "endpoint", "authentication", "readToolNames", "resourceUris", "connectionRevision", "name", "installationUrl"}, []string{"provider", "endpoint", "authentication", "readToolNames", "resourceUris", "connectionRevision", "name"}) {
+		valueQueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication := new(QueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication)
+		if err := json.Unmarshal(data, &valueQueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication); err == nil {
+			q.typ = "QueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication"
+			q.QueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication = valueQueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"accountType", "avatarUrl", "flavor", "host", "installationUrl", "repositories", "provider", "repositoryDiscoveryRequestedAt", "repositoryScans"}, []string{"accountType", "repositories", "provider"}) {
+		valueQueryIntegrationsInstallationsResponseItemProviderMetadataTwo := new(QueryIntegrationsInstallationsResponseItemProviderMetadataTwo)
+		if err := json.Unmarshal(data, &valueQueryIntegrationsInstallationsResponseItemProviderMetadataTwo); err == nil {
+			q.typ = "QueryIntegrationsInstallationsResponseItemProviderMetadataTwo"
+			q.QueryIntegrationsInstallationsResponseItemProviderMetadataTwo = valueQueryIntegrationsInstallationsResponseItemProviderMetadataTwo
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"accountType", "avatarUrl", "flavor", "host", "installationUrl", "repositories", "provider", "repositoryDiscoveryRequestedAt", "repositoryScans"}, []string{"accountType", "repositories", "provider"}) {
+		valueQueryIntegrationsInstallationsResponseItemProviderMetadataThree := new(QueryIntegrationsInstallationsResponseItemProviderMetadataThree)
+		if err := json.Unmarshal(data, &valueQueryIntegrationsInstallationsResponseItemProviderMetadataThree); err == nil {
+			q.typ = "QueryIntegrationsInstallationsResponseItemProviderMetadataThree"
+			q.QueryIntegrationsInstallationsResponseItemProviderMetadataThree = valueQueryIntegrationsInstallationsResponseItemProviderMetadataThree
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"accountType", "avatarUrl", "flavor", "host", "installationUrl", "repositories", "provider", "repositoryDiscoveryRequestedAt", "repositoryScans"}, []string{"accountType", "repositories", "provider"}) {
+		valueQueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL := new(QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL)
+		if err := json.Unmarshal(data, &valueQueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL); err == nil {
+			q.typ = "QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL"
+			q.QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL = valueQueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"avatar", "installationUrl", "name", "projects", "accountType", "id", "slug", "provider"}, []string{"accountType", "id", "slug", "provider"}) {
+		valueQueryIntegrationsInstallationsResponseItemProviderMetadataSlug := new(QueryIntegrationsInstallationsResponseItemProviderMetadataSlug)
+		if err := json.Unmarshal(data, &valueQueryIntegrationsInstallationsResponseItemProviderMetadataSlug); err == nil {
+			q.typ = "QueryIntegrationsInstallationsResponseItemProviderMetadataSlug"
+			q.QueryIntegrationsInstallationsResponseItemProviderMetadataSlug = valueQueryIntegrationsInstallationsResponseItemProviderMetadataSlug
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"avatar", "installationUrl", "name", "projects", "accountType", "email", "id", "username", "provider"}, []string{"accountType", "email", "id", "username", "provider"}) {
+		valueQueryIntegrationsInstallationsResponseItemProviderMetadataEmail := new(QueryIntegrationsInstallationsResponseItemProviderMetadataEmail)
+		if err := json.Unmarshal(data, &valueQueryIntegrationsInstallationsResponseItemProviderMetadataEmail); err == nil {
+			q.typ = "QueryIntegrationsInstallationsResponseItemProviderMetadataEmail"
+			q.QueryIntegrationsInstallationsResponseItemProviderMetadataEmail = valueQueryIntegrationsInstallationsResponseItemProviderMetadataEmail
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"accountType", "avatar", "id", "installationUrl", "name", "deploymentCutoffs", "versionCutoffs", "workers", "assetsOnlyWorkers", "workersDiscoveredAt", "provider", "oauthScopes", "refreshToken"}, []string{"accountType", "id", "provider"}) {
+		valueQueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers := new(QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers)
+		if err := json.Unmarshal(data, &valueQueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers); err == nil {
+			q.typ = "QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers"
+			q.QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers = valueQueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"teamId", "teamName", "installationUrl", "chatRouting", "provider", "oauthScopes"}, []string{"teamId", "teamName", "provider"}) {
+		valueQueryIntegrationsInstallationsResponseItemProviderMetadataChatRouting := new(QueryIntegrationsInstallationsResponseItemProviderMetadataChatRouting)
+		if err := json.Unmarshal(data, &valueQueryIntegrationsInstallationsResponseItemProviderMetadataChatRouting); err == nil {
+			q.typ = "QueryIntegrationsInstallationsResponseItemProviderMetadataChatRouting"
+			q.QueryIntegrationsInstallationsResponseItemProviderMetadataChatRouting = valueQueryIntegrationsInstallationsResponseItemProviderMetadataChatRouting
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"installationUrl", "provider"}, []string{"provider"}) {
+		valueQueryIntegrationsInstallationsResponseItemProviderMetadataNine := new(QueryIntegrationsInstallationsResponseItemProviderMetadataNine)
+		if err := json.Unmarshal(data, &valueQueryIntegrationsInstallationsResponseItemProviderMetadataNine); err == nil {
+			q.typ = "QueryIntegrationsInstallationsResponseItemProviderMetadataNine"
+			q.QueryIntegrationsInstallationsResponseItemProviderMetadataNine = valueQueryIntegrationsInstallationsResponseItemProviderMetadataNine
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"provider", "module1", "oauthScopes", "id", "name", "urlKey", "appUserId", "installedAt", "permissionsChangedAt", "scopes", "installationUrl", "avatar"}, []string{"provider", "id", "name", "urlKey", "appUserId", "scopes"}) {
+		valueQueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID := new(QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID)
+		if err := json.Unmarshal(data, &valueQueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID); err == nil {
+			q.typ = "QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID"
+			q.QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID = valueQueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"provider", "name"}) {
+		valueQueryIntegrationsInstallationsResponseItemProviderMetadataZero := new(QueryIntegrationsInstallationsResponseItemProviderMetadataZero)
+		if err := json.Unmarshal(data, &valueQueryIntegrationsInstallationsResponseItemProviderMetadataZero); err == nil {
+			q.typ = "QueryIntegrationsInstallationsResponseItemProviderMetadataZero"
+			q.QueryIntegrationsInstallationsResponseItemProviderMetadataZero = valueQueryIntegrationsInstallationsResponseItemProviderMetadataZero
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"provider", "endpoint", "authentication", "readToolNames", "resourceUris", "connectionRevision", "name"}) {
+		valueQueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication := new(QueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication)
+		if err := json.Unmarshal(data, &valueQueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication); err == nil {
+			q.typ = "QueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication"
+			q.QueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication = valueQueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"accountType", "repositories", "provider"}) {
+		valueQueryIntegrationsInstallationsResponseItemProviderMetadataTwo := new(QueryIntegrationsInstallationsResponseItemProviderMetadataTwo)
+		if err := json.Unmarshal(data, &valueQueryIntegrationsInstallationsResponseItemProviderMetadataTwo); err == nil {
+			q.typ = "QueryIntegrationsInstallationsResponseItemProviderMetadataTwo"
+			q.QueryIntegrationsInstallationsResponseItemProviderMetadataTwo = valueQueryIntegrationsInstallationsResponseItemProviderMetadataTwo
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"accountType", "repositories", "provider"}) {
+		valueQueryIntegrationsInstallationsResponseItemProviderMetadataThree := new(QueryIntegrationsInstallationsResponseItemProviderMetadataThree)
+		if err := json.Unmarshal(data, &valueQueryIntegrationsInstallationsResponseItemProviderMetadataThree); err == nil {
+			q.typ = "QueryIntegrationsInstallationsResponseItemProviderMetadataThree"
+			q.QueryIntegrationsInstallationsResponseItemProviderMetadataThree = valueQueryIntegrationsInstallationsResponseItemProviderMetadataThree
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"accountType", "repositories", "provider"}) {
+		valueQueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL := new(QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL)
+		if err := json.Unmarshal(data, &valueQueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL); err == nil {
+			q.typ = "QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL"
+			q.QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL = valueQueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"accountType", "id", "slug", "provider"}) {
+		valueQueryIntegrationsInstallationsResponseItemProviderMetadataSlug := new(QueryIntegrationsInstallationsResponseItemProviderMetadataSlug)
+		if err := json.Unmarshal(data, &valueQueryIntegrationsInstallationsResponseItemProviderMetadataSlug); err == nil {
+			q.typ = "QueryIntegrationsInstallationsResponseItemProviderMetadataSlug"
+			q.QueryIntegrationsInstallationsResponseItemProviderMetadataSlug = valueQueryIntegrationsInstallationsResponseItemProviderMetadataSlug
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"accountType", "email", "id", "username", "provider"}) {
+		valueQueryIntegrationsInstallationsResponseItemProviderMetadataEmail := new(QueryIntegrationsInstallationsResponseItemProviderMetadataEmail)
+		if err := json.Unmarshal(data, &valueQueryIntegrationsInstallationsResponseItemProviderMetadataEmail); err == nil {
+			q.typ = "QueryIntegrationsInstallationsResponseItemProviderMetadataEmail"
+			q.QueryIntegrationsInstallationsResponseItemProviderMetadataEmail = valueQueryIntegrationsInstallationsResponseItemProviderMetadataEmail
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"accountType", "id", "provider"}) {
+		valueQueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers := new(QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers)
+		if err := json.Unmarshal(data, &valueQueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers); err == nil {
+			q.typ = "QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers"
+			q.QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers = valueQueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"teamId", "teamName", "provider"}) {
+		valueQueryIntegrationsInstallationsResponseItemProviderMetadataChatRouting := new(QueryIntegrationsInstallationsResponseItemProviderMetadataChatRouting)
+		if err := json.Unmarshal(data, &valueQueryIntegrationsInstallationsResponseItemProviderMetadataChatRouting); err == nil {
+			q.typ = "QueryIntegrationsInstallationsResponseItemProviderMetadataChatRouting"
+			q.QueryIntegrationsInstallationsResponseItemProviderMetadataChatRouting = valueQueryIntegrationsInstallationsResponseItemProviderMetadataChatRouting
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"provider"}) {
+		valueQueryIntegrationsInstallationsResponseItemProviderMetadataNine := new(QueryIntegrationsInstallationsResponseItemProviderMetadataNine)
+		if err := json.Unmarshal(data, &valueQueryIntegrationsInstallationsResponseItemProviderMetadataNine); err == nil {
+			q.typ = "QueryIntegrationsInstallationsResponseItemProviderMetadataNine"
+			q.QueryIntegrationsInstallationsResponseItemProviderMetadataNine = valueQueryIntegrationsInstallationsResponseItemProviderMetadataNine
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"provider", "id", "name", "urlKey", "appUserId", "scopes"}) {
+		valueQueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID := new(QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID)
+		if err := json.Unmarshal(data, &valueQueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID); err == nil {
+			q.typ = "QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID"
+			q.QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID = valueQueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID
+			return nil
+		}
+	}
+	valueQueryIntegrationsInstallationsResponseItemProviderMetadataZero := new(QueryIntegrationsInstallationsResponseItemProviderMetadataZero)
+	if err := json.Unmarshal(data, &valueQueryIntegrationsInstallationsResponseItemProviderMetadataZero); err == nil {
+		q.typ = "QueryIntegrationsInstallationsResponseItemProviderMetadataZero"
+		q.QueryIntegrationsInstallationsResponseItemProviderMetadataZero = valueQueryIntegrationsInstallationsResponseItemProviderMetadataZero
+		return nil
+	}
+	valueQueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication := new(QueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication)
+	if err := json.Unmarshal(data, &valueQueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication); err == nil {
+		q.typ = "QueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication"
+		q.QueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication = valueQueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication
+		return nil
+	}
+	valueQueryIntegrationsInstallationsResponseItemProviderMetadataTwo := new(QueryIntegrationsInstallationsResponseItemProviderMetadataTwo)
+	if err := json.Unmarshal(data, &valueQueryIntegrationsInstallationsResponseItemProviderMetadataTwo); err == nil {
+		q.typ = "QueryIntegrationsInstallationsResponseItemProviderMetadataTwo"
+		q.QueryIntegrationsInstallationsResponseItemProviderMetadataTwo = valueQueryIntegrationsInstallationsResponseItemProviderMetadataTwo
+		return nil
+	}
+	valueQueryIntegrationsInstallationsResponseItemProviderMetadataThree := new(QueryIntegrationsInstallationsResponseItemProviderMetadataThree)
+	if err := json.Unmarshal(data, &valueQueryIntegrationsInstallationsResponseItemProviderMetadataThree); err == nil {
+		q.typ = "QueryIntegrationsInstallationsResponseItemProviderMetadataThree"
+		q.QueryIntegrationsInstallationsResponseItemProviderMetadataThree = valueQueryIntegrationsInstallationsResponseItemProviderMetadataThree
+		return nil
+	}
+	valueQueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL := new(QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL)
+	if err := json.Unmarshal(data, &valueQueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL); err == nil {
+		q.typ = "QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL"
+		q.QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL = valueQueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL
+		return nil
+	}
+	valueQueryIntegrationsInstallationsResponseItemProviderMetadataSlug := new(QueryIntegrationsInstallationsResponseItemProviderMetadataSlug)
+	if err := json.Unmarshal(data, &valueQueryIntegrationsInstallationsResponseItemProviderMetadataSlug); err == nil {
+		q.typ = "QueryIntegrationsInstallationsResponseItemProviderMetadataSlug"
+		q.QueryIntegrationsInstallationsResponseItemProviderMetadataSlug = valueQueryIntegrationsInstallationsResponseItemProviderMetadataSlug
+		return nil
+	}
+	valueQueryIntegrationsInstallationsResponseItemProviderMetadataEmail := new(QueryIntegrationsInstallationsResponseItemProviderMetadataEmail)
+	if err := json.Unmarshal(data, &valueQueryIntegrationsInstallationsResponseItemProviderMetadataEmail); err == nil {
+		q.typ = "QueryIntegrationsInstallationsResponseItemProviderMetadataEmail"
+		q.QueryIntegrationsInstallationsResponseItemProviderMetadataEmail = valueQueryIntegrationsInstallationsResponseItemProviderMetadataEmail
+		return nil
+	}
+	valueQueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers := new(QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers)
+	if err := json.Unmarshal(data, &valueQueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers); err == nil {
+		q.typ = "QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers"
+		q.QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers = valueQueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers
+		return nil
+	}
+	valueQueryIntegrationsInstallationsResponseItemProviderMetadataChatRouting := new(QueryIntegrationsInstallationsResponseItemProviderMetadataChatRouting)
+	if err := json.Unmarshal(data, &valueQueryIntegrationsInstallationsResponseItemProviderMetadataChatRouting); err == nil {
+		q.typ = "QueryIntegrationsInstallationsResponseItemProviderMetadataChatRouting"
+		q.QueryIntegrationsInstallationsResponseItemProviderMetadataChatRouting = valueQueryIntegrationsInstallationsResponseItemProviderMetadataChatRouting
+		return nil
+	}
+	valueQueryIntegrationsInstallationsResponseItemProviderMetadataNine := new(QueryIntegrationsInstallationsResponseItemProviderMetadataNine)
+	if err := json.Unmarshal(data, &valueQueryIntegrationsInstallationsResponseItemProviderMetadataNine); err == nil {
+		q.typ = "QueryIntegrationsInstallationsResponseItemProviderMetadataNine"
+		q.QueryIntegrationsInstallationsResponseItemProviderMetadataNine = valueQueryIntegrationsInstallationsResponseItemProviderMetadataNine
+		return nil
+	}
+	valueQueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID := new(QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID)
+	if err := json.Unmarshal(data, &valueQueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID); err == nil {
+		q.typ = "QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID"
+		q.QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID = valueQueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, q)
+}
+
+func (q QueryIntegrationsInstallationsResponseItemProviderMetadata) MarshalJSON() ([]byte, error) {
+	if q.typ == "QueryIntegrationsInstallationsResponseItemProviderMetadataZero" || q.QueryIntegrationsInstallationsResponseItemProviderMetadataZero != nil {
+		return json.Marshal(q.QueryIntegrationsInstallationsResponseItemProviderMetadataZero)
+	}
+	if q.typ == "QueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication" || q.QueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication != nil {
+		return json.Marshal(q.QueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication)
+	}
+	if q.typ == "QueryIntegrationsInstallationsResponseItemProviderMetadataTwo" || q.QueryIntegrationsInstallationsResponseItemProviderMetadataTwo != nil {
+		return json.Marshal(q.QueryIntegrationsInstallationsResponseItemProviderMetadataTwo)
+	}
+	if q.typ == "QueryIntegrationsInstallationsResponseItemProviderMetadataThree" || q.QueryIntegrationsInstallationsResponseItemProviderMetadataThree != nil {
+		return json.Marshal(q.QueryIntegrationsInstallationsResponseItemProviderMetadataThree)
+	}
+	if q.typ == "QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL" || q.QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL != nil {
+		return json.Marshal(q.QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL)
+	}
+	if q.typ == "QueryIntegrationsInstallationsResponseItemProviderMetadataSlug" || q.QueryIntegrationsInstallationsResponseItemProviderMetadataSlug != nil {
+		return json.Marshal(q.QueryIntegrationsInstallationsResponseItemProviderMetadataSlug)
+	}
+	if q.typ == "QueryIntegrationsInstallationsResponseItemProviderMetadataEmail" || q.QueryIntegrationsInstallationsResponseItemProviderMetadataEmail != nil {
+		return json.Marshal(q.QueryIntegrationsInstallationsResponseItemProviderMetadataEmail)
+	}
+	if q.typ == "QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers" || q.QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers != nil {
+		return json.Marshal(q.QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers)
+	}
+	if q.typ == "QueryIntegrationsInstallationsResponseItemProviderMetadataChatRouting" || q.QueryIntegrationsInstallationsResponseItemProviderMetadataChatRouting != nil {
+		return json.Marshal(q.QueryIntegrationsInstallationsResponseItemProviderMetadataChatRouting)
+	}
+	if q.typ == "QueryIntegrationsInstallationsResponseItemProviderMetadataNine" || q.QueryIntegrationsInstallationsResponseItemProviderMetadataNine != nil {
+		return json.Marshal(q.QueryIntegrationsInstallationsResponseItemProviderMetadataNine)
+	}
+	if q.typ == "QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID" || q.QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID != nil {
+		return json.Marshal(q.QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", q)
+}
+
+type QueryIntegrationsInstallationsResponseItemProviderMetadataVisitor interface {
+	VisitQueryIntegrationsInstallationsResponseItemProviderMetadataZero(*QueryIntegrationsInstallationsResponseItemProviderMetadataZero) error
+	VisitQueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication(*QueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication) error
+	VisitQueryIntegrationsInstallationsResponseItemProviderMetadataTwo(*QueryIntegrationsInstallationsResponseItemProviderMetadataTwo) error
+	VisitQueryIntegrationsInstallationsResponseItemProviderMetadataThree(*QueryIntegrationsInstallationsResponseItemProviderMetadataThree) error
+	VisitQueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL(*QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL) error
+	VisitQueryIntegrationsInstallationsResponseItemProviderMetadataSlug(*QueryIntegrationsInstallationsResponseItemProviderMetadataSlug) error
+	VisitQueryIntegrationsInstallationsResponseItemProviderMetadataEmail(*QueryIntegrationsInstallationsResponseItemProviderMetadataEmail) error
+	VisitQueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers(*QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers) error
+	VisitQueryIntegrationsInstallationsResponseItemProviderMetadataChatRouting(*QueryIntegrationsInstallationsResponseItemProviderMetadataChatRouting) error
+	VisitQueryIntegrationsInstallationsResponseItemProviderMetadataNine(*QueryIntegrationsInstallationsResponseItemProviderMetadataNine) error
+	VisitQueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID(*QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID) error
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadata) Accept(visitor QueryIntegrationsInstallationsResponseItemProviderMetadataVisitor) error {
+	if q.typ == "QueryIntegrationsInstallationsResponseItemProviderMetadataZero" || q.QueryIntegrationsInstallationsResponseItemProviderMetadataZero != nil {
+		return visitor.VisitQueryIntegrationsInstallationsResponseItemProviderMetadataZero(q.QueryIntegrationsInstallationsResponseItemProviderMetadataZero)
+	}
+	if q.typ == "QueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication" || q.QueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication != nil {
+		return visitor.VisitQueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication(q.QueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication)
+	}
+	if q.typ == "QueryIntegrationsInstallationsResponseItemProviderMetadataTwo" || q.QueryIntegrationsInstallationsResponseItemProviderMetadataTwo != nil {
+		return visitor.VisitQueryIntegrationsInstallationsResponseItemProviderMetadataTwo(q.QueryIntegrationsInstallationsResponseItemProviderMetadataTwo)
+	}
+	if q.typ == "QueryIntegrationsInstallationsResponseItemProviderMetadataThree" || q.QueryIntegrationsInstallationsResponseItemProviderMetadataThree != nil {
+		return visitor.VisitQueryIntegrationsInstallationsResponseItemProviderMetadataThree(q.QueryIntegrationsInstallationsResponseItemProviderMetadataThree)
+	}
+	if q.typ == "QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL" || q.QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL != nil {
+		return visitor.VisitQueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL(q.QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL)
+	}
+	if q.typ == "QueryIntegrationsInstallationsResponseItemProviderMetadataSlug" || q.QueryIntegrationsInstallationsResponseItemProviderMetadataSlug != nil {
+		return visitor.VisitQueryIntegrationsInstallationsResponseItemProviderMetadataSlug(q.QueryIntegrationsInstallationsResponseItemProviderMetadataSlug)
+	}
+	if q.typ == "QueryIntegrationsInstallationsResponseItemProviderMetadataEmail" || q.QueryIntegrationsInstallationsResponseItemProviderMetadataEmail != nil {
+		return visitor.VisitQueryIntegrationsInstallationsResponseItemProviderMetadataEmail(q.QueryIntegrationsInstallationsResponseItemProviderMetadataEmail)
+	}
+	if q.typ == "QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers" || q.QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers != nil {
+		return visitor.VisitQueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers(q.QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers)
+	}
+	if q.typ == "QueryIntegrationsInstallationsResponseItemProviderMetadataChatRouting" || q.QueryIntegrationsInstallationsResponseItemProviderMetadataChatRouting != nil {
+		return visitor.VisitQueryIntegrationsInstallationsResponseItemProviderMetadataChatRouting(q.QueryIntegrationsInstallationsResponseItemProviderMetadataChatRouting)
+	}
+	if q.typ == "QueryIntegrationsInstallationsResponseItemProviderMetadataNine" || q.QueryIntegrationsInstallationsResponseItemProviderMetadataNine != nil {
+		return visitor.VisitQueryIntegrationsInstallationsResponseItemProviderMetadataNine(q.QueryIntegrationsInstallationsResponseItemProviderMetadataNine)
+	}
+	if q.typ == "QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID" || q.QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID != nil {
+		return visitor.VisitQueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID(q.QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", q)
+}
+
+var (
+	queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDFieldProvider             = big.NewInt(1 << 0)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDFieldModule1              = big.NewInt(1 << 1)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDFieldOauthScopes          = big.NewInt(1 << 2)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDFieldID                   = big.NewInt(1 << 3)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDFieldName                 = big.NewInt(1 << 4)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDFieldURLKey               = big.NewInt(1 << 5)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDFieldAppUserID            = big.NewInt(1 << 6)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDFieldInstalledAt          = big.NewInt(1 << 7)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDFieldPermissionsChangedAt = big.NewInt(1 << 8)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDFieldScopes               = big.NewInt(1 << 9)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDFieldInstallationURL      = big.NewInt(1 << 10)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDFieldAvatar               = big.NewInt(1 << 11)
+)
+
+// queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDNullableFields maps the wire names of QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID's nullable fields (required or optional) to their field bits.
+var queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDNullableFields = map[string]*big.Int{
+	"installationUrl": queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDFieldInstallationURL,
+	"avatar":          queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDFieldAvatar,
+}
+
+type QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID struct {
+	Provider             QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDProvider `json:"provider" url:"provider"`
+	Module1              *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1 `json:"module1,omitempty" url:"module1,omitempty"`
+	OauthScopes          []string                                                                    `json:"oauthScopes,omitempty" url:"oauthScopes,omitempty"`
+	ID                   string                                                                      `json:"id" url:"id"`
+	Name                 string                                                                      `json:"name" url:"name"`
+	URLKey               string                                                                      `json:"urlKey" url:"urlKey"`
+	AppUserID            string                                                                      `json:"appUserId" url:"appUserId"`
+	InstalledAt          *int                                                                        `json:"installedAt,omitempty" url:"installedAt,omitempty"`
+	PermissionsChangedAt *int                                                                        `json:"permissionsChangedAt,omitempty" url:"permissionsChangedAt,omitempty"`
+	Scopes               []string                                                                    `json:"scopes" url:"scopes"`
+	InstallationURL      *string                                                                     `json:"installationUrl,omitempty" url:"installationUrl,omitempty"`
+	Avatar               *string                                                                     `json:"avatar,omitempty" url:"avatar,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID) GetProvider() QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDProvider {
+	if q == nil {
+		return ""
+	}
+	return q.Provider
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID) GetModule1() *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1 {
+	if q == nil {
+		return nil
+	}
+	return q.Module1
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID) GetOauthScopes() []string {
+	if q == nil {
+		return nil
+	}
+	return q.OauthScopes
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID) GetID() string {
+	if q == nil {
+		return ""
+	}
+	return q.ID
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID) GetName() string {
+	if q == nil {
+		return ""
+	}
+	return q.Name
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID) GetURLKey() string {
+	if q == nil {
+		return ""
+	}
+	return q.URLKey
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID) GetAppUserID() string {
+	if q == nil {
+		return ""
+	}
+	return q.AppUserID
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID) GetInstalledAt() *int {
+	if q == nil {
+		return nil
+	}
+	return q.InstalledAt
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID) GetPermissionsChangedAt() *int {
+	if q == nil {
+		return nil
+	}
+	return q.PermissionsChangedAt
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID) GetScopes() []string {
+	if q == nil {
+		return nil
+	}
+	return q.Scopes
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID) GetInstallationURL() *string {
+	if q == nil {
+		return nil
+	}
+	return q.InstallationURL
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID) GetAvatar() *string {
+	if q == nil {
+		return nil
+	}
+	return q.Avatar
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID) GetExtraProperties() map[string]interface{} {
+	if q == nil {
+		return nil
+	}
+	return q.extraProperties
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID) require(field *big.Int) {
+	next := new(big.Int)
+	if q.explicitFields != nil {
+		next.Set(q.explicitFields)
+	}
+	next.Or(next, field)
+	q.explicitFields = next
+}
+
+// SetProvider sets the Provider field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID) SetProvider(provider QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDProvider) {
+	q.Provider = provider
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDFieldProvider)
+}
+
+// SetModule1 sets the Module1 field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID) SetModule1(module1 *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1) {
+	q.Module1 = module1
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDFieldModule1)
+}
+
+// SetOauthScopes sets the OauthScopes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID) SetOauthScopes(oauthScopes []string) {
+	q.OauthScopes = oauthScopes
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDFieldOauthScopes)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID) SetID(id string) {
+	q.ID = id
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDFieldID)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID) SetName(name string) {
+	q.Name = name
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDFieldName)
+}
+
+// SetURLKey sets the URLKey field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID) SetURLKey(urlKey string) {
+	q.URLKey = urlKey
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDFieldURLKey)
+}
+
+// SetAppUserID sets the AppUserID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID) SetAppUserID(appUserID string) {
+	q.AppUserID = appUserID
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDFieldAppUserID)
+}
+
+// SetInstalledAt sets the InstalledAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID) SetInstalledAt(installedAt *int) {
+	q.InstalledAt = installedAt
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDFieldInstalledAt)
+}
+
+// SetPermissionsChangedAt sets the PermissionsChangedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID) SetPermissionsChangedAt(permissionsChangedAt *int) {
+	q.PermissionsChangedAt = permissionsChangedAt
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDFieldPermissionsChangedAt)
+}
+
+// SetScopes sets the Scopes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID) SetScopes(scopes []string) {
+	q.Scopes = scopes
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDFieldScopes)
+}
+
+// SetInstallationURL sets the InstallationURL field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID) SetInstallationURL(installationURL *string) {
+	q.InstallationURL = installationURL
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDFieldInstallationURL)
+}
+
+// SetAvatar sets the Avatar field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID) SetAvatar(avatar *string) {
+	q.Avatar = avatar
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDFieldAvatar)
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID) UnmarshalJSON(data []byte) error {
+	type unmarshaler QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*q = QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *q)
+	if err != nil {
+		return err
+	}
+	q.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		q.require(presentFields)
+	}
+	q.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID) MarshalJSON() ([]byte, error) {
+	type embed QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*q),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, q.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserID) String() string {
+	if q == nil {
+		return "<nil>"
+	}
+	if len(q.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(q.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(q); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", q)
+}
+
+var (
+	queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1FieldVersion                 = big.NewInt(1 << 0)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1FieldMode                    = big.NewInt(1 << 1)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1FieldRevision                = big.NewInt(1 << 2)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1FieldAuthorizationGeneration = big.NewInt(1 << 3)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1FieldConsentRef              = big.NewInt(1 << 4)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1FieldCreateIssues            = big.NewInt(1 << 5)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1FieldCommentIssues           = big.NewInt(1 << 6)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1FieldDestinationTeamID       = big.NewInt(1 << 7)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1FieldAllowedTeamIDs          = big.NewInt(1 << 8)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1FieldDelivery                = big.NewInt(1 << 9)
+)
+
+// queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1NullableFields maps the wire names of QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1's nullable fields (required or optional) to their field bits.
+var queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1NullableFields = map[string]*big.Int{
+	"destinationTeamId": queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1FieldDestinationTeamID,
+}
+
+type QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1 struct {
+	Version                 string                                                                              `json:"version" url:"version"`
+	Mode                    QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1Mode      `json:"mode" url:"mode"`
+	Revision                int                                                                                 `json:"revision" url:"revision"`
+	AuthorizationGeneration int                                                                                 `json:"authorizationGeneration" url:"authorizationGeneration"`
+	ConsentRef              string                                                                              `json:"consentRef" url:"consentRef"`
+	CreateIssues            bool                                                                                `json:"createIssues" url:"createIssues"`
+	CommentIssues           bool                                                                                `json:"commentIssues" url:"commentIssues"`
+	DestinationTeamID       *string                                                                             `json:"destinationTeamId,omitempty" url:"destinationTeamId,omitempty"`
+	AllowedTeamIDs          []string                                                                            `json:"allowedTeamIds" url:"allowedTeamIds"`
+	Delivery                *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1Delivery `json:"delivery,omitempty" url:"delivery,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1) GetVersion() string {
+	if q == nil {
+		return ""
+	}
+	return q.Version
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1) GetMode() QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1Mode {
+	if q == nil {
+		return ""
+	}
+	return q.Mode
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1) GetRevision() int {
+	if q == nil {
+		return 0
+	}
+	return q.Revision
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1) GetAuthorizationGeneration() int {
+	if q == nil {
+		return 0
+	}
+	return q.AuthorizationGeneration
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1) GetConsentRef() string {
+	if q == nil {
+		return ""
+	}
+	return q.ConsentRef
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1) GetCreateIssues() bool {
+	if q == nil {
+		return false
+	}
+	return q.CreateIssues
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1) GetCommentIssues() bool {
+	if q == nil {
+		return false
+	}
+	return q.CommentIssues
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1) GetDestinationTeamID() *string {
+	if q == nil {
+		return nil
+	}
+	return q.DestinationTeamID
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1) GetAllowedTeamIDs() []string {
+	if q == nil {
+		return nil
+	}
+	return q.AllowedTeamIDs
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1) GetDelivery() *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1Delivery {
+	if q == nil {
+		return nil
+	}
+	return q.Delivery
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1) GetExtraProperties() map[string]interface{} {
+	if q == nil {
+		return nil
+	}
+	return q.extraProperties
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1) require(field *big.Int) {
+	next := new(big.Int)
+	if q.explicitFields != nil {
+		next.Set(q.explicitFields)
+	}
+	next.Or(next, field)
+	q.explicitFields = next
+}
+
+// SetVersion sets the Version field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1) SetVersion(version string) {
+	q.Version = version
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1FieldVersion)
+}
+
+// SetMode sets the Mode field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1) SetMode(mode QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1Mode) {
+	q.Mode = mode
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1FieldMode)
+}
+
+// SetRevision sets the Revision field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1) SetRevision(revision int) {
+	q.Revision = revision
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1FieldRevision)
+}
+
+// SetAuthorizationGeneration sets the AuthorizationGeneration field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1) SetAuthorizationGeneration(authorizationGeneration int) {
+	q.AuthorizationGeneration = authorizationGeneration
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1FieldAuthorizationGeneration)
+}
+
+// SetConsentRef sets the ConsentRef field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1) SetConsentRef(consentRef string) {
+	q.ConsentRef = consentRef
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1FieldConsentRef)
+}
+
+// SetCreateIssues sets the CreateIssues field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1) SetCreateIssues(createIssues bool) {
+	q.CreateIssues = createIssues
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1FieldCreateIssues)
+}
+
+// SetCommentIssues sets the CommentIssues field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1) SetCommentIssues(commentIssues bool) {
+	q.CommentIssues = commentIssues
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1FieldCommentIssues)
+}
+
+// SetDestinationTeamID sets the DestinationTeamID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1) SetDestinationTeamID(destinationTeamID *string) {
+	q.DestinationTeamID = destinationTeamID
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1FieldDestinationTeamID)
+}
+
+// SetAllowedTeamIDs sets the AllowedTeamIDs field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1) SetAllowedTeamIDs(allowedTeamIDs []string) {
+	q.AllowedTeamIDs = allowedTeamIDs
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1FieldAllowedTeamIDs)
+}
+
+// SetDelivery sets the Delivery field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1) SetDelivery(delivery *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1Delivery) {
+	q.Delivery = delivery
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1FieldDelivery)
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1) UnmarshalJSON(data []byte) error {
+	type unmarshaler QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*q = QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *q)
+	if err != nil {
+		return err
+	}
+	q.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1NullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		q.require(presentFields)
+	}
+	q.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1) MarshalJSON() ([]byte, error) {
+	type embed QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*q),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, q.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1) String() string {
+	if q == nil {
+		return "<nil>"
+	}
+	if len(q.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(q.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(q); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", q)
+}
+
+var (
+	queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1DeliveryFieldProviderWorkspaceID = big.NewInt(1 << 0)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1DeliveryFieldConsentRef          = big.NewInt(1 << 1)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1DeliveryFieldConsentedAt         = big.NewInt(1 << 2)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1DeliveryFieldVerifiedTeams       = big.NewInt(1 << 3)
+)
+
+type QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1Delivery struct {
+	ProviderWorkspaceID string                                                                                                 `json:"providerWorkspaceId" url:"providerWorkspaceId"`
+	ConsentRef          string                                                                                                 `json:"consentRef" url:"consentRef"`
+	ConsentedAt         int                                                                                                    `json:"consentedAt" url:"consentedAt"`
+	VerifiedTeams       []*QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1DeliveryVerifiedTeamsItem `json:"verifiedTeams" url:"verifiedTeams"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1Delivery) GetProviderWorkspaceID() string {
+	if q == nil {
+		return ""
+	}
+	return q.ProviderWorkspaceID
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1Delivery) GetConsentRef() string {
+	if q == nil {
+		return ""
+	}
+	return q.ConsentRef
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1Delivery) GetConsentedAt() int {
+	if q == nil {
+		return 0
+	}
+	return q.ConsentedAt
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1Delivery) GetVerifiedTeams() []*QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1DeliveryVerifiedTeamsItem {
+	if q == nil {
+		return nil
+	}
+	return q.VerifiedTeams
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1Delivery) GetExtraProperties() map[string]interface{} {
+	if q == nil {
+		return nil
+	}
+	return q.extraProperties
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1Delivery) require(field *big.Int) {
+	next := new(big.Int)
+	if q.explicitFields != nil {
+		next.Set(q.explicitFields)
+	}
+	next.Or(next, field)
+	q.explicitFields = next
+}
+
+// SetProviderWorkspaceID sets the ProviderWorkspaceID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1Delivery) SetProviderWorkspaceID(providerWorkspaceID string) {
+	q.ProviderWorkspaceID = providerWorkspaceID
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1DeliveryFieldProviderWorkspaceID)
+}
+
+// SetConsentRef sets the ConsentRef field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1Delivery) SetConsentRef(consentRef string) {
+	q.ConsentRef = consentRef
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1DeliveryFieldConsentRef)
+}
+
+// SetConsentedAt sets the ConsentedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1Delivery) SetConsentedAt(consentedAt int) {
+	q.ConsentedAt = consentedAt
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1DeliveryFieldConsentedAt)
+}
+
+// SetVerifiedTeams sets the VerifiedTeams field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1Delivery) SetVerifiedTeams(verifiedTeams []*QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1DeliveryVerifiedTeamsItem) {
+	q.VerifiedTeams = verifiedTeams
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1DeliveryFieldVerifiedTeams)
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1Delivery) UnmarshalJSON(data []byte) error {
+	type unmarshaler QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1Delivery
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*q = QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1Delivery(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *q)
+	if err != nil {
+		return err
+	}
+	q.extraProperties = extraProperties
+	q.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1Delivery) MarshalJSON() ([]byte, error) {
+	type embed QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1Delivery
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*q),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, q.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1Delivery) String() string {
+	if q == nil {
+		return "<nil>"
+	}
+	if len(q.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(q.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(q); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", q)
+}
+
+var (
+	queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1DeliveryVerifiedTeamsItemFieldTeamID     = big.NewInt(1 << 0)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1DeliveryVerifiedTeamsItemFieldVerifiedAt = big.NewInt(1 << 1)
+)
+
+type QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1DeliveryVerifiedTeamsItem struct {
+	TeamID     string `json:"teamId" url:"teamId"`
+	VerifiedAt int    `json:"verifiedAt" url:"verifiedAt"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1DeliveryVerifiedTeamsItem) GetTeamID() string {
+	if q == nil {
+		return ""
+	}
+	return q.TeamID
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1DeliveryVerifiedTeamsItem) GetVerifiedAt() int {
+	if q == nil {
+		return 0
+	}
+	return q.VerifiedAt
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1DeliveryVerifiedTeamsItem) GetExtraProperties() map[string]interface{} {
+	if q == nil {
+		return nil
+	}
+	return q.extraProperties
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1DeliveryVerifiedTeamsItem) require(field *big.Int) {
+	next := new(big.Int)
+	if q.explicitFields != nil {
+		next.Set(q.explicitFields)
+	}
+	next.Or(next, field)
+	q.explicitFields = next
+}
+
+// SetTeamID sets the TeamID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1DeliveryVerifiedTeamsItem) SetTeamID(teamID string) {
+	q.TeamID = teamID
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1DeliveryVerifiedTeamsItemFieldTeamID)
+}
+
+// SetVerifiedAt sets the VerifiedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1DeliveryVerifiedTeamsItem) SetVerifiedAt(verifiedAt int) {
+	q.VerifiedAt = verifiedAt
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1DeliveryVerifiedTeamsItemFieldVerifiedAt)
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1DeliveryVerifiedTeamsItem) UnmarshalJSON(data []byte) error {
+	type unmarshaler QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1DeliveryVerifiedTeamsItem
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*q = QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1DeliveryVerifiedTeamsItem(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *q)
+	if err != nil {
+		return err
+	}
+	q.extraProperties = extraProperties
+	q.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1DeliveryVerifiedTeamsItem) MarshalJSON() ([]byte, error) {
+	type embed QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1DeliveryVerifiedTeamsItem
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*q),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, q.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1DeliveryVerifiedTeamsItem) String() string {
+	if q == nil {
+		return "<nil>"
+	}
+	if len(q.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(q.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(q); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", q)
+}
+
+type QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1Mode string
+
+const (
+	QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1ModeIndividualApproval QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1Mode = "individual-approval"
+)
+
+func NewQueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1ModeFromString(s string) (QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1Mode, error) {
+	switch s {
+	case "individual-approval":
+		return QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1ModeIndividualApproval, nil
+	}
+	var t QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1Mode
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (q QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1Mode) Ptr() *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDModule1Mode {
+	return &q
+}
+
+type QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDProvider string
+
+const (
+	QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDProviderLinear QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDProvider = "linear"
+)
+
+func NewQueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDProviderFromString(s string) (QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDProvider, error) {
+	switch s {
+	case "linear":
+		return QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDProviderLinear, nil
+	}
+	var t QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDProvider
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (q QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDProvider) Ptr() *QueryIntegrationsInstallationsResponseItemProviderMetadataAppUserIDProvider {
+	return &q
+}
+
+var (
+	queryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkersFieldAccountType         = big.NewInt(1 << 0)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkersFieldAvatar              = big.NewInt(1 << 1)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkersFieldID                  = big.NewInt(1 << 2)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkersFieldInstallationURL     = big.NewInt(1 << 3)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkersFieldName                = big.NewInt(1 << 4)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkersFieldDeploymentCutoffs   = big.NewInt(1 << 5)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkersFieldVersionCutoffs      = big.NewInt(1 << 6)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkersFieldWorkers             = big.NewInt(1 << 7)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkersFieldAssetsOnlyWorkers   = big.NewInt(1 << 8)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkersFieldWorkersDiscoveredAt = big.NewInt(1 << 9)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkersFieldProvider            = big.NewInt(1 << 10)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkersFieldOauthScopes         = big.NewInt(1 << 11)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkersFieldRefreshToken        = big.NewInt(1 << 12)
+)
+
+// queryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkersNullableFields maps the wire names of QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers's nullable fields (required or optional) to their field bits.
+var queryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkersNullableFields = map[string]*big.Int{
+	"avatar":          queryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkersFieldAvatar,
+	"installationUrl": queryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkersFieldInstallationURL,
+	"name":            queryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkersFieldName,
+}
+
+type QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers struct {
+	AccountType         QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkersAccountType `json:"accountType" url:"accountType"`
+	Avatar              *string                                                                                `json:"avatar,omitempty" url:"avatar,omitempty"`
+	ID                  string                                                                                 `json:"id" url:"id"`
+	InstallationURL     *string                                                                                `json:"installationUrl,omitempty" url:"installationUrl,omitempty"`
+	Name                *string                                                                                `json:"name,omitempty" url:"name,omitempty"`
+	DeploymentCutoffs   map[string]string                                                                      `json:"deploymentCutoffs,omitempty" url:"deploymentCutoffs,omitempty"`
+	VersionCutoffs      map[string]string                                                                      `json:"versionCutoffs,omitempty" url:"versionCutoffs,omitempty"`
+	Workers             map[string]string                                                                      `json:"workers,omitempty" url:"workers,omitempty"`
+	AssetsOnlyWorkers   []string                                                                               `json:"assetsOnlyWorkers,omitempty" url:"assetsOnlyWorkers,omitempty"`
+	WorkersDiscoveredAt *int                                                                                   `json:"workersDiscoveredAt,omitempty" url:"workersDiscoveredAt,omitempty"`
+	Provider            QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkersProvider    `json:"provider" url:"provider"`
+	OauthScopes         []string                                                                               `json:"oauthScopes,omitempty" url:"oauthScopes,omitempty"`
+	RefreshToken        any                                                                                    `json:"refreshToken,omitempty" url:"refreshToken,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers) GetAccountType() QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkersAccountType {
+	if q == nil {
+		return ""
+	}
+	return q.AccountType
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers) GetAvatar() *string {
+	if q == nil {
+		return nil
+	}
+	return q.Avatar
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers) GetID() string {
+	if q == nil {
+		return ""
+	}
+	return q.ID
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers) GetInstallationURL() *string {
+	if q == nil {
+		return nil
+	}
+	return q.InstallationURL
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers) GetName() *string {
+	if q == nil {
+		return nil
+	}
+	return q.Name
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers) GetDeploymentCutoffs() map[string]string {
+	if q == nil {
+		return nil
+	}
+	return q.DeploymentCutoffs
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers) GetVersionCutoffs() map[string]string {
+	if q == nil {
+		return nil
+	}
+	return q.VersionCutoffs
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers) GetWorkers() map[string]string {
+	if q == nil {
+		return nil
+	}
+	return q.Workers
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers) GetAssetsOnlyWorkers() []string {
+	if q == nil {
+		return nil
+	}
+	return q.AssetsOnlyWorkers
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers) GetWorkersDiscoveredAt() *int {
+	if q == nil {
+		return nil
+	}
+	return q.WorkersDiscoveredAt
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers) GetProvider() QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkersProvider {
+	if q == nil {
+		return ""
+	}
+	return q.Provider
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers) GetOauthScopes() []string {
+	if q == nil {
+		return nil
+	}
+	return q.OauthScopes
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers) GetRefreshToken() any {
+	if q == nil {
+		return nil
+	}
+	return q.RefreshToken
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers) GetExtraProperties() map[string]interface{} {
+	if q == nil {
+		return nil
+	}
+	return q.extraProperties
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers) require(field *big.Int) {
+	next := new(big.Int)
+	if q.explicitFields != nil {
+		next.Set(q.explicitFields)
+	}
+	next.Or(next, field)
+	q.explicitFields = next
+}
+
+// SetAccountType sets the AccountType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers) SetAccountType(accountType QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkersAccountType) {
+	q.AccountType = accountType
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkersFieldAccountType)
+}
+
+// SetAvatar sets the Avatar field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers) SetAvatar(avatar *string) {
+	q.Avatar = avatar
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkersFieldAvatar)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers) SetID(id string) {
+	q.ID = id
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkersFieldID)
+}
+
+// SetInstallationURL sets the InstallationURL field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers) SetInstallationURL(installationURL *string) {
+	q.InstallationURL = installationURL
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkersFieldInstallationURL)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers) SetName(name *string) {
+	q.Name = name
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkersFieldName)
+}
+
+// SetDeploymentCutoffs sets the DeploymentCutoffs field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers) SetDeploymentCutoffs(deploymentCutoffs map[string]string) {
+	q.DeploymentCutoffs = deploymentCutoffs
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkersFieldDeploymentCutoffs)
+}
+
+// SetVersionCutoffs sets the VersionCutoffs field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers) SetVersionCutoffs(versionCutoffs map[string]string) {
+	q.VersionCutoffs = versionCutoffs
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkersFieldVersionCutoffs)
+}
+
+// SetWorkers sets the Workers field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers) SetWorkers(workers map[string]string) {
+	q.Workers = workers
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkersFieldWorkers)
+}
+
+// SetAssetsOnlyWorkers sets the AssetsOnlyWorkers field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers) SetAssetsOnlyWorkers(assetsOnlyWorkers []string) {
+	q.AssetsOnlyWorkers = assetsOnlyWorkers
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkersFieldAssetsOnlyWorkers)
+}
+
+// SetWorkersDiscoveredAt sets the WorkersDiscoveredAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers) SetWorkersDiscoveredAt(workersDiscoveredAt *int) {
+	q.WorkersDiscoveredAt = workersDiscoveredAt
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkersFieldWorkersDiscoveredAt)
+}
+
+// SetProvider sets the Provider field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers) SetProvider(provider QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkersProvider) {
+	q.Provider = provider
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkersFieldProvider)
+}
+
+// SetOauthScopes sets the OauthScopes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers) SetOauthScopes(oauthScopes []string) {
+	q.OauthScopes = oauthScopes
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkersFieldOauthScopes)
+}
+
+// SetRefreshToken sets the RefreshToken field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers) SetRefreshToken(refreshToken any) {
+	q.RefreshToken = refreshToken
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkersFieldRefreshToken)
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers) UnmarshalJSON(data []byte) error {
+	type unmarshaler QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*q = QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *q)
+	if err != nil {
+		return err
+	}
+	q.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, queryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkersNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		q.require(presentFields)
+	}
+	q.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers) MarshalJSON() ([]byte, error) {
+	type embed QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*q),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, q.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkers) String() string {
+	if q == nil {
+		return "<nil>"
+	}
+	if len(q.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(q.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(q); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", q)
+}
+
+type QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkersAccountType string
+
+const (
+	QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkersAccountTypeAccount QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkersAccountType = "account"
+)
+
+func NewQueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkersAccountTypeFromString(s string) (QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkersAccountType, error) {
+	switch s {
+	case "account":
+		return QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkersAccountTypeAccount, nil
+	}
+	var t QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkersAccountType
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (q QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkersAccountType) Ptr() *QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkersAccountType {
+	return &q
+}
+
+type QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkersProvider string
+
+const (
+	QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkersProviderCloudflare QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkersProvider = "cloudflare"
+)
+
+func NewQueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkersProviderFromString(s string) (QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkersProvider, error) {
+	switch s {
+	case "cloudflare":
+		return QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkersProviderCloudflare, nil
+	}
+	var t QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkersProvider
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (q QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkersProvider) Ptr() *QueryIntegrationsInstallationsResponseItemProviderMetadataAssetsOnlyWorkersProvider {
+	return &q
+}
+
+var (
+	queryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationFieldProvider           = big.NewInt(1 << 0)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationFieldEndpoint           = big.NewInt(1 << 1)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationFieldAuthentication     = big.NewInt(1 << 2)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationFieldReadToolNames      = big.NewInt(1 << 3)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationFieldResourceURIs       = big.NewInt(1 << 4)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationFieldConnectionRevision = big.NewInt(1 << 5)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationFieldName               = big.NewInt(1 << 6)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationFieldInstallationURL    = big.NewInt(1 << 7)
+)
+
+// queryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationNullableFields maps the wire names of QueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication's nullable fields (required or optional) to their field bits.
+var queryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationNullableFields = map[string]*big.Int{
+	"installationUrl": queryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationFieldInstallationURL,
+}
+
+type QueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication struct {
+	Provider           QueryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationProvider       `json:"provider" url:"provider"`
+	Endpoint           string                                                                                 `json:"endpoint" url:"endpoint"`
+	Authentication     QueryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationAuthentication `json:"authentication" url:"authentication"`
+	ReadToolNames      []string                                                                               `json:"readToolNames" url:"readToolNames"`
+	ResourceURIs       []string                                                                               `json:"resourceUris" url:"resourceUris"`
+	ConnectionRevision int                                                                                    `json:"connectionRevision" url:"connectionRevision"`
+	Name               string                                                                                 `json:"name" url:"name"`
+	InstallationURL    *string                                                                                `json:"installationUrl,omitempty" url:"installationUrl,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication) GetProvider() QueryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationProvider {
+	if q == nil {
+		return ""
+	}
+	return q.Provider
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication) GetEndpoint() string {
+	if q == nil {
+		return ""
+	}
+	return q.Endpoint
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication) GetAuthentication() QueryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationAuthentication {
+	if q == nil {
+		return ""
+	}
+	return q.Authentication
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication) GetReadToolNames() []string {
+	if q == nil {
+		return nil
+	}
+	return q.ReadToolNames
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication) GetResourceURIs() []string {
+	if q == nil {
+		return nil
+	}
+	return q.ResourceURIs
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication) GetConnectionRevision() int {
+	if q == nil {
+		return 0
+	}
+	return q.ConnectionRevision
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication) GetName() string {
+	if q == nil {
+		return ""
+	}
+	return q.Name
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication) GetInstallationURL() *string {
+	if q == nil {
+		return nil
+	}
+	return q.InstallationURL
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication) GetExtraProperties() map[string]interface{} {
+	if q == nil {
+		return nil
+	}
+	return q.extraProperties
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication) require(field *big.Int) {
+	next := new(big.Int)
+	if q.explicitFields != nil {
+		next.Set(q.explicitFields)
+	}
+	next.Or(next, field)
+	q.explicitFields = next
+}
+
+// SetProvider sets the Provider field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication) SetProvider(provider QueryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationProvider) {
+	q.Provider = provider
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationFieldProvider)
+}
+
+// SetEndpoint sets the Endpoint field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication) SetEndpoint(endpoint string) {
+	q.Endpoint = endpoint
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationFieldEndpoint)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication) SetAuthentication(authentication QueryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationAuthentication) {
+	q.Authentication = authentication
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationFieldAuthentication)
+}
+
+// SetReadToolNames sets the ReadToolNames field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication) SetReadToolNames(readToolNames []string) {
+	q.ReadToolNames = readToolNames
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationFieldReadToolNames)
+}
+
+// SetResourceURIs sets the ResourceURIs field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication) SetResourceURIs(resourceURIs []string) {
+	q.ResourceURIs = resourceURIs
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationFieldResourceURIs)
+}
+
+// SetConnectionRevision sets the ConnectionRevision field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication) SetConnectionRevision(connectionRevision int) {
+	q.ConnectionRevision = connectionRevision
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationFieldConnectionRevision)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication) SetName(name string) {
+	q.Name = name
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationFieldName)
+}
+
+// SetInstallationURL sets the InstallationURL field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication) SetInstallationURL(installationURL *string) {
+	q.InstallationURL = installationURL
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationFieldInstallationURL)
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication) UnmarshalJSON(data []byte) error {
+	type unmarshaler QueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*q = QueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *q)
+	if err != nil {
+		return err
+	}
+	q.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, queryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		q.require(presentFields)
+	}
+	q.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication) MarshalJSON() ([]byte, error) {
+	type embed QueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*q),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, q.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAuthentication) String() string {
+	if q == nil {
+		return "<nil>"
+	}
+	if len(q.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(q.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(q); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", q)
+}
+
+type QueryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationAuthentication string
+
+const (
+	QueryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationAuthenticationBearer QueryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationAuthentication = "bearer"
+	QueryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationAuthenticationNone   QueryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationAuthentication = "none"
+	QueryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationAuthenticationOauth  QueryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationAuthentication = "oauth"
+)
+
+func NewQueryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationAuthenticationFromString(s string) (QueryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationAuthentication, error) {
+	switch s {
+	case "bearer":
+		return QueryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationAuthenticationBearer, nil
+	case "none":
+		return QueryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationAuthenticationNone, nil
+	case "oauth":
+		return QueryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationAuthenticationOauth, nil
+	}
+	var t QueryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationAuthentication
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (q QueryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationAuthentication) Ptr() *QueryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationAuthentication {
+	return &q
+}
+
+type QueryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationProvider string
+
+const (
+	QueryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationProviderMcp QueryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationProvider = "mcp"
+)
+
+func NewQueryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationProviderFromString(s string) (QueryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationProvider, error) {
+	switch s {
+	case "mcp":
+		return QueryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationProviderMcp, nil
+	}
+	var t QueryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationProvider
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (q QueryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationProvider) Ptr() *QueryIntegrationsInstallationsResponseItemProviderMetadataAuthenticationProvider {
+	return &q
+}
+
+var (
+	queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLFieldAccountType                    = big.NewInt(1 << 0)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLFieldAvatarURL                      = big.NewInt(1 << 1)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLFieldFlavor                         = big.NewInt(1 << 2)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLFieldHost                           = big.NewInt(1 << 3)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLFieldInstallationURL                = big.NewInt(1 << 4)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLFieldRepositories                   = big.NewInt(1 << 5)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLFieldProvider                       = big.NewInt(1 << 6)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLFieldRepositoryDiscoveryRequestedAt = big.NewInt(1 << 7)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLFieldRepositoryScans                = big.NewInt(1 << 8)
+)
+
+// queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLNullableFields maps the wire names of QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL's nullable fields (required or optional) to their field bits.
+var queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLNullableFields = map[string]*big.Int{
+	"avatarUrl":                      queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLFieldAvatarURL,
+	"installationUrl":                queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLFieldInstallationURL,
+	"repositoryDiscoveryRequestedAt": queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLFieldRepositoryDiscoveryRequestedAt,
+}
+
+type QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL struct {
+	AccountType                    string                                                                                              `json:"accountType" url:"accountType"`
+	AvatarURL                      *string                                                                                             `json:"avatarUrl,omitempty" url:"avatarUrl,omitempty"`
+	Flavor                         *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLFlavor                          `json:"flavor,omitempty" url:"flavor,omitempty"`
+	Host                           *string                                                                                             `json:"host,omitempty" url:"host,omitempty"`
+	InstallationURL                *string                                                                                             `json:"installationUrl,omitempty" url:"installationUrl,omitempty"`
+	Repositories                   map[string]string                                                                                   `json:"repositories" url:"repositories"`
+	Provider                       QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLProvider                         `json:"provider" url:"provider"`
+	RepositoryDiscoveryRequestedAt *int                                                                                                `json:"repositoryDiscoveryRequestedAt,omitempty" url:"repositoryDiscoveryRequestedAt,omitempty"`
+	RepositoryScans                map[string]*QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValue `json:"repositoryScans,omitempty" url:"repositoryScans,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL) GetAccountType() string {
+	if q == nil {
+		return ""
+	}
+	return q.AccountType
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL) GetAvatarURL() *string {
+	if q == nil {
+		return nil
+	}
+	return q.AvatarURL
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL) GetFlavor() *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLFlavor {
+	if q == nil {
+		return nil
+	}
+	return q.Flavor
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL) GetHost() *string {
+	if q == nil {
+		return nil
+	}
+	return q.Host
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL) GetInstallationURL() *string {
+	if q == nil {
+		return nil
+	}
+	return q.InstallationURL
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL) GetRepositories() map[string]string {
+	if q == nil {
+		return nil
+	}
+	return q.Repositories
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL) GetProvider() QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLProvider {
+	if q == nil {
+		return ""
+	}
+	return q.Provider
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL) GetRepositoryDiscoveryRequestedAt() *int {
+	if q == nil {
+		return nil
+	}
+	return q.RepositoryDiscoveryRequestedAt
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL) GetRepositoryScans() map[string]*QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValue {
+	if q == nil {
+		return nil
+	}
+	return q.RepositoryScans
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL) GetExtraProperties() map[string]interface{} {
+	if q == nil {
+		return nil
+	}
+	return q.extraProperties
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL) require(field *big.Int) {
+	next := new(big.Int)
+	if q.explicitFields != nil {
+		next.Set(q.explicitFields)
+	}
+	next.Or(next, field)
+	q.explicitFields = next
+}
+
+// SetAccountType sets the AccountType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL) SetAccountType(accountType string) {
+	q.AccountType = accountType
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLFieldAccountType)
+}
+
+// SetAvatarURL sets the AvatarURL field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL) SetAvatarURL(avatarURL *string) {
+	q.AvatarURL = avatarURL
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLFieldAvatarURL)
+}
+
+// SetFlavor sets the Flavor field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL) SetFlavor(flavor *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLFlavor) {
+	q.Flavor = flavor
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLFieldFlavor)
+}
+
+// SetHost sets the Host field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL) SetHost(host *string) {
+	q.Host = host
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLFieldHost)
+}
+
+// SetInstallationURL sets the InstallationURL field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL) SetInstallationURL(installationURL *string) {
+	q.InstallationURL = installationURL
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLFieldInstallationURL)
+}
+
+// SetRepositories sets the Repositories field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL) SetRepositories(repositories map[string]string) {
+	q.Repositories = repositories
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLFieldRepositories)
+}
+
+// SetProvider sets the Provider field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL) SetProvider(provider QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLProvider) {
+	q.Provider = provider
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLFieldProvider)
+}
+
+// SetRepositoryDiscoveryRequestedAt sets the RepositoryDiscoveryRequestedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL) SetRepositoryDiscoveryRequestedAt(repositoryDiscoveryRequestedAt *int) {
+	q.RepositoryDiscoveryRequestedAt = repositoryDiscoveryRequestedAt
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLFieldRepositoryDiscoveryRequestedAt)
+}
+
+// SetRepositoryScans sets the RepositoryScans field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL) SetRepositoryScans(repositoryScans map[string]*QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValue) {
+	q.RepositoryScans = repositoryScans
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLFieldRepositoryScans)
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL) UnmarshalJSON(data []byte) error {
+	type unmarshaler QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*q = QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *q)
+	if err != nil {
+		return err
+	}
+	q.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		q.require(presentFields)
+	}
+	q.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL) MarshalJSON() ([]byte, error) {
+	type embed QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*q),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, q.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURL) String() string {
+	if q == nil {
+		return "<nil>"
+	}
+	if len(q.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(q.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(q); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", q)
+}
+
+type QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLFlavor string
+
+const (
+	QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLFlavorGithubCom QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLFlavor = "github_com"
+	QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLFlavorGheCloud  QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLFlavor = "ghe_cloud"
+	QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLFlavorGheServer QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLFlavor = "ghe_server"
+)
+
+func NewQueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLFlavorFromString(s string) (QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLFlavor, error) {
+	switch s {
+	case "github_com":
+		return QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLFlavorGithubCom, nil
+	case "ghe_cloud":
+		return QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLFlavorGheCloud, nil
+	case "ghe_server":
+		return QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLFlavorGheServer, nil
+	}
+	var t QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLFlavor
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (q QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLFlavor) Ptr() *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLFlavor {
+	return &q
+}
+
+type QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLProvider string
+
+const (
+	QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLProviderGheServer QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLProvider = "ghe_server"
+)
+
+func NewQueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLProviderFromString(s string) (QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLProvider, error) {
+	switch s {
+	case "ghe_server":
+		return QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLProviderGheServer, nil
+	}
+	var t QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLProvider
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (q QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLProvider) Ptr() *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLProvider {
+	return &q
+}
+
+var (
+	queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueFieldApps         = big.NewInt(1 << 0)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueFieldErrorMessage = big.NewInt(1 << 1)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueFieldScannedAt    = big.NewInt(1 << 2)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueFieldStatus       = big.NewInt(1 << 3)
+)
+
+// queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueNullableFields maps the wire names of QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValue's nullable fields (required or optional) to their field bits.
+var queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueNullableFields = map[string]*big.Int{
+	"apps":         queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueFieldApps,
+	"errorMessage": queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueFieldErrorMessage,
+	"scannedAt":    queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueFieldScannedAt,
+}
+
+type QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValue struct {
+	Apps         []*QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueAppsItem `json:"apps,omitempty" url:"apps,omitempty"`
+	ErrorMessage *string                                                                                            `json:"errorMessage,omitempty" url:"errorMessage,omitempty"`
+	ScannedAt    *string                                                                                            `json:"scannedAt,omitempty" url:"scannedAt,omitempty"`
+	Status       QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueStatus      `json:"status" url:"status"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValue) GetApps() []*QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueAppsItem {
+	if q == nil {
+		return nil
+	}
+	return q.Apps
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValue) GetErrorMessage() *string {
+	if q == nil {
+		return nil
+	}
+	return q.ErrorMessage
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValue) GetScannedAt() *string {
+	if q == nil {
+		return nil
+	}
+	return q.ScannedAt
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValue) GetStatus() QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueStatus {
+	if q == nil {
+		return ""
+	}
+	return q.Status
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValue) GetExtraProperties() map[string]interface{} {
+	if q == nil {
+		return nil
+	}
+	return q.extraProperties
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValue) require(field *big.Int) {
+	next := new(big.Int)
+	if q.explicitFields != nil {
+		next.Set(q.explicitFields)
+	}
+	next.Or(next, field)
+	q.explicitFields = next
+}
+
+// SetApps sets the Apps field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValue) SetApps(apps []*QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueAppsItem) {
+	q.Apps = apps
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueFieldApps)
+}
+
+// SetErrorMessage sets the ErrorMessage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValue) SetErrorMessage(errorMessage *string) {
+	q.ErrorMessage = errorMessage
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueFieldErrorMessage)
+}
+
+// SetScannedAt sets the ScannedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValue) SetScannedAt(scannedAt *string) {
+	q.ScannedAt = scannedAt
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueFieldScannedAt)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValue) SetStatus(status QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueStatus) {
+	q.Status = status
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueFieldStatus)
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValue) UnmarshalJSON(data []byte) error {
+	type unmarshaler QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValue
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*q = QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValue(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *q)
+	if err != nil {
+		return err
+	}
+	q.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		q.require(presentFields)
+	}
+	q.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValue) MarshalJSON() ([]byte, error) {
+	type embed QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValue
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*q),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, q.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValue) String() string {
+	if q == nil {
+		return "<nil>"
+	}
+	if len(q.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(q.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(q); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", q)
+}
+
+var (
+	queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueAppsItemFieldFramework = big.NewInt(1 << 0)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueAppsItemFieldName      = big.NewInt(1 << 1)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueAppsItemFieldPath      = big.NewInt(1 << 2)
+)
+
+type QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueAppsItem struct {
+	Framework *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueAppsItemFramework `json:"framework" url:"framework"`
+	Name      string                                                                                                    `json:"name" url:"name"`
+	Path      string                                                                                                    `json:"path" url:"path"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueAppsItem) GetFramework() *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueAppsItemFramework {
+	if q == nil {
+		return nil
+	}
+	return q.Framework
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueAppsItem) GetName() string {
+	if q == nil {
+		return ""
+	}
+	return q.Name
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueAppsItem) GetPath() string {
+	if q == nil {
+		return ""
+	}
+	return q.Path
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueAppsItem) GetExtraProperties() map[string]interface{} {
+	if q == nil {
+		return nil
+	}
+	return q.extraProperties
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueAppsItem) require(field *big.Int) {
+	next := new(big.Int)
+	if q.explicitFields != nil {
+		next.Set(q.explicitFields)
+	}
+	next.Or(next, field)
+	q.explicitFields = next
+}
+
+// SetFramework sets the Framework field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueAppsItem) SetFramework(framework *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueAppsItemFramework) {
+	q.Framework = framework
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueAppsItemFieldFramework)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueAppsItem) SetName(name string) {
+	q.Name = name
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueAppsItemFieldName)
+}
+
+// SetPath sets the Path field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueAppsItem) SetPath(path string) {
+	q.Path = path
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueAppsItemFieldPath)
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueAppsItem) UnmarshalJSON(data []byte) error {
+	type unmarshaler QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueAppsItem
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*q = QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueAppsItem(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *q)
+	if err != nil {
+		return err
+	}
+	q.extraProperties = extraProperties
+	q.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueAppsItem) MarshalJSON() ([]byte, error) {
+	type embed QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueAppsItem
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*q),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, q.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueAppsItem) String() string {
+	if q == nil {
+		return "<nil>"
+	}
+	if len(q.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(q.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(q); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", q)
+}
+
+var (
+	queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueAppsItemFrameworkFieldID   = big.NewInt(1 << 0)
+	queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueAppsItemFrameworkFieldName = big.NewInt(1 << 1)
+)
+
+type QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueAppsItemFramework struct {
+	ID   string `json:"id" url:"id"`
+	Name string `json:"name" url:"name"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueAppsItemFramework) GetID() string {
+	if q == nil {
+		return ""
+	}
+	return q.ID
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueAppsItemFramework) GetName() string {
+	if q == nil {
+		return ""
+	}
+	return q.Name
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueAppsItemFramework) GetExtraProperties() map[string]interface{} {
+	if q == nil {
+		return nil
+	}
+	return q.extraProperties
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueAppsItemFramework) require(field *big.Int) {
+	next := new(big.Int)
+	if q.explicitFields != nil {
+		next.Set(q.explicitFields)
+	}
+	next.Or(next, field)
+	q.explicitFields = next
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueAppsItemFramework) SetID(id string) {
+	q.ID = id
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueAppsItemFrameworkFieldID)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueAppsItemFramework) SetName(name string) {
+	q.Name = name
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueAppsItemFrameworkFieldName)
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueAppsItemFramework) UnmarshalJSON(data []byte) error {
+	type unmarshaler QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueAppsItemFramework
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*q = QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueAppsItemFramework(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *q)
+	if err != nil {
+		return err
+	}
+	q.extraProperties = extraProperties
+	q.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueAppsItemFramework) MarshalJSON() ([]byte, error) {
+	type embed QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueAppsItemFramework
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*q),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, q.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueAppsItemFramework) String() string {
+	if q == nil {
+		return "<nil>"
+	}
+	if len(q.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(q.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(q); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", q)
+}
+
+type QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueStatus string
+
+const (
+	QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueStatusPending  QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueStatus = "pending"
+	QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueStatusScanning QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueStatus = "scanning"
+	QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueStatusReady    QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueStatus = "ready"
+	QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueStatusFailed   QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueStatus = "failed"
+)
+
+func NewQueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueStatusFromString(s string) (QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueStatus, error) {
+	switch s {
+	case "pending":
+		return QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueStatusPending, nil
+	case "scanning":
+		return QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueStatusScanning, nil
+	case "ready":
+		return QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueStatusReady, nil
+	case "failed":
+		return QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueStatusFailed, nil
+	}
+	var t QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueStatus
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (q QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueStatus) Ptr() *QueryIntegrationsInstallationsResponseItemProviderMetadataAvatarURLRepositoryScansValueStatus {
+	return &q
+}
+
+var (
+	queryIntegrationsInstallationsResponseItemProviderMetadataChatRoutingFieldTeamID          = big.NewInt(1 << 0)
+	queryIntegrationsInstallationsResponseItemProviderMetadataChatRoutingFieldTeamName        = big.NewInt(1 << 1)
+	queryIntegrationsInstallationsResponseItemProviderMetadataChatRoutingFieldInstallationURL = big.NewInt(1 << 2)
+	queryIntegrationsInstallationsResponseItemProviderMetadataChatRoutingFieldChatRouting     = big.NewInt(1 << 3)
+	queryIntegrationsInstallationsResponseItemProviderMetadataChatRoutingFieldProvider        = big.NewInt(1 << 4)
+	queryIntegrationsInstallationsResponseItemProviderMetadataChatRoutingFieldOauthScopes     = big.NewInt(1 << 5)
+)
+
+// queryIntegrationsInstallationsResponseItemProviderMetadataChatRoutingNullableFields maps the wire names of QueryIntegrationsInstallationsResponseItemProviderMetadataChatRouting's nullable fields (required or optional) to their field bits.
+var queryIntegrationsInstallationsResponseItemProviderMetadataChatRoutingNullableFields = map[string]*big.Int{
+	"installationUrl": queryIntegrationsInstallationsResponseItemProviderMetadataChatRoutingFieldInstallationURL,
+}
+
+type QueryIntegrationsInstallationsResponseItemProviderMetadataChatRouting struct {
+	TeamID          string                                                                                            `json:"teamId" url:"teamId"`
+	TeamName        string                                                                                            `json:"teamName" url:"teamName"`
+	InstallationURL *string                                                                                           `json:"installationUrl,omitempty" url:"installationUrl,omitempty"`
+	ChatRouting     map[string]*QueryIntegrationsInstallationsResponseItemProviderMetadataChatRoutingChatRoutingValue `json:"chatRouting,omitempty" url:"chatRouting,omitempty"`
+	Provider        QueryIntegrationsInstallationsResponseItemProviderMetadataChatRoutingProvider                     `json:"provider" url:"provider"`
+	OauthScopes     []string                                                                                          `json:"oauthScopes,omitempty" url:"oauthScopes,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataChatRouting) GetTeamID() string {
+	if q == nil {
+		return ""
+	}
+	return q.TeamID
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataChatRouting) GetTeamName() string {
+	if q == nil {
+		return ""
+	}
+	return q.TeamName
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataChatRouting) GetInstallationURL() *string {
+	if q == nil {
+		return nil
+	}
+	return q.InstallationURL
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataChatRouting) GetChatRouting() map[string]*QueryIntegrationsInstallationsResponseItemProviderMetadataChatRoutingChatRoutingValue {
+	if q == nil {
+		return nil
+	}
+	return q.ChatRouting
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataChatRouting) GetProvider() QueryIntegrationsInstallationsResponseItemProviderMetadataChatRoutingProvider {
+	if q == nil {
+		return ""
+	}
+	return q.Provider
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataChatRouting) GetOauthScopes() []string {
+	if q == nil {
+		return nil
+	}
+	return q.OauthScopes
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataChatRouting) GetExtraProperties() map[string]interface{} {
+	if q == nil {
+		return nil
+	}
+	return q.extraProperties
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataChatRouting) require(field *big.Int) {
+	next := new(big.Int)
+	if q.explicitFields != nil {
+		next.Set(q.explicitFields)
+	}
+	next.Or(next, field)
+	q.explicitFields = next
+}
+
+// SetTeamID sets the TeamID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataChatRouting) SetTeamID(teamID string) {
+	q.TeamID = teamID
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataChatRoutingFieldTeamID)
+}
+
+// SetTeamName sets the TeamName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataChatRouting) SetTeamName(teamName string) {
+	q.TeamName = teamName
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataChatRoutingFieldTeamName)
+}
+
+// SetInstallationURL sets the InstallationURL field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataChatRouting) SetInstallationURL(installationURL *string) {
+	q.InstallationURL = installationURL
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataChatRoutingFieldInstallationURL)
+}
+
+// SetChatRouting sets the ChatRouting field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataChatRouting) SetChatRouting(chatRouting map[string]*QueryIntegrationsInstallationsResponseItemProviderMetadataChatRoutingChatRoutingValue) {
+	q.ChatRouting = chatRouting
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataChatRoutingFieldChatRouting)
+}
+
+// SetProvider sets the Provider field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataChatRouting) SetProvider(provider QueryIntegrationsInstallationsResponseItemProviderMetadataChatRoutingProvider) {
+	q.Provider = provider
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataChatRoutingFieldProvider)
+}
+
+// SetOauthScopes sets the OauthScopes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataChatRouting) SetOauthScopes(oauthScopes []string) {
+	q.OauthScopes = oauthScopes
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataChatRoutingFieldOauthScopes)
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataChatRouting) UnmarshalJSON(data []byte) error {
+	type unmarshaler QueryIntegrationsInstallationsResponseItemProviderMetadataChatRouting
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*q = QueryIntegrationsInstallationsResponseItemProviderMetadataChatRouting(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *q)
+	if err != nil {
+		return err
+	}
+	q.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, queryIntegrationsInstallationsResponseItemProviderMetadataChatRoutingNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		q.require(presentFields)
+	}
+	q.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataChatRouting) MarshalJSON() ([]byte, error) {
+	type embed QueryIntegrationsInstallationsResponseItemProviderMetadataChatRouting
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*q),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, q.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataChatRouting) String() string {
+	if q == nil {
+		return "<nil>"
+	}
+	if len(q.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(q.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(q); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", q)
+}
+
+var (
+	queryIntegrationsInstallationsResponseItemProviderMetadataChatRoutingChatRoutingValueFieldChannelID   = big.NewInt(1 << 0)
+	queryIntegrationsInstallationsResponseItemProviderMetadataChatRoutingChatRoutingValueFieldChannelName = big.NewInt(1 << 1)
+)
+
+type QueryIntegrationsInstallationsResponseItemProviderMetadataChatRoutingChatRoutingValue struct {
+	ChannelID   string `json:"channelId" url:"channelId"`
+	ChannelName string `json:"channelName" url:"channelName"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataChatRoutingChatRoutingValue) GetChannelID() string {
+	if q == nil {
+		return ""
+	}
+	return q.ChannelID
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataChatRoutingChatRoutingValue) GetChannelName() string {
+	if q == nil {
+		return ""
+	}
+	return q.ChannelName
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataChatRoutingChatRoutingValue) GetExtraProperties() map[string]interface{} {
+	if q == nil {
+		return nil
+	}
+	return q.extraProperties
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataChatRoutingChatRoutingValue) require(field *big.Int) {
+	next := new(big.Int)
+	if q.explicitFields != nil {
+		next.Set(q.explicitFields)
+	}
+	next.Or(next, field)
+	q.explicitFields = next
+}
+
+// SetChannelID sets the ChannelID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataChatRoutingChatRoutingValue) SetChannelID(channelID string) {
+	q.ChannelID = channelID
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataChatRoutingChatRoutingValueFieldChannelID)
+}
+
+// SetChannelName sets the ChannelName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataChatRoutingChatRoutingValue) SetChannelName(channelName string) {
+	q.ChannelName = channelName
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataChatRoutingChatRoutingValueFieldChannelName)
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataChatRoutingChatRoutingValue) UnmarshalJSON(data []byte) error {
+	type unmarshaler QueryIntegrationsInstallationsResponseItemProviderMetadataChatRoutingChatRoutingValue
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*q = QueryIntegrationsInstallationsResponseItemProviderMetadataChatRoutingChatRoutingValue(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *q)
+	if err != nil {
+		return err
+	}
+	q.extraProperties = extraProperties
+	q.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataChatRoutingChatRoutingValue) MarshalJSON() ([]byte, error) {
+	type embed QueryIntegrationsInstallationsResponseItemProviderMetadataChatRoutingChatRoutingValue
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*q),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, q.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataChatRoutingChatRoutingValue) String() string {
+	if q == nil {
+		return "<nil>"
+	}
+	if len(q.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(q.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(q); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", q)
+}
+
+type QueryIntegrationsInstallationsResponseItemProviderMetadataChatRoutingProvider string
+
+const (
+	QueryIntegrationsInstallationsResponseItemProviderMetadataChatRoutingProviderSlack QueryIntegrationsInstallationsResponseItemProviderMetadataChatRoutingProvider = "slack"
+)
+
+func NewQueryIntegrationsInstallationsResponseItemProviderMetadataChatRoutingProviderFromString(s string) (QueryIntegrationsInstallationsResponseItemProviderMetadataChatRoutingProvider, error) {
+	switch s {
+	case "slack":
+		return QueryIntegrationsInstallationsResponseItemProviderMetadataChatRoutingProviderSlack, nil
+	}
+	var t QueryIntegrationsInstallationsResponseItemProviderMetadataChatRoutingProvider
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (q QueryIntegrationsInstallationsResponseItemProviderMetadataChatRoutingProvider) Ptr() *QueryIntegrationsInstallationsResponseItemProviderMetadataChatRoutingProvider {
+	return &q
+}
+
+var (
+	queryIntegrationsInstallationsResponseItemProviderMetadataEmailFieldAvatar          = big.NewInt(1 << 0)
+	queryIntegrationsInstallationsResponseItemProviderMetadataEmailFieldInstallationURL = big.NewInt(1 << 1)
+	queryIntegrationsInstallationsResponseItemProviderMetadataEmailFieldName            = big.NewInt(1 << 2)
+	queryIntegrationsInstallationsResponseItemProviderMetadataEmailFieldProjects        = big.NewInt(1 << 3)
+	queryIntegrationsInstallationsResponseItemProviderMetadataEmailFieldAccountType     = big.NewInt(1 << 4)
+	queryIntegrationsInstallationsResponseItemProviderMetadataEmailFieldEmail           = big.NewInt(1 << 5)
+	queryIntegrationsInstallationsResponseItemProviderMetadataEmailFieldID              = big.NewInt(1 << 6)
+	queryIntegrationsInstallationsResponseItemProviderMetadataEmailFieldUsername        = big.NewInt(1 << 7)
+	queryIntegrationsInstallationsResponseItemProviderMetadataEmailFieldProvider        = big.NewInt(1 << 8)
+)
+
+// queryIntegrationsInstallationsResponseItemProviderMetadataEmailNullableFields maps the wire names of QueryIntegrationsInstallationsResponseItemProviderMetadataEmail's nullable fields (required or optional) to their field bits.
+var queryIntegrationsInstallationsResponseItemProviderMetadataEmailNullableFields = map[string]*big.Int{
+	"avatar":          queryIntegrationsInstallationsResponseItemProviderMetadataEmailFieldAvatar,
+	"installationUrl": queryIntegrationsInstallationsResponseItemProviderMetadataEmailFieldInstallationURL,
+	"name":            queryIntegrationsInstallationsResponseItemProviderMetadataEmailFieldName,
+}
+
+type QueryIntegrationsInstallationsResponseItemProviderMetadataEmail struct {
+	Avatar          *string                                                                    `json:"avatar,omitempty" url:"avatar,omitempty"`
+	InstallationURL *string                                                                    `json:"installationUrl,omitempty" url:"installationUrl,omitempty"`
+	Name            *string                                                                    `json:"name,omitempty" url:"name,omitempty"`
+	Projects        map[string]*string                                                         `json:"projects,omitempty" url:"projects,omitempty"`
+	AccountType     QueryIntegrationsInstallationsResponseItemProviderMetadataEmailAccountType `json:"accountType" url:"accountType"`
+	Email           string                                                                     `json:"email" url:"email"`
+	ID              string                                                                     `json:"id" url:"id"`
+	Username        string                                                                     `json:"username" url:"username"`
+	Provider        QueryIntegrationsInstallationsResponseItemProviderMetadataEmailProvider    `json:"provider" url:"provider"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataEmail) GetAvatar() *string {
+	if q == nil {
+		return nil
+	}
+	return q.Avatar
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataEmail) GetInstallationURL() *string {
+	if q == nil {
+		return nil
+	}
+	return q.InstallationURL
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataEmail) GetName() *string {
+	if q == nil {
+		return nil
+	}
+	return q.Name
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataEmail) GetProjects() map[string]*string {
+	if q == nil {
+		return nil
+	}
+	return q.Projects
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataEmail) GetAccountType() QueryIntegrationsInstallationsResponseItemProviderMetadataEmailAccountType {
+	if q == nil {
+		return ""
+	}
+	return q.AccountType
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataEmail) GetEmail() string {
+	if q == nil {
+		return ""
+	}
+	return q.Email
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataEmail) GetID() string {
+	if q == nil {
+		return ""
+	}
+	return q.ID
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataEmail) GetUsername() string {
+	if q == nil {
+		return ""
+	}
+	return q.Username
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataEmail) GetProvider() QueryIntegrationsInstallationsResponseItemProviderMetadataEmailProvider {
+	if q == nil {
+		return ""
+	}
+	return q.Provider
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataEmail) GetExtraProperties() map[string]interface{} {
+	if q == nil {
+		return nil
+	}
+	return q.extraProperties
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataEmail) require(field *big.Int) {
+	next := new(big.Int)
+	if q.explicitFields != nil {
+		next.Set(q.explicitFields)
+	}
+	next.Or(next, field)
+	q.explicitFields = next
+}
+
+// SetAvatar sets the Avatar field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataEmail) SetAvatar(avatar *string) {
+	q.Avatar = avatar
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataEmailFieldAvatar)
+}
+
+// SetInstallationURL sets the InstallationURL field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataEmail) SetInstallationURL(installationURL *string) {
+	q.InstallationURL = installationURL
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataEmailFieldInstallationURL)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataEmail) SetName(name *string) {
+	q.Name = name
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataEmailFieldName)
+}
+
+// SetProjects sets the Projects field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataEmail) SetProjects(projects map[string]*string) {
+	q.Projects = projects
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataEmailFieldProjects)
+}
+
+// SetAccountType sets the AccountType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataEmail) SetAccountType(accountType QueryIntegrationsInstallationsResponseItemProviderMetadataEmailAccountType) {
+	q.AccountType = accountType
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataEmailFieldAccountType)
+}
+
+// SetEmail sets the Email field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataEmail) SetEmail(email string) {
+	q.Email = email
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataEmailFieldEmail)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataEmail) SetID(id string) {
+	q.ID = id
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataEmailFieldID)
+}
+
+// SetUsername sets the Username field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataEmail) SetUsername(username string) {
+	q.Username = username
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataEmailFieldUsername)
+}
+
+// SetProvider sets the Provider field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataEmail) SetProvider(provider QueryIntegrationsInstallationsResponseItemProviderMetadataEmailProvider) {
+	q.Provider = provider
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataEmailFieldProvider)
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataEmail) UnmarshalJSON(data []byte) error {
+	type unmarshaler QueryIntegrationsInstallationsResponseItemProviderMetadataEmail
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*q = QueryIntegrationsInstallationsResponseItemProviderMetadataEmail(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *q)
+	if err != nil {
+		return err
+	}
+	q.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, queryIntegrationsInstallationsResponseItemProviderMetadataEmailNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		q.require(presentFields)
+	}
+	q.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataEmail) MarshalJSON() ([]byte, error) {
+	type embed QueryIntegrationsInstallationsResponseItemProviderMetadataEmail
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*q),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, q.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataEmail) String() string {
+	if q == nil {
+		return "<nil>"
+	}
+	if len(q.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(q.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(q); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", q)
+}
+
+type QueryIntegrationsInstallationsResponseItemProviderMetadataEmailAccountType string
+
+const (
+	QueryIntegrationsInstallationsResponseItemProviderMetadataEmailAccountTypeUser QueryIntegrationsInstallationsResponseItemProviderMetadataEmailAccountType = "user"
+)
+
+func NewQueryIntegrationsInstallationsResponseItemProviderMetadataEmailAccountTypeFromString(s string) (QueryIntegrationsInstallationsResponseItemProviderMetadataEmailAccountType, error) {
+	switch s {
+	case "user":
+		return QueryIntegrationsInstallationsResponseItemProviderMetadataEmailAccountTypeUser, nil
+	}
+	var t QueryIntegrationsInstallationsResponseItemProviderMetadataEmailAccountType
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (q QueryIntegrationsInstallationsResponseItemProviderMetadataEmailAccountType) Ptr() *QueryIntegrationsInstallationsResponseItemProviderMetadataEmailAccountType {
+	return &q
+}
+
+type QueryIntegrationsInstallationsResponseItemProviderMetadataEmailProvider string
+
+const (
+	QueryIntegrationsInstallationsResponseItemProviderMetadataEmailProviderVercel QueryIntegrationsInstallationsResponseItemProviderMetadataEmailProvider = "vercel"
+)
+
+func NewQueryIntegrationsInstallationsResponseItemProviderMetadataEmailProviderFromString(s string) (QueryIntegrationsInstallationsResponseItemProviderMetadataEmailProvider, error) {
+	switch s {
+	case "vercel":
+		return QueryIntegrationsInstallationsResponseItemProviderMetadataEmailProviderVercel, nil
+	}
+	var t QueryIntegrationsInstallationsResponseItemProviderMetadataEmailProvider
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (q QueryIntegrationsInstallationsResponseItemProviderMetadataEmailProvider) Ptr() *QueryIntegrationsInstallationsResponseItemProviderMetadataEmailProvider {
+	return &q
+}
+
+var (
+	queryIntegrationsInstallationsResponseItemProviderMetadataNineFieldInstallationURL = big.NewInt(1 << 0)
+	queryIntegrationsInstallationsResponseItemProviderMetadataNineFieldProvider        = big.NewInt(1 << 1)
+)
+
+// queryIntegrationsInstallationsResponseItemProviderMetadataNineNullableFields maps the wire names of QueryIntegrationsInstallationsResponseItemProviderMetadataNine's nullable fields (required or optional) to their field bits.
+var queryIntegrationsInstallationsResponseItemProviderMetadataNineNullableFields = map[string]*big.Int{
+	"installationUrl": queryIntegrationsInstallationsResponseItemProviderMetadataNineFieldInstallationURL,
+}
+
+type QueryIntegrationsInstallationsResponseItemProviderMetadataNine struct {
+	InstallationURL *string                                                                `json:"installationUrl,omitempty" url:"installationUrl,omitempty"`
+	Provider        QueryIntegrationsInstallationsResponseItemProviderMetadataNineProvider `json:"provider" url:"provider"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataNine) GetInstallationURL() *string {
+	if q == nil {
+		return nil
+	}
+	return q.InstallationURL
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataNine) GetProvider() QueryIntegrationsInstallationsResponseItemProviderMetadataNineProvider {
+	if q == nil {
+		return ""
+	}
+	return q.Provider
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataNine) GetExtraProperties() map[string]interface{} {
+	if q == nil {
+		return nil
+	}
+	return q.extraProperties
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataNine) require(field *big.Int) {
+	next := new(big.Int)
+	if q.explicitFields != nil {
+		next.Set(q.explicitFields)
+	}
+	next.Or(next, field)
+	q.explicitFields = next
+}
+
+// SetInstallationURL sets the InstallationURL field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataNine) SetInstallationURL(installationURL *string) {
+	q.InstallationURL = installationURL
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataNineFieldInstallationURL)
+}
+
+// SetProvider sets the Provider field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataNine) SetProvider(provider QueryIntegrationsInstallationsResponseItemProviderMetadataNineProvider) {
+	q.Provider = provider
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataNineFieldProvider)
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataNine) UnmarshalJSON(data []byte) error {
+	type unmarshaler QueryIntegrationsInstallationsResponseItemProviderMetadataNine
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*q = QueryIntegrationsInstallationsResponseItemProviderMetadataNine(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *q)
+	if err != nil {
+		return err
+	}
+	q.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, queryIntegrationsInstallationsResponseItemProviderMetadataNineNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		q.require(presentFields)
+	}
+	q.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataNine) MarshalJSON() ([]byte, error) {
+	type embed QueryIntegrationsInstallationsResponseItemProviderMetadataNine
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*q),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, q.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataNine) String() string {
+	if q == nil {
+		return "<nil>"
+	}
+	if len(q.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(q.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(q); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", q)
+}
+
+type QueryIntegrationsInstallationsResponseItemProviderMetadataNineProvider string
+
+const (
+	QueryIntegrationsInstallationsResponseItemProviderMetadataNineProviderCli QueryIntegrationsInstallationsResponseItemProviderMetadataNineProvider = "cli"
+)
+
+func NewQueryIntegrationsInstallationsResponseItemProviderMetadataNineProviderFromString(s string) (QueryIntegrationsInstallationsResponseItemProviderMetadataNineProvider, error) {
+	switch s {
+	case "cli":
+		return QueryIntegrationsInstallationsResponseItemProviderMetadataNineProviderCli, nil
+	}
+	var t QueryIntegrationsInstallationsResponseItemProviderMetadataNineProvider
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (q QueryIntegrationsInstallationsResponseItemProviderMetadataNineProvider) Ptr() *QueryIntegrationsInstallationsResponseItemProviderMetadataNineProvider {
+	return &q
+}
+
+var (
+	queryIntegrationsInstallationsResponseItemProviderMetadataSlugFieldAvatar          = big.NewInt(1 << 0)
+	queryIntegrationsInstallationsResponseItemProviderMetadataSlugFieldInstallationURL = big.NewInt(1 << 1)
+	queryIntegrationsInstallationsResponseItemProviderMetadataSlugFieldName            = big.NewInt(1 << 2)
+	queryIntegrationsInstallationsResponseItemProviderMetadataSlugFieldProjects        = big.NewInt(1 << 3)
+	queryIntegrationsInstallationsResponseItemProviderMetadataSlugFieldAccountType     = big.NewInt(1 << 4)
+	queryIntegrationsInstallationsResponseItemProviderMetadataSlugFieldID              = big.NewInt(1 << 5)
+	queryIntegrationsInstallationsResponseItemProviderMetadataSlugFieldSlug            = big.NewInt(1 << 6)
+	queryIntegrationsInstallationsResponseItemProviderMetadataSlugFieldProvider        = big.NewInt(1 << 7)
+)
+
+// queryIntegrationsInstallationsResponseItemProviderMetadataSlugNullableFields maps the wire names of QueryIntegrationsInstallationsResponseItemProviderMetadataSlug's nullable fields (required or optional) to their field bits.
+var queryIntegrationsInstallationsResponseItemProviderMetadataSlugNullableFields = map[string]*big.Int{
+	"avatar":          queryIntegrationsInstallationsResponseItemProviderMetadataSlugFieldAvatar,
+	"installationUrl": queryIntegrationsInstallationsResponseItemProviderMetadataSlugFieldInstallationURL,
+	"name":            queryIntegrationsInstallationsResponseItemProviderMetadataSlugFieldName,
+}
+
+type QueryIntegrationsInstallationsResponseItemProviderMetadataSlug struct {
+	Avatar          *string                                                                   `json:"avatar,omitempty" url:"avatar,omitempty"`
+	InstallationURL *string                                                                   `json:"installationUrl,omitempty" url:"installationUrl,omitempty"`
+	Name            *string                                                                   `json:"name,omitempty" url:"name,omitempty"`
+	Projects        map[string]*string                                                        `json:"projects,omitempty" url:"projects,omitempty"`
+	AccountType     QueryIntegrationsInstallationsResponseItemProviderMetadataSlugAccountType `json:"accountType" url:"accountType"`
+	ID              string                                                                    `json:"id" url:"id"`
+	Slug            string                                                                    `json:"slug" url:"slug"`
+	Provider        QueryIntegrationsInstallationsResponseItemProviderMetadataSlugProvider    `json:"provider" url:"provider"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataSlug) GetAvatar() *string {
+	if q == nil {
+		return nil
+	}
+	return q.Avatar
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataSlug) GetInstallationURL() *string {
+	if q == nil {
+		return nil
+	}
+	return q.InstallationURL
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataSlug) GetName() *string {
+	if q == nil {
+		return nil
+	}
+	return q.Name
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataSlug) GetProjects() map[string]*string {
+	if q == nil {
+		return nil
+	}
+	return q.Projects
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataSlug) GetAccountType() QueryIntegrationsInstallationsResponseItemProviderMetadataSlugAccountType {
+	if q == nil {
+		return ""
+	}
+	return q.AccountType
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataSlug) GetID() string {
+	if q == nil {
+		return ""
+	}
+	return q.ID
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataSlug) GetSlug() string {
+	if q == nil {
+		return ""
+	}
+	return q.Slug
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataSlug) GetProvider() QueryIntegrationsInstallationsResponseItemProviderMetadataSlugProvider {
+	if q == nil {
+		return ""
+	}
+	return q.Provider
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataSlug) GetExtraProperties() map[string]interface{} {
+	if q == nil {
+		return nil
+	}
+	return q.extraProperties
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataSlug) require(field *big.Int) {
+	next := new(big.Int)
+	if q.explicitFields != nil {
+		next.Set(q.explicitFields)
+	}
+	next.Or(next, field)
+	q.explicitFields = next
+}
+
+// SetAvatar sets the Avatar field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataSlug) SetAvatar(avatar *string) {
+	q.Avatar = avatar
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataSlugFieldAvatar)
+}
+
+// SetInstallationURL sets the InstallationURL field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataSlug) SetInstallationURL(installationURL *string) {
+	q.InstallationURL = installationURL
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataSlugFieldInstallationURL)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataSlug) SetName(name *string) {
+	q.Name = name
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataSlugFieldName)
+}
+
+// SetProjects sets the Projects field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataSlug) SetProjects(projects map[string]*string) {
+	q.Projects = projects
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataSlugFieldProjects)
+}
+
+// SetAccountType sets the AccountType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataSlug) SetAccountType(accountType QueryIntegrationsInstallationsResponseItemProviderMetadataSlugAccountType) {
+	q.AccountType = accountType
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataSlugFieldAccountType)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataSlug) SetID(id string) {
+	q.ID = id
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataSlugFieldID)
+}
+
+// SetSlug sets the Slug field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataSlug) SetSlug(slug string) {
+	q.Slug = slug
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataSlugFieldSlug)
+}
+
+// SetProvider sets the Provider field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataSlug) SetProvider(provider QueryIntegrationsInstallationsResponseItemProviderMetadataSlugProvider) {
+	q.Provider = provider
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataSlugFieldProvider)
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataSlug) UnmarshalJSON(data []byte) error {
+	type unmarshaler QueryIntegrationsInstallationsResponseItemProviderMetadataSlug
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*q = QueryIntegrationsInstallationsResponseItemProviderMetadataSlug(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *q)
+	if err != nil {
+		return err
+	}
+	q.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, queryIntegrationsInstallationsResponseItemProviderMetadataSlugNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		q.require(presentFields)
+	}
+	q.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataSlug) MarshalJSON() ([]byte, error) {
+	type embed QueryIntegrationsInstallationsResponseItemProviderMetadataSlug
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*q),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, q.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataSlug) String() string {
+	if q == nil {
+		return "<nil>"
+	}
+	if len(q.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(q.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(q); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", q)
+}
+
+type QueryIntegrationsInstallationsResponseItemProviderMetadataSlugAccountType string
+
+const (
+	QueryIntegrationsInstallationsResponseItemProviderMetadataSlugAccountTypeTeam QueryIntegrationsInstallationsResponseItemProviderMetadataSlugAccountType = "team"
+)
+
+func NewQueryIntegrationsInstallationsResponseItemProviderMetadataSlugAccountTypeFromString(s string) (QueryIntegrationsInstallationsResponseItemProviderMetadataSlugAccountType, error) {
+	switch s {
+	case "team":
+		return QueryIntegrationsInstallationsResponseItemProviderMetadataSlugAccountTypeTeam, nil
+	}
+	var t QueryIntegrationsInstallationsResponseItemProviderMetadataSlugAccountType
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (q QueryIntegrationsInstallationsResponseItemProviderMetadataSlugAccountType) Ptr() *QueryIntegrationsInstallationsResponseItemProviderMetadataSlugAccountType {
+	return &q
+}
+
+type QueryIntegrationsInstallationsResponseItemProviderMetadataSlugProvider string
+
+const (
+	QueryIntegrationsInstallationsResponseItemProviderMetadataSlugProviderVercel QueryIntegrationsInstallationsResponseItemProviderMetadataSlugProvider = "vercel"
+)
+
+func NewQueryIntegrationsInstallationsResponseItemProviderMetadataSlugProviderFromString(s string) (QueryIntegrationsInstallationsResponseItemProviderMetadataSlugProvider, error) {
+	switch s {
+	case "vercel":
+		return QueryIntegrationsInstallationsResponseItemProviderMetadataSlugProviderVercel, nil
+	}
+	var t QueryIntegrationsInstallationsResponseItemProviderMetadataSlugProvider
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (q QueryIntegrationsInstallationsResponseItemProviderMetadataSlugProvider) Ptr() *QueryIntegrationsInstallationsResponseItemProviderMetadataSlugProvider {
+	return &q
+}
+
+var (
+	queryIntegrationsInstallationsResponseItemProviderMetadataThreeFieldAccountType                    = big.NewInt(1 << 0)
+	queryIntegrationsInstallationsResponseItemProviderMetadataThreeFieldAvatarURL                      = big.NewInt(1 << 1)
+	queryIntegrationsInstallationsResponseItemProviderMetadataThreeFieldFlavor                         = big.NewInt(1 << 2)
+	queryIntegrationsInstallationsResponseItemProviderMetadataThreeFieldHost                           = big.NewInt(1 << 3)
+	queryIntegrationsInstallationsResponseItemProviderMetadataThreeFieldInstallationURL                = big.NewInt(1 << 4)
+	queryIntegrationsInstallationsResponseItemProviderMetadataThreeFieldRepositories                   = big.NewInt(1 << 5)
+	queryIntegrationsInstallationsResponseItemProviderMetadataThreeFieldProvider                       = big.NewInt(1 << 6)
+	queryIntegrationsInstallationsResponseItemProviderMetadataThreeFieldRepositoryDiscoveryRequestedAt = big.NewInt(1 << 7)
+	queryIntegrationsInstallationsResponseItemProviderMetadataThreeFieldRepositoryScans                = big.NewInt(1 << 8)
+)
+
+// queryIntegrationsInstallationsResponseItemProviderMetadataThreeNullableFields maps the wire names of QueryIntegrationsInstallationsResponseItemProviderMetadataThree's nullable fields (required or optional) to their field bits.
+var queryIntegrationsInstallationsResponseItemProviderMetadataThreeNullableFields = map[string]*big.Int{
+	"avatarUrl":                      queryIntegrationsInstallationsResponseItemProviderMetadataThreeFieldAvatarURL,
+	"installationUrl":                queryIntegrationsInstallationsResponseItemProviderMetadataThreeFieldInstallationURL,
+	"repositoryDiscoveryRequestedAt": queryIntegrationsInstallationsResponseItemProviderMetadataThreeFieldRepositoryDiscoveryRequestedAt,
+}
+
+type QueryIntegrationsInstallationsResponseItemProviderMetadataThree struct {
+	AccountType                    string                                                                                          `json:"accountType" url:"accountType"`
+	AvatarURL                      *string                                                                                         `json:"avatarUrl,omitempty" url:"avatarUrl,omitempty"`
+	Flavor                         *QueryIntegrationsInstallationsResponseItemProviderMetadataThreeFlavor                          `json:"flavor,omitempty" url:"flavor,omitempty"`
+	Host                           *string                                                                                         `json:"host,omitempty" url:"host,omitempty"`
+	InstallationURL                *string                                                                                         `json:"installationUrl,omitempty" url:"installationUrl,omitempty"`
+	Repositories                   map[string]string                                                                               `json:"repositories" url:"repositories"`
+	Provider                       QueryIntegrationsInstallationsResponseItemProviderMetadataThreeProvider                         `json:"provider" url:"provider"`
+	RepositoryDiscoveryRequestedAt *int                                                                                            `json:"repositoryDiscoveryRequestedAt,omitempty" url:"repositoryDiscoveryRequestedAt,omitempty"`
+	RepositoryScans                map[string]*QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValue `json:"repositoryScans,omitempty" url:"repositoryScans,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThree) GetAccountType() string {
+	if q == nil {
+		return ""
+	}
+	return q.AccountType
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThree) GetAvatarURL() *string {
+	if q == nil {
+		return nil
+	}
+	return q.AvatarURL
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThree) GetFlavor() *QueryIntegrationsInstallationsResponseItemProviderMetadataThreeFlavor {
+	if q == nil {
+		return nil
+	}
+	return q.Flavor
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThree) GetHost() *string {
+	if q == nil {
+		return nil
+	}
+	return q.Host
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThree) GetInstallationURL() *string {
+	if q == nil {
+		return nil
+	}
+	return q.InstallationURL
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThree) GetRepositories() map[string]string {
+	if q == nil {
+		return nil
+	}
+	return q.Repositories
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThree) GetProvider() QueryIntegrationsInstallationsResponseItemProviderMetadataThreeProvider {
+	if q == nil {
+		return ""
+	}
+	return q.Provider
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThree) GetRepositoryDiscoveryRequestedAt() *int {
+	if q == nil {
+		return nil
+	}
+	return q.RepositoryDiscoveryRequestedAt
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThree) GetRepositoryScans() map[string]*QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValue {
+	if q == nil {
+		return nil
+	}
+	return q.RepositoryScans
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThree) GetExtraProperties() map[string]interface{} {
+	if q == nil {
+		return nil
+	}
+	return q.extraProperties
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThree) require(field *big.Int) {
+	next := new(big.Int)
+	if q.explicitFields != nil {
+		next.Set(q.explicitFields)
+	}
+	next.Or(next, field)
+	q.explicitFields = next
+}
+
+// SetAccountType sets the AccountType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThree) SetAccountType(accountType string) {
+	q.AccountType = accountType
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataThreeFieldAccountType)
+}
+
+// SetAvatarURL sets the AvatarURL field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThree) SetAvatarURL(avatarURL *string) {
+	q.AvatarURL = avatarURL
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataThreeFieldAvatarURL)
+}
+
+// SetFlavor sets the Flavor field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThree) SetFlavor(flavor *QueryIntegrationsInstallationsResponseItemProviderMetadataThreeFlavor) {
+	q.Flavor = flavor
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataThreeFieldFlavor)
+}
+
+// SetHost sets the Host field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThree) SetHost(host *string) {
+	q.Host = host
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataThreeFieldHost)
+}
+
+// SetInstallationURL sets the InstallationURL field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThree) SetInstallationURL(installationURL *string) {
+	q.InstallationURL = installationURL
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataThreeFieldInstallationURL)
+}
+
+// SetRepositories sets the Repositories field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThree) SetRepositories(repositories map[string]string) {
+	q.Repositories = repositories
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataThreeFieldRepositories)
+}
+
+// SetProvider sets the Provider field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThree) SetProvider(provider QueryIntegrationsInstallationsResponseItemProviderMetadataThreeProvider) {
+	q.Provider = provider
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataThreeFieldProvider)
+}
+
+// SetRepositoryDiscoveryRequestedAt sets the RepositoryDiscoveryRequestedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThree) SetRepositoryDiscoveryRequestedAt(repositoryDiscoveryRequestedAt *int) {
+	q.RepositoryDiscoveryRequestedAt = repositoryDiscoveryRequestedAt
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataThreeFieldRepositoryDiscoveryRequestedAt)
+}
+
+// SetRepositoryScans sets the RepositoryScans field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThree) SetRepositoryScans(repositoryScans map[string]*QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValue) {
+	q.RepositoryScans = repositoryScans
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataThreeFieldRepositoryScans)
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThree) UnmarshalJSON(data []byte) error {
+	type unmarshaler QueryIntegrationsInstallationsResponseItemProviderMetadataThree
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*q = QueryIntegrationsInstallationsResponseItemProviderMetadataThree(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *q)
+	if err != nil {
+		return err
+	}
+	q.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, queryIntegrationsInstallationsResponseItemProviderMetadataThreeNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		q.require(presentFields)
+	}
+	q.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThree) MarshalJSON() ([]byte, error) {
+	type embed QueryIntegrationsInstallationsResponseItemProviderMetadataThree
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*q),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, q.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThree) String() string {
+	if q == nil {
+		return "<nil>"
+	}
+	if len(q.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(q.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(q); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", q)
+}
+
+type QueryIntegrationsInstallationsResponseItemProviderMetadataThreeFlavor string
+
+const (
+	QueryIntegrationsInstallationsResponseItemProviderMetadataThreeFlavorGithubCom QueryIntegrationsInstallationsResponseItemProviderMetadataThreeFlavor = "github_com"
+	QueryIntegrationsInstallationsResponseItemProviderMetadataThreeFlavorGheCloud  QueryIntegrationsInstallationsResponseItemProviderMetadataThreeFlavor = "ghe_cloud"
+	QueryIntegrationsInstallationsResponseItemProviderMetadataThreeFlavorGheServer QueryIntegrationsInstallationsResponseItemProviderMetadataThreeFlavor = "ghe_server"
+)
+
+func NewQueryIntegrationsInstallationsResponseItemProviderMetadataThreeFlavorFromString(s string) (QueryIntegrationsInstallationsResponseItemProviderMetadataThreeFlavor, error) {
+	switch s {
+	case "github_com":
+		return QueryIntegrationsInstallationsResponseItemProviderMetadataThreeFlavorGithubCom, nil
+	case "ghe_cloud":
+		return QueryIntegrationsInstallationsResponseItemProviderMetadataThreeFlavorGheCloud, nil
+	case "ghe_server":
+		return QueryIntegrationsInstallationsResponseItemProviderMetadataThreeFlavorGheServer, nil
+	}
+	var t QueryIntegrationsInstallationsResponseItemProviderMetadataThreeFlavor
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (q QueryIntegrationsInstallationsResponseItemProviderMetadataThreeFlavor) Ptr() *QueryIntegrationsInstallationsResponseItemProviderMetadataThreeFlavor {
+	return &q
+}
+
+type QueryIntegrationsInstallationsResponseItemProviderMetadataThreeProvider string
+
+const (
+	QueryIntegrationsInstallationsResponseItemProviderMetadataThreeProviderGheCloud QueryIntegrationsInstallationsResponseItemProviderMetadataThreeProvider = "ghe_cloud"
+)
+
+func NewQueryIntegrationsInstallationsResponseItemProviderMetadataThreeProviderFromString(s string) (QueryIntegrationsInstallationsResponseItemProviderMetadataThreeProvider, error) {
+	switch s {
+	case "ghe_cloud":
+		return QueryIntegrationsInstallationsResponseItemProviderMetadataThreeProviderGheCloud, nil
+	}
+	var t QueryIntegrationsInstallationsResponseItemProviderMetadataThreeProvider
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (q QueryIntegrationsInstallationsResponseItemProviderMetadataThreeProvider) Ptr() *QueryIntegrationsInstallationsResponseItemProviderMetadataThreeProvider {
+	return &q
+}
+
+var (
+	queryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueFieldApps         = big.NewInt(1 << 0)
+	queryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueFieldErrorMessage = big.NewInt(1 << 1)
+	queryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueFieldScannedAt    = big.NewInt(1 << 2)
+	queryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueFieldStatus       = big.NewInt(1 << 3)
+)
+
+// queryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueNullableFields maps the wire names of QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValue's nullable fields (required or optional) to their field bits.
+var queryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueNullableFields = map[string]*big.Int{
+	"apps":         queryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueFieldApps,
+	"errorMessage": queryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueFieldErrorMessage,
+	"scannedAt":    queryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueFieldScannedAt,
+}
+
+type QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValue struct {
+	Apps         []*QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueAppsItem `json:"apps,omitempty" url:"apps,omitempty"`
+	ErrorMessage *string                                                                                        `json:"errorMessage,omitempty" url:"errorMessage,omitempty"`
+	ScannedAt    *string                                                                                        `json:"scannedAt,omitempty" url:"scannedAt,omitempty"`
+	Status       QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueStatus      `json:"status" url:"status"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValue) GetApps() []*QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueAppsItem {
+	if q == nil {
+		return nil
+	}
+	return q.Apps
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValue) GetErrorMessage() *string {
+	if q == nil {
+		return nil
+	}
+	return q.ErrorMessage
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValue) GetScannedAt() *string {
+	if q == nil {
+		return nil
+	}
+	return q.ScannedAt
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValue) GetStatus() QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueStatus {
+	if q == nil {
+		return ""
+	}
+	return q.Status
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValue) GetExtraProperties() map[string]interface{} {
+	if q == nil {
+		return nil
+	}
+	return q.extraProperties
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValue) require(field *big.Int) {
+	next := new(big.Int)
+	if q.explicitFields != nil {
+		next.Set(q.explicitFields)
+	}
+	next.Or(next, field)
+	q.explicitFields = next
+}
+
+// SetApps sets the Apps field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValue) SetApps(apps []*QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueAppsItem) {
+	q.Apps = apps
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueFieldApps)
+}
+
+// SetErrorMessage sets the ErrorMessage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValue) SetErrorMessage(errorMessage *string) {
+	q.ErrorMessage = errorMessage
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueFieldErrorMessage)
+}
+
+// SetScannedAt sets the ScannedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValue) SetScannedAt(scannedAt *string) {
+	q.ScannedAt = scannedAt
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueFieldScannedAt)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValue) SetStatus(status QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueStatus) {
+	q.Status = status
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueFieldStatus)
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValue) UnmarshalJSON(data []byte) error {
+	type unmarshaler QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValue
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*q = QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValue(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *q)
+	if err != nil {
+		return err
+	}
+	q.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, queryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		q.require(presentFields)
+	}
+	q.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValue) MarshalJSON() ([]byte, error) {
+	type embed QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValue
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*q),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, q.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValue) String() string {
+	if q == nil {
+		return "<nil>"
+	}
+	if len(q.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(q.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(q); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", q)
+}
+
+var (
+	queryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueAppsItemFieldFramework = big.NewInt(1 << 0)
+	queryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueAppsItemFieldName      = big.NewInt(1 << 1)
+	queryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueAppsItemFieldPath      = big.NewInt(1 << 2)
+)
+
+type QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueAppsItem struct {
+	Framework *QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueAppsItemFramework `json:"framework" url:"framework"`
+	Name      string                                                                                                `json:"name" url:"name"`
+	Path      string                                                                                                `json:"path" url:"path"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueAppsItem) GetFramework() *QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueAppsItemFramework {
+	if q == nil {
+		return nil
+	}
+	return q.Framework
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueAppsItem) GetName() string {
+	if q == nil {
+		return ""
+	}
+	return q.Name
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueAppsItem) GetPath() string {
+	if q == nil {
+		return ""
+	}
+	return q.Path
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueAppsItem) GetExtraProperties() map[string]interface{} {
+	if q == nil {
+		return nil
+	}
+	return q.extraProperties
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueAppsItem) require(field *big.Int) {
+	next := new(big.Int)
+	if q.explicitFields != nil {
+		next.Set(q.explicitFields)
+	}
+	next.Or(next, field)
+	q.explicitFields = next
+}
+
+// SetFramework sets the Framework field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueAppsItem) SetFramework(framework *QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueAppsItemFramework) {
+	q.Framework = framework
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueAppsItemFieldFramework)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueAppsItem) SetName(name string) {
+	q.Name = name
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueAppsItemFieldName)
+}
+
+// SetPath sets the Path field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueAppsItem) SetPath(path string) {
+	q.Path = path
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueAppsItemFieldPath)
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueAppsItem) UnmarshalJSON(data []byte) error {
+	type unmarshaler QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueAppsItem
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*q = QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueAppsItem(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *q)
+	if err != nil {
+		return err
+	}
+	q.extraProperties = extraProperties
+	q.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueAppsItem) MarshalJSON() ([]byte, error) {
+	type embed QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueAppsItem
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*q),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, q.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueAppsItem) String() string {
+	if q == nil {
+		return "<nil>"
+	}
+	if len(q.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(q.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(q); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", q)
+}
+
+var (
+	queryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueAppsItemFrameworkFieldID   = big.NewInt(1 << 0)
+	queryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueAppsItemFrameworkFieldName = big.NewInt(1 << 1)
+)
+
+type QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueAppsItemFramework struct {
+	ID   string `json:"id" url:"id"`
+	Name string `json:"name" url:"name"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueAppsItemFramework) GetID() string {
+	if q == nil {
+		return ""
+	}
+	return q.ID
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueAppsItemFramework) GetName() string {
+	if q == nil {
+		return ""
+	}
+	return q.Name
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueAppsItemFramework) GetExtraProperties() map[string]interface{} {
+	if q == nil {
+		return nil
+	}
+	return q.extraProperties
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueAppsItemFramework) require(field *big.Int) {
+	next := new(big.Int)
+	if q.explicitFields != nil {
+		next.Set(q.explicitFields)
+	}
+	next.Or(next, field)
+	q.explicitFields = next
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueAppsItemFramework) SetID(id string) {
+	q.ID = id
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueAppsItemFrameworkFieldID)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueAppsItemFramework) SetName(name string) {
+	q.Name = name
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueAppsItemFrameworkFieldName)
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueAppsItemFramework) UnmarshalJSON(data []byte) error {
+	type unmarshaler QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueAppsItemFramework
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*q = QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueAppsItemFramework(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *q)
+	if err != nil {
+		return err
+	}
+	q.extraProperties = extraProperties
+	q.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueAppsItemFramework) MarshalJSON() ([]byte, error) {
+	type embed QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueAppsItemFramework
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*q),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, q.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueAppsItemFramework) String() string {
+	if q == nil {
+		return "<nil>"
+	}
+	if len(q.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(q.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(q); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", q)
+}
+
+type QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueStatus string
+
+const (
+	QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueStatusPending  QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueStatus = "pending"
+	QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueStatusScanning QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueStatus = "scanning"
+	QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueStatusReady    QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueStatus = "ready"
+	QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueStatusFailed   QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueStatus = "failed"
+)
+
+func NewQueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueStatusFromString(s string) (QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueStatus, error) {
+	switch s {
+	case "pending":
+		return QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueStatusPending, nil
+	case "scanning":
+		return QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueStatusScanning, nil
+	case "ready":
+		return QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueStatusReady, nil
+	case "failed":
+		return QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueStatusFailed, nil
+	}
+	var t QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueStatus
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (q QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueStatus) Ptr() *QueryIntegrationsInstallationsResponseItemProviderMetadataThreeRepositoryScansValueStatus {
+	return &q
+}
+
+var (
+	queryIntegrationsInstallationsResponseItemProviderMetadataTwoFieldAccountType                    = big.NewInt(1 << 0)
+	queryIntegrationsInstallationsResponseItemProviderMetadataTwoFieldAvatarURL                      = big.NewInt(1 << 1)
+	queryIntegrationsInstallationsResponseItemProviderMetadataTwoFieldFlavor                         = big.NewInt(1 << 2)
+	queryIntegrationsInstallationsResponseItemProviderMetadataTwoFieldHost                           = big.NewInt(1 << 3)
+	queryIntegrationsInstallationsResponseItemProviderMetadataTwoFieldInstallationURL                = big.NewInt(1 << 4)
+	queryIntegrationsInstallationsResponseItemProviderMetadataTwoFieldRepositories                   = big.NewInt(1 << 5)
+	queryIntegrationsInstallationsResponseItemProviderMetadataTwoFieldProvider                       = big.NewInt(1 << 6)
+	queryIntegrationsInstallationsResponseItemProviderMetadataTwoFieldRepositoryDiscoveryRequestedAt = big.NewInt(1 << 7)
+	queryIntegrationsInstallationsResponseItemProviderMetadataTwoFieldRepositoryScans                = big.NewInt(1 << 8)
+)
+
+// queryIntegrationsInstallationsResponseItemProviderMetadataTwoNullableFields maps the wire names of QueryIntegrationsInstallationsResponseItemProviderMetadataTwo's nullable fields (required or optional) to their field bits.
+var queryIntegrationsInstallationsResponseItemProviderMetadataTwoNullableFields = map[string]*big.Int{
+	"avatarUrl":                      queryIntegrationsInstallationsResponseItemProviderMetadataTwoFieldAvatarURL,
+	"installationUrl":                queryIntegrationsInstallationsResponseItemProviderMetadataTwoFieldInstallationURL,
+	"repositoryDiscoveryRequestedAt": queryIntegrationsInstallationsResponseItemProviderMetadataTwoFieldRepositoryDiscoveryRequestedAt,
+}
+
+type QueryIntegrationsInstallationsResponseItemProviderMetadataTwo struct {
+	AccountType                    string                                                                                        `json:"accountType" url:"accountType"`
+	AvatarURL                      *string                                                                                       `json:"avatarUrl,omitempty" url:"avatarUrl,omitempty"`
+	Flavor                         *QueryIntegrationsInstallationsResponseItemProviderMetadataTwoFlavor                          `json:"flavor,omitempty" url:"flavor,omitempty"`
+	Host                           *string                                                                                       `json:"host,omitempty" url:"host,omitempty"`
+	InstallationURL                *string                                                                                       `json:"installationUrl,omitempty" url:"installationUrl,omitempty"`
+	Repositories                   map[string]string                                                                             `json:"repositories" url:"repositories"`
+	Provider                       QueryIntegrationsInstallationsResponseItemProviderMetadataTwoProvider                         `json:"provider" url:"provider"`
+	RepositoryDiscoveryRequestedAt *int                                                                                          `json:"repositoryDiscoveryRequestedAt,omitempty" url:"repositoryDiscoveryRequestedAt,omitempty"`
+	RepositoryScans                map[string]*QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValue `json:"repositoryScans,omitempty" url:"repositoryScans,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwo) GetAccountType() string {
+	if q == nil {
+		return ""
+	}
+	return q.AccountType
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwo) GetAvatarURL() *string {
+	if q == nil {
+		return nil
+	}
+	return q.AvatarURL
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwo) GetFlavor() *QueryIntegrationsInstallationsResponseItemProviderMetadataTwoFlavor {
+	if q == nil {
+		return nil
+	}
+	return q.Flavor
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwo) GetHost() *string {
+	if q == nil {
+		return nil
+	}
+	return q.Host
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwo) GetInstallationURL() *string {
+	if q == nil {
+		return nil
+	}
+	return q.InstallationURL
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwo) GetRepositories() map[string]string {
+	if q == nil {
+		return nil
+	}
+	return q.Repositories
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwo) GetProvider() QueryIntegrationsInstallationsResponseItemProviderMetadataTwoProvider {
+	if q == nil {
+		return ""
+	}
+	return q.Provider
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwo) GetRepositoryDiscoveryRequestedAt() *int {
+	if q == nil {
+		return nil
+	}
+	return q.RepositoryDiscoveryRequestedAt
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwo) GetRepositoryScans() map[string]*QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValue {
+	if q == nil {
+		return nil
+	}
+	return q.RepositoryScans
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwo) GetExtraProperties() map[string]interface{} {
+	if q == nil {
+		return nil
+	}
+	return q.extraProperties
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwo) require(field *big.Int) {
+	next := new(big.Int)
+	if q.explicitFields != nil {
+		next.Set(q.explicitFields)
+	}
+	next.Or(next, field)
+	q.explicitFields = next
+}
+
+// SetAccountType sets the AccountType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwo) SetAccountType(accountType string) {
+	q.AccountType = accountType
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataTwoFieldAccountType)
+}
+
+// SetAvatarURL sets the AvatarURL field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwo) SetAvatarURL(avatarURL *string) {
+	q.AvatarURL = avatarURL
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataTwoFieldAvatarURL)
+}
+
+// SetFlavor sets the Flavor field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwo) SetFlavor(flavor *QueryIntegrationsInstallationsResponseItemProviderMetadataTwoFlavor) {
+	q.Flavor = flavor
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataTwoFieldFlavor)
+}
+
+// SetHost sets the Host field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwo) SetHost(host *string) {
+	q.Host = host
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataTwoFieldHost)
+}
+
+// SetInstallationURL sets the InstallationURL field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwo) SetInstallationURL(installationURL *string) {
+	q.InstallationURL = installationURL
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataTwoFieldInstallationURL)
+}
+
+// SetRepositories sets the Repositories field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwo) SetRepositories(repositories map[string]string) {
+	q.Repositories = repositories
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataTwoFieldRepositories)
+}
+
+// SetProvider sets the Provider field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwo) SetProvider(provider QueryIntegrationsInstallationsResponseItemProviderMetadataTwoProvider) {
+	q.Provider = provider
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataTwoFieldProvider)
+}
+
+// SetRepositoryDiscoveryRequestedAt sets the RepositoryDiscoveryRequestedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwo) SetRepositoryDiscoveryRequestedAt(repositoryDiscoveryRequestedAt *int) {
+	q.RepositoryDiscoveryRequestedAt = repositoryDiscoveryRequestedAt
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataTwoFieldRepositoryDiscoveryRequestedAt)
+}
+
+// SetRepositoryScans sets the RepositoryScans field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwo) SetRepositoryScans(repositoryScans map[string]*QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValue) {
+	q.RepositoryScans = repositoryScans
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataTwoFieldRepositoryScans)
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwo) UnmarshalJSON(data []byte) error {
+	type unmarshaler QueryIntegrationsInstallationsResponseItemProviderMetadataTwo
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*q = QueryIntegrationsInstallationsResponseItemProviderMetadataTwo(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *q)
+	if err != nil {
+		return err
+	}
+	q.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, queryIntegrationsInstallationsResponseItemProviderMetadataTwoNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		q.require(presentFields)
+	}
+	q.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwo) MarshalJSON() ([]byte, error) {
+	type embed QueryIntegrationsInstallationsResponseItemProviderMetadataTwo
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*q),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, q.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwo) String() string {
+	if q == nil {
+		return "<nil>"
+	}
+	if len(q.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(q.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(q); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", q)
+}
+
+type QueryIntegrationsInstallationsResponseItemProviderMetadataTwoFlavor string
+
+const (
+	QueryIntegrationsInstallationsResponseItemProviderMetadataTwoFlavorGithubCom QueryIntegrationsInstallationsResponseItemProviderMetadataTwoFlavor = "github_com"
+	QueryIntegrationsInstallationsResponseItemProviderMetadataTwoFlavorGheCloud  QueryIntegrationsInstallationsResponseItemProviderMetadataTwoFlavor = "ghe_cloud"
+	QueryIntegrationsInstallationsResponseItemProviderMetadataTwoFlavorGheServer QueryIntegrationsInstallationsResponseItemProviderMetadataTwoFlavor = "ghe_server"
+)
+
+func NewQueryIntegrationsInstallationsResponseItemProviderMetadataTwoFlavorFromString(s string) (QueryIntegrationsInstallationsResponseItemProviderMetadataTwoFlavor, error) {
+	switch s {
+	case "github_com":
+		return QueryIntegrationsInstallationsResponseItemProviderMetadataTwoFlavorGithubCom, nil
+	case "ghe_cloud":
+		return QueryIntegrationsInstallationsResponseItemProviderMetadataTwoFlavorGheCloud, nil
+	case "ghe_server":
+		return QueryIntegrationsInstallationsResponseItemProviderMetadataTwoFlavorGheServer, nil
+	}
+	var t QueryIntegrationsInstallationsResponseItemProviderMetadataTwoFlavor
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (q QueryIntegrationsInstallationsResponseItemProviderMetadataTwoFlavor) Ptr() *QueryIntegrationsInstallationsResponseItemProviderMetadataTwoFlavor {
+	return &q
+}
+
+type QueryIntegrationsInstallationsResponseItemProviderMetadataTwoProvider string
+
+const (
+	QueryIntegrationsInstallationsResponseItemProviderMetadataTwoProviderGithub QueryIntegrationsInstallationsResponseItemProviderMetadataTwoProvider = "github"
+)
+
+func NewQueryIntegrationsInstallationsResponseItemProviderMetadataTwoProviderFromString(s string) (QueryIntegrationsInstallationsResponseItemProviderMetadataTwoProvider, error) {
+	switch s {
+	case "github":
+		return QueryIntegrationsInstallationsResponseItemProviderMetadataTwoProviderGithub, nil
+	}
+	var t QueryIntegrationsInstallationsResponseItemProviderMetadataTwoProvider
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (q QueryIntegrationsInstallationsResponseItemProviderMetadataTwoProvider) Ptr() *QueryIntegrationsInstallationsResponseItemProviderMetadataTwoProvider {
+	return &q
+}
+
+var (
+	queryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueFieldApps         = big.NewInt(1 << 0)
+	queryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueFieldErrorMessage = big.NewInt(1 << 1)
+	queryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueFieldScannedAt    = big.NewInt(1 << 2)
+	queryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueFieldStatus       = big.NewInt(1 << 3)
+)
+
+// queryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueNullableFields maps the wire names of QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValue's nullable fields (required or optional) to their field bits.
+var queryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueNullableFields = map[string]*big.Int{
+	"apps":         queryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueFieldApps,
+	"errorMessage": queryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueFieldErrorMessage,
+	"scannedAt":    queryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueFieldScannedAt,
+}
+
+type QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValue struct {
+	Apps         []*QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueAppsItem `json:"apps,omitempty" url:"apps,omitempty"`
+	ErrorMessage *string                                                                                      `json:"errorMessage,omitempty" url:"errorMessage,omitempty"`
+	ScannedAt    *string                                                                                      `json:"scannedAt,omitempty" url:"scannedAt,omitempty"`
+	Status       QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueStatus      `json:"status" url:"status"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValue) GetApps() []*QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueAppsItem {
+	if q == nil {
+		return nil
+	}
+	return q.Apps
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValue) GetErrorMessage() *string {
+	if q == nil {
+		return nil
+	}
+	return q.ErrorMessage
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValue) GetScannedAt() *string {
+	if q == nil {
+		return nil
+	}
+	return q.ScannedAt
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValue) GetStatus() QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueStatus {
+	if q == nil {
+		return ""
+	}
+	return q.Status
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValue) GetExtraProperties() map[string]interface{} {
+	if q == nil {
+		return nil
+	}
+	return q.extraProperties
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValue) require(field *big.Int) {
+	next := new(big.Int)
+	if q.explicitFields != nil {
+		next.Set(q.explicitFields)
+	}
+	next.Or(next, field)
+	q.explicitFields = next
+}
+
+// SetApps sets the Apps field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValue) SetApps(apps []*QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueAppsItem) {
+	q.Apps = apps
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueFieldApps)
+}
+
+// SetErrorMessage sets the ErrorMessage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValue) SetErrorMessage(errorMessage *string) {
+	q.ErrorMessage = errorMessage
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueFieldErrorMessage)
+}
+
+// SetScannedAt sets the ScannedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValue) SetScannedAt(scannedAt *string) {
+	q.ScannedAt = scannedAt
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueFieldScannedAt)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValue) SetStatus(status QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueStatus) {
+	q.Status = status
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueFieldStatus)
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValue) UnmarshalJSON(data []byte) error {
+	type unmarshaler QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValue
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*q = QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValue(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *q)
+	if err != nil {
+		return err
+	}
+	q.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, queryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		q.require(presentFields)
+	}
+	q.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValue) MarshalJSON() ([]byte, error) {
+	type embed QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValue
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*q),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, q.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValue) String() string {
+	if q == nil {
+		return "<nil>"
+	}
+	if len(q.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(q.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(q); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", q)
+}
+
+var (
+	queryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueAppsItemFieldFramework = big.NewInt(1 << 0)
+	queryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueAppsItemFieldName      = big.NewInt(1 << 1)
+	queryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueAppsItemFieldPath      = big.NewInt(1 << 2)
+)
+
+type QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueAppsItem struct {
+	Framework *QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueAppsItemFramework `json:"framework" url:"framework"`
+	Name      string                                                                                              `json:"name" url:"name"`
+	Path      string                                                                                              `json:"path" url:"path"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueAppsItem) GetFramework() *QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueAppsItemFramework {
+	if q == nil {
+		return nil
+	}
+	return q.Framework
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueAppsItem) GetName() string {
+	if q == nil {
+		return ""
+	}
+	return q.Name
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueAppsItem) GetPath() string {
+	if q == nil {
+		return ""
+	}
+	return q.Path
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueAppsItem) GetExtraProperties() map[string]interface{} {
+	if q == nil {
+		return nil
+	}
+	return q.extraProperties
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueAppsItem) require(field *big.Int) {
+	next := new(big.Int)
+	if q.explicitFields != nil {
+		next.Set(q.explicitFields)
+	}
+	next.Or(next, field)
+	q.explicitFields = next
+}
+
+// SetFramework sets the Framework field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueAppsItem) SetFramework(framework *QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueAppsItemFramework) {
+	q.Framework = framework
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueAppsItemFieldFramework)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueAppsItem) SetName(name string) {
+	q.Name = name
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueAppsItemFieldName)
+}
+
+// SetPath sets the Path field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueAppsItem) SetPath(path string) {
+	q.Path = path
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueAppsItemFieldPath)
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueAppsItem) UnmarshalJSON(data []byte) error {
+	type unmarshaler QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueAppsItem
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*q = QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueAppsItem(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *q)
+	if err != nil {
+		return err
+	}
+	q.extraProperties = extraProperties
+	q.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueAppsItem) MarshalJSON() ([]byte, error) {
+	type embed QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueAppsItem
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*q),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, q.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueAppsItem) String() string {
+	if q == nil {
+		return "<nil>"
+	}
+	if len(q.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(q.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(q); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", q)
+}
+
+var (
+	queryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueAppsItemFrameworkFieldID   = big.NewInt(1 << 0)
+	queryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueAppsItemFrameworkFieldName = big.NewInt(1 << 1)
+)
+
+type QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueAppsItemFramework struct {
+	ID   string `json:"id" url:"id"`
+	Name string `json:"name" url:"name"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueAppsItemFramework) GetID() string {
+	if q == nil {
+		return ""
+	}
+	return q.ID
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueAppsItemFramework) GetName() string {
+	if q == nil {
+		return ""
+	}
+	return q.Name
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueAppsItemFramework) GetExtraProperties() map[string]interface{} {
+	if q == nil {
+		return nil
+	}
+	return q.extraProperties
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueAppsItemFramework) require(field *big.Int) {
+	next := new(big.Int)
+	if q.explicitFields != nil {
+		next.Set(q.explicitFields)
+	}
+	next.Or(next, field)
+	q.explicitFields = next
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueAppsItemFramework) SetID(id string) {
+	q.ID = id
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueAppsItemFrameworkFieldID)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueAppsItemFramework) SetName(name string) {
+	q.Name = name
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueAppsItemFrameworkFieldName)
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueAppsItemFramework) UnmarshalJSON(data []byte) error {
+	type unmarshaler QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueAppsItemFramework
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*q = QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueAppsItemFramework(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *q)
+	if err != nil {
+		return err
+	}
+	q.extraProperties = extraProperties
+	q.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueAppsItemFramework) MarshalJSON() ([]byte, error) {
+	type embed QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueAppsItemFramework
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*q),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, q.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueAppsItemFramework) String() string {
+	if q == nil {
+		return "<nil>"
+	}
+	if len(q.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(q.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(q); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", q)
+}
+
+type QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueStatus string
+
+const (
+	QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueStatusPending  QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueStatus = "pending"
+	QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueStatusScanning QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueStatus = "scanning"
+	QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueStatusReady    QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueStatus = "ready"
+	QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueStatusFailed   QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueStatus = "failed"
+)
+
+func NewQueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueStatusFromString(s string) (QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueStatus, error) {
+	switch s {
+	case "pending":
+		return QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueStatusPending, nil
+	case "scanning":
+		return QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueStatusScanning, nil
+	case "ready":
+		return QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueStatusReady, nil
+	case "failed":
+		return QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueStatusFailed, nil
+	}
+	var t QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueStatus
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (q QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueStatus) Ptr() *QueryIntegrationsInstallationsResponseItemProviderMetadataTwoRepositoryScansValueStatus {
+	return &q
+}
+
+var (
+	queryIntegrationsInstallationsResponseItemProviderMetadataZeroFieldProvider        = big.NewInt(1 << 0)
+	queryIntegrationsInstallationsResponseItemProviderMetadataZeroFieldName            = big.NewInt(1 << 1)
+	queryIntegrationsInstallationsResponseItemProviderMetadataZeroFieldInstallationURL = big.NewInt(1 << 2)
+)
+
+// queryIntegrationsInstallationsResponseItemProviderMetadataZeroNullableFields maps the wire names of QueryIntegrationsInstallationsResponseItemProviderMetadataZero's nullable fields (required or optional) to their field bits.
+var queryIntegrationsInstallationsResponseItemProviderMetadataZeroNullableFields = map[string]*big.Int{
+	"installationUrl": queryIntegrationsInstallationsResponseItemProviderMetadataZeroFieldInstallationURL,
+}
+
+type QueryIntegrationsInstallationsResponseItemProviderMetadataZero struct {
+	Provider        QueryIntegrationsInstallationsResponseItemProviderMetadataZeroProvider `json:"provider" url:"provider"`
+	Name            string                                                                 `json:"name" url:"name"`
+	InstallationURL *string                                                                `json:"installationUrl,omitempty" url:"installationUrl,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataZero) GetProvider() QueryIntegrationsInstallationsResponseItemProviderMetadataZeroProvider {
+	if q == nil {
+		return ""
+	}
+	return q.Provider
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataZero) GetName() string {
+	if q == nil {
+		return ""
+	}
+	return q.Name
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataZero) GetInstallationURL() *string {
+	if q == nil {
+		return nil
+	}
+	return q.InstallationURL
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataZero) GetExtraProperties() map[string]interface{} {
+	if q == nil {
+		return nil
+	}
+	return q.extraProperties
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataZero) require(field *big.Int) {
+	next := new(big.Int)
+	if q.explicitFields != nil {
+		next.Set(q.explicitFields)
+	}
+	next.Or(next, field)
+	q.explicitFields = next
+}
+
+// SetProvider sets the Provider field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataZero) SetProvider(provider QueryIntegrationsInstallationsResponseItemProviderMetadataZeroProvider) {
+	q.Provider = provider
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataZeroFieldProvider)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataZero) SetName(name string) {
+	q.Name = name
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataZeroFieldName)
+}
+
+// SetInstallationURL sets the InstallationURL field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataZero) SetInstallationURL(installationURL *string) {
+	q.InstallationURL = installationURL
+	q.require(queryIntegrationsInstallationsResponseItemProviderMetadataZeroFieldInstallationURL)
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataZero) UnmarshalJSON(data []byte) error {
+	type unmarshaler QueryIntegrationsInstallationsResponseItemProviderMetadataZero
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*q = QueryIntegrationsInstallationsResponseItemProviderMetadataZero(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *q)
+	if err != nil {
+		return err
+	}
+	q.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, queryIntegrationsInstallationsResponseItemProviderMetadataZeroNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		q.require(presentFields)
+	}
+	q.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataZero) MarshalJSON() ([]byte, error) {
+	type embed QueryIntegrationsInstallationsResponseItemProviderMetadataZero
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*q),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, q.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (q *QueryIntegrationsInstallationsResponseItemProviderMetadataZero) String() string {
+	if q == nil {
+		return "<nil>"
+	}
+	if len(q.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(q.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(q); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", q)
+}
+
+type QueryIntegrationsInstallationsResponseItemProviderMetadataZeroProvider string
+
+const (
+	QueryIntegrationsInstallationsResponseItemProviderMetadataZeroProviderOpentelemetry QueryIntegrationsInstallationsResponseItemProviderMetadataZeroProvider = "opentelemetry"
+)
+
+func NewQueryIntegrationsInstallationsResponseItemProviderMetadataZeroProviderFromString(s string) (QueryIntegrationsInstallationsResponseItemProviderMetadataZeroProvider, error) {
+	switch s {
+	case "opentelemetry":
+		return QueryIntegrationsInstallationsResponseItemProviderMetadataZeroProviderOpentelemetry, nil
+	}
+	var t QueryIntegrationsInstallationsResponseItemProviderMetadataZeroProvider
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (q QueryIntegrationsInstallationsResponseItemProviderMetadataZeroProvider) Ptr() *QueryIntegrationsInstallationsResponseItemProviderMetadataZeroProvider {
+	return &q
+}
+
+type QueryIntegrationsInstallationsResponseItemStatus string
+
+const (
+	QueryIntegrationsInstallationsResponseItemStatusConnected      QueryIntegrationsInstallationsResponseItemStatus = "connected"
+	QueryIntegrationsInstallationsResponseItemStatusDisconnected   QueryIntegrationsInstallationsResponseItemStatus = "disconnected"
+	QueryIntegrationsInstallationsResponseItemStatusRequiresReauth QueryIntegrationsInstallationsResponseItemStatus = "requires_reauth"
+	QueryIntegrationsInstallationsResponseItemStatusPending        QueryIntegrationsInstallationsResponseItemStatus = "pending"
+	QueryIntegrationsInstallationsResponseItemStatusActionRequired QueryIntegrationsInstallationsResponseItemStatus = "action_required"
+	QueryIntegrationsInstallationsResponseItemStatusError          QueryIntegrationsInstallationsResponseItemStatus = "error"
+)
+
+func NewQueryIntegrationsInstallationsResponseItemStatusFromString(s string) (QueryIntegrationsInstallationsResponseItemStatus, error) {
+	switch s {
+	case "connected":
+		return QueryIntegrationsInstallationsResponseItemStatusConnected, nil
+	case "disconnected":
+		return QueryIntegrationsInstallationsResponseItemStatusDisconnected, nil
+	case "requires_reauth":
+		return QueryIntegrationsInstallationsResponseItemStatusRequiresReauth, nil
+	case "pending":
+		return QueryIntegrationsInstallationsResponseItemStatusPending, nil
+	case "action_required":
+		return QueryIntegrationsInstallationsResponseItemStatusActionRequired, nil
+	case "error":
+		return QueryIntegrationsInstallationsResponseItemStatusError, nil
+	}
+	var t QueryIntegrationsInstallationsResponseItemStatus
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (q QueryIntegrationsInstallationsResponseItemStatus) Ptr() *QueryIntegrationsInstallationsResponseItemStatus {
+	return &q
+}
+
+type QueryIntegrationsInstallationsResponseItemStatusReason string
+
+const (
+	QueryIntegrationsInstallationsResponseItemStatusReasonProviderSuspended         QueryIntegrationsInstallationsResponseItemStatusReason = "provider_suspended"
+	QueryIntegrationsInstallationsResponseItemStatusReasonAuthExpired               QueryIntegrationsInstallationsResponseItemStatusReason = "auth_expired"
+	QueryIntegrationsInstallationsResponseItemStatusReasonMissingPermissions        QueryIntegrationsInstallationsResponseItemStatusReason = "missing_permissions"
+	QueryIntegrationsInstallationsResponseItemStatusReasonSetupIncomplete           QueryIntegrationsInstallationsResponseItemStatusReason = "setup_incomplete"
+	QueryIntegrationsInstallationsResponseItemStatusReasonAlreadyConnectedElsewhere QueryIntegrationsInstallationsResponseItemStatusReason = "already_connected_elsewhere"
+	QueryIntegrationsInstallationsResponseItemStatusReasonUnknownError              QueryIntegrationsInstallationsResponseItemStatusReason = "unknown_error"
+)
+
+func NewQueryIntegrationsInstallationsResponseItemStatusReasonFromString(s string) (QueryIntegrationsInstallationsResponseItemStatusReason, error) {
+	switch s {
+	case "provider_suspended":
+		return QueryIntegrationsInstallationsResponseItemStatusReasonProviderSuspended, nil
+	case "auth_expired":
+		return QueryIntegrationsInstallationsResponseItemStatusReasonAuthExpired, nil
+	case "missing_permissions":
+		return QueryIntegrationsInstallationsResponseItemStatusReasonMissingPermissions, nil
+	case "setup_incomplete":
+		return QueryIntegrationsInstallationsResponseItemStatusReasonSetupIncomplete, nil
+	case "already_connected_elsewhere":
+		return QueryIntegrationsInstallationsResponseItemStatusReasonAlreadyConnectedElsewhere, nil
+	case "unknown_error":
+		return QueryIntegrationsInstallationsResponseItemStatusReasonUnknownError, nil
+	}
+	var t QueryIntegrationsInstallationsResponseItemStatusReason
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (q QueryIntegrationsInstallationsResponseItemStatusReason) Ptr() *QueryIntegrationsInstallationsResponseItemStatusReason {
 	return &q
 }
 

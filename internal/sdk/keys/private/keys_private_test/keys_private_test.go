@@ -77,40 +77,6 @@ func VerifyRequestCount(
     require.Equal(t, expected, len(result.Requests))
 }
 
-func VerifyAuthHeaders(
-    t *testing.T,
-    testId string,
-    method string,
-    urlPath string,
-    headerMatchers map[string]string,
-) {
-    wiremockURL := os.Getenv("WIREMOCK_URL")
-    	if wiremockURL == "" {
-    		wiremockURL = "http://localhost:8080"
-    	}
-    	WiremockAdminURL := wiremockURL + "/__admin"
-    var reqBody bytes.Buffer
-    reqBody.WriteString(`{"method":"`)
-    reqBody.WriteString(method)
-    reqBody.WriteString(`","urlPath":"`)
-    reqBody.WriteString(urlPath)
-    reqBody.WriteString(`","headers":{"X-Test-Id":{"equalTo":"`)
-    reqBody.WriteString(testId)
-    reqBody.WriteString(`"}`)
-    for name, matcher := range headerMatchers {
-        reqBody.WriteString(`,"`)
-        reqBody.WriteString(name)
-        reqBody.WriteString(`":`)
-        reqBody.WriteString(matcher)
-    }
-    reqBody.WriteString(`}}`)
-    resp, err := http.Post(WiremockAdminURL+"/requests/find", "application/json", &reqBody)
-    require.NoError(t, err)
-    var result struct { Requests []interface{} `json:"requests"` }
-    json.NewDecoder(resp.Body).Decode(&result)
-    require.Equal(t, 1, len(result.Requests), "expected exactly one request with the routed auth headers for "+testId)
-}
-
 func TestKeysPrivateCreateWithWireMock(
     t *testing.T,
 ) {
@@ -140,9 +106,6 @@ func TestKeysPrivateCreateWithWireMock(
 
     require.NoError(t, invocationErr, "Client method call should succeed")
     VerifyRequestCount(t, "TestKeysPrivateCreateWithWireMock", "POST", "/v3/workspaces/workspaceSlug/api-keys", nil, 1)
-    VerifyAuthHeaders(t, "TestKeysPrivateCreateWithWireMock", "POST", "/v3/workspaces/workspaceSlug/api-keys", map[string]string{
-    		"Authorization": `{"matches":"Bearer .*"}`,
-    	})
 }
 
 func TestKeysPrivateGetWithWireMock(
@@ -170,9 +133,6 @@ func TestKeysPrivateGetWithWireMock(
 
     require.NoError(t, invocationErr, "Client method call should succeed")
     VerifyRequestCount(t, "TestKeysPrivateGetWithWireMock", "GET", "/v3/workspaces/workspaceSlug/api-keys/apiKeyId", nil, 1)
-    VerifyAuthHeaders(t, "TestKeysPrivateGetWithWireMock", "GET", "/v3/workspaces/workspaceSlug/api-keys/apiKeyId", map[string]string{
-    		"Authorization": `{"matches":"Bearer .*"}`,
-    	})
 }
 
 func TestKeysPrivateDeleteWithWireMock(
@@ -200,9 +160,6 @@ func TestKeysPrivateDeleteWithWireMock(
 
     require.NoError(t, invocationErr, "Client method call should succeed")
     VerifyRequestCount(t, "TestKeysPrivateDeleteWithWireMock", "DELETE", "/v3/workspaces/workspaceSlug/api-keys/apiKeyId", nil, 1)
-    VerifyAuthHeaders(t, "TestKeysPrivateDeleteWithWireMock", "DELETE", "/v3/workspaces/workspaceSlug/api-keys/apiKeyId", map[string]string{
-    		"Authorization": `{"matches":"Bearer .*"}`,
-    	})
 }
 
 

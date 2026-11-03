@@ -3,11 +3,9 @@ package provider
 import (
 	"context"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/interfere-inc/terraform-provider-interfere/internal/resource_surface"
 )
 
@@ -21,9 +19,6 @@ func (r *surfaceResource) Schema(ctx context.Context, _ resource.SchemaRequest, 
 	for _, field := range []string{"workspace_slug", "type"} {
 		attributes[field] = requiredString(attributes[field], stringplanmodifier.RequiresReplace())
 	}
-	name := attributes["name"].(schema.StringAttribute)
-	name.Validators = []validator.String{stringvalidator.LengthBetween(1, 48)}
-	attributes["name"] = name
 	tracking := attributes["anonymous_user_tracking"].(schema.BoolAttribute)
 	tracking.Optional = true
 	tracking.Default = nil

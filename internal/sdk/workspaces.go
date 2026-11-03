@@ -442,49 +442,88 @@ func (m *MutationWorkspacesUpdateBasicsResponse) String() string {
 }
 
 var (
-	queryWorkspacesCurrentResponseFieldID                    = big.NewInt(1 << 0)
-	queryWorkspacesCurrentResponseFieldName                  = big.NewInt(1 << 1)
-	queryWorkspacesCurrentResponseFieldSlug                  = big.NewInt(1 << 2)
-	queryWorkspacesCurrentResponseFieldDataResidencyLocation = big.NewInt(1 << 3)
+	queryWorkspacesCurrentResponseFieldAllowMemberWorkspaceCreation = big.NewInt(1 << 0)
+	queryWorkspacesCurrentResponseFieldClerkOrgID                   = big.NewInt(1 << 1)
+	queryWorkspacesCurrentResponseFieldClerkUpdatedAt               = big.NewInt(1 << 2)
+	queryWorkspacesCurrentResponseFieldDataResidencyLocation        = big.NewInt(1 << 3)
+	queryWorkspacesCurrentResponseFieldDemoResetAt                  = big.NewInt(1 << 4)
+	queryWorkspacesCurrentResponseFieldDemoResetStatus              = big.NewInt(1 << 5)
+	queryWorkspacesCurrentResponseFieldDemoWorkspace                = big.NewInt(1 << 6)
+	queryWorkspacesCurrentResponseFieldEnabledAuthMethods           = big.NewInt(1 << 7)
+	queryWorkspacesCurrentResponseFieldID                           = big.NewInt(1 << 8)
+	queryWorkspacesCurrentResponseFieldImageURL                     = big.NewInt(1 << 9)
+	queryWorkspacesCurrentResponseFieldImpersonationExpiresAt       = big.NewInt(1 << 10)
+	queryWorkspacesCurrentResponseFieldImpersonationGranted         = big.NewInt(1 << 11)
+	queryWorkspacesCurrentResponseFieldName                         = big.NewInt(1 << 12)
+	queryWorkspacesCurrentResponseFieldOnboardingCompletedAt        = big.NewInt(1 << 13)
+	queryWorkspacesCurrentResponseFieldResidencyPolicy              = big.NewInt(1 << 14)
+	queryWorkspacesCurrentResponseFieldSlug                         = big.NewInt(1 << 15)
+	queryWorkspacesCurrentResponseFieldStripeCustomerID             = big.NewInt(1 << 16)
+	queryWorkspacesCurrentResponseFieldCreatedAt                    = big.NewInt(1 << 17)
+	queryWorkspacesCurrentResponseFieldDeletedAt                    = big.NewInt(1 << 18)
+	queryWorkspacesCurrentResponseFieldUpdatedAt                    = big.NewInt(1 << 19)
 )
 
+// queryWorkspacesCurrentResponseNullableFields maps the wire names of QueryWorkspacesCurrentResponse's nullable fields (required or optional) to their field bits.
+var queryWorkspacesCurrentResponseNullableFields = map[string]*big.Int{
+	"clerkUpdatedAt":         queryWorkspacesCurrentResponseFieldClerkUpdatedAt,
+	"demoResetAt":            queryWorkspacesCurrentResponseFieldDemoResetAt,
+	"demoResetStatus":        queryWorkspacesCurrentResponseFieldDemoResetStatus,
+	"enabledAuthMethods":     queryWorkspacesCurrentResponseFieldEnabledAuthMethods,
+	"impersonationExpiresAt": queryWorkspacesCurrentResponseFieldImpersonationExpiresAt,
+	"onboardingCompletedAt":  queryWorkspacesCurrentResponseFieldOnboardingCompletedAt,
+	"stripeCustomerId":       queryWorkspacesCurrentResponseFieldStripeCustomerID,
+	"deletedAt":              queryWorkspacesCurrentResponseFieldDeletedAt,
+}
+
 type QueryWorkspacesCurrentResponse struct {
-	// Unique workspace identifier.
-	ID string `json:"id" url:"id"`
-	// Display name of the workspace.
-	Name string `json:"name" url:"name"`
-	// Workspace URL slug, using lowercase letters, numbers, and hyphens.
-	Slug string `json:"slug" url:"slug"`
-	// Region where workspace data is stored. Set when the workspace is created.
-	DataResidencyLocation QueryWorkspacesCurrentResponseDataResidencyLocation `json:"dataResidencyLocation" url:"dataResidencyLocation"`
+	AllowMemberWorkspaceCreation bool                                                   `json:"allowMemberWorkspaceCreation" url:"allowMemberWorkspaceCreation"`
+	ClerkOrgID                   string                                                 `json:"clerkOrgId" url:"clerkOrgId"`
+	ClerkUpdatedAt               *float64                                               `json:"clerkUpdatedAt,omitempty" url:"clerkUpdatedAt,omitempty"`
+	DataResidencyLocation        QueryWorkspacesCurrentResponseDataResidencyLocation    `json:"dataResidencyLocation" url:"dataResidencyLocation"`
+	DemoResetAt                  *float64                                               `json:"demoResetAt,omitempty" url:"demoResetAt,omitempty"`
+	DemoResetStatus              *QueryWorkspacesCurrentResponseDemoResetStatus         `json:"demoResetStatus,omitempty" url:"demoResetStatus,omitempty"`
+	DemoWorkspace                bool                                                   `json:"demoWorkspace" url:"demoWorkspace"`
+	EnabledAuthMethods           []QueryWorkspacesCurrentResponseEnabledAuthMethodsItem `json:"enabledAuthMethods,omitempty" url:"enabledAuthMethods,omitempty"`
+	ID                           string                                                 `json:"id" url:"id"`
+	ImageURL                     string                                                 `json:"imageUrl" url:"imageUrl"`
+	ImpersonationExpiresAt       *float64                                               `json:"impersonationExpiresAt,omitempty" url:"impersonationExpiresAt,omitempty"`
+	ImpersonationGranted         bool                                                   `json:"impersonationGranted" url:"impersonationGranted"`
+	Name                         string                                                 `json:"name" url:"name"`
+	OnboardingCompletedAt        *float64                                               `json:"onboardingCompletedAt,omitempty" url:"onboardingCompletedAt,omitempty"`
+	ResidencyPolicy              QueryWorkspacesCurrentResponseResidencyPolicy          `json:"residencyPolicy" url:"residencyPolicy"`
+	Slug                         string                                                 `json:"slug" url:"slug"`
+	StripeCustomerID             *string                                                `json:"stripeCustomerId,omitempty" url:"stripeCustomerId,omitempty"`
+	CreatedAt                    float64                                                `json:"createdAt" url:"createdAt"`
+	DeletedAt                    *float64                                               `json:"deletedAt,omitempty" url:"deletedAt,omitempty"`
+	UpdatedAt                    float64                                                `json:"updatedAt" url:"updatedAt"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 
-	ExtraProperties map[string]interface{} `json:"-" url:"-"`
-
-	rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
 }
 
-func (q *QueryWorkspacesCurrentResponse) GetID() string {
+func (q *QueryWorkspacesCurrentResponse) GetAllowMemberWorkspaceCreation() bool {
+	if q == nil {
+		return false
+	}
+	return q.AllowMemberWorkspaceCreation
+}
+
+func (q *QueryWorkspacesCurrentResponse) GetClerkOrgID() string {
 	if q == nil {
 		return ""
 	}
-	return q.ID
+	return q.ClerkOrgID
 }
 
-func (q *QueryWorkspacesCurrentResponse) GetName() string {
+func (q *QueryWorkspacesCurrentResponse) GetClerkUpdatedAt() *float64 {
 	if q == nil {
-		return ""
+		return nil
 	}
-	return q.Name
-}
-
-func (q *QueryWorkspacesCurrentResponse) GetSlug() string {
-	if q == nil {
-		return ""
-	}
-	return q.Slug
+	return q.ClerkUpdatedAt
 }
 
 func (q *QueryWorkspacesCurrentResponse) GetDataResidencyLocation() QueryWorkspacesCurrentResponseDataResidencyLocation {
@@ -494,11 +533,123 @@ func (q *QueryWorkspacesCurrentResponse) GetDataResidencyLocation() QueryWorkspa
 	return q.DataResidencyLocation
 }
 
+func (q *QueryWorkspacesCurrentResponse) GetDemoResetAt() *float64 {
+	if q == nil {
+		return nil
+	}
+	return q.DemoResetAt
+}
+
+func (q *QueryWorkspacesCurrentResponse) GetDemoResetStatus() *QueryWorkspacesCurrentResponseDemoResetStatus {
+	if q == nil {
+		return nil
+	}
+	return q.DemoResetStatus
+}
+
+func (q *QueryWorkspacesCurrentResponse) GetDemoWorkspace() bool {
+	if q == nil {
+		return false
+	}
+	return q.DemoWorkspace
+}
+
+func (q *QueryWorkspacesCurrentResponse) GetEnabledAuthMethods() []QueryWorkspacesCurrentResponseEnabledAuthMethodsItem {
+	if q == nil {
+		return nil
+	}
+	return q.EnabledAuthMethods
+}
+
+func (q *QueryWorkspacesCurrentResponse) GetID() string {
+	if q == nil {
+		return ""
+	}
+	return q.ID
+}
+
+func (q *QueryWorkspacesCurrentResponse) GetImageURL() string {
+	if q == nil {
+		return ""
+	}
+	return q.ImageURL
+}
+
+func (q *QueryWorkspacesCurrentResponse) GetImpersonationExpiresAt() *float64 {
+	if q == nil {
+		return nil
+	}
+	return q.ImpersonationExpiresAt
+}
+
+func (q *QueryWorkspacesCurrentResponse) GetImpersonationGranted() bool {
+	if q == nil {
+		return false
+	}
+	return q.ImpersonationGranted
+}
+
+func (q *QueryWorkspacesCurrentResponse) GetName() string {
+	if q == nil {
+		return ""
+	}
+	return q.Name
+}
+
+func (q *QueryWorkspacesCurrentResponse) GetOnboardingCompletedAt() *float64 {
+	if q == nil {
+		return nil
+	}
+	return q.OnboardingCompletedAt
+}
+
+func (q *QueryWorkspacesCurrentResponse) GetResidencyPolicy() QueryWorkspacesCurrentResponseResidencyPolicy {
+	if q == nil {
+		return ""
+	}
+	return q.ResidencyPolicy
+}
+
+func (q *QueryWorkspacesCurrentResponse) GetSlug() string {
+	if q == nil {
+		return ""
+	}
+	return q.Slug
+}
+
+func (q *QueryWorkspacesCurrentResponse) GetStripeCustomerID() *string {
+	if q == nil {
+		return nil
+	}
+	return q.StripeCustomerID
+}
+
+func (q *QueryWorkspacesCurrentResponse) GetCreatedAt() float64 {
+	if q == nil {
+		return 0
+	}
+	return q.CreatedAt
+}
+
+func (q *QueryWorkspacesCurrentResponse) GetDeletedAt() *float64 {
+	if q == nil {
+		return nil
+	}
+	return q.DeletedAt
+}
+
+func (q *QueryWorkspacesCurrentResponse) GetUpdatedAt() float64 {
+	if q == nil {
+		return 0
+	}
+	return q.UpdatedAt
+}
+
 func (q *QueryWorkspacesCurrentResponse) GetExtraProperties() map[string]interface{} {
 	if q == nil {
 		return nil
 	}
-	return q.ExtraProperties
+	return q.extraProperties
 }
 
 func (q *QueryWorkspacesCurrentResponse) require(field *big.Int) {
@@ -510,25 +661,25 @@ func (q *QueryWorkspacesCurrentResponse) require(field *big.Int) {
 	q.explicitFields = next
 }
 
-// SetID sets the ID field and marks it as non-optional;
+// SetAllowMemberWorkspaceCreation sets the AllowMemberWorkspaceCreation field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (q *QueryWorkspacesCurrentResponse) SetID(id string) {
-	q.ID = id
-	q.require(queryWorkspacesCurrentResponseFieldID)
+func (q *QueryWorkspacesCurrentResponse) SetAllowMemberWorkspaceCreation(allowMemberWorkspaceCreation bool) {
+	q.AllowMemberWorkspaceCreation = allowMemberWorkspaceCreation
+	q.require(queryWorkspacesCurrentResponseFieldAllowMemberWorkspaceCreation)
 }
 
-// SetName sets the Name field and marks it as non-optional;
+// SetClerkOrgID sets the ClerkOrgID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (q *QueryWorkspacesCurrentResponse) SetName(name string) {
-	q.Name = name
-	q.require(queryWorkspacesCurrentResponseFieldName)
+func (q *QueryWorkspacesCurrentResponse) SetClerkOrgID(clerkOrgID string) {
+	q.ClerkOrgID = clerkOrgID
+	q.require(queryWorkspacesCurrentResponseFieldClerkOrgID)
 }
 
-// SetSlug sets the Slug field and marks it as non-optional;
+// SetClerkUpdatedAt sets the ClerkUpdatedAt field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (q *QueryWorkspacesCurrentResponse) SetSlug(slug string) {
-	q.Slug = slug
-	q.require(queryWorkspacesCurrentResponseFieldSlug)
+func (q *QueryWorkspacesCurrentResponse) SetClerkUpdatedAt(clerkUpdatedAt *float64) {
+	q.ClerkUpdatedAt = clerkUpdatedAt
+	q.require(queryWorkspacesCurrentResponseFieldClerkUpdatedAt)
 }
 
 // SetDataResidencyLocation sets the DataResidencyLocation field and marks it as non-optional;
@@ -538,22 +689,137 @@ func (q *QueryWorkspacesCurrentResponse) SetDataResidencyLocation(dataResidencyL
 	q.require(queryWorkspacesCurrentResponseFieldDataResidencyLocation)
 }
 
+// SetDemoResetAt sets the DemoResetAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryWorkspacesCurrentResponse) SetDemoResetAt(demoResetAt *float64) {
+	q.DemoResetAt = demoResetAt
+	q.require(queryWorkspacesCurrentResponseFieldDemoResetAt)
+}
+
+// SetDemoResetStatus sets the DemoResetStatus field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryWorkspacesCurrentResponse) SetDemoResetStatus(demoResetStatus *QueryWorkspacesCurrentResponseDemoResetStatus) {
+	q.DemoResetStatus = demoResetStatus
+	q.require(queryWorkspacesCurrentResponseFieldDemoResetStatus)
+}
+
+// SetDemoWorkspace sets the DemoWorkspace field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryWorkspacesCurrentResponse) SetDemoWorkspace(demoWorkspace bool) {
+	q.DemoWorkspace = demoWorkspace
+	q.require(queryWorkspacesCurrentResponseFieldDemoWorkspace)
+}
+
+// SetEnabledAuthMethods sets the EnabledAuthMethods field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryWorkspacesCurrentResponse) SetEnabledAuthMethods(enabledAuthMethods []QueryWorkspacesCurrentResponseEnabledAuthMethodsItem) {
+	q.EnabledAuthMethods = enabledAuthMethods
+	q.require(queryWorkspacesCurrentResponseFieldEnabledAuthMethods)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryWorkspacesCurrentResponse) SetID(id string) {
+	q.ID = id
+	q.require(queryWorkspacesCurrentResponseFieldID)
+}
+
+// SetImageURL sets the ImageURL field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryWorkspacesCurrentResponse) SetImageURL(imageURL string) {
+	q.ImageURL = imageURL
+	q.require(queryWorkspacesCurrentResponseFieldImageURL)
+}
+
+// SetImpersonationExpiresAt sets the ImpersonationExpiresAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryWorkspacesCurrentResponse) SetImpersonationExpiresAt(impersonationExpiresAt *float64) {
+	q.ImpersonationExpiresAt = impersonationExpiresAt
+	q.require(queryWorkspacesCurrentResponseFieldImpersonationExpiresAt)
+}
+
+// SetImpersonationGranted sets the ImpersonationGranted field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryWorkspacesCurrentResponse) SetImpersonationGranted(impersonationGranted bool) {
+	q.ImpersonationGranted = impersonationGranted
+	q.require(queryWorkspacesCurrentResponseFieldImpersonationGranted)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryWorkspacesCurrentResponse) SetName(name string) {
+	q.Name = name
+	q.require(queryWorkspacesCurrentResponseFieldName)
+}
+
+// SetOnboardingCompletedAt sets the OnboardingCompletedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryWorkspacesCurrentResponse) SetOnboardingCompletedAt(onboardingCompletedAt *float64) {
+	q.OnboardingCompletedAt = onboardingCompletedAt
+	q.require(queryWorkspacesCurrentResponseFieldOnboardingCompletedAt)
+}
+
+// SetResidencyPolicy sets the ResidencyPolicy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryWorkspacesCurrentResponse) SetResidencyPolicy(residencyPolicy QueryWorkspacesCurrentResponseResidencyPolicy) {
+	q.ResidencyPolicy = residencyPolicy
+	q.require(queryWorkspacesCurrentResponseFieldResidencyPolicy)
+}
+
+// SetSlug sets the Slug field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryWorkspacesCurrentResponse) SetSlug(slug string) {
+	q.Slug = slug
+	q.require(queryWorkspacesCurrentResponseFieldSlug)
+}
+
+// SetStripeCustomerID sets the StripeCustomerID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryWorkspacesCurrentResponse) SetStripeCustomerID(stripeCustomerID *string) {
+	q.StripeCustomerID = stripeCustomerID
+	q.require(queryWorkspacesCurrentResponseFieldStripeCustomerID)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryWorkspacesCurrentResponse) SetCreatedAt(createdAt float64) {
+	q.CreatedAt = createdAt
+	q.require(queryWorkspacesCurrentResponseFieldCreatedAt)
+}
+
+// SetDeletedAt sets the DeletedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryWorkspacesCurrentResponse) SetDeletedAt(deletedAt *float64) {
+	q.DeletedAt = deletedAt
+	q.require(queryWorkspacesCurrentResponseFieldDeletedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryWorkspacesCurrentResponse) SetUpdatedAt(updatedAt float64) {
+	q.UpdatedAt = updatedAt
+	q.require(queryWorkspacesCurrentResponseFieldUpdatedAt)
+}
+
 func (q *QueryWorkspacesCurrentResponse) UnmarshalJSON(data []byte) error {
-	type embed QueryWorkspacesCurrentResponse
-	var unmarshaler = struct {
-		embed
-	}{
-		embed: embed(*q),
-	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+	type unmarshaler QueryWorkspacesCurrentResponse
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*q = QueryWorkspacesCurrentResponse(unmarshaler.embed)
+	*q = QueryWorkspacesCurrentResponse(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *q)
 	if err != nil {
 		return err
 	}
-	q.ExtraProperties = extraProperties
+	q.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, queryWorkspacesCurrentResponseNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		q.require(presentFields)
+	}
 	q.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -566,7 +832,7 @@ func (q *QueryWorkspacesCurrentResponse) MarshalJSON() ([]byte, error) {
 		embed: embed(*q),
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, q.explicitFields)
-	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, q.ExtraProperties)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (q *QueryWorkspacesCurrentResponse) String() string {
@@ -584,7 +850,6 @@ func (q *QueryWorkspacesCurrentResponse) String() string {
 	return fmt.Sprintf("%#v", q)
 }
 
-// Region where workspace data is stored. Set when the workspace is created.
 type QueryWorkspacesCurrentResponseDataResidencyLocation string
 
 const (
@@ -604,6 +869,90 @@ func NewQueryWorkspacesCurrentResponseDataResidencyLocationFromString(s string) 
 }
 
 func (q QueryWorkspacesCurrentResponseDataResidencyLocation) Ptr() *QueryWorkspacesCurrentResponseDataResidencyLocation {
+	return &q
+}
+
+type QueryWorkspacesCurrentResponseDemoResetStatus string
+
+const (
+	QueryWorkspacesCurrentResponseDemoResetStatusRunning   QueryWorkspacesCurrentResponseDemoResetStatus = "RUNNING"
+	QueryWorkspacesCurrentResponseDemoResetStatusSucceeded QueryWorkspacesCurrentResponseDemoResetStatus = "SUCCEEDED"
+	QueryWorkspacesCurrentResponseDemoResetStatusFailed    QueryWorkspacesCurrentResponseDemoResetStatus = "FAILED"
+)
+
+func NewQueryWorkspacesCurrentResponseDemoResetStatusFromString(s string) (QueryWorkspacesCurrentResponseDemoResetStatus, error) {
+	switch s {
+	case "RUNNING":
+		return QueryWorkspacesCurrentResponseDemoResetStatusRunning, nil
+	case "SUCCEEDED":
+		return QueryWorkspacesCurrentResponseDemoResetStatusSucceeded, nil
+	case "FAILED":
+		return QueryWorkspacesCurrentResponseDemoResetStatusFailed, nil
+	}
+	var t QueryWorkspacesCurrentResponseDemoResetStatus
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (q QueryWorkspacesCurrentResponseDemoResetStatus) Ptr() *QueryWorkspacesCurrentResponseDemoResetStatus {
+	return &q
+}
+
+type QueryWorkspacesCurrentResponseEnabledAuthMethodsItem string
+
+const (
+	QueryWorkspacesCurrentResponseEnabledAuthMethodsItemEnterpriseSSO QueryWorkspacesCurrentResponseEnabledAuthMethodsItem = "enterprise_sso"
+	QueryWorkspacesCurrentResponseEnabledAuthMethodsItemOauthGoogle   QueryWorkspacesCurrentResponseEnabledAuthMethodsItem = "oauth_google"
+	QueryWorkspacesCurrentResponseEnabledAuthMethodsItemOauthGithub   QueryWorkspacesCurrentResponseEnabledAuthMethodsItem = "oauth_github"
+	QueryWorkspacesCurrentResponseEnabledAuthMethodsItemOauthVercel   QueryWorkspacesCurrentResponseEnabledAuthMethodsItem = "oauth_vercel"
+	QueryWorkspacesCurrentResponseEnabledAuthMethodsItemPasskey       QueryWorkspacesCurrentResponseEnabledAuthMethodsItem = "passkey"
+	QueryWorkspacesCurrentResponseEnabledAuthMethodsItemEmailCode     QueryWorkspacesCurrentResponseEnabledAuthMethodsItem = "email_code"
+)
+
+func NewQueryWorkspacesCurrentResponseEnabledAuthMethodsItemFromString(s string) (QueryWorkspacesCurrentResponseEnabledAuthMethodsItem, error) {
+	switch s {
+	case "enterprise_sso":
+		return QueryWorkspacesCurrentResponseEnabledAuthMethodsItemEnterpriseSSO, nil
+	case "oauth_google":
+		return QueryWorkspacesCurrentResponseEnabledAuthMethodsItemOauthGoogle, nil
+	case "oauth_github":
+		return QueryWorkspacesCurrentResponseEnabledAuthMethodsItemOauthGithub, nil
+	case "oauth_vercel":
+		return QueryWorkspacesCurrentResponseEnabledAuthMethodsItemOauthVercel, nil
+	case "passkey":
+		return QueryWorkspacesCurrentResponseEnabledAuthMethodsItemPasskey, nil
+	case "email_code":
+		return QueryWorkspacesCurrentResponseEnabledAuthMethodsItemEmailCode, nil
+	}
+	var t QueryWorkspacesCurrentResponseEnabledAuthMethodsItem
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (q QueryWorkspacesCurrentResponseEnabledAuthMethodsItem) Ptr() *QueryWorkspacesCurrentResponseEnabledAuthMethodsItem {
+	return &q
+}
+
+type QueryWorkspacesCurrentResponseResidencyPolicy string
+
+const (
+	QueryWorkspacesCurrentResponseResidencyPolicyAny QueryWorkspacesCurrentResponseResidencyPolicy = "any"
+	QueryWorkspacesCurrentResponseResidencyPolicyUs  QueryWorkspacesCurrentResponseResidencyPolicy = "us"
+	QueryWorkspacesCurrentResponseResidencyPolicyEu  QueryWorkspacesCurrentResponseResidencyPolicy = "eu"
+)
+
+func NewQueryWorkspacesCurrentResponseResidencyPolicyFromString(s string) (QueryWorkspacesCurrentResponseResidencyPolicy, error) {
+	switch s {
+	case "any":
+		return QueryWorkspacesCurrentResponseResidencyPolicyAny, nil
+	case "us":
+		return QueryWorkspacesCurrentResponseResidencyPolicyUs, nil
+	case "eu":
+		return QueryWorkspacesCurrentResponseResidencyPolicyEu, nil
+	}
+	var t QueryWorkspacesCurrentResponseResidencyPolicy
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (q QueryWorkspacesCurrentResponseResidencyPolicy) Ptr() *QueryWorkspacesCurrentResponseResidencyPolicy {
 	return &q
 }
 

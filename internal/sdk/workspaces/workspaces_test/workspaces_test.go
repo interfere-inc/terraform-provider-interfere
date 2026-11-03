@@ -77,40 +77,6 @@ func VerifyRequestCount(
     require.Equal(t, expected, len(result.Requests))
 }
 
-func VerifyAuthHeaders(
-    t *testing.T,
-    testId string,
-    method string,
-    urlPath string,
-    headerMatchers map[string]string,
-) {
-    wiremockURL := os.Getenv("WIREMOCK_URL")
-    	if wiremockURL == "" {
-    		wiremockURL = "http://localhost:8080"
-    	}
-    	WiremockAdminURL := wiremockURL + "/__admin"
-    var reqBody bytes.Buffer
-    reqBody.WriteString(`{"method":"`)
-    reqBody.WriteString(method)
-    reqBody.WriteString(`","urlPath":"`)
-    reqBody.WriteString(urlPath)
-    reqBody.WriteString(`","headers":{"X-Test-Id":{"equalTo":"`)
-    reqBody.WriteString(testId)
-    reqBody.WriteString(`"}`)
-    for name, matcher := range headerMatchers {
-        reqBody.WriteString(`,"`)
-        reqBody.WriteString(name)
-        reqBody.WriteString(`":`)
-        reqBody.WriteString(matcher)
-    }
-    reqBody.WriteString(`}}`)
-    resp, err := http.Post(WiremockAdminURL+"/requests/find", "application/json", &reqBody)
-    require.NoError(t, err)
-    var result struct { Requests []interface{} `json:"requests"` }
-    json.NewDecoder(resp.Body).Decode(&result)
-    require.Equal(t, 1, len(result.Requests), "expected exactly one request with the routed auth headers for "+testId)
-}
-
 func TestWorkspacesCurrentWithWireMock(
     t *testing.T,
 ) {
@@ -135,9 +101,6 @@ func TestWorkspacesCurrentWithWireMock(
 
     require.NoError(t, invocationErr, "Client method call should succeed")
     VerifyRequestCount(t, "TestWorkspacesCurrentWithWireMock", "POST", "/v3/workspaces/workspaceSlug/queries/workspaces.current", nil, 1)
-    VerifyAuthHeaders(t, "TestWorkspacesCurrentWithWireMock", "POST", "/v3/workspaces/workspaceSlug/queries/workspaces.current", map[string]string{
-    		"Authorization": `{"matches":"Bearer .*"}`,
-    	})
 }
 
 func TestWorkspacesAddProxyDomainWithWireMock(
@@ -168,9 +131,6 @@ func TestWorkspacesAddProxyDomainWithWireMock(
 
     require.NoError(t, invocationErr, "Client method call should succeed")
     VerifyRequestCount(t, "TestWorkspacesAddProxyDomainWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/workspaces.addProxyDomain", nil, 1)
-    VerifyAuthHeaders(t, "TestWorkspacesAddProxyDomainWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/workspaces.addProxyDomain", map[string]string{
-    		"Authorization": `{"matches":"Bearer .*"}`,
-    	})
 }
 
 func TestWorkspacesRemoveProxyDomainWithWireMock(
@@ -200,9 +160,6 @@ func TestWorkspacesRemoveProxyDomainWithWireMock(
 
     require.NoError(t, invocationErr, "Client method call should succeed")
     VerifyRequestCount(t, "TestWorkspacesRemoveProxyDomainWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/workspaces.removeProxyDomain", nil, 1)
-    VerifyAuthHeaders(t, "TestWorkspacesRemoveProxyDomainWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/workspaces.removeProxyDomain", map[string]string{
-    		"Authorization": `{"matches":"Bearer .*"}`,
-    	})
 }
 
 func TestWorkspacesUpdateBasicsWithWireMock(
@@ -230,9 +187,6 @@ func TestWorkspacesUpdateBasicsWithWireMock(
 
     require.NoError(t, invocationErr, "Client method call should succeed")
     VerifyRequestCount(t, "TestWorkspacesUpdateBasicsWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/workspaces.updateBasics", nil, 1)
-    VerifyAuthHeaders(t, "TestWorkspacesUpdateBasicsWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/workspaces.updateBasics", map[string]string{
-    		"Authorization": `{"matches":"Bearer .*"}`,
-    	})
 }
 
 

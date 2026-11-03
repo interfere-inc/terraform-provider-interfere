@@ -34,13 +34,13 @@ func TestReadPreservesStateOnAmbiguousOrFailedResponses(t *testing.T) {
 		status int
 		body   any
 	}{
-		"permission filtered": {0, json.RawMessage(`null`)},
-		"incomplete":          {0, map[string]any{}},
-		"unauthorized":        {401, map[string]any{"message": "fixture-token"}},
-		"forbidden":           {403, map[string]any{"message": "fixture-token"}},
-		"not found":           {404, map[string]any{"message": "fixture-token"}},
-		"unavailable":         {503, map[string]any{"message": "fixture-token"}},
-		"reused slug":         {0, map[string]any{"id": "different", "slug": surfaceSlug, "name": "Other", "type": "react", "deletedAt": nil}},
+		"ambiguous null": {0, json.RawMessage(`null`)},
+		"incomplete":     {0, map[string]any{}},
+		"unauthorized":   {401, map[string]any{"message": "fixture-token"}},
+		"forbidden":      {403, map[string]any{"message": "fixture-token"}},
+		"not found":      {404, map[string]any{"message": "fixture-token"}},
+		"unavailable":    {503, map[string]any{"message": "fixture-token"}},
+		"reused slug":    {0, map[string]any{"id": "different", "slug": surfaceSlug, "name": "Other", "type": "react", "deletedAt": nil}},
 	}
 	for name, test := range cases {
 		t.Run(name, func(t *testing.T) {
@@ -64,5 +64,29 @@ func TestReadRemovesExplicitlyDeletedSurface(t *testing.T) {
 	r.Read(context.Background(), resource.ReadRequest{State: state}, &response)
 	if response.Diagnostics.HasError() || !response.State.Raw.IsNull() {
 		t.Fatalf("Expected deleted surface to leave state: %v", response.Diagnostics)
+	}
+}
+
+func TestReadRemovesConfirmedMissingSurface(t *testing.T) {
+	f := newSurfaceFixture(t)
+	f.readStatus = 404
+	f.readBody = map[string]any{"code": "WORKSPACE_RESOURCE_NOT_FOUND"}
+	r, state := fixtureResource(t, f)
+	response := resource.ReadResponse{State: state}
+	r.Read(context.Background(), resource.ReadRequest{State: state}, &response)
+	if response.Diagnostics.HasError() || !response.State.Raw.IsNull() {
+		t.Fatalf("Expected confirmed missing surface to leave state: %v", response.Diagnostics)
+	}
+}
+
+func TestDeleteAcceptsConfirmedMissingSurface(t *testing.T) {
+	f := newSurfaceFixture(t)
+	f.readStatus = 404
+	f.readBody = map[string]any{"code": "WORKSPACE_RESOURCE_NOT_FOUND"}
+	r, state := fixtureResource(t, f)
+	response := resource.DeleteResponse{State: state}
+	r.Delete(context.Background(), resource.DeleteRequest{State: state}, &response)
+	if response.Diagnostics.HasError() {
+		t.Fatalf("Expected deletion of missing surface to succeed: %v", response.Diagnostics)
 	}
 }

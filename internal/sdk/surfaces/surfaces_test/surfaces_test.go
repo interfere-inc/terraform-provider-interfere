@@ -77,40 +77,6 @@ func VerifyRequestCount(
     require.Equal(t, expected, len(result.Requests))
 }
 
-func VerifyAuthHeaders(
-    t *testing.T,
-    testId string,
-    method string,
-    urlPath string,
-    headerMatchers map[string]string,
-) {
-    wiremockURL := os.Getenv("WIREMOCK_URL")
-    	if wiremockURL == "" {
-    		wiremockURL = "http://localhost:8080"
-    	}
-    	WiremockAdminURL := wiremockURL + "/__admin"
-    var reqBody bytes.Buffer
-    reqBody.WriteString(`{"method":"`)
-    reqBody.WriteString(method)
-    reqBody.WriteString(`","urlPath":"`)
-    reqBody.WriteString(urlPath)
-    reqBody.WriteString(`","headers":{"X-Test-Id":{"equalTo":"`)
-    reqBody.WriteString(testId)
-    reqBody.WriteString(`"}`)
-    for name, matcher := range headerMatchers {
-        reqBody.WriteString(`,"`)
-        reqBody.WriteString(name)
-        reqBody.WriteString(`":`)
-        reqBody.WriteString(matcher)
-    }
-    reqBody.WriteString(`}}`)
-    resp, err := http.Post(WiremockAdminURL+"/requests/find", "application/json", &reqBody)
-    require.NoError(t, err)
-    var result struct { Requests []interface{} `json:"requests"` }
-    json.NewDecoder(resp.Body).Decode(&result)
-    require.Equal(t, 1, len(result.Requests), "expected exactly one request with the routed auth headers for "+testId)
-}
-
 func TestSurfacesGetBySlugIncludeDeletedWithWireMock(
     t *testing.T,
 ) {
@@ -138,9 +104,6 @@ func TestSurfacesGetBySlugIncludeDeletedWithWireMock(
 
     require.NoError(t, invocationErr, "Client method call should succeed")
     VerifyRequestCount(t, "TestSurfacesGetBySlugIncludeDeletedWithWireMock", "POST", "/v3/workspaces/workspaceSlug/queries/surfaces.getBySlugIncludeDeleted", nil, 1)
-    VerifyAuthHeaders(t, "TestSurfacesGetBySlugIncludeDeletedWithWireMock", "POST", "/v3/workspaces/workspaceSlug/queries/surfaces.getBySlugIncludeDeleted", map[string]string{
-    		"Authorization": `{"matches":"Bearer .*"}`,
-    	})
 }
 
 func TestSurfacesDeleteWithWireMock(
@@ -170,9 +133,6 @@ func TestSurfacesDeleteWithWireMock(
 
     require.NoError(t, invocationErr, "Client method call should succeed")
     VerifyRequestCount(t, "TestSurfacesDeleteWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/surfaces.delete", nil, 1)
-    VerifyAuthHeaders(t, "TestSurfacesDeleteWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/surfaces.delete", map[string]string{
-    		"Authorization": `{"matches":"Bearer .*"}`,
-    	})
 }
 
 func TestSurfacesSetAnonymousUserTrackingWithWireMock(
@@ -203,9 +163,6 @@ func TestSurfacesSetAnonymousUserTrackingWithWireMock(
 
     require.NoError(t, invocationErr, "Client method call should succeed")
     VerifyRequestCount(t, "TestSurfacesSetAnonymousUserTrackingWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/surfaces.setAnonymousUserTracking", nil, 1)
-    VerifyAuthHeaders(t, "TestSurfacesSetAnonymousUserTrackingWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/surfaces.setAnonymousUserTracking", map[string]string{
-    		"Authorization": `{"matches":"Bearer .*"}`,
-    	})
 }
 
 func TestSurfacesUpdateNameWithWireMock(
@@ -236,9 +193,6 @@ func TestSurfacesUpdateNameWithWireMock(
 
     require.NoError(t, invocationErr, "Client method call should succeed")
     VerifyRequestCount(t, "TestSurfacesUpdateNameWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/surfaces.updateName", nil, 1)
-    VerifyAuthHeaders(t, "TestSurfacesUpdateNameWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/surfaces.updateName", map[string]string{
-    		"Authorization": `{"matches":"Bearer .*"}`,
-    	})
 }
 
 func TestSurfacesCreateSurfaceWithWireMock(
@@ -273,9 +227,6 @@ func TestSurfacesCreateSurfaceWithWireMock(
 
     require.NoError(t, invocationErr, "Client method call should succeed")
     VerifyRequestCount(t, "TestSurfacesCreateSurfaceWithWireMock", "POST", "/v3/workspaces/workspaceSlug/surfaces", nil, 1)
-    VerifyAuthHeaders(t, "TestSurfacesCreateSurfaceWithWireMock", "POST", "/v3/workspaces/workspaceSlug/surfaces", map[string]string{
-    		"Authorization": `{"matches":"Bearer .*"}`,
-    	})
 }
 
 

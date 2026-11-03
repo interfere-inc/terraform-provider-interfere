@@ -46,7 +46,7 @@ func NewClient(options *core.RequestOptions) *Client {
 // 	    IdempotencyKey: "idempotencyKey",
 // 	    Name: "name",
 // 	}
-// 	client.Keys.Public.Create(
+// 	_, err := client.Keys.Public.Create(
 // 	    context.TODO(),
 // 	    request,
 // 	)
@@ -54,7 +54,7 @@ func (c *Client) Create(
     ctx context.Context,
     request *keys.CreatePublicRequest,
     opts ...option.RequestOption,
-) (*sdk.CreateSurfacePublicKeyResponse, error){
+) (*sdk.CreateSurfacePublicKeyResponse, error) {
     response, err := c.WithRawResponse.Create(
         ctx,
         request,
@@ -75,7 +75,7 @@ func (c *Client) Create(
 // 	    SurfaceSlug: "surfaceSlug",
 // 	    PublicKeyID: "publicKeyId",
 // 	}
-// 	client.Keys.Public.Get(
+// 	_, err := client.Keys.Public.Get(
 // 	    context.TODO(),
 // 	    request,
 // 	)
@@ -83,7 +83,7 @@ func (c *Client) Get(
     ctx context.Context,
     request *keys.GetPublicRequest,
     opts ...option.RequestOption,
-) (*sdk.ReadPublicKeyResponse, error){
+) (*sdk.ReadPublicKeyResponse, error) {
     response, err := c.WithRawResponse.Get(
         ctx,
         request,
@@ -104,7 +104,7 @@ func (c *Client) Get(
 // 	    SurfaceSlug: "surfaceSlug",
 // 	    PublicKeyID: "publicKeyId",
 // 	}
-// 	client.Keys.Public.Delete(
+// 	_, err := client.Keys.Public.Delete(
 // 	    context.TODO(),
 // 	    request,
 // 	)
@@ -112,7 +112,7 @@ func (c *Client) Delete(
     ctx context.Context,
     request *keys.DeletePublicRequest,
     opts ...option.RequestOption,
-) (*sdk.RevokeSurfacePublicKeyResponse, error){
+) (*sdk.RevokeSurfacePublicKeyResponse, error) {
     response, err := c.WithRawResponse.Delete(
         ctx,
         request,

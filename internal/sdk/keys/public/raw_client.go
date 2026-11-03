@@ -38,7 +38,7 @@ func (r *RawClient) Create(
     ctx context.Context,
     request *keys.CreatePublicRequest,
     opts ...option.RequestOption,
-) (*core.Response[*sdk.CreateSurfacePublicKeyResponse], error){
+) (*core.Response[*sdk.CreateSurfacePublicKeyResponse], error) {
     options := core.NewRequestOptions(opts...)
     baseURL := internal.ResolveBaseURL(
         options.BaseURL,
@@ -50,16 +50,9 @@ func (r *RawClient) Create(
         request.WorkspaceSlug,
         request.SurfaceSlug,
     )
-    authHeaders, authErr := r.options.AuthHeadersForEndpoint([][]string{{"clerkSession"}})
-    if authErr != nil {
-        return nil, authErr
-    }
     headers := internal.MergeHeaders(
-        internal.MergeHeaders(
-            r.options.ToHeader(),
-            options.ToHeader(),
-        ),
-        authHeaders,
+        r.options.ToHeader(),
+        options.ToHeader(),
     )
     headers.Add("Content-Type", "application/json")
     var response *sdk.CreateSurfacePublicKeyResponse
@@ -93,7 +86,7 @@ func (r *RawClient) Get(
     ctx context.Context,
     request *keys.GetPublicRequest,
     opts ...option.RequestOption,
-) (*core.Response[*sdk.ReadPublicKeyResponse], error){
+) (*core.Response[*sdk.ReadPublicKeyResponse], error) {
     options := core.NewRequestOptions(opts...)
     baseURL := internal.ResolveBaseURL(
         options.BaseURL,
@@ -106,16 +99,9 @@ func (r *RawClient) Get(
         request.SurfaceSlug,
         request.PublicKeyID,
     )
-    authHeaders, authErr := r.options.AuthHeadersForEndpoint([][]string{{"clerkSession"}})
-    if authErr != nil {
-        return nil, authErr
-    }
     headers := internal.MergeHeaders(
-        internal.MergeHeaders(
-            r.options.ToHeader(),
-            options.ToHeader(),
-        ),
-        authHeaders,
+        r.options.ToHeader(),
+        options.ToHeader(),
     )
     var response *sdk.ReadPublicKeyResponse
     raw, err := r.caller.Call(
@@ -147,7 +133,7 @@ func (r *RawClient) Delete(
     ctx context.Context,
     request *keys.DeletePublicRequest,
     opts ...option.RequestOption,
-) (*core.Response[*sdk.RevokeSurfacePublicKeyResponse], error){
+) (*core.Response[*sdk.RevokeSurfacePublicKeyResponse], error) {
     options := core.NewRequestOptions(opts...)
     baseURL := internal.ResolveBaseURL(
         options.BaseURL,
@@ -160,16 +146,9 @@ func (r *RawClient) Delete(
         request.SurfaceSlug,
         request.PublicKeyID,
     )
-    authHeaders, authErr := r.options.AuthHeadersForEndpoint([][]string{{"clerkSession"}})
-    if authErr != nil {
-        return nil, authErr
-    }
     headers := internal.MergeHeaders(
-        internal.MergeHeaders(
-            r.options.ToHeader(),
-            options.ToHeader(),
-        ),
-        authHeaders,
+        r.options.ToHeader(),
+        options.ToHeader(),
     )
     var response *sdk.RevokeSurfacePublicKeyResponse
     raw, err := r.caller.Call(

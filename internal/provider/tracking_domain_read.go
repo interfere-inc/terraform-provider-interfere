@@ -12,7 +12,7 @@ import (
 func (r *trackingDomainResource) read(ctx context.Context, data trackingDomainModel) (*sdk.QueryDomainsByIDIncludeDeletedResponse, error) {
 	remote, err := r.client.Domains.ByIDIncludeDeleted(ctx, &sdk.ByIDIncludeDeletedDomainsRequest{WorkspaceSlug: data.WorkspaceSlug.ValueString(), Args: &sdk.ByIDIncludeDeletedDomainsRequestArgs{DomainID: data.ID.ValueString()}})
 	if err != nil {
-		return nil, errors.New(apiError(err))
+		return nil, resourceReadError(err)
 	}
 	if remote == nil || remote.ID != data.ID.ValueString() || remote.Name == "" || remote.Type == nil || *remote.Type != "proxy" || remote.Status == nil {
 		return nil, errors.New("The API returned no domain or an invalid identity. Check workspace domain permissions; Terraform state was preserved.")
@@ -40,6 +40,10 @@ func (r *trackingDomainResource) Read(ctx context.Context, req resource.ReadRequ
 		return
 	}
 	remote, err := r.read(ctx, data)
+	if errors.Is(err, errResourceNotFound) {
+		resp.State.RemoveResource(ctx)
+		return
+	}
 	if err != nil {
 		resp.Diagnostics.AddError("Unable to read domain", err.Error())
 		return

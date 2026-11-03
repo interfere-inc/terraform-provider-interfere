@@ -33,13 +33,13 @@ Set `INTERFERE_TOKEN` through your shell or secret manager, then run `terraform 
 
 Building and testing requires Go 1.26 or newer and Terraform. The public repository includes generated Go code, so `make build test check` works without Fern or Docker.
 
-Regeneration additionally requires Docker and the Fern CLI pinned in `fern/fern.config.json`. The CLI prerelease is available from the [public Fern snapshot release](https://github.com/skve/fern/releases/tag/pr-17949-ffdd423). Fern Go generator 1.64.2 runs locally without an enterprise entitlement in the tested configuration.
+Regeneration additionally requires Docker and Bun. `make generate` runs stable Fern CLI 5.193.2, also pinned in `fern/fern.config.json`, with Go generator 1.70.16. Local generation does not require an enterprise entitlement. The provider uses the OpenAPI bearer security scheme directly. The separate public CLI retains its Fern snapshot because stable Fern does not support its per-endpoint multi-auth configuration.
 
 Copy the Gateway Terraform OpenAPI 3.1 publication into the provider's generation input:
 
 ```sh
 cp /absolute/path/to/openapi-terraform-3.1.json openapi.json
-make generate FERN=/absolute/path/to/fern
+make generate
 make build test check
 ```
 
@@ -140,16 +140,6 @@ Idempotent creation requests use Fern's native retry handling, with at most thre
 If creation fails after retries, or a transport error leaves its result uncertain, the diagnostic includes its non-secret creation UUID. Set `idempotency_key` to that value before applying again to recover the same operation. The provider does not promise recovery after a process crash before Terraform saves state or the diagnostic is returned; inspect the remote resource before retrying in that case.
 
 ## Releases
-
-The **Prepare release** workflow checks `https://api.interfere.com/openapi-terraform.json` daily at 08:23 UTC, on pushes to `main`, and on manual dispatch. Deploy the Gateway Terraform publication endpoint before enabling this workflow. A failed download or generation fails the run without creating a release PR; an unchanged schema with no pending changesets is a no-op.
-
-When the deployed contract changes, the workflow regenerates the Fern client, Terraform schemas, and documentation, runs the provider checks, and uses Changesets to create or update `changeset-release/main`. The PR contains the generated changes, a version bump in `package.json`, and `CHANGELOG.md`. Schema updates conservatively propose a minor bump before 1.0 and a major bump after 1.0; review compatibility before merging. New API resources still need explicit mappings and lifecycle adapters. Changes that cannot compile or pass tests require an implementation fix before a release PR can be created.
-
-For provider-only changes, run `bun install --frozen-lockfile --ignore-scripts` and `bun run changeset`, and commit the resulting `.changeset/*.md` file with the change. The package is private: Changesets manages release versions only and never publishes an npm package. Keep these release automation files when syncing monorepo source snapshots.
-
-The workflow uses the repository's `GITHUB_TOKEN` with contents, pull-request, and Actions write permissions. Allow GitHub Actions to create pull requests in repository settings. Because bot-token pushes do not trigger ordinary push/PR workflows, it explicitly dispatches **Check** on the release branch.
-
-After reviewing and merging the release PR, push `v<package.json version>` at the merged revision to run the existing signed draft-release workflow. Inspect and publish the draft to notify the Terraform Registry. The scheduled workflow opens release PRs; it does not automatically tag or publish releases.
 
 The monorepo remains the development source. The public repository contains only this provider directory and its generated Go code, with a separate Git history. Infrastructure provisions the repository, Engineering access, and branch protection.
 

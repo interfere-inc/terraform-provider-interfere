@@ -25,10 +25,10 @@ func (r *surfaceResource) read(ctx context.Context, data surfaceModel) (*sdk.Que
 		Args:          &sdk.GetBySlugIncludeDeletedSurfacesRequestArgs{SurfaceSlug: data.Slug.ValueString()},
 	})
 	if err != nil {
-		return nil, errors.New(apiError(err))
+		return nil, resourceReadError(err)
 	}
 	if remote == nil {
-		return nil, errors.New("The API returned no surface. This can mean insufficient permissions, so Terraform state was preserved. Verify workspace access before retrying.")
+		return nil, errors.New("The API returned an empty surface response without confirming absence. Terraform state was preserved.")
 	}
 	if remote.ID == "" || remote.Name == "" || remote.Type == "" || remote.Slug != data.Slug.ValueString() {
 		return nil, errors.New("The API returned an incomplete or unexpected surface. Terraform state was preserved.")
@@ -46,6 +46,10 @@ func (r *surfaceResource) Read(ctx context.Context, req resource.ReadRequest, re
 		return
 	}
 	remote, err := r.read(ctx, data)
+	if errors.Is(err, errResourceNotFound) {
+		resp.State.RemoveResource(ctx)
+		return
+	}
 	if err != nil {
 		resp.Diagnostics.AddError("Unable to read surface", err.Error())
 		return

@@ -37,7 +37,7 @@ func (r *RawClient) Current(
     ctx context.Context,
     request *sdk.CurrentWorkspacesRequest,
     opts ...option.RequestOption,
-) (*core.Response[*sdk.QueryWorkspacesCurrentResponse], error){
+) (*core.Response[*sdk.QueryWorkspacesCurrentResponse], error) {
     options := core.NewRequestOptions(opts...)
     baseURL := internal.ResolveBaseURL(
         options.BaseURL,
@@ -48,16 +48,9 @@ func (r *RawClient) Current(
         baseURL + "/v3/workspaces/%v/queries/workspaces.current",
         request.WorkspaceSlug,
     )
-    authHeaders, authErr := r.options.AuthHeadersForEndpoint([][]string{{"clerkSession"}})
-    if authErr != nil {
-        return nil, authErr
-    }
     headers := internal.MergeHeaders(
-        internal.MergeHeaders(
-            r.options.ToHeader(),
-            options.ToHeader(),
-        ),
-        authHeaders,
+        r.options.ToHeader(),
+        options.ToHeader(),
     )
     headers.Add("Content-Type", "application/json")
     var response *sdk.QueryWorkspacesCurrentResponse
@@ -74,7 +67,6 @@ func (r *RawClient) Current(
             Client: options.HTTPClient,
             Request: request,
             Response: &response,
-            ResponseIsOptional: true,
             ErrorDecoder: internal.NewErrorDecoder(sdk.ErrorCodes),
         },
     )
@@ -92,7 +84,7 @@ func (r *RawClient) AddProxyDomain(
     ctx context.Context,
     request *sdk.AddProxyDomainWorkspacesRequest,
     opts ...option.RequestOption,
-) (*core.Response[*sdk.MutationWorkspacesAddProxyDomainResponse], error){
+) (*core.Response[*sdk.MutationWorkspacesAddProxyDomainResponse], error) {
     options := core.NewRequestOptions(opts...)
     baseURL := internal.ResolveBaseURL(
         options.BaseURL,
@@ -103,16 +95,9 @@ func (r *RawClient) AddProxyDomain(
         baseURL + "/v3/workspaces/%v/actions/workspaces.addProxyDomain",
         request.WorkspaceSlug,
     )
-    authHeaders, authErr := r.options.AuthHeadersForEndpoint([][]string{{"clerkSession"}})
-    if authErr != nil {
-        return nil, authErr
-    }
     headers := internal.MergeHeaders(
-        internal.MergeHeaders(
-            r.options.ToHeader(),
-            options.ToHeader(),
-        ),
-        authHeaders,
+        r.options.ToHeader(),
+        options.ToHeader(),
     )
     headers.Add("Content-Type", "application/json")
     var response *sdk.MutationWorkspacesAddProxyDomainResponse
@@ -146,7 +131,7 @@ func (r *RawClient) RemoveProxyDomain(
     ctx context.Context,
     request *sdk.RemoveProxyDomainWorkspacesRequest,
     opts ...option.RequestOption,
-) (*core.Response[*sdk.MutationWorkspacesRemoveProxyDomainResponse], error){
+) (*core.Response[*sdk.MutationWorkspacesRemoveProxyDomainResponse], error) {
     options := core.NewRequestOptions(opts...)
     baseURL := internal.ResolveBaseURL(
         options.BaseURL,
@@ -157,16 +142,9 @@ func (r *RawClient) RemoveProxyDomain(
         baseURL + "/v3/workspaces/%v/actions/workspaces.removeProxyDomain",
         request.WorkspaceSlug,
     )
-    authHeaders, authErr := r.options.AuthHeadersForEndpoint([][]string{{"clerkSession"}})
-    if authErr != nil {
-        return nil, authErr
-    }
     headers := internal.MergeHeaders(
-        internal.MergeHeaders(
-            r.options.ToHeader(),
-            options.ToHeader(),
-        ),
-        authHeaders,
+        r.options.ToHeader(),
+        options.ToHeader(),
     )
     headers.Add("Content-Type", "application/json")
     var response *sdk.MutationWorkspacesRemoveProxyDomainResponse
@@ -200,7 +178,7 @@ func (r *RawClient) UpdateBasics(
     ctx context.Context,
     request *sdk.UpdateBasicsWorkspacesRequest,
     opts ...option.RequestOption,
-) (*core.Response[*sdk.MutationWorkspacesUpdateBasicsResponse], error){
+) (*core.Response[*sdk.MutationWorkspacesUpdateBasicsResponse], error) {
     options := core.NewRequestOptions(opts...)
     baseURL := internal.ResolveBaseURL(
         options.BaseURL,
@@ -211,16 +189,9 @@ func (r *RawClient) UpdateBasics(
         baseURL + "/v3/workspaces/%v/actions/workspaces.updateBasics",
         request.WorkspaceSlug,
     )
-    authHeaders, authErr := r.options.AuthHeadersForEndpoint([][]string{{"clerkSession"}})
-    if authErr != nil {
-        return nil, authErr
-    }
     headers := internal.MergeHeaders(
-        internal.MergeHeaders(
-            r.options.ToHeader(),
-            options.ToHeader(),
-        ),
-        authHeaders,
+        r.options.ToHeader(),
+        options.ToHeader(),
     )
     headers.Add("Content-Type", "application/json")
     var response *sdk.MutationWorkspacesUpdateBasicsResponse

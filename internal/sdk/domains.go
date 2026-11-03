@@ -68,38 +68,81 @@ func (b *ByIDIncludeDeletedDomainsRequest) MarshalJSON() ([]byte, error) {
 }
 
 var (
-	queryDomainsByIDIncludeDeletedResponseFieldID             = big.NewInt(1 << 0)
-	queryDomainsByIDIncludeDeletedResponseFieldName           = big.NewInt(1 << 1)
-	queryDomainsByIDIncludeDeletedResponseFieldType           = big.NewInt(1 << 2)
-	queryDomainsByIDIncludeDeletedResponseFieldStatus         = big.NewInt(1 << 3)
-	queryDomainsByIDIncludeDeletedResponseFieldDeletedAt      = big.NewInt(1 << 4)
-	queryDomainsByIDIncludeDeletedResponseFieldDomainMetadata = big.NewInt(1 << 5)
+	queryDomainsByIDIncludeDeletedResponseFieldAffiliationEmailAddress = big.NewInt(1 << 0)
+	queryDomainsByIDIncludeDeletedResponseFieldClerkDomainID           = big.NewInt(1 << 1)
+	queryDomainsByIDIncludeDeletedResponseFieldDomainMetadata          = big.NewInt(1 << 2)
+	queryDomainsByIDIncludeDeletedResponseFieldEnrollmentMode          = big.NewInt(1 << 3)
+	queryDomainsByIDIncludeDeletedResponseFieldID                      = big.NewInt(1 << 4)
+	queryDomainsByIDIncludeDeletedResponseFieldName                    = big.NewInt(1 << 5)
+	queryDomainsByIDIncludeDeletedResponseFieldOrganizationID          = big.NewInt(1 << 6)
+	queryDomainsByIDIncludeDeletedResponseFieldStatus                  = big.NewInt(1 << 7)
+	queryDomainsByIDIncludeDeletedResponseFieldType                    = big.NewInt(1 << 8)
+	queryDomainsByIDIncludeDeletedResponseFieldVerifiedAt              = big.NewInt(1 << 9)
+	queryDomainsByIDIncludeDeletedResponseFieldCreatedAt               = big.NewInt(1 << 10)
+	queryDomainsByIDIncludeDeletedResponseFieldDeletedAt               = big.NewInt(1 << 11)
+	queryDomainsByIDIncludeDeletedResponseFieldUpdatedAt               = big.NewInt(1 << 12)
 )
 
 // queryDomainsByIDIncludeDeletedResponseNullableFields maps the wire names of QueryDomainsByIDIncludeDeletedResponse's nullable fields (required or optional) to their field bits.
 var queryDomainsByIDIncludeDeletedResponseNullableFields = map[string]*big.Int{
-	"type":           queryDomainsByIDIncludeDeletedResponseFieldType,
-	"status":         queryDomainsByIDIncludeDeletedResponseFieldStatus,
-	"deletedAt":      queryDomainsByIDIncludeDeletedResponseFieldDeletedAt,
-	"domainMetadata": queryDomainsByIDIncludeDeletedResponseFieldDomainMetadata,
+	"affiliationEmailAddress": queryDomainsByIDIncludeDeletedResponseFieldAffiliationEmailAddress,
+	"clerkDomainId":           queryDomainsByIDIncludeDeletedResponseFieldClerkDomainID,
+	"domainMetadata":          queryDomainsByIDIncludeDeletedResponseFieldDomainMetadata,
+	"enrollmentMode":          queryDomainsByIDIncludeDeletedResponseFieldEnrollmentMode,
+	"status":                  queryDomainsByIDIncludeDeletedResponseFieldStatus,
+	"type":                    queryDomainsByIDIncludeDeletedResponseFieldType,
+	"verifiedAt":              queryDomainsByIDIncludeDeletedResponseFieldVerifiedAt,
+	"deletedAt":               queryDomainsByIDIncludeDeletedResponseFieldDeletedAt,
 }
 
 type QueryDomainsByIDIncludeDeletedResponse struct {
-	// Unique tracking domain identifier.
-	ID string `json:"id" url:"id"`
-	// Lowercase fully qualified tracking hostname, without a trailing dot.
-	Name string  `json:"name" url:"name"`
-	Type *string `json:"type,omitempty" url:"type,omitempty"`
-	// Current hostname verification status.
-	Status         *QueryDomainsByIDIncludeDeletedResponseStatus         `json:"status,omitempty" url:"status,omitempty"`
-	DeletedAt      *float64                                              `json:"deletedAt,omitempty" url:"deletedAt,omitempty"`
-	DomainMetadata *QueryDomainsByIDIncludeDeletedResponseDomainMetadata `json:"domainMetadata,omitempty" url:"domainMetadata,omitempty"`
+	AffiliationEmailAddress *string                                               `json:"affiliationEmailAddress,omitempty" url:"affiliationEmailAddress,omitempty"`
+	ClerkDomainID           *string                                               `json:"clerkDomainId,omitempty" url:"clerkDomainId,omitempty"`
+	DomainMetadata          *QueryDomainsByIDIncludeDeletedResponseDomainMetadata `json:"domainMetadata,omitempty" url:"domainMetadata,omitempty"`
+	EnrollmentMode          *string                                               `json:"enrollmentMode,omitempty" url:"enrollmentMode,omitempty"`
+	ID                      string                                                `json:"id" url:"id"`
+	Name                    string                                                `json:"name" url:"name"`
+	OrganizationID          string                                                `json:"organizationId" url:"organizationId"`
+	Status                  *QueryDomainsByIDIncludeDeletedResponseStatus         `json:"status,omitempty" url:"status,omitempty"`
+	Type                    *QueryDomainsByIDIncludeDeletedResponseType           `json:"type,omitempty" url:"type,omitempty"`
+	VerifiedAt              *float64                                              `json:"verifiedAt,omitempty" url:"verifiedAt,omitempty"`
+	CreatedAt               float64                                               `json:"createdAt" url:"createdAt"`
+	DeletedAt               *float64                                              `json:"deletedAt,omitempty" url:"deletedAt,omitempty"`
+	UpdatedAt               float64                                               `json:"updatedAt" url:"updatedAt"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
+}
+
+func (q *QueryDomainsByIDIncludeDeletedResponse) GetAffiliationEmailAddress() *string {
+	if q == nil {
+		return nil
+	}
+	return q.AffiliationEmailAddress
+}
+
+func (q *QueryDomainsByIDIncludeDeletedResponse) GetClerkDomainID() *string {
+	if q == nil {
+		return nil
+	}
+	return q.ClerkDomainID
+}
+
+func (q *QueryDomainsByIDIncludeDeletedResponse) GetDomainMetadata() *QueryDomainsByIDIncludeDeletedResponseDomainMetadata {
+	if q == nil {
+		return nil
+	}
+	return q.DomainMetadata
+}
+
+func (q *QueryDomainsByIDIncludeDeletedResponse) GetEnrollmentMode() *string {
+	if q == nil {
+		return nil
+	}
+	return q.EnrollmentMode
 }
 
 func (q *QueryDomainsByIDIncludeDeletedResponse) GetID() string {
@@ -116,11 +159,11 @@ func (q *QueryDomainsByIDIncludeDeletedResponse) GetName() string {
 	return q.Name
 }
 
-func (q *QueryDomainsByIDIncludeDeletedResponse) GetType() *string {
+func (q *QueryDomainsByIDIncludeDeletedResponse) GetOrganizationID() string {
 	if q == nil {
-		return nil
+		return ""
 	}
-	return q.Type
+	return q.OrganizationID
 }
 
 func (q *QueryDomainsByIDIncludeDeletedResponse) GetStatus() *QueryDomainsByIDIncludeDeletedResponseStatus {
@@ -130,6 +173,27 @@ func (q *QueryDomainsByIDIncludeDeletedResponse) GetStatus() *QueryDomainsByIDIn
 	return q.Status
 }
 
+func (q *QueryDomainsByIDIncludeDeletedResponse) GetType() *QueryDomainsByIDIncludeDeletedResponseType {
+	if q == nil {
+		return nil
+	}
+	return q.Type
+}
+
+func (q *QueryDomainsByIDIncludeDeletedResponse) GetVerifiedAt() *float64 {
+	if q == nil {
+		return nil
+	}
+	return q.VerifiedAt
+}
+
+func (q *QueryDomainsByIDIncludeDeletedResponse) GetCreatedAt() float64 {
+	if q == nil {
+		return 0
+	}
+	return q.CreatedAt
+}
+
 func (q *QueryDomainsByIDIncludeDeletedResponse) GetDeletedAt() *float64 {
 	if q == nil {
 		return nil
@@ -137,11 +201,11 @@ func (q *QueryDomainsByIDIncludeDeletedResponse) GetDeletedAt() *float64 {
 	return q.DeletedAt
 }
 
-func (q *QueryDomainsByIDIncludeDeletedResponse) GetDomainMetadata() *QueryDomainsByIDIncludeDeletedResponseDomainMetadata {
+func (q *QueryDomainsByIDIncludeDeletedResponse) GetUpdatedAt() float64 {
 	if q == nil {
-		return nil
+		return 0
 	}
-	return q.DomainMetadata
+	return q.UpdatedAt
 }
 
 func (q *QueryDomainsByIDIncludeDeletedResponse) GetExtraProperties() map[string]interface{} {
@@ -160,6 +224,34 @@ func (q *QueryDomainsByIDIncludeDeletedResponse) require(field *big.Int) {
 	q.explicitFields = next
 }
 
+// SetAffiliationEmailAddress sets the AffiliationEmailAddress field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryDomainsByIDIncludeDeletedResponse) SetAffiliationEmailAddress(affiliationEmailAddress *string) {
+	q.AffiliationEmailAddress = affiliationEmailAddress
+	q.require(queryDomainsByIDIncludeDeletedResponseFieldAffiliationEmailAddress)
+}
+
+// SetClerkDomainID sets the ClerkDomainID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryDomainsByIDIncludeDeletedResponse) SetClerkDomainID(clerkDomainID *string) {
+	q.ClerkDomainID = clerkDomainID
+	q.require(queryDomainsByIDIncludeDeletedResponseFieldClerkDomainID)
+}
+
+// SetDomainMetadata sets the DomainMetadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryDomainsByIDIncludeDeletedResponse) SetDomainMetadata(domainMetadata *QueryDomainsByIDIncludeDeletedResponseDomainMetadata) {
+	q.DomainMetadata = domainMetadata
+	q.require(queryDomainsByIDIncludeDeletedResponseFieldDomainMetadata)
+}
+
+// SetEnrollmentMode sets the EnrollmentMode field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryDomainsByIDIncludeDeletedResponse) SetEnrollmentMode(enrollmentMode *string) {
+	q.EnrollmentMode = enrollmentMode
+	q.require(queryDomainsByIDIncludeDeletedResponseFieldEnrollmentMode)
+}
+
 // SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (q *QueryDomainsByIDIncludeDeletedResponse) SetID(id string) {
@@ -174,11 +266,11 @@ func (q *QueryDomainsByIDIncludeDeletedResponse) SetName(name string) {
 	q.require(queryDomainsByIDIncludeDeletedResponseFieldName)
 }
 
-// SetType sets the Type field and marks it as non-optional;
+// SetOrganizationID sets the OrganizationID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (q *QueryDomainsByIDIncludeDeletedResponse) SetType(type_ *string) {
-	q.Type = type_
-	q.require(queryDomainsByIDIncludeDeletedResponseFieldType)
+func (q *QueryDomainsByIDIncludeDeletedResponse) SetOrganizationID(organizationID string) {
+	q.OrganizationID = organizationID
+	q.require(queryDomainsByIDIncludeDeletedResponseFieldOrganizationID)
 }
 
 // SetStatus sets the Status field and marks it as non-optional;
@@ -188,6 +280,27 @@ func (q *QueryDomainsByIDIncludeDeletedResponse) SetStatus(status *QueryDomainsB
 	q.require(queryDomainsByIDIncludeDeletedResponseFieldStatus)
 }
 
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryDomainsByIDIncludeDeletedResponse) SetType(type_ *QueryDomainsByIDIncludeDeletedResponseType) {
+	q.Type = type_
+	q.require(queryDomainsByIDIncludeDeletedResponseFieldType)
+}
+
+// SetVerifiedAt sets the VerifiedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryDomainsByIDIncludeDeletedResponse) SetVerifiedAt(verifiedAt *float64) {
+	q.VerifiedAt = verifiedAt
+	q.require(queryDomainsByIDIncludeDeletedResponseFieldVerifiedAt)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryDomainsByIDIncludeDeletedResponse) SetCreatedAt(createdAt float64) {
+	q.CreatedAt = createdAt
+	q.require(queryDomainsByIDIncludeDeletedResponseFieldCreatedAt)
+}
+
 // SetDeletedAt sets the DeletedAt field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (q *QueryDomainsByIDIncludeDeletedResponse) SetDeletedAt(deletedAt *float64) {
@@ -195,11 +308,11 @@ func (q *QueryDomainsByIDIncludeDeletedResponse) SetDeletedAt(deletedAt *float64
 	q.require(queryDomainsByIDIncludeDeletedResponseFieldDeletedAt)
 }
 
-// SetDomainMetadata sets the DomainMetadata field and marks it as non-optional;
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (q *QueryDomainsByIDIncludeDeletedResponse) SetDomainMetadata(domainMetadata *QueryDomainsByIDIncludeDeletedResponseDomainMetadata) {
-	q.DomainMetadata = domainMetadata
-	q.require(queryDomainsByIDIncludeDeletedResponseFieldDomainMetadata)
+func (q *QueryDomainsByIDIncludeDeletedResponse) SetUpdatedAt(updatedAt float64) {
+	q.UpdatedAt = updatedAt
+	q.require(queryDomainsByIDIncludeDeletedResponseFieldUpdatedAt)
 }
 
 func (q *QueryDomainsByIDIncludeDeletedResponse) UnmarshalJSON(data []byte) error {
@@ -439,7 +552,6 @@ func (q QueryDomainsByIDIncludeDeletedResponseDomainMetadataProvider) Ptr() *Que
 	return &q
 }
 
-// Current hostname verification status.
 type QueryDomainsByIDIncludeDeletedResponseStatus string
 
 const (
@@ -465,6 +577,28 @@ func NewQueryDomainsByIDIncludeDeletedResponseStatusFromString(s string) (QueryD
 }
 
 func (q QueryDomainsByIDIncludeDeletedResponseStatus) Ptr() *QueryDomainsByIDIncludeDeletedResponseStatus {
+	return &q
+}
+
+type QueryDomainsByIDIncludeDeletedResponseType string
+
+const (
+	QueryDomainsByIDIncludeDeletedResponseTypeClerk QueryDomainsByIDIncludeDeletedResponseType = "clerk"
+	QueryDomainsByIDIncludeDeletedResponseTypeProxy QueryDomainsByIDIncludeDeletedResponseType = "proxy"
+)
+
+func NewQueryDomainsByIDIncludeDeletedResponseTypeFromString(s string) (QueryDomainsByIDIncludeDeletedResponseType, error) {
+	switch s {
+	case "clerk":
+		return QueryDomainsByIDIncludeDeletedResponseTypeClerk, nil
+	case "proxy":
+		return QueryDomainsByIDIncludeDeletedResponseTypeProxy, nil
+	}
+	var t QueryDomainsByIDIncludeDeletedResponseType
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (q QueryDomainsByIDIncludeDeletedResponseType) Ptr() *QueryDomainsByIDIncludeDeletedResponseType {
 	return &q
 }
 

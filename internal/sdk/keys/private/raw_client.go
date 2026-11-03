@@ -38,7 +38,7 @@ func (r *RawClient) Create(
     ctx context.Context,
     request *keys.CreatePrivateRequest,
     opts ...option.RequestOption,
-) (*core.Response[*sdk.CreateWorkspaceAPIKeyResponse], error){
+) (*core.Response[*sdk.CreateWorkspaceAPIKeyResponse], error) {
     options := core.NewRequestOptions(opts...)
     baseURL := internal.ResolveBaseURL(
         options.BaseURL,
@@ -49,16 +49,9 @@ func (r *RawClient) Create(
         baseURL + "/v3/workspaces/%v/api-keys",
         request.WorkspaceSlug,
     )
-    authHeaders, authErr := r.options.AuthHeadersForEndpoint([][]string{{"clerkSession"}})
-    if authErr != nil {
-        return nil, authErr
-    }
     headers := internal.MergeHeaders(
-        internal.MergeHeaders(
-            r.options.ToHeader(),
-            options.ToHeader(),
-        ),
-        authHeaders,
+        r.options.ToHeader(),
+        options.ToHeader(),
     )
     headers.Add("Content-Type", "application/json")
     var response *sdk.CreateWorkspaceAPIKeyResponse
@@ -92,7 +85,7 @@ func (r *RawClient) Get(
     ctx context.Context,
     request *keys.GetPrivateRequest,
     opts ...option.RequestOption,
-) (*core.Response[*sdk.ReadPrivateKeyResponse], error){
+) (*core.Response[*sdk.ReadPrivateKeyResponse], error) {
     options := core.NewRequestOptions(opts...)
     baseURL := internal.ResolveBaseURL(
         options.BaseURL,
@@ -104,16 +97,9 @@ func (r *RawClient) Get(
         request.WorkspaceSlug,
         request.APIKeyID,
     )
-    authHeaders, authErr := r.options.AuthHeadersForEndpoint([][]string{{"clerkSession"}})
-    if authErr != nil {
-        return nil, authErr
-    }
     headers := internal.MergeHeaders(
-        internal.MergeHeaders(
-            r.options.ToHeader(),
-            options.ToHeader(),
-        ),
-        authHeaders,
+        r.options.ToHeader(),
+        options.ToHeader(),
     )
     var response *sdk.ReadPrivateKeyResponse
     raw, err := r.caller.Call(
@@ -145,7 +131,7 @@ func (r *RawClient) Delete(
     ctx context.Context,
     request *keys.DeletePrivateRequest,
     opts ...option.RequestOption,
-) (*core.Response[*sdk.RevokeWorkspaceAPIKeyResponse], error){
+) (*core.Response[*sdk.RevokeWorkspaceAPIKeyResponse], error) {
     options := core.NewRequestOptions(opts...)
     baseURL := internal.ResolveBaseURL(
         options.BaseURL,
@@ -157,16 +143,9 @@ func (r *RawClient) Delete(
         request.WorkspaceSlug,
         request.APIKeyID,
     )
-    authHeaders, authErr := r.options.AuthHeadersForEndpoint([][]string{{"clerkSession"}})
-    if authErr != nil {
-        return nil, authErr
-    }
     headers := internal.MergeHeaders(
-        internal.MergeHeaders(
-            r.options.ToHeader(),
-            options.ToHeader(),
-        ),
-        authHeaders,
+        r.options.ToHeader(),
+        options.ToHeader(),
     )
     var response *sdk.RevokeWorkspaceAPIKeyResponse
     raw, err := r.caller.Call(

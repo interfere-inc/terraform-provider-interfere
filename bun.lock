@@ -6,7 +6,7 @@
       "name": "terraform-provider-interfere",
       "devDependencies": {
         "@changesets/cli": "3.0.3",
-        "fern-api": "https://github.com/skve/fern/releases/download/pr-17949-ffdd423/fern-api-5.143.1-pr.17949.ffdd423.tgz",
+        "fern-api": "5.193.2",
       },
     },
   },
@@ -83,7 +83,7 @@
 
     "fdir": ["fdir@6.5.0", "", { "peerDependencies": { "picomatch": "^3 || ^4" }, "optionalPeers": ["picomatch"] }, "sha512-tIbYtZbucOs0BRGqPJkshJUYdL+SDH7dVM8gjy+ERp3WAUjLEFJE+02kanyHtwjWOnwrKYBiwAmM0p4kLJAnXg=="],
 
-    "fern-api": ["fern-api@https://github.com/skve/fern/releases/download/pr-17949-ffdd423/fern-api-5.143.1-pr.17949.ffdd423.tgz", { "optionalDependencies": { "@boundaryml/baml": "^0.219.0" }, "bin": { "fern": "cli.cjs" } }, "sha512-xxJB98xe0R0r+kwiioAdwweNJJo9zOekXY/STMgvBwlmQjbPLjf2UvG/Sb0/rrktVKwdaF7a5i2acthhkgmTaA=="],
+    "fern-api": ["fern-api@5.193.2", "", { "optionalDependencies": { "@boundaryml/baml": "^0.219.0" }, "bin": { "fern": "cli.cjs" } }, "sha512-Qm66JwVvNhcpwqKwGEm/zZvBdPsWRAZCIk8Qtlld0HAwH1CtkJlEneuK1yNMEmkCNE4VS3wKQbjgKZGWDH6i2w=="],
 
     "human-id": ["human-id@4.2.2", "", { "bin": { "human-id": "dist/cli.js" } }, "sha512-Z+8unD6em/MJwyrkWQ2M3wygRGI1+MztbutiNwk1DCuEPXOZRWGjtcMPZYP1exY9iNZMhd7ZOSMQSo9WYtiQRw=="],
 

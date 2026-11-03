@@ -2,6 +2,7 @@ package provider
 
 import (
 	"context"
+	"errors"
 
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -26,6 +27,10 @@ func (r *surfaceRepositoryResource) Read(ctx context.Context, req resource.ReadR
 		return
 	}
 	remote, err := r.read(ctx, data)
+	if errors.Is(err, errResourceNotFound) {
+		resp.State.RemoveResource(ctx)
+		return
+	}
 	if err != nil {
 		resp.Diagnostics.AddError("Unable to read mapping", err.Error())
 		return

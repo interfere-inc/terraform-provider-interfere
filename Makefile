@@ -1,4 +1,4 @@
-FERN ?= fern
+FERN ?= bunx --package fern-api@5.193.2 fern
 OPENAPI_GENERATOR ?= go run github.com/hashicorp/terraform-plugin-codegen-openapi/cmd/tfplugingen-openapi@v0.3.0
 FRAMEWORK_GENERATOR ?= go run github.com/hashicorp/terraform-plugin-codegen-framework/cmd/tfplugingen-framework@v0.4.1
 
