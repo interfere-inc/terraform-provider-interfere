@@ -1,5 +1,6 @@
 name: Check
 on:
+  workflow_dispatch:
   pull_request:
   push:
     branches:
@@ -11,6 +12,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6
+        with:
+          bun-version: "1.4.0"
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
@@ -22,4 +26,6 @@ jobs:
         with:
           terraform_version: "1.16.4"
           terraform_wrapper: false
+      - run: bun install --frozen-lockfile --ignore-scripts
+      - run: bun run test:release
       - run: make build test check check-generated

@@ -141,6 +141,16 @@ If creation fails after retries, or a transport error leaves its result uncertai
 
 ## Releases
 
+The **Prepare release** workflow checks `https://api.interfere.com/openapi-terraform.json` daily at 08:23 UTC, on pushes to `main`, and on manual dispatch. Deploy the Gateway Terraform publication endpoint before enabling this workflow. A failed download or generation fails the run without creating a release PR; an unchanged schema with no pending changesets is a no-op.
+
+When the deployed contract changes, the workflow regenerates the Fern client, Terraform schemas, and documentation, runs the provider checks, and uses Changesets to create or update `changeset-release/main`. The PR contains the generated changes, a version bump in `package.json`, and `CHANGELOG.md`. Schema updates conservatively propose a minor bump before 1.0 and a major bump after 1.0; review compatibility before merging. New API resources still need explicit mappings and lifecycle adapters. Changes that cannot compile or pass tests require an implementation fix before a release PR can be created.
+
+For provider-only changes, run `bun install --frozen-lockfile --ignore-scripts` and `bun run changeset`, and commit the resulting `.changeset/*.md` file with the change. The package is private: Changesets manages release versions only and never publishes an npm package. Keep these release automation files when syncing monorepo source snapshots.
+
+The workflow uses the repository's `GITHUB_TOKEN` with contents, pull-request, and Actions write permissions. Allow GitHub Actions to create pull requests in repository settings. Because bot-token pushes do not trigger ordinary push/PR workflows, it explicitly dispatches **Check** on the release branch.
+
+After reviewing and merging the release PR, push `v<package.json version>` at the merged revision to run the existing signed draft-release workflow. Inspect and publish the draft to notify the Terraform Registry. The scheduled workflow opens release PRs; it does not automatically tag or publish releases.
+
 The monorepo remains the development source. The public repository contains only this provider directory and its generated Go code, with a separate Git history. Infrastructure provisions the repository, Engineering access, and branch protection.
 
 Sync a reviewed provider snapshot into the public repository, including `openapi.json` and `internal/sdk`. These generated inputs are ignored in the monorepo; force-add them when first tracking them in the standalone public repository. Exclude `.tools`, `bin`, `dist`, Terraform state, and local Fern metadata. Review the resulting diff and run `make build test check check-generated` before publishing it.

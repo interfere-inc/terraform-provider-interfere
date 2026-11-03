@@ -1,0 +1,15 @@
+{
+  "name": "terraform-provider-interfere",
+  "version": "0.5.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "changeset": "changeset",
+    "release:prepare": "bun scripts/prepare-release.ts",
+    "test:release": "bun test scripts"
+  },
+  "devDependencies": {
+    "@changesets/cli": "3.0.3",
+    "fern-api": "https://github.com/skve/fern/releases/download/pr-17949-ffdd423/fern-api-5.143.1-pr.17949.ffdd423.tgz"
+  }
+}
