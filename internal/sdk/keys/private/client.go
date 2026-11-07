@@ -36,7 +36,7 @@ func NewClient(options *core.RequestOptions) *Client {
     }
 }
 
-// Creates a private API key with explicit scopes and expiration. Supply surfaceSlug for a surface key; omit it for a workspace key. Grants cannot exceed the caller's permissions. Reuse the same idempotency key and request after an uncertain response.
+// Creates a private API key with explicit scopes and expiration. Supply surfaceSlug for an app key; omit it for a workspace key. Grants cannot exceed the caller's permissions. Reuse the same idempotency key and request after an uncertain response.
 // 
 // Example:
 // 
@@ -68,7 +68,7 @@ func (c *Client) Create(
     return response.Body, nil
 }
 
-// Reads a workspace or surface key's grants and expiration without retrieving its secret. Requires workspace authentication read permission for workspace keys or surface read permission for surface keys.
+// Reads a workspace or app key's grants and expiration without retrieving its secret. Requires workspace authentication read permission for workspace keys or app read permission for app keys.
 // 
 // Example:
 // 
@@ -96,7 +96,7 @@ func (c *Client) Get(
     return response.Body, nil
 }
 
-// Revokes a workspace or surface API key so it can no longer authorize API requests. Requires workspace authentication write permission for workspace keys or surface write permission for surface keys.
+// Revokes a workspace or app API key so it can no longer authorize API requests. Requires workspace authentication write permission for workspace keys or app write permission for app keys.
 // 
 // Example:
 // 

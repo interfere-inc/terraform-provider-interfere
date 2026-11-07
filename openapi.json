@@ -22,11 +22,13 @@
   "tags": [
     {
       "name": "Surface keys",
-      "description": "Surface credential issuance and rotation"
+      "description": "App (surface) credential issuance and rotation",
+      "x-displayName": "App keys"
     },
     {
       "name": "Surfaces",
-      "description": "Workspace surfaces and their activity"
+      "description": "Workspace apps (surfaces) and their activity",
+      "x-displayName": "Apps"
     },
     {
       "name": "Workspaces",
@@ -385,7 +387,7 @@
                     },
                     "readToolNames": {
                       "type": "array",
-                      "maxItems": 100,
+                      "maxItems": 500,
                       "items": {
                         "type": "string",
                         "minLength": 1,
@@ -394,7 +396,7 @@
                     },
                     "resourceUris": {
                       "type": "array",
-                      "maxItems": 100,
+                      "maxItems": 500,
                       "items": {
                         "type": "string",
                         "minLength": 1,
@@ -482,6 +484,9 @@
                       "additionalProperties": {
                         "type": "string"
                       }
+                    },
+                    "accountId": {
+                      "type": "string"
                     },
                     "permissions": {
                       "type": "object",
@@ -660,6 +665,9 @@
                         "type": "string"
                       }
                     },
+                    "accountId": {
+                      "type": "string"
+                    },
                     "permissions": {
                       "type": "object",
                       "propertyNames": {
@@ -836,6 +844,9 @@
                       "additionalProperties": {
                         "type": "string"
                       }
+                    },
+                    "accountId": {
+                      "type": "string"
                     },
                     "permissions": {
                       "type": "object",
@@ -3553,7 +3564,7 @@
       "post": {
         "operationId": "query_surfaces_getBySlugIncludeDeleted",
         "summary": "Read surfaces.getBySlugIncludeDeleted",
-        "description": "Read a surface by slug even if deleted. Use only when investigating historical references; prefer surfaces.get for active resources. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation is read-only despite using POST. Requires org:surfaces:read; insufficient permission returns an access-denied error. An authorized read with no matching resource returns WORKSPACE_RESOURCE_NOT_FOUND (404). Only use pagination arguments declared in the schema.",
+        "description": "Read an app (surface) by slug even if deleted. Use only when investigating historical references; prefer surfaces.get for active resources. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation is read-only despite using POST. Requires org:surfaces:read; insufficient permission returns an access-denied error. An authorized read with no matching resource returns WORKSPACE_RESOURCE_NOT_FOUND (404). Only use pagination arguments declared in the schema.",
         "tags": [
           "Workspaces"
         ],
@@ -3643,7 +3654,7 @@
       "post": {
         "operationId": "mutation_integrations_linkSurfaceToDestination",
         "summary": "Run integrations.linkSurfaceToDestination",
-        "description": "Link a surface to an integration destination. Inspect the existing installation and mapping first. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.",
+        "description": "Link an app (surface) to an integration destination. Inspect the existing installation and mapping first. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.",
         "tags": [
           "Workspaces"
         ],
@@ -3741,7 +3752,7 @@
       "post": {
         "operationId": "mutation_integrations_linkSurfaceToRepository",
         "summary": "Run integrations.linkSurfaceToRepository",
-        "description": "Link a surface to a repository. Resolve repository and surface IDs from their list queries first. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.",
+        "description": "Link an app (surface) to a repository. Resolve repository and app IDs from their list queries first. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.",
         "tags": [
           "Workspaces"
         ],
@@ -3850,7 +3861,7 @@
       "post": {
         "operationId": "mutation_integrations_unlinkSurfaceDestinationMapping",
         "summary": "Run integrations.unlinkSurfaceDestinationMapping",
-        "description": "Remove a surface's destination mapping. This changes integration routing. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.",
+        "description": "Remove an app's destination mapping. This changes integration routing. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.",
         "tags": [
           "Workspaces"
         ],
@@ -3937,7 +3948,7 @@
       "post": {
         "operationId": "mutation_integrations_unlinkSurfaceMapping",
         "summary": "Run integrations.unlinkSurfaceMapping",
-        "description": "Remove a surface's integration mapping. Inspect the selected mapping before unlinking it. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.",
+        "description": "Remove an app's integration mapping. Inspect the selected mapping before unlinking it. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.",
         "tags": [
           "Workspaces"
         ],
@@ -4295,7 +4306,7 @@
       "post": {
         "operationId": "mutation_surfaces_delete",
         "summary": "Run surfaces.delete",
-        "description": "Delete a surface. This is destructive; resolve its exact ID and slug with surfaces.list and verify the requested target. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.",
+        "description": "Delete an app (surface). This is destructive; resolve its exact ID and slug with surfaces.list and verify the requested target. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.",
         "tags": [
           "Workspaces"
         ],
@@ -4382,7 +4393,7 @@
       "post": {
         "operationId": "mutation_surfaces_setAnonymousUserTracking",
         "summary": "Run surfaces.setAnonymousUserTracking",
-        "description": "Enable or disable anonymous-user tracking for a surface. Inspect its current setting first. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.",
+        "description": "Enable or disable anonymous-user tracking for an app (surface). Inspect its current setting first. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.",
         "tags": [
           "Workspaces"
         ],
@@ -4473,7 +4484,7 @@
       "post": {
         "operationId": "mutation_surfaces_updateName",
         "summary": "Run surfaces.updateName",
-        "description": "Rename a surface. Resolve its ID with surfaces.list and preserve the rest of its settings. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.",
+        "description": "Rename an app (surface). Resolve its ID with surfaces.list and preserve the rest of its settings. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.",
         "tags": [
           "Workspaces"
         ],
@@ -4566,7 +4577,7 @@
       "post": {
         "operationId": "createWorkspaceApiKey",
         "summary": "Create workspace API key",
-        "description": "Creates a private API key with explicit scopes and expiration. Supply surfaceSlug for a surface key; omit it for a workspace key. Grants cannot exceed the caller's permissions. Reuse the same idempotency key and request after an uncertain response.",
+        "description": "Creates a private API key with explicit scopes and expiration. Supply surfaceSlug for an app key; omit it for a workspace key. Grants cannot exceed the caller's permissions. Reuse the same idempotency key and request after an uncertain response.",
         "tags": [
           "Workspaces"
         ],
@@ -4711,7 +4722,7 @@
       "get": {
         "operationId": "readPrivateKey",
         "summary": "Read private key metadata",
-        "description": "Reads a workspace or surface key's grants and expiration without retrieving its secret. Requires workspace authentication read permission for workspace keys or surface read permission for surface keys.",
+        "description": "Reads a workspace or app key's grants and expiration without retrieving its secret. Requires workspace authentication read permission for workspace keys or app read permission for app keys.",
         "tags": [
           "Workspaces"
         ],
@@ -4780,7 +4791,7 @@
       "delete": {
         "operationId": "revokeWorkspaceApiKey",
         "summary": "Revoke workspace API key",
-        "description": "Revokes a workspace or surface API key so it can no longer authorize API requests. Requires workspace authentication write permission for workspace keys or surface write permission for surface keys.",
+        "description": "Revokes a workspace or app API key so it can no longer authorize API requests. Requires workspace authentication write permission for workspace keys or app write permission for app keys.",
         "tags": [
           "Workspaces"
         ],
@@ -4847,8 +4858,8 @@
     "/v3/workspaces/{workspaceSlug}/surfaces": {
       "post": {
         "operationId": "createSurface",
-        "summary": "Create surface",
-        "description": "Creates a surface in the workspace. Reuse the original request identity when retrying the same creation attempt.",
+        "summary": "Create app",
+        "description": "Creates an app (surface) in the workspace. Reuse the original request identity when retrying the same creation attempt.",
         "tags": [
           "Surfaces"
         ],
@@ -5096,8 +5107,8 @@
     "/v3/workspaces/{workspaceSlug}/surfaces/{surfaceSlug}/publicKeys": {
       "post": {
         "operationId": "createSurfacePublicKey",
-        "summary": "Create surface public key",
-        "description": "Creates a publishable key for the surface.",
+        "summary": "Create app public key",
+        "description": "Creates a publishable key for the app (surface).",
         "tags": [
           "Surface keys"
         ],
@@ -5197,8 +5208,8 @@
     "/v3/workspaces/{workspaceSlug}/surfaces/{surfaceSlug}/publicKeys/{publicKeyId}": {
       "get": {
         "operationId": "readPublicKey",
-        "summary": "Read surface public key",
-        "description": "Reads a publishable key's identity, current value and revocation status. Requires surface read permission. Revoked keys and keys belonging to deleted surfaces report revoked: true.",
+        "summary": "Read app public key",
+        "description": "Reads a publishable key's identity, current value and revocation status. Requires app read permission. Revoked keys and keys belonging to deleted apps report revoked: true.",
         "tags": [
           "Surface keys"
         ],
@@ -5276,8 +5287,8 @@
       },
       "delete": {
         "operationId": "revokeSurfacePublicKey",
-        "summary": "Revoke surface public key",
-        "description": "Revokes a publishable key and all its rotation grace-period values. Requires surface write permission. Repeating revocation of an existing key succeeds without changing its revocation time.",
+        "summary": "Revoke app public key",
+        "description": "Revokes a publishable key and all its rotation grace-period values. Requires app write permission. Repeating revocation of an existing key succeeds without changing its revocation time.",
         "tags": [
           "Surface keys"
         ],
