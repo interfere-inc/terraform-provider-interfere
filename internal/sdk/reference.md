@@ -157,7 +157,7 @@ _, err := client.Integrations.Installations(
 <dl>
 <dd>
 
-Link a surface to an integration destination. Inspect the existing installation and mapping first. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.
+Link an app (surface) to an integration destination. Inspect the existing installation and mapping first. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.
 </dd>
 </dl>
 </dd>
@@ -230,7 +230,7 @@ _, err := client.Integrations.LinkSurfaceToDestination(
 <dl>
 <dd>
 
-Link a surface to a repository. Resolve repository and surface IDs from their list queries first. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.
+Link an app (surface) to a repository. Resolve repository and app IDs from their list queries first. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.
 </dd>
 </dl>
 </dd>
@@ -303,7 +303,7 @@ _, err := client.Integrations.LinkSurfaceToRepository(
 <dl>
 <dd>
 
-Remove a surface's destination mapping. This changes integration routing. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.
+Remove an app's destination mapping. This changes integration routing. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.
 </dd>
 </dl>
 </dd>
@@ -374,7 +374,7 @@ _, err := client.Integrations.UnlinkSurfaceDestinationMapping(
 <dl>
 <dd>
 
-Remove a surface's integration mapping. Inspect the selected mapping before unlinking it. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.
+Remove an app's integration mapping. Inspect the selected mapping before unlinking it. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.
 </dd>
 </dl>
 </dd>
@@ -727,7 +727,7 @@ _, err := client.Workspaces.UpdateBasics(
 <dl>
 <dd>
 
-Read a surface by slug even if deleted. Use only when investigating historical references; prefer surfaces.get for active resources. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation is read-only despite using POST. Requires org:surfaces:read; insufficient permission returns an access-denied error. An authorized read with no matching resource returns WORKSPACE_RESOURCE_NOT_FOUND (404). Only use pagination arguments declared in the schema.
+Read an app (surface) by slug even if deleted. Use only when investigating historical references; prefer surfaces.get for active resources. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation is read-only despite using POST. Requires org:surfaces:read; insufficient permission returns an access-denied error. An authorized read with no matching resource returns WORKSPACE_RESOURCE_NOT_FOUND (404). Only use pagination arguments declared in the schema.
 </dd>
 </dl>
 </dd>
@@ -798,7 +798,7 @@ _, err := client.Surfaces.GetBySlugIncludeDeleted(
 <dl>
 <dd>
 
-Delete a surface. This is destructive; resolve its exact ID and slug with surfaces.list and verify the requested target. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.
+Delete an app (surface). This is destructive; resolve its exact ID and slug with surfaces.list and verify the requested target. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.
 </dd>
 </dl>
 </dd>
@@ -869,7 +869,7 @@ _, err := client.Surfaces.Delete(
 <dl>
 <dd>
 
-Enable or disable anonymous-user tracking for a surface. Inspect its current setting first. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.
+Enable or disable anonymous-user tracking for an app (surface). Inspect its current setting first. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.
 </dd>
 </dl>
 </dd>
@@ -941,7 +941,7 @@ _, err := client.Surfaces.SetAnonymousUserTracking(
 <dl>
 <dd>
 
-Rename a surface. Resolve its ID with surfaces.list and preserve the rest of its settings. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.
+Rename an app (surface). Resolve its ID with surfaces.list and preserve the rest of its settings. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.
 </dd>
 </dl>
 </dd>
@@ -1013,7 +1013,7 @@ _, err := client.Surfaces.UpdateName(
 <dl>
 <dd>
 
-Creates a surface in the workspace. Reuse the original request identity when retrying the same creation attempt.
+Creates an app (surface) in the workspace. Reuse the original request identity when retrying the same creation attempt.
 </dd>
 </dl>
 </dd>
@@ -1122,7 +1122,7 @@ _, err := client.Surfaces.CreateSurface(
 <dl>
 <dd>
 
-Creates a private API key with explicit scopes and expiration. Supply surfaceSlug for a surface key; omit it for a workspace key. Grants cannot exceed the caller's permissions. Reuse the same idempotency key and request after an uncertain response.
+Creates a private API key with explicit scopes and expiration. Supply surfaceSlug for an app key; omit it for a workspace key. Grants cannot exceed the caller's permissions. Reuse the same idempotency key and request after an uncertain response.
 </dd>
 </dl>
 </dd>
@@ -1227,7 +1227,7 @@ _, err := client.Keys.Private.Create(
 <dl>
 <dd>
 
-Reads a workspace or surface key's grants and expiration without retrieving its secret. Requires workspace authentication read permission for workspace keys or surface read permission for surface keys.
+Reads a workspace or app key's grants and expiration without retrieving its secret. Requires workspace authentication read permission for workspace keys or app read permission for app keys.
 </dd>
 </dl>
 </dd>
@@ -1296,7 +1296,7 @@ _, err := client.Keys.Private.Get(
 <dl>
 <dd>
 
-Revokes a workspace or surface API key so it can no longer authorize API requests. Requires workspace authentication write permission for workspace keys or surface write permission for surface keys.
+Revokes a workspace or app API key so it can no longer authorize API requests. Requires workspace authentication write permission for workspace keys or app write permission for app keys.
 </dd>
 </dl>
 </dd>
@@ -1366,7 +1366,7 @@ _, err := client.Keys.Private.Delete(
 <dl>
 <dd>
 
-Creates a publishable key for the surface.
+Creates a publishable key for the app (surface).
 </dd>
 </dl>
 </dd>
@@ -1453,7 +1453,7 @@ _, err := client.Keys.Public.Create(
 <dl>
 <dd>
 
-Reads a publishable key's identity, current value and revocation status. Requires surface read permission. Revoked keys and keys belonging to deleted surfaces report revoked: true.
+Reads a publishable key's identity, current value and revocation status. Requires app read permission. Revoked keys and keys belonging to deleted apps report revoked: true.
 </dd>
 </dl>
 </dd>
@@ -1531,7 +1531,7 @@ _, err := client.Keys.Public.Get(
 <dl>
 <dd>
 
-Revokes a publishable key and all its rotation grace-period values. Requires surface write permission. Repeating revocation of an existing key succeeds without changing its revocation time.
+Revokes a publishable key and all its rotation grace-period values. Requires app write permission. Repeating revocation of an existing key succeeds without changing its revocation time.
 </dd>
 </dl>
 </dd>

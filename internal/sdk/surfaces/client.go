@@ -35,7 +35,7 @@ func NewClient(options *core.RequestOptions) *Client {
     }
 }
 
-// Read a surface by slug even if deleted. Use only when investigating historical references; prefer surfaces.get for active resources. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation is read-only despite using POST. Requires org:surfaces:read; insufficient permission returns an access-denied error. An authorized read with no matching resource returns WORKSPACE_RESOURCE_NOT_FOUND (404). Only use pagination arguments declared in the schema.
+// Read an app (surface) by slug even if deleted. Use only when investigating historical references; prefer surfaces.get for active resources. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation is read-only despite using POST. Requires org:surfaces:read; insufficient permission returns an access-denied error. An authorized read with no matching resource returns WORKSPACE_RESOURCE_NOT_FOUND (404). Only use pagination arguments declared in the schema.
 // 
 // Example:
 // 
@@ -65,7 +65,7 @@ func (c *Client) GetBySlugIncludeDeleted(
     return response.Body, nil
 }
 
-// Delete a surface. This is destructive; resolve its exact ID and slug with surfaces.list and verify the requested target. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.
+// Delete an app (surface). This is destructive; resolve its exact ID and slug with surfaces.list and verify the requested target. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.
 // 
 // Example:
 // 
@@ -95,7 +95,7 @@ func (c *Client) Delete(
     return response.Body, nil
 }
 
-// Enable or disable anonymous-user tracking for a surface. Inspect its current setting first. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.
+// Enable or disable anonymous-user tracking for an app (surface). Inspect its current setting first. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.
 // 
 // Example:
 // 
@@ -126,7 +126,7 @@ func (c *Client) SetAnonymousUserTracking(
     return response.Body, nil
 }
 
-// Rename a surface. Resolve its ID with surfaces.list and preserve the rest of its settings. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.
+// Rename an app (surface). Resolve its ID with surfaces.list and preserve the rest of its settings. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.
 // 
 // Example:
 // 
@@ -157,7 +157,7 @@ func (c *Client) UpdateName(
     return response.Body, nil
 }
 
-// Creates a surface in the workspace. Reuse the original request identity when retrying the same creation attempt.
+// Creates an app (surface) in the workspace. Reuse the original request identity when retrying the same creation attempt.
 // 
 // Example:
 // 

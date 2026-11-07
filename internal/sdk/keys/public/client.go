@@ -36,7 +36,7 @@ func NewClient(options *core.RequestOptions) *Client {
     }
 }
 
-// Creates a publishable key for the surface.
+// Creates a publishable key for the app (surface).
 // 
 // Example:
 // 
@@ -66,7 +66,7 @@ func (c *Client) Create(
     return response.Body, nil
 }
 
-// Reads a publishable key's identity, current value and revocation status. Requires surface read permission. Revoked keys and keys belonging to deleted surfaces report revoked: true.
+// Reads a publishable key's identity, current value and revocation status. Requires app read permission. Revoked keys and keys belonging to deleted apps report revoked: true.
 // 
 // Example:
 // 
@@ -95,7 +95,7 @@ func (c *Client) Get(
     return response.Body, nil
 }
 
-// Revokes a publishable key and all its rotation grace-period values. Requires surface write permission. Repeating revocation of an existing key succeeds without changing its revocation time.
+// Revokes a publishable key and all its rotation grace-period values. Requires app write permission. Repeating revocation of an existing key succeeds without changing its revocation time.
 // 
 // Example:
 // 

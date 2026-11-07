@@ -1,5 +1,11 @@
 # terraform-provider-interfere
 
+## 0.7.0
+
+### Minor Changes
+
+- Regenerate the provider against the deployed Terraform API contract (65525892b0d6270545f6df1c9651c55e25022c96bd10f6ca6a6ccd46f57c03bd → f27531ff9b2de0bd97a8ba2cc302ca8a26bf201c0e7c079593ee712d7e7b2fc4). Review generated schema changes and lifecycle compatibility before publishing.
+
 ## 0.6.0
 
 ### Minor Changes
