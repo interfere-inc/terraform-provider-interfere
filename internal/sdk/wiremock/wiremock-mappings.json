@@ -505,8 +505,8 @@
       }
     },
     {
-      "id": "3c826dba-86d2-49cb-86b2-f267a225f824",
-      "name": "Create surface - default",
+      "id": "837d5a91-1bb5-4e11-9f42-671eaeacda89",
+      "name": "Create app - default",
       "request": {
         "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/surfaces",
         "method": "POST",
@@ -528,7 +528,7 @@
           "Content-Type": "application/json"
         }
       },
-      "uuid": "3c826dba-86d2-49cb-86b2-f267a225f824",
+      "uuid": "837d5a91-1bb5-4e11-9f42-671eaeacda89",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -655,8 +655,8 @@
       }
     },
     {
-      "id": "867cd9a0-84b7-4bfe-bdfe-f9d15d5806b2",
-      "name": "Create surface public key - default",
+      "id": "c2fef2fb-3125-4279-9c8a-a54f3293f7d8",
+      "name": "Create app public key - default",
       "request": {
         "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/surfaces/{surfaceSlug}/publicKeys",
         "method": "POST",
@@ -681,7 +681,7 @@
           "Content-Type": "application/json"
         }
       },
-      "uuid": "867cd9a0-84b7-4bfe-bdfe-f9d15d5806b2",
+      "uuid": "c2fef2fb-3125-4279-9c8a-a54f3293f7d8",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -694,8 +694,8 @@
       }
     },
     {
-      "id": "7356ff97-7a63-42a4-9d89-e55721f2a348",
-      "name": "Read surface public key - default",
+      "id": "96495896-634c-449b-9ed8-1c367b7c7fa0",
+      "name": "Read app public key - default",
       "request": {
         "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/surfaces/{surfaceSlug}/publicKeys/{publicKeyId}",
         "method": "GET",
@@ -723,7 +723,7 @@
           "Content-Type": "application/json"
         }
       },
-      "uuid": "7356ff97-7a63-42a4-9d89-e55721f2a348",
+      "uuid": "96495896-634c-449b-9ed8-1c367b7c7fa0",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -736,8 +736,8 @@
       }
     },
     {
-      "id": "4d0861e1-0e71-4b8d-a6b6-f1cd6a55f1c4",
-      "name": "Revoke surface public key - default",
+      "id": "dd9476ae-556f-46a7-81e4-ff3b052ec907",
+      "name": "Revoke app public key - default",
       "request": {
         "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/surfaces/{surfaceSlug}/publicKeys/{publicKeyId}",
         "method": "DELETE",
@@ -765,7 +765,7 @@
           "Content-Type": "application/json"
         }
       },
-      "uuid": "4d0861e1-0e71-4b8d-a6b6-f1cd6a55f1c4",
+      "uuid": "dd9476ae-556f-46a7-81e4-ff3b052ec907",
       "persistent": true,
       "priority": 3,
       "metadata": {
