@@ -21,6 +21,7 @@ type surfaceFixture struct {
 	name, surfaceType              string
 	deleted                        bool
 	tracking                       bool
+	replayPolicy                   string
 	creates, updates, deletes      int
 	readBody                       any
 	readStatus, writeStatus        int
@@ -30,7 +31,7 @@ type surfaceFixture struct {
 
 func newSurfaceFixture(t *testing.T) *surfaceFixture {
 	t.Helper()
-	f := &surfaceFixture{name: "Example", acknowledge: true, tracking: true, surfaceType: "react"}
+	f := &surfaceFixture{name: "Example", acknowledge: true, tracking: true, replayPolicy: "on_error", surfaceType: "react"}
 	f.server = httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		f.mu.Lock()
 		defer f.mu.Unlock()
@@ -74,6 +75,9 @@ func newSurfaceFixture(t *testing.T) *surfaceFixture {
 					return
 				}
 				f.name, f.deleted, f.surfaceType = body.Name, false, string(body.Type)
+				if body.AnonymousReplayPolicy != nil {
+					f.replayPolicy = string(*body.AnonymousReplayPolicy)
+				}
 				write(map[string]any{
 					"surface":   map[string]any{"id": surfaceID, "slug": surfaceSlug, "name": f.name, "type": string(body.Type)},
 					"apiKey":    map[string]any{"id": "key", "name": "Default", "secret": "must-not-enter-state"},
@@ -101,7 +105,7 @@ func newSurfaceFixture(t *testing.T) *surfaceFixture {
 				if f.deleted {
 					deletedAt = 1234567890
 				}
-				write(map[string]any{"id": surfaceID, "slug": surfaceSlug, "name": f.name, "type": f.surfaceType, "deletedAt": deletedAt, "anonymousUserTracking": f.tracking, "sourceConnectionId": nil, "sourceMappingId": nil, "sourceWorkingDirectory": nil, "destinationConnectionId": nil, "destinationMappingId": nil})
+				write(map[string]any{"id": surfaceID, "slug": surfaceSlug, "name": f.name, "type": f.surfaceType, "deletedAt": deletedAt, "anonymousReplayPolicy": f.replayPolicy, "anonymousUserTracking": f.tracking, "sourceConnectionId": nil, "sourceMappingId": nil, "sourceWorkingDirectory": nil, "destinationConnectionId": nil, "destinationMappingId": nil})
 			},
 			"/v3/workspaces/example/actions/surfaces.setAnonymousUserTracking": func() {
 				var body sdk.SetAnonymousUserTrackingSurfacesRequest
@@ -110,6 +114,20 @@ func newSurfaceFixture(t *testing.T) *surfaceFixture {
 				}
 				if f.acknowledge {
 					f.tracking = body.Args.Enabled
+				}
+				write(map[string]any{"success": f.acknowledge})
+			},
+			"/v3/workspaces/example/actions/surfaces.setAnonymousReplayPolicy": func() {
+				var body sdk.SetAnonymousReplayPolicySurfacesRequest
+				if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+					t.Error(err)
+				}
+				if body.Args == nil || body.Args.SurfaceSlug != surfaceSlug {
+					t.Error("Unexpected replay policy identifier")
+					return
+				}
+				if f.acknowledge {
+					f.replayPolicy = string(body.Args.Policy)
 				}
 				write(map[string]any{"success": f.acknowledge})
 			},

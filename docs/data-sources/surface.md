@@ -29,6 +29,7 @@ data "interfere_surface" "web" {
 
 ### Read-Only
 
+- `anonymous_replay_policy` (String) When sessions without an identified user record session replay: always, on_error (only once an error occurs) or never. Defaults to on_error when anonymous-user tracking is on, otherwise always.
 - `anonymous_user_tracking` (Boolean) Whether anonymous-user telemetry is collected.
 - `id` (String) Unique surface identifier.
 - `name` (String) Display name of the surface.

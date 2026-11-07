@@ -18,6 +18,7 @@ type surfaceLookupModel struct {
 	Name                  types.String `tfsdk:"name"`
 	Type                  types.String `tfsdk:"type"`
 	AnonymousUserTracking types.Bool   `tfsdk:"anonymous_user_tracking"`
+	AnonymousReplayPolicy types.String `tfsdk:"anonymous_replay_policy"`
 }
 
 func NewSurfaceDataSource() datasource.DataSource { return &surfaceDataSource{} }
@@ -64,5 +65,6 @@ func (r *surfaceDataSource) Read(ctx context.Context, req datasource.ReadRequest
 	data.Name = types.StringValue(remote.Name)
 	data.Type = types.StringValue(string(remote.Type))
 	data.AnonymousUserTracking = types.BoolValue(remote.AnonymousUserTracking)
+	data.AnonymousReplayPolicy = types.StringValue(remote.AnonymousReplayPolicy)
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }

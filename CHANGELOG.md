@@ -1,5 +1,11 @@
 # terraform-provider-interfere
 
+## 0.8.0
+
+### Minor Changes
+
+- Add `anonymous_replay_policy` to the `interfere_surface` resource and the `interfere_surface` data source. Set it to `always`, `on_error` or `never` to choose when sessions without an identified user record session replay; omit it to preserve the API setting. Changes update the surface in place, and imports read the current policy. Regenerated against the deployed Terraform API contract (f27531ff9b2de0bd97a8ba2cc302ca8a26bf201c0e7c079593ee712d7e7b2fc4 → efdab7054a048a89f67d865395d68eb89f5a67c901c2795a119a66ea9455cd99), which adds the `surfaces.setAnonymousReplayPolicy` operation. Indirect `golang.org/x` dependencies are updated.
+
 ## 0.7.0
 
 ### Minor Changes

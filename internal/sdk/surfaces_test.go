@@ -18,6 +18,14 @@ func TestSettersCreateSurfaceRequest(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetAnonymousReplayPolicy", func(t *testing.T) {
+		obj := &CreateSurfaceRequest{}
+		var fernTestValueAnonymousReplayPolicy *CreateSurfaceRequestAnonymousReplayPolicy
+		obj.SetAnonymousReplayPolicy(fernTestValueAnonymousReplayPolicy)
+		assert.Equal(t, fernTestValueAnonymousReplayPolicy, obj.AnonymousReplayPolicy)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetAnonymousUserTracking", func(t *testing.T) {
 		obj := &CreateSurfaceRequest{}
 		var fernTestValueAnonymousUserTracking *bool
@@ -69,6 +77,37 @@ func TestSettersMarkExplicitCreateSurfaceRequest(t *testing.T) {
 
 		// Act
 		obj.SetWorkspaceSlug(fernTestValueWorkspaceSlug)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAnonymousReplayPolicy_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateSurfaceRequest{}
+		var fernTestValueAnonymousReplayPolicy *CreateSurfaceRequestAnonymousReplayPolicy
+
+		// Act
+		obj.SetAnonymousReplayPolicy(fernTestValueAnonymousReplayPolicy)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -389,6 +428,90 @@ func TestSettersMarkExplicitGetBySlugIncludeDeletedSurfacesRequest(t *testing.T)
 		// Arrange
 		obj := &GetBySlugIncludeDeletedSurfacesRequest{}
 		var fernTestValueArgs *GetBySlugIncludeDeletedSurfacesRequestArgs
+
+		// Act
+		obj.SetArgs(fernTestValueArgs)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersSetAnonymousReplayPolicySurfacesRequest(t *testing.T) {
+	t.Run("SetWorkspaceSlug", func(t *testing.T) {
+		obj := &SetAnonymousReplayPolicySurfacesRequest{}
+		var fernTestValueWorkspaceSlug string
+		obj.SetWorkspaceSlug(fernTestValueWorkspaceSlug)
+		assert.Equal(t, fernTestValueWorkspaceSlug, obj.WorkspaceSlug)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetArgs", func(t *testing.T) {
+		obj := &SetAnonymousReplayPolicySurfacesRequest{}
+		var fernTestValueArgs *SetAnonymousReplayPolicySurfacesRequestArgs
+		obj.SetArgs(fernTestValueArgs)
+		assert.Equal(t, fernTestValueArgs, obj.Args)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestSettersMarkExplicitSetAnonymousReplayPolicySurfacesRequest(t *testing.T) {
+	t.Run("SetWorkspaceSlug_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &SetAnonymousReplayPolicySurfacesRequest{}
+		var fernTestValueWorkspaceSlug string
+
+		// Act
+		obj.SetWorkspaceSlug(fernTestValueWorkspaceSlug)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetArgs_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &SetAnonymousReplayPolicySurfacesRequest{}
+		var fernTestValueArgs *SetAnonymousReplayPolicySurfacesRequestArgs
 
 		// Act
 		obj.SetArgs(fernTestValueArgs)
@@ -1239,6 +1362,77 @@ func TestSettersMarkExplicitMutationSurfacesDeleteResponse(t *testing.T) {
 
 }
 
+func TestSettersMutationSurfacesSetAnonymousReplayPolicyResponse(t *testing.T) {
+	t.Run("SetSuccess", func(t *testing.T) {
+		obj := &MutationSurfacesSetAnonymousReplayPolicyResponse{}
+		var fernTestValueSuccess bool
+		obj.SetSuccess(fernTestValueSuccess)
+		assert.Equal(t, fernTestValueSuccess, obj.Success)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersMutationSurfacesSetAnonymousReplayPolicyResponse(t *testing.T) {
+	t.Run("GetSuccess", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &MutationSurfacesSetAnonymousReplayPolicyResponse{}
+		var expected bool
+		obj.Success = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetSuccess(), "getter should return the property value")
+	})
+
+	t.Run("GetSuccess_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *MutationSurfacesSetAnonymousReplayPolicyResponse
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetSuccess() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitMutationSurfacesSetAnonymousReplayPolicyResponse(t *testing.T) {
+	t.Run("SetSuccess_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &MutationSurfacesSetAnonymousReplayPolicyResponse{}
+		var fernTestValueSuccess bool
+
+		// Act
+		obj.SetSuccess(fernTestValueSuccess)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
 func TestSettersMutationSurfacesSetAnonymousUserTrackingResponse(t *testing.T) {
 	t.Run("SetSuccess", func(t *testing.T) {
 		obj := &MutationSurfacesSetAnonymousUserTrackingResponse{}
@@ -1403,6 +1597,14 @@ func TestSettersQuerySurfacesGetBySlugIncludeDeletedResponse(t *testing.T) {
 		var fernTestValueUpdatedAt float64
 		obj.SetUpdatedAt(fernTestValueUpdatedAt)
 		assert.Equal(t, fernTestValueUpdatedAt, obj.UpdatedAt)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetAnonymousReplayPolicy", func(t *testing.T) {
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		var fernTestValueAnonymousReplayPolicy string
+		obj.SetAnonymousReplayPolicy(fernTestValueAnonymousReplayPolicy)
+		assert.Equal(t, fernTestValueAnonymousReplayPolicy, obj.AnonymousReplayPolicy)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -1654,6 +1856,29 @@ func TestGettersQuerySurfacesGetBySlugIncludeDeletedResponse(t *testing.T) {
 			}
 		}()
 		_ = obj.GetUpdatedAt() // Should return zero value
+	})
+
+	t.Run("GetAnonymousReplayPolicy", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		var expected string
+		obj.AnonymousReplayPolicy = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAnonymousReplayPolicy(), "getter should return the property value")
+	})
+
+	t.Run("GetAnonymousReplayPolicy_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *QuerySurfacesGetBySlugIncludeDeletedResponse
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAnonymousReplayPolicy() // Should return zero value
 	})
 
 	t.Run("GetAnonymousUserTracking", func(t *testing.T) {
@@ -2352,6 +2577,37 @@ func TestSettersMarkExplicitQuerySurfacesGetBySlugIncludeDeletedResponse(t *test
 
 		// Act
 		obj.SetUpdatedAt(fernTestValueUpdatedAt)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAnonymousReplayPolicy_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponse{}
+		var fernTestValueAnonymousReplayPolicy string
+
+		// Act
+		obj.SetAnonymousReplayPolicy(fernTestValueAnonymousReplayPolicy)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -4061,6 +4317,139 @@ func TestSettersMarkExplicitGetBySlugIncludeDeletedSurfacesRequestArgs(t *testin
 
 }
 
+func TestSettersSetAnonymousReplayPolicySurfacesRequestArgs(t *testing.T) {
+	t.Run("SetSurfaceSlug", func(t *testing.T) {
+		obj := &SetAnonymousReplayPolicySurfacesRequestArgs{}
+		var fernTestValueSurfaceSlug string
+		obj.SetSurfaceSlug(fernTestValueSurfaceSlug)
+		assert.Equal(t, fernTestValueSurfaceSlug, obj.SurfaceSlug)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetPolicy", func(t *testing.T) {
+		obj := &SetAnonymousReplayPolicySurfacesRequestArgs{}
+		var fernTestValuePolicy SetAnonymousReplayPolicySurfacesRequestArgsPolicy
+		obj.SetPolicy(fernTestValuePolicy)
+		assert.Equal(t, fernTestValuePolicy, obj.Policy)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersSetAnonymousReplayPolicySurfacesRequestArgs(t *testing.T) {
+	t.Run("GetSurfaceSlug", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &SetAnonymousReplayPolicySurfacesRequestArgs{}
+		var expected string
+		obj.SurfaceSlug = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetSurfaceSlug(), "getter should return the property value")
+	})
+
+	t.Run("GetSurfaceSlug_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *SetAnonymousReplayPolicySurfacesRequestArgs
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetSurfaceSlug() // Should return zero value
+	})
+
+	t.Run("GetPolicy", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &SetAnonymousReplayPolicySurfacesRequestArgs{}
+		var expected SetAnonymousReplayPolicySurfacesRequestArgsPolicy
+		obj.Policy = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetPolicy(), "getter should return the property value")
+	})
+
+	t.Run("GetPolicy_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *SetAnonymousReplayPolicySurfacesRequestArgs
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetPolicy() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitSetAnonymousReplayPolicySurfacesRequestArgs(t *testing.T) {
+	t.Run("SetSurfaceSlug_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &SetAnonymousReplayPolicySurfacesRequestArgs{}
+		var fernTestValueSurfaceSlug string
+
+		// Act
+		obj.SetSurfaceSlug(fernTestValueSurfaceSlug)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetPolicy_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &SetAnonymousReplayPolicySurfacesRequestArgs{}
+		var fernTestValuePolicy SetAnonymousReplayPolicySurfacesRequestArgsPolicy
+
+		// Act
+		obj.SetPolicy(fernTestValuePolicy)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
 func TestSettersSetAnonymousUserTrackingSurfacesRequestArgs(t *testing.T) {
 	t.Run("SetSurfaceSlug", func(t *testing.T) {
 		obj := &SetAnonymousUserTrackingSurfacesRequestArgs{}
@@ -4642,6 +5031,39 @@ func TestJSONMarshalingMutationSurfacesDeleteResponse(t *testing.T) {
 	})
 }
 
+func TestJSONMarshalingMutationSurfacesSetAnonymousReplayPolicyResponse(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &MutationSurfacesSetAnonymousReplayPolicyResponse{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled MutationSurfacesSetAnonymousReplayPolicyResponse
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj MutationSurfacesSetAnonymousReplayPolicyResponse
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj MutationSurfacesSetAnonymousReplayPolicyResponse
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
 func TestJSONMarshalingMutationSurfacesSetAnonymousUserTrackingResponse(t *testing.T) {
 	t.Run("MarshalUnmarshal", func(t *testing.T) {
 		t.Parallel()
@@ -4802,6 +5224,39 @@ func TestJSONMarshalingQuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlug
 	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
 		t.Parallel()
 		var obj QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingSetAnonymousReplayPolicySurfacesRequestArgs(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &SetAnonymousReplayPolicySurfacesRequestArgs{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled SetAnonymousReplayPolicySurfacesRequestArgs
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj SetAnonymousReplayPolicySurfacesRequestArgs
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj SetAnonymousReplayPolicySurfacesRequestArgs
 		err := json.Unmarshal([]byte(`{}`), &obj)
 		assert.NoError(t, err, "unmarshaling empty object should succeed")
 	})
@@ -5085,6 +5540,22 @@ func TestStringMutationSurfacesDeleteResponse(t *testing.T) {
 	})
 }
 
+func TestStringMutationSurfacesSetAnonymousReplayPolicyResponse(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &MutationSurfacesSetAnonymousReplayPolicyResponse{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *MutationSurfacesSetAnonymousReplayPolicyResponse
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
 func TestStringMutationSurfacesSetAnonymousUserTrackingResponse(t *testing.T) {
 	t.Run("StringMethod", func(t *testing.T) {
 		t.Parallel()
@@ -5160,6 +5631,22 @@ func TestStringQuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins(t *t
 	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringSetAnonymousReplayPolicySurfacesRequestArgs(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &SetAnonymousReplayPolicySurfacesRequestArgs{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *SetAnonymousReplayPolicySurfacesRequestArgs
 		result := obj.String()
 		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
 	})
@@ -5387,6 +5874,42 @@ func TestEnumCreateSurfaceRequestAPIKeyScopesItem(t *testing.T) {
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewCreateSurfaceRequestAPIKeyScopesItemFromString("org:telemetry:write")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumCreateSurfaceRequestAnonymousReplayPolicy(t *testing.T) {
+	t.Run("NewFromString_always", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewCreateSurfaceRequestAnonymousReplayPolicyFromString("always")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, CreateSurfaceRequestAnonymousReplayPolicy("always"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_on_error", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewCreateSurfaceRequestAnonymousReplayPolicyFromString("on_error")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, CreateSurfaceRequestAnonymousReplayPolicy("on_error"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_never", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewCreateSurfaceRequestAnonymousReplayPolicyFromString("never")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, CreateSurfaceRequestAnonymousReplayPolicy("never"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewCreateSurfaceRequestAnonymousReplayPolicyFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewCreateSurfaceRequestAnonymousReplayPolicyFromString("always")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -5653,6 +6176,42 @@ func TestEnumQuerySurfacesGetBySlugIncludeDeletedResponseType(t *testing.T) {
 	})
 }
 
+func TestEnumSetAnonymousReplayPolicySurfacesRequestArgsPolicy(t *testing.T) {
+	t.Run("NewFromString_always", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewSetAnonymousReplayPolicySurfacesRequestArgsPolicyFromString("always")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, SetAnonymousReplayPolicySurfacesRequestArgsPolicy("always"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_on_error", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewSetAnonymousReplayPolicySurfacesRequestArgsPolicyFromString("on_error")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, SetAnonymousReplayPolicySurfacesRequestArgsPolicy("on_error"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_never", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewSetAnonymousReplayPolicySurfacesRequestArgsPolicyFromString("never")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, SetAnonymousReplayPolicySurfacesRequestArgsPolicy("never"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewSetAnonymousReplayPolicySurfacesRequestArgsPolicyFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewSetAnonymousReplayPolicySurfacesRequestArgsPolicyFromString("always")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
 func TestExtraPropertiesCreateSurfaceRequestAPIKey(t *testing.T) {
 	t.Run("GetExtraProperties", func(t *testing.T) {
 		t.Parallel()
@@ -5814,6 +6373,29 @@ func TestExtraPropertiesMutationSurfacesDeleteResponse(t *testing.T) {
 	})
 }
 
+func TestExtraPropertiesMutationSurfacesSetAnonymousReplayPolicyResponse(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &MutationSurfacesSetAnonymousReplayPolicyResponse{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *MutationSurfacesSetAnonymousReplayPolicyResponse
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
 func TestExtraPropertiesMutationSurfacesSetAnonymousUserTrackingResponse(t *testing.T) {
 	t.Run("GetExtraProperties", func(t *testing.T) {
 		t.Parallel()
@@ -5924,6 +6506,29 @@ func TestExtraPropertiesQuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlu
 	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlugins
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesSetAnonymousReplayPolicySurfacesRequestArgs(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &SetAnonymousReplayPolicySurfacesRequestArgs{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *SetAnonymousReplayPolicySurfacesRequestArgs
 		extraProps := obj.GetExtraProperties()
 		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
 	})

@@ -3,6 +3,7 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type surfaceModel struct {
+	AnonymousReplayPolicy types.String `tfsdk:"anonymous_replay_policy"`
 	AnonymousUserTracking types.Bool   `tfsdk:"anonymous_user_tracking"`
 	Id                    types.String `tfsdk:"id"`
 	IdempotencyKey        types.String `tfsdk:"idempotency_key"`

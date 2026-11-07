@@ -11,16 +11,19 @@ import (
 
 var (
 	createSurfaceRequestFieldWorkspaceSlug         = big.NewInt(1 << 0)
-	createSurfaceRequestFieldAnonymousUserTracking = big.NewInt(1 << 1)
-	createSurfaceRequestFieldAPIKey                = big.NewInt(1 << 2)
-	createSurfaceRequestFieldIdempotencyKey        = big.NewInt(1 << 3)
-	createSurfaceRequestFieldName                  = big.NewInt(1 << 4)
-	createSurfaceRequestFieldType                  = big.NewInt(1 << 5)
+	createSurfaceRequestFieldAnonymousReplayPolicy = big.NewInt(1 << 1)
+	createSurfaceRequestFieldAnonymousUserTracking = big.NewInt(1 << 2)
+	createSurfaceRequestFieldAPIKey                = big.NewInt(1 << 3)
+	createSurfaceRequestFieldIdempotencyKey        = big.NewInt(1 << 4)
+	createSurfaceRequestFieldName                  = big.NewInt(1 << 5)
+	createSurfaceRequestFieldType                  = big.NewInt(1 << 6)
 )
 
 type CreateSurfaceRequest struct {
 	// Workspace URL slug, using lowercase letters, numbers, and hyphens.
 	WorkspaceSlug string `json:"-" url:"-"`
+	// When sessions without an identified user record replay. Defaults to on_error when anonymous-user tracking is on, otherwise always.
+	AnonymousReplayPolicy *CreateSurfaceRequestAnonymousReplayPolicy `json:"anonymousReplayPolicy,omitempty" url:"-"`
 	// Whether anonymous-user telemetry is collected.
 	AnonymousUserTracking *bool                       `json:"anonymousUserTracking,omitempty" url:"-"`
 	APIKey                *CreateSurfaceRequestAPIKey `json:"apiKey" url:"-"`
@@ -48,6 +51,13 @@ func (c *CreateSurfaceRequest) require(field *big.Int) {
 func (c *CreateSurfaceRequest) SetWorkspaceSlug(workspaceSlug string) {
 	c.WorkspaceSlug = workspaceSlug
 	c.require(createSurfaceRequestFieldWorkspaceSlug)
+}
+
+// SetAnonymousReplayPolicy sets the AnonymousReplayPolicy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateSurfaceRequest) SetAnonymousReplayPolicy(anonymousReplayPolicy *CreateSurfaceRequestAnonymousReplayPolicy) {
+	c.AnonymousReplayPolicy = anonymousReplayPolicy
+	c.require(createSurfaceRequestFieldAnonymousReplayPolicy)
 }
 
 // SetAnonymousUserTracking sets the AnonymousUserTracking field and marks it as non-optional;
@@ -219,6 +229,64 @@ func (g *GetBySlugIncludeDeletedSurfacesRequest) MarshalJSON() ([]byte, error) {
 		embed: embed(*g),
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
+	setAnonymousReplayPolicySurfacesRequestFieldWorkspaceSlug = big.NewInt(1 << 0)
+	setAnonymousReplayPolicySurfacesRequestFieldArgs          = big.NewInt(1 << 1)
+)
+
+type SetAnonymousReplayPolicySurfacesRequest struct {
+	// Workspace URL slug, using lowercase letters, numbers, and hyphens.
+	WorkspaceSlug string                                       `json:"-" url:"-"`
+	Args          *SetAnonymousReplayPolicySurfacesRequestArgs `json:"args" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (s *SetAnonymousReplayPolicySurfacesRequest) require(field *big.Int) {
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
+	}
+	next.Or(next, field)
+	s.explicitFields = next
+}
+
+// SetWorkspaceSlug sets the WorkspaceSlug field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetAnonymousReplayPolicySurfacesRequest) SetWorkspaceSlug(workspaceSlug string) {
+	s.WorkspaceSlug = workspaceSlug
+	s.require(setAnonymousReplayPolicySurfacesRequestFieldWorkspaceSlug)
+}
+
+// SetArgs sets the Args field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetAnonymousReplayPolicySurfacesRequest) SetArgs(args *SetAnonymousReplayPolicySurfacesRequestArgs) {
+	s.Args = args
+	s.require(setAnonymousReplayPolicySurfacesRequestFieldArgs)
+}
+
+func (s *SetAnonymousReplayPolicySurfacesRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler SetAnonymousReplayPolicySurfacesRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*s = SetAnonymousReplayPolicySurfacesRequest(body)
+	return nil
+}
+
+func (s *SetAnonymousReplayPolicySurfacesRequest) MarshalJSON() ([]byte, error) {
+	type embed SetAnonymousReplayPolicySurfacesRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
 	return json.Marshal(explicitMarshaler)
 }
 
@@ -792,6 +860,92 @@ func (m *MutationSurfacesDeleteResponse) String() string {
 }
 
 var (
+	mutationSurfacesSetAnonymousReplayPolicyResponseFieldSuccess = big.NewInt(1 << 0)
+)
+
+type MutationSurfacesSetAnonymousReplayPolicyResponse struct {
+	Success bool `json:"success" url:"success"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (m *MutationSurfacesSetAnonymousReplayPolicyResponse) GetSuccess() bool {
+	if m == nil {
+		return false
+	}
+	return m.Success
+}
+
+func (m *MutationSurfacesSetAnonymousReplayPolicyResponse) GetExtraProperties() map[string]interface{} {
+	if m == nil {
+		return nil
+	}
+	return m.extraProperties
+}
+
+func (m *MutationSurfacesSetAnonymousReplayPolicyResponse) require(field *big.Int) {
+	next := new(big.Int)
+	if m.explicitFields != nil {
+		next.Set(m.explicitFields)
+	}
+	next.Or(next, field)
+	m.explicitFields = next
+}
+
+// SetSuccess sets the Success field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *MutationSurfacesSetAnonymousReplayPolicyResponse) SetSuccess(success bool) {
+	m.Success = success
+	m.require(mutationSurfacesSetAnonymousReplayPolicyResponseFieldSuccess)
+}
+
+func (m *MutationSurfacesSetAnonymousReplayPolicyResponse) UnmarshalJSON(data []byte) error {
+	type unmarshaler MutationSurfacesSetAnonymousReplayPolicyResponse
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*m = MutationSurfacesSetAnonymousReplayPolicyResponse(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *m)
+	if err != nil {
+		return err
+	}
+	m.extraProperties = extraProperties
+	m.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (m *MutationSurfacesSetAnonymousReplayPolicyResponse) MarshalJSON() ([]byte, error) {
+	type embed MutationSurfacesSetAnonymousReplayPolicyResponse
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*m),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, m.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (m *MutationSurfacesSetAnonymousReplayPolicyResponse) String() string {
+	if m == nil {
+		return "<nil>"
+	}
+	if len(m.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(m); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", m)
+}
+
+var (
 	mutationSurfacesSetAnonymousUserTrackingResponseFieldSuccess = big.NewInt(1 << 0)
 )
 
@@ -967,27 +1121,28 @@ var (
 	querySurfacesGetBySlugIncludeDeletedResponseFieldCreatedAt               = big.NewInt(1 << 0)
 	querySurfacesGetBySlugIncludeDeletedResponseFieldDeletedAt               = big.NewInt(1 << 1)
 	querySurfacesGetBySlugIncludeDeletedResponseFieldUpdatedAt               = big.NewInt(1 << 2)
-	querySurfacesGetBySlugIncludeDeletedResponseFieldAnonymousUserTracking   = big.NewInt(1 << 3)
-	querySurfacesGetBySlugIncludeDeletedResponseFieldDestinationConnectionID = big.NewInt(1 << 4)
-	querySurfacesGetBySlugIncludeDeletedResponseFieldDestinationMappingID    = big.NewInt(1 << 5)
-	querySurfacesGetBySlugIncludeDeletedResponseFieldDestinationMappingLabel = big.NewInt(1 << 6)
-	querySurfacesGetBySlugIncludeDeletedResponseFieldDestinationMappingURL   = big.NewInt(1 << 7)
-	querySurfacesGetBySlugIncludeDeletedResponseFieldEnvironmentFiltering    = big.NewInt(1 << 8)
-	querySurfacesGetBySlugIncludeDeletedResponseFieldID                      = big.NewInt(1 << 9)
-	querySurfacesGetBySlugIncludeDeletedResponseFieldName                    = big.NewInt(1 << 10)
-	querySurfacesGetBySlugIncludeDeletedResponseFieldOnboardedAt             = big.NewInt(1 << 11)
-	querySurfacesGetBySlugIncludeDeletedResponseFieldOrganizationID          = big.NewInt(1 << 12)
-	querySurfacesGetBySlugIncludeDeletedResponseFieldPrimaryEnvironmentID    = big.NewInt(1 << 13)
-	querySurfacesGetBySlugIncludeDeletedResponseFieldPrimaryEnvironmentName  = big.NewInt(1 << 14)
-	querySurfacesGetBySlugIncludeDeletedResponseFieldSdkConfig               = big.NewInt(1 << 15)
-	querySurfacesGetBySlugIncludeDeletedResponseFieldSlug                    = big.NewInt(1 << 16)
-	querySurfacesGetBySlugIncludeDeletedResponseFieldSourceDatasourceID      = big.NewInt(1 << 17)
-	querySurfacesGetBySlugIncludeDeletedResponseFieldSourceConnectionID      = big.NewInt(1 << 18)
-	querySurfacesGetBySlugIncludeDeletedResponseFieldSourceMappingID         = big.NewInt(1 << 19)
-	querySurfacesGetBySlugIncludeDeletedResponseFieldSourceMappingLabel      = big.NewInt(1 << 20)
-	querySurfacesGetBySlugIncludeDeletedResponseFieldSourceMappingURL        = big.NewInt(1 << 21)
-	querySurfacesGetBySlugIncludeDeletedResponseFieldSourceWorkingDirectory  = big.NewInt(1 << 22)
-	querySurfacesGetBySlugIncludeDeletedResponseFieldType                    = big.NewInt(1 << 23)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldAnonymousReplayPolicy   = big.NewInt(1 << 3)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldAnonymousUserTracking   = big.NewInt(1 << 4)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldDestinationConnectionID = big.NewInt(1 << 5)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldDestinationMappingID    = big.NewInt(1 << 6)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldDestinationMappingLabel = big.NewInt(1 << 7)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldDestinationMappingURL   = big.NewInt(1 << 8)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldEnvironmentFiltering    = big.NewInt(1 << 9)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldID                      = big.NewInt(1 << 10)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldName                    = big.NewInt(1 << 11)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldOnboardedAt             = big.NewInt(1 << 12)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldOrganizationID          = big.NewInt(1 << 13)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldPrimaryEnvironmentID    = big.NewInt(1 << 14)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldPrimaryEnvironmentName  = big.NewInt(1 << 15)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldSdkConfig               = big.NewInt(1 << 16)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldSlug                    = big.NewInt(1 << 17)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldSourceDatasourceID      = big.NewInt(1 << 18)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldSourceConnectionID      = big.NewInt(1 << 19)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldSourceMappingID         = big.NewInt(1 << 20)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldSourceMappingLabel      = big.NewInt(1 << 21)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldSourceMappingURL        = big.NewInt(1 << 22)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldSourceWorkingDirectory  = big.NewInt(1 << 23)
+	querySurfacesGetBySlugIncludeDeletedResponseFieldType                    = big.NewInt(1 << 24)
 )
 
 // querySurfacesGetBySlugIncludeDeletedResponseNullableFields maps the wire names of QuerySurfacesGetBySlugIncludeDeletedResponse's nullable fields (required or optional) to their field bits.
@@ -1013,6 +1168,7 @@ type QuerySurfacesGetBySlugIncludeDeletedResponse struct {
 	CreatedAt               float64                                                `json:"createdAt" url:"createdAt"`
 	DeletedAt               *float64                                               `json:"deletedAt,omitempty" url:"deletedAt,omitempty"`
 	UpdatedAt               float64                                                `json:"updatedAt" url:"updatedAt"`
+	AnonymousReplayPolicy   string                                                 `json:"anonymousReplayPolicy" url:"anonymousReplayPolicy"`
 	AnonymousUserTracking   bool                                                   `json:"anonymousUserTracking" url:"anonymousUserTracking"`
 	DestinationConnectionID *string                                                `json:"destinationConnectionId,omitempty" url:"destinationConnectionId,omitempty"`
 	DestinationMappingID    *string                                                `json:"destinationMappingId,omitempty" url:"destinationMappingId,omitempty"`
@@ -1061,6 +1217,13 @@ func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) GetUpdatedAt() float64 {
 		return 0
 	}
 	return q.UpdatedAt
+}
+
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) GetAnonymousReplayPolicy() string {
+	if q == nil {
+		return ""
+	}
+	return q.AnonymousReplayPolicy
 }
 
 func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) GetAnonymousUserTracking() bool {
@@ -1245,6 +1408,13 @@ func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) SetDeletedAt(deletedAt *f
 func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) SetUpdatedAt(updatedAt float64) {
 	q.UpdatedAt = updatedAt
 	q.require(querySurfacesGetBySlugIncludeDeletedResponseFieldUpdatedAt)
+}
+
+// SetAnonymousReplayPolicy sets the AnonymousReplayPolicy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) SetAnonymousReplayPolicy(anonymousReplayPolicy string) {
+	q.AnonymousReplayPolicy = anonymousReplayPolicy
+	q.require(querySurfacesGetBySlugIncludeDeletedResponseFieldAnonymousReplayPolicy)
 }
 
 // SetAnonymousUserTracking sets the AnonymousUserTracking field and marks it as non-optional;
@@ -1840,6 +2010,32 @@ func (q QuerySurfacesGetBySlugIncludeDeletedResponseType) Ptr() *QuerySurfacesGe
 	return &q
 }
 
+// When sessions without an identified user record replay. Defaults to on_error when anonymous-user tracking is on, otherwise always.
+type CreateSurfaceRequestAnonymousReplayPolicy string
+
+const (
+	CreateSurfaceRequestAnonymousReplayPolicyAlways  CreateSurfaceRequestAnonymousReplayPolicy = "always"
+	CreateSurfaceRequestAnonymousReplayPolicyOnError CreateSurfaceRequestAnonymousReplayPolicy = "on_error"
+	CreateSurfaceRequestAnonymousReplayPolicyNever   CreateSurfaceRequestAnonymousReplayPolicy = "never"
+)
+
+func NewCreateSurfaceRequestAnonymousReplayPolicyFromString(s string) (CreateSurfaceRequestAnonymousReplayPolicy, error) {
+	switch s {
+	case "always":
+		return CreateSurfaceRequestAnonymousReplayPolicyAlways, nil
+	case "on_error":
+		return CreateSurfaceRequestAnonymousReplayPolicyOnError, nil
+	case "never":
+		return CreateSurfaceRequestAnonymousReplayPolicyNever, nil
+	}
+	var t CreateSurfaceRequestAnonymousReplayPolicy
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c CreateSurfaceRequestAnonymousReplayPolicy) Ptr() *CreateSurfaceRequestAnonymousReplayPolicy {
+	return &c
+}
+
 var (
 	createSurfaceRequestAPIKeyFieldScopes                 = big.NewInt(1 << 0)
 	createSurfaceRequestAPIKeyFieldSecondsUntilExpiration = big.NewInt(1 << 1)
@@ -2254,6 +2450,136 @@ func (g *GetBySlugIncludeDeletedSurfacesRequestArgs) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", g)
+}
+
+var (
+	setAnonymousReplayPolicySurfacesRequestArgsFieldSurfaceSlug = big.NewInt(1 << 0)
+	setAnonymousReplayPolicySurfacesRequestArgsFieldPolicy      = big.NewInt(1 << 1)
+)
+
+type SetAnonymousReplayPolicySurfacesRequestArgs struct {
+	// Surface URL slug, using lowercase letters, numbers, and hyphens.
+	SurfaceSlug string `json:"surfaceSlug" url:"surfaceSlug"`
+	// When sessions without an identified user record replay: always, only once an error occurs, or never.
+	Policy SetAnonymousReplayPolicySurfacesRequestArgsPolicy `json:"policy" url:"policy"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (s *SetAnonymousReplayPolicySurfacesRequestArgs) GetSurfaceSlug() string {
+	if s == nil {
+		return ""
+	}
+	return s.SurfaceSlug
+}
+
+func (s *SetAnonymousReplayPolicySurfacesRequestArgs) GetPolicy() SetAnonymousReplayPolicySurfacesRequestArgsPolicy {
+	if s == nil {
+		return ""
+	}
+	return s.Policy
+}
+
+func (s *SetAnonymousReplayPolicySurfacesRequestArgs) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
+	return s.extraProperties
+}
+
+func (s *SetAnonymousReplayPolicySurfacesRequestArgs) require(field *big.Int) {
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
+	}
+	next.Or(next, field)
+	s.explicitFields = next
+}
+
+// SetSurfaceSlug sets the SurfaceSlug field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetAnonymousReplayPolicySurfacesRequestArgs) SetSurfaceSlug(surfaceSlug string) {
+	s.SurfaceSlug = surfaceSlug
+	s.require(setAnonymousReplayPolicySurfacesRequestArgsFieldSurfaceSlug)
+}
+
+// SetPolicy sets the Policy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetAnonymousReplayPolicySurfacesRequestArgs) SetPolicy(policy SetAnonymousReplayPolicySurfacesRequestArgsPolicy) {
+	s.Policy = policy
+	s.require(setAnonymousReplayPolicySurfacesRequestArgsFieldPolicy)
+}
+
+func (s *SetAnonymousReplayPolicySurfacesRequestArgs) UnmarshalJSON(data []byte) error {
+	type unmarshaler SetAnonymousReplayPolicySurfacesRequestArgs
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*s = SetAnonymousReplayPolicySurfacesRequestArgs(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+	s.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (s *SetAnonymousReplayPolicySurfacesRequestArgs) MarshalJSON() ([]byte, error) {
+	type embed SetAnonymousReplayPolicySurfacesRequestArgs
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (s *SetAnonymousReplayPolicySurfacesRequestArgs) String() string {
+	if s == nil {
+		return "<nil>"
+	}
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
+}
+
+// When sessions without an identified user record replay: always, only once an error occurs, or never.
+type SetAnonymousReplayPolicySurfacesRequestArgsPolicy string
+
+const (
+	SetAnonymousReplayPolicySurfacesRequestArgsPolicyAlways  SetAnonymousReplayPolicySurfacesRequestArgsPolicy = "always"
+	SetAnonymousReplayPolicySurfacesRequestArgsPolicyOnError SetAnonymousReplayPolicySurfacesRequestArgsPolicy = "on_error"
+	SetAnonymousReplayPolicySurfacesRequestArgsPolicyNever   SetAnonymousReplayPolicySurfacesRequestArgsPolicy = "never"
+)
+
+func NewSetAnonymousReplayPolicySurfacesRequestArgsPolicyFromString(s string) (SetAnonymousReplayPolicySurfacesRequestArgsPolicy, error) {
+	switch s {
+	case "always":
+		return SetAnonymousReplayPolicySurfacesRequestArgsPolicyAlways, nil
+	case "on_error":
+		return SetAnonymousReplayPolicySurfacesRequestArgsPolicyOnError, nil
+	case "never":
+		return SetAnonymousReplayPolicySurfacesRequestArgsPolicyNever, nil
+	}
+	var t SetAnonymousReplayPolicySurfacesRequestArgsPolicy
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (s SetAnonymousReplayPolicySurfacesRequestArgsPolicy) Ptr() *SetAnonymousReplayPolicySurfacesRequestArgsPolicy {
+	return &s
 }
 
 var (

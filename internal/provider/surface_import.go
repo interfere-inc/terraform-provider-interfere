@@ -27,6 +27,7 @@ func (r *surfaceResource) ImportState(ctx context.Context, req resource.ImportSt
 		return
 	}
 	data.Id = types.StringValue(remote.ID)
+	data.AnonymousReplayPolicy = types.StringValue(remote.AnonymousReplayPolicy)
 	data.AnonymousUserTracking = types.BoolValue(remote.AnonymousUserTracking)
 	data.Name = types.StringValue(remote.Name)
 	data.Type = types.StringValue(string(remote.Type))

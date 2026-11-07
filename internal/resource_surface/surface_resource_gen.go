@@ -16,6 +16,19 @@ import (
 func SurfaceResourceSchema(ctx context.Context) schema.Schema {
 	return schema.Schema{
 		Attributes: map[string]schema.Attribute{
+			"anonymous_replay_policy": schema.StringAttribute{
+				Optional:            true,
+				Computed:            true,
+				Description:         "When sessions without an identified user record session replay: always, on_error (only once an error occurs) or never. Defaults to on_error when anonymous-user tracking is on, otherwise always.",
+				MarkdownDescription: "When sessions without an identified user record session replay: always, on_error (only once an error occurs) or never. Defaults to on_error when anonymous-user tracking is on, otherwise always.",
+				Validators: []validator.String{
+					stringvalidator.OneOf(
+						"always",
+						"on_error",
+						"never",
+					),
+				},
+			},
 			"anonymous_user_tracking": schema.BoolAttribute{
 				Optional:            true,
 				Computed:            true,
@@ -72,6 +85,7 @@ func SurfaceResourceSchema(ctx context.Context) schema.Schema {
 }
 
 type SurfaceModel struct {
+	AnonymousReplayPolicy types.String `tfsdk:"anonymous_replay_policy"`
 	AnonymousUserTracking types.Bool   `tfsdk:"anonymous_user_tracking"`
 	Id                    types.String `tfsdk:"id"`
 	IdempotencyKey        types.String `tfsdk:"idempotency_key"`

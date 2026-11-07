@@ -3,12 +3,12 @@
 page_title: "interfere_surface Resource - Interfere"
 subcategory: ""
 description: |-
-  Manage a surface's name, framework, and anonymous-user tracking. Import using workspace-slug/surface-slug. Creation also issues default credentials, which this resource does not store.
+  Manage a surface's name, framework, anonymous-user tracking and anonymous session replay policy. Import using workspace-slug/surface-slug. Creation also issues default credentials, which this resource does not store.
 ---
 
 # interfere_surface (Resource)
 
-Manage a surface's name, framework, and anonymous-user tracking. Import using workspace-slug/surface-slug. Creation also issues default credentials, which this resource does not store.
+Manage a surface's name, framework, anonymous-user tracking and anonymous session replay policy. Import using workspace-slug/surface-slug. Creation also issues default credentials, which this resource does not store.
 
 ## Example Usage
 
@@ -18,6 +18,7 @@ resource "interfere_surface" "app" {
   name                    = "Application"
   type                    = "react"
   anonymous_user_tracking = false
+  anonymous_replay_policy = "always"
 }
 ```
 
@@ -32,6 +33,7 @@ resource "interfere_surface" "app" {
 
 ### Optional
 
+- `anonymous_replay_policy` (String) When sessions without an identified user record session replay: always, on_error (only once an error occurs) or never. Defaults to on_error when anonymous-user tracking is on, otherwise always. Omit to preserve the current API setting.
 - `anonymous_user_tracking` (Boolean) Whether anonymous-user telemetry is collected. Omit to preserve the current API setting.
 - `idempotency_key` (String) Creation UUID, generated automatically when omitted. Explicit UUIDs remain supported for recovering an uncertain creation. Reuse that UUID to retry; use a fresh UUID for replacement.
 

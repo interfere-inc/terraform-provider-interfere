@@ -151,7 +151,7 @@ Before publishing a release, deploy the corresponding API changes and run accept
 
 ## Surface settings and integration mappings
 
-Set `anonymous_user_tracking` on `interfere_surface` to manage collection of anonymous-user telemetry. Omit it to preserve the API setting. Changes update the existing surface in place. SDK plugin, tracing, and log-sourcing configuration are not managed by this version.
+Set `anonymous_user_tracking` on `interfere_surface` to manage collection of anonymous-user telemetry. Omit it to preserve the API setting. Set `anonymous_replay_policy` to `always`, `on_error` or `never` to choose when sessions without an identified user record session replay; omit it to preserve the API setting. Changes update the existing surface in place. SDK plugin, tracing, and log-sourcing configuration are not managed by this version.
 
 Use `interfere_surface_repository` for a GitHub, GitHub Enterprise Cloud, or GitHub Enterprise Server repository and optional repository-relative `working_directory`. Use `interfere_surface_destination` for a Vercel project, Cloudflare Worker, or CLI destination. Both require an existing installation and `org:surfaces:read` plus `org:integration_settings:write`. Installation and OAuth consent remain outside Terraform.
 
@@ -167,6 +167,6 @@ Import using `workspace-slug/domain-UUID`. Omit `idempotency_key` to generate UU
 
 ## Data sources
 
-`data.interfere_workspace` looks up workspace identity, name, and residency with `org:workspace_basics:read`. `data.interfere_surface` reads surface identity, type, and anonymous-user tracking with `org:surfaces:read`. Neither takes ownership of the object.
+`data.interfere_workspace` looks up workspace identity, name, and residency with `org:workspace_basics:read`. `data.interfere_surface` reads surface identity, type, anonymous-user tracking and anonymous replay policy with `org:surfaces:read`. Neither takes ownership of the object.
 
 `data.interfere_integration` looks up an installation using `integration_provider` and requires `org:integration_settings:read`. When multiple installations match, set `integration_id` explicitly. Missing, ambiguous, or inaccessible results produce an error. Only installation identity, provider, and status enter state; installation credentials and provider metadata do not.

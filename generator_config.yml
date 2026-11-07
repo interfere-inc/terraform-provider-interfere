@@ -84,6 +84,8 @@ resources:
             description: "Application framework used by the surface."
           anonymousUserTracking:
             description: "Whether anonymous-user telemetry is collected."
+          anonymousReplayPolicy:
+            description: "When sessions without an identified user record session replay: always, on_error (only once an error occurs) or never. Defaults to on_error when anonymous-user tracking is on, otherwise always."
   private_key:
     create:
       path: "/v3/workspaces/{workspaceSlug}/api-keys"
@@ -120,6 +122,7 @@ resources:
           "name",
           "slug",
           "type",
+          "anonymousReplayPolicy",
           "anonymousUserTracking",
           "deletedAt",
           "sourceConnectionId",

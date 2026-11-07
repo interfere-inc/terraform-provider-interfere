@@ -19,13 +19,18 @@ func (r *surfaceResource) Create(ctx context.Context, req resource.CreateRequest
 	data.IdempotencyKey = creationIdentity(data.IdempotencyKey)
 	grants := &sdk.CreateSurfaceRequestAPIKey{Scopes: []sdk.CreateSurfaceRequestAPIKeyScopesItem{sdk.CreateSurfaceRequestAPIKeyScopesItemReleaseWrite}}
 	grants.SetSecondsUntilExpiration(nil)
-	created, err := r.client.Surfaces.CreateSurface(ctx, &sdk.CreateSurfaceRequest{
+	request := &sdk.CreateSurfaceRequest{
 		APIKey:         grants,
 		WorkspaceSlug:  data.WorkspaceSlug.ValueString(),
 		IdempotencyKey: data.IdempotencyKey.ValueString(),
 		Name:           data.Name.ValueString(),
 		Type:           sdk.CreateSurfaceRequestType(data.Type.ValueString()),
-	}, option.WithMaxAttempts(3))
+	}
+	if !data.AnonymousReplayPolicy.IsNull() && !data.AnonymousReplayPolicy.IsUnknown() {
+		policy := sdk.CreateSurfaceRequestAnonymousReplayPolicy(data.AnonymousReplayPolicy.ValueString())
+		request.SetAnonymousReplayPolicy(&policy)
+	}
+	created, err := r.client.Surfaces.CreateSurface(ctx, request, option.WithMaxAttempts(3))
 	if err != nil {
 		resp.Diagnostics.AddError("Unable to create surface", creationError(data.IdempotencyKey, apiError(err)))
 		return
@@ -41,6 +46,9 @@ func (r *surfaceResource) Create(ctx context.Context, req resource.CreateRequest
 	partial := data
 	if partial.AnonymousUserTracking.IsUnknown() {
 		partial.AnonymousUserTracking = types.BoolNull()
+	}
+	if partial.AnonymousReplayPolicy.IsUnknown() {
+		partial.AnonymousReplayPolicy = types.StringNull()
 	}
 	resp.Diagnostics.Append(resp.State.Set(ctx, &partial)...)
 	if err := r.applySettings(ctx, &data); err != nil {

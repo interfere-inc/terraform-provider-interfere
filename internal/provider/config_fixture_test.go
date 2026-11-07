@@ -57,7 +57,7 @@ func newConfigFixture(t *testing.T) *configFixture {
 				if body.Args["surfaceSlug"] != surfaceSlug {
 					t.Error("Wrong surface")
 				}
-				write(map[string]any{"id": surfaceID, "slug": surfaceSlug, "name": "Example", "type": "react", "deletedAt": nil, "anonymousUserTracking": true, "sourceConnectionId": f.source, "sourceMappingId": f.repository, "sourceWorkingDirectory": f.directory, "destinationConnectionId": f.destination, "destinationMappingId": f.project})
+				write(map[string]any{"id": surfaceID, "slug": surfaceSlug, "name": "Example", "type": "react", "deletedAt": nil, "anonymousReplayPolicy": "on_error", "anonymousUserTracking": true, "sourceConnectionId": f.source, "sourceMappingId": f.repository, "sourceWorkingDirectory": f.directory, "destinationConnectionId": f.destination, "destinationMappingId": f.project})
 			},
 			"queries/workspaces.current": func() {
 				write(map[string]any{"id": surfaceID, "slug": "example", "name": "Example", "dataResidencyLocation": "us"})

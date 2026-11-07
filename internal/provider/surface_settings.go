@@ -27,5 +27,16 @@ func (r *surfaceResource) applySettings(ctx context.Context, data *surfaceModel)
 	} else {
 		data.AnonymousUserTracking = types.BoolValue(remote.AnonymousUserTracking)
 	}
+	if !data.AnonymousReplayPolicy.IsNull() && !data.AnonymousReplayPolicy.IsUnknown() && data.AnonymousReplayPolicy.ValueString() != remote.AnonymousReplayPolicy {
+		result, err := r.client.Surfaces.SetAnonymousReplayPolicy(ctx, &sdk.SetAnonymousReplayPolicySurfacesRequest{WorkspaceSlug: data.WorkspaceSlug.ValueString(), Args: &sdk.SetAnonymousReplayPolicySurfacesRequestArgs{SurfaceSlug: data.Slug.ValueString(), Policy: sdk.SetAnonymousReplayPolicySurfacesRequestArgsPolicy(data.AnonymousReplayPolicy.ValueString())}})
+		if err != nil {
+			return errors.New(apiError(err))
+		}
+		if result == nil || !result.Success {
+			return errors.New("The API did not acknowledge the anonymous replay policy update.")
+		}
+	} else {
+		data.AnonymousReplayPolicy = types.StringValue(remote.AnonymousReplayPolicy)
+	}
 	return nil
 }

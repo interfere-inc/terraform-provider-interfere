@@ -95,6 +95,37 @@ func (c *Client) Delete(
     return response.Body, nil
 }
 
+// Choose when an app (surface) records session replay for visitors that are not identified: always, on_error (only once an error occurs) or never. Identified users always record. Inspect its current setting first. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.
+// 
+// Example:
+// 
+// 	request := &sdk.SetAnonymousReplayPolicySurfacesRequest{
+// 	    WorkspaceSlug: "workspaceSlug",
+// 	    Args: &sdk.SetAnonymousReplayPolicySurfacesRequestArgs{
+// 	        SurfaceSlug: "surfaceSlug",
+// 	        Policy: sdk.SetAnonymousReplayPolicySurfacesRequestArgsPolicyAlways,
+// 	    },
+// 	}
+// 	_, err := client.Surfaces.SetAnonymousReplayPolicy(
+// 	    context.TODO(),
+// 	    request,
+// 	)
+func (c *Client) SetAnonymousReplayPolicy(
+    ctx context.Context,
+    request *sdk.SetAnonymousReplayPolicySurfacesRequest,
+    opts ...option.RequestOption,
+) (*sdk.MutationSurfacesSetAnonymousReplayPolicyResponse, error) {
+    response, err := c.WithRawResponse.SetAnonymousReplayPolicy(
+        ctx,
+        request,
+        opts...,
+    )
+    if err != nil {
+        return nil, err
+    }
+    return response.Body, nil
+}
+
 // Enable or disable anonymous-user tracking for an app (surface). Inspect its current setting first. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.
 // 
 // Example:

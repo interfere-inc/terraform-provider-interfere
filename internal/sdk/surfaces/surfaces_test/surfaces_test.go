@@ -135,6 +135,36 @@ func TestSurfacesDeleteWithWireMock(
     VerifyRequestCount(t, "TestSurfacesDeleteWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/surfaces.delete", nil, 1)
 }
 
+func TestSurfacesSetAnonymousReplayPolicyWithWireMock(
+    t *testing.T,
+) {
+    WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+    	if WireMockBaseURL == "" {
+    		WireMockBaseURL = "http://localhost:8080"
+    	}
+    client := client.NewClient(
+        option.WithBaseURL(WireMockBaseURL),
+        option.WithToken("test-token"),
+    )
+        request := &sdk.SetAnonymousReplayPolicySurfacesRequest{
+            WorkspaceSlug: "workspaceSlug",
+            Args: &sdk.SetAnonymousReplayPolicySurfacesRequestArgs{
+                SurfaceSlug: "surfaceSlug",
+                Policy: sdk.SetAnonymousReplayPolicySurfacesRequestArgsPolicyAlways,
+            },
+        }
+    _, invocationErr :=     client.Surfaces.SetAnonymousReplayPolicy(
+            context.TODO(),
+            request,
+            option.WithHTTPHeader(
+                http.Header{"X-Test-Id": []string{"TestSurfacesSetAnonymousReplayPolicyWithWireMock"}},
+            ),
+        )
+
+    require.NoError(t, invocationErr, "Client method call should succeed")
+    VerifyRequestCount(t, "TestSurfacesSetAnonymousReplayPolicyWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/surfaces.setAnonymousReplayPolicy", nil, 1)
+}
+
 func TestSurfacesSetAnonymousUserTrackingWithWireMock(
     t *testing.T,
 ) {

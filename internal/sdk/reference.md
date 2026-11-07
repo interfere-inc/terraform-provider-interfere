@@ -857,6 +857,78 @@ _, err := client.Surfaces.Delete(
 </dl>
 </details>
 
+<details><summary><code>client.Surfaces.SetAnonymousReplayPolicy(WorkspaceSlug, request) -> *sdk.MutationSurfacesSetAnonymousReplayPolicyResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Choose when an app (surface) records session replay for visitors that are not identified: always, on_error (only once an error occurs) or never. Identified users always record. Inspect its current setting first. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &sdk.SetAnonymousReplayPolicySurfacesRequest{
+    WorkspaceSlug: "workspaceSlug",
+    Args: &sdk.SetAnonymousReplayPolicySurfacesRequestArgs{
+        SurfaceSlug: "surfaceSlug",
+        Policy: sdk.SetAnonymousReplayPolicySurfacesRequestArgsPolicyAlways,
+    },
+}
+_, err := client.Surfaces.SetAnonymousReplayPolicy(
+    context.TODO(),
+    request,
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**workspaceSlug:** `string` — Workspace URL slug, using lowercase letters, numbers, and hyphens.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**args:** `*sdk.SetAnonymousReplayPolicySurfacesRequestArgs` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.Surfaces.SetAnonymousUserTracking(WorkspaceSlug, request) -> *sdk.MutationSurfacesSetAnonymousUserTrackingResponse</code></summary>
 <dl>
 <dd>
@@ -1058,6 +1130,14 @@ _, err := client.Surfaces.CreateSurface(
 <dd>
 
 **workspaceSlug:** `string` — Workspace URL slug, using lowercase letters, numbers, and hyphens.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**anonymousReplayPolicy:** `*sdk.CreateSurfaceRequestAnonymousReplayPolicy` — When sessions without an identified user record replay. Defaults to on_error when anonymous-user tracking is on, otherwise always.
     
 </dd>
 </dl>
