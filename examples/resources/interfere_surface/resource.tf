@@ -3,4 +3,5 @@ resource "interfere_surface" "app" {
   name                    = "Application"
   type                    = "react"
   anonymous_user_tracking = false
+  anonymous_replay_policy = "always"
 }

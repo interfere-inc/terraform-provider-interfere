@@ -379,7 +379,7 @@
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"createdAt\": 1.1,\n  \"deletedAt\": 1.1,\n  \"updatedAt\": 1.1,\n  \"anonymousUserTracking\": true,\n  \"destinationConnectionId\": \"destinationConnectionId\",\n  \"destinationMappingId\": \"destinationMappingId\",\n  \"destinationMappingLabel\": \"destinationMappingLabel\",\n  \"destinationMappingUrl\": \"destinationMappingUrl\",\n  \"environmentFiltering\": true,\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"onboardedAt\": 1.1,\n  \"organizationId\": \"organizationId\",\n  \"primaryEnvironmentId\": \"primaryEnvironmentId\",\n  \"primaryEnvironmentName\": \"primaryEnvironmentName\",\n  \"sdkConfig\": {\n    \"plugins\": {\n      \"errors\": true,\n      \"device\": true,\n      \"pageEvents\": true,\n      \"rageClick\": true,\n      \"replay\": true,\n      \"logs\": true\n    },\n    \"serverTracing\": \"full\",\n    \"logSourcing\": \"sdk\",\n    \"platform\": \"vercel\"\n  },\n  \"slug\": \"slug\",\n  \"sourceDatasourceId\": \"sourceDatasourceId\",\n  \"sourceConnectionId\": \"sourceConnectionId\",\n  \"sourceMappingId\": \"sourceMappingId\",\n  \"sourceMappingLabel\": \"sourceMappingLabel\",\n  \"sourceMappingUrl\": \"sourceMappingUrl\",\n  \"sourceWorkingDirectory\": \"sourceWorkingDirectory\",\n  \"type\": \"elysia\"\n}",
+        "body": "{\n  \"createdAt\": 1.1,\n  \"deletedAt\": 1.1,\n  \"updatedAt\": 1.1,\n  \"anonymousReplayPolicy\": \"anonymousReplayPolicy\",\n  \"anonymousUserTracking\": true,\n  \"destinationConnectionId\": \"destinationConnectionId\",\n  \"destinationMappingId\": \"destinationMappingId\",\n  \"destinationMappingLabel\": \"destinationMappingLabel\",\n  \"destinationMappingUrl\": \"destinationMappingUrl\",\n  \"environmentFiltering\": true,\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"onboardedAt\": 1.1,\n  \"organizationId\": \"organizationId\",\n  \"primaryEnvironmentId\": \"primaryEnvironmentId\",\n  \"primaryEnvironmentName\": \"primaryEnvironmentName\",\n  \"sdkConfig\": {\n    \"plugins\": {\n      \"errors\": true,\n      \"device\": true,\n      \"pageEvents\": true,\n      \"rageClick\": true,\n      \"replay\": true,\n      \"logs\": true\n    },\n    \"serverTracing\": \"full\",\n    \"logSourcing\": \"sdk\",\n    \"platform\": \"vercel\"\n  },\n  \"slug\": \"slug\",\n  \"sourceDatasourceId\": \"sourceDatasourceId\",\n  \"sourceConnectionId\": \"sourceConnectionId\",\n  \"sourceMappingId\": \"sourceMappingId\",\n  \"sourceMappingLabel\": \"sourceMappingLabel\",\n  \"sourceMappingUrl\": \"sourceMappingUrl\",\n  \"sourceWorkingDirectory\": \"sourceWorkingDirectory\",\n  \"type\": \"elysia\"\n}",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -421,6 +421,42 @@
         }
       },
       "uuid": "ee5c3ac7-24a8-4d23-9991-6f89c10d0a93",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "dbe25c29-bf5e-4cc2-9aff-e979462c165f",
+      "name": "Run surfaces.setAnonymousReplayPolicy - default",
+      "request": {
+        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/actions/surfaces.setAnonymousReplayPolicy",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        },
+        "pathParameters": {
+          "workspaceSlug": {
+            "equalTo": "workspaceSlug"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"success\": true\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "dbe25c29-bf5e-4cc2-9aff-e979462c165f",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -779,6 +815,6 @@
     }
   ],
   "meta": {
-    "total": 21
+    "total": 22
   }
 }

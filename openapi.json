@@ -1988,6 +1988,9 @@
           "updatedAt": {
             "type": "number"
           },
+          "anonymousReplayPolicy": {
+            "type": "string"
+          },
           "anonymousUserTracking": {
             "type": "boolean"
           },
@@ -2297,6 +2300,7 @@
           "createdAt",
           "deletedAt",
           "updatedAt",
+          "anonymousReplayPolicy",
           "anonymousUserTracking",
           "destinationConnectionId",
           "destinationMappingId",
@@ -2406,6 +2410,18 @@
         ]
       },
       "Mutation_surfaces_deleteResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "const": true,
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "success"
+        ]
+      },
+      "Mutation_surfaces_setAnonymousReplayPolicyResponse": {
         "type": "object",
         "properties": {
           "success": {
@@ -4389,6 +4405,103 @@
         ]
       }
     },
+    "/v3/workspaces/{workspaceSlug}/actions/surfaces.setAnonymousReplayPolicy": {
+      "post": {
+        "operationId": "mutation_surfaces_setAnonymousReplayPolicy",
+        "summary": "Run surfaces.setAnonymousReplayPolicy",
+        "description": "Choose when an app (surface) records session replay for visitors that are not identified: always, on_error (only once an error occurs) or never. Identified users always record. Inspect its current setting first. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.",
+        "tags": [
+          "Workspaces"
+        ],
+        "parameters": [
+          {
+            "name": "workspaceSlug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Workspace URL slug, using lowercase letters, numbers, and hyphens."
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "args": {
+                    "type": "object",
+                    "properties": {
+                      "surfaceSlug": {
+                        "type": "string",
+                        "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+                        "description": "Surface URL slug, using lowercase letters, numbers, and hyphens."
+                      },
+                      "policy": {
+                        "enum": [
+                          "always",
+                          "on_error",
+                          "never"
+                        ],
+                        "type": "string",
+                        "description": "When sessions without an identified user record replay: always, only once an error occurs, or never."
+                      }
+                    },
+                    "required": [
+                      "surfaceSlug",
+                      "policy"
+                    ]
+                  }
+                },
+                "required": [
+                  "args"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mutation_surfaces_setAnonymousReplayPolicyResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/RpcValidationError"
+          },
+          "401": {
+            "$ref": "#/components/responses/ErrorResponse_b32e7e47d27147b78e9ca9c8927315e0c48a5a54a03868590623df7e2ff7d2af"
+          },
+          "403": {
+            "$ref": "#/components/responses/ErrorResponse_10ef468de4a2f3d5e1e4a4bcd9c19369a4c535898d4ecea2b48444857aece895"
+          },
+          "503": {
+            "$ref": "#/components/responses/ErrorResponse_a4a8a71ed4a33ddc602b7e2cf4dd0b51ef37c46db1b01870377abdbd6cbda1b5"
+          }
+        },
+        "x-fern-sdk-method-name": "setAnonymousReplayPolicy",
+        "x-cloudflare-labels": [
+          "cf-api-endpoint"
+        ],
+        "security": [
+          {
+            "clerkSession": []
+          }
+        ],
+        "x-internal": false,
+        "x-fern-sdk-group-name": [
+          "surfaces"
+        ]
+      }
+    },
     "/v3/workspaces/{workspaceSlug}/actions/surfaces.setAnonymousUserTracking": {
       "post": {
         "operationId": "mutation_surfaces_setAnonymousUserTracking",
@@ -4882,6 +4995,15 @@
               "schema": {
                 "type": "object",
                 "properties": {
+                  "anonymousReplayPolicy": {
+                    "enum": [
+                      "always",
+                      "on_error",
+                      "never"
+                    ],
+                    "type": "string",
+                    "description": "When sessions without an identified user record replay. Defaults to on_error when anonymous-user tracking is on, otherwise always."
+                  },
                   "anonymousUserTracking": {
                     "type": "boolean",
                     "default": true,

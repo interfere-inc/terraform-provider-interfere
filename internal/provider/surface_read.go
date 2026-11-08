@@ -59,6 +59,7 @@ func (r *surfaceResource) Read(ctx context.Context, req resource.ReadRequest, re
 		return
 	}
 	data.Id = types.StringValue(remote.ID)
+	data.AnonymousReplayPolicy = types.StringValue(remote.AnonymousReplayPolicy)
 	data.AnonymousUserTracking = types.BoolValue(remote.AnonymousUserTracking)
 	data.Name = types.StringValue(remote.Name)
 	data.Type = types.StringValue(string(remote.Type))

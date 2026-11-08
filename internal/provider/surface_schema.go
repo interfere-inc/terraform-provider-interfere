@@ -11,7 +11,7 @@ import (
 
 func (r *surfaceResource) Schema(ctx context.Context, _ resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = resource_surface.SurfaceResourceSchema(ctx)
-	resp.Schema.Description = "Manage a surface's name, framework, and anonymous-user tracking. Import using workspace-slug/surface-slug. Creation also issues default credentials, which this resource does not store."
+	resp.Schema.Description = "Manage a surface's name, framework, anonymous-user tracking and anonymous session replay policy. Import using workspace-slug/surface-slug. Creation also issues default credentials, which this resource does not store."
 	attributes := resp.Schema.Attributes
 	for _, field := range []string{"id", "slug"} {
 		attributes[field] = stableString(attributes[field])
@@ -25,5 +25,10 @@ func (r *surfaceResource) Schema(ctx context.Context, _ resource.SchemaRequest, 
 	tracking.Description += " Omit to preserve the current API setting."
 	tracking.MarkdownDescription = tracking.Description
 	attributes["anonymous_user_tracking"] = tracking
+	replay := attributes["anonymous_replay_policy"].(schema.StringAttribute)
+	replay.Description += " Omit to preserve the current API setting."
+	replay.MarkdownDescription = replay.Description
+	replay.PlanModifiers = append(replay.PlanModifiers, stringplanmodifier.UseStateForUnknown())
+	attributes["anonymous_replay_policy"] = replay
 	attributes["idempotency_key"] = creationIdentityAttribute(false)
 }
