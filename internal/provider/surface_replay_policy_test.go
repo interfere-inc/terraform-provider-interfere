@@ -41,5 +41,6 @@ slug=interfere_surface.test.slug
 		{PreConfig: func() { f.mu.Lock(); f.replayPolicy = "always"; f.mu.Unlock() }, Config: config("on_error"), Check: resource.TestCheckResourceAttr("interfere_surface.test", "anonymous_replay_policy", "on_error")},
 		{Config: config(""), Check: resource.TestCheckResourceAttr("interfere_surface.test", "anonymous_replay_policy", "on_error")},
 		{Config: config("sometimes"), ExpectError: regexp.MustCompile(`value must be one of`)},
+		{Config: config("always"), Check: resource.ComposeAggregateTestCheckFunc(resource.TestCheckResourceAttr("interfere_surface.test", "anonymous_replay_policy", "always"), resource.TestCheckResourceAttr("data.interfere_surface.test", "anonymous_replay_policy", "always"))},
 	}})
 }
