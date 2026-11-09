@@ -77,6 +77,35 @@ func VerifyRequestCount(
     require.Equal(t, expected, len(result.Requests))
 }
 
+func TestKeysPublicListForSurfaceWithWireMock(
+    t *testing.T,
+) {
+    WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+    	if WireMockBaseURL == "" {
+    		WireMockBaseURL = "http://localhost:8080"
+    	}
+    client := client.NewClient(
+        option.WithBaseURL(WireMockBaseURL),
+        option.WithToken("test-token"),
+    )
+        request := &keys.ListForSurfacePublicRequest{
+            WorkspaceSlug: "workspaceSlug",
+            Args: &keys.ListForSurfacePublicRequestArgs{
+                SurfaceSlug: "surfaceSlug",
+            },
+        }
+    _, invocationErr :=     client.Keys.Public.ListForSurface(
+            context.TODO(),
+            request,
+            option.WithHTTPHeader(
+                http.Header{"X-Test-Id": []string{"TestKeysPublicListForSurfaceWithWireMock"}},
+            ),
+        )
+
+    require.NoError(t, invocationErr, "Client method call should succeed")
+    VerifyRequestCount(t, "TestKeysPublicListForSurfaceWithWireMock", "POST", "/v3/workspaces/workspaceSlug/queries/publicKeys.forSurface", nil, 1)
+}
+
 func TestKeysPublicCreateWithWireMock(
     t *testing.T,
 ) {

@@ -9,6 +9,8 @@ import (
     internal "github.com/interfere-inc/terraform-provider-interfere/internal/sdk/internal"
     client "github.com/interfere-inc/terraform-provider-interfere/internal/sdk/keys/client"
     option "github.com/interfere-inc/terraform-provider-interfere/internal/sdk/option"
+    scimclient "github.com/interfere-inc/terraform-provider-interfere/internal/sdk/scim/client"
+    support "github.com/interfere-inc/terraform-provider-interfere/internal/sdk/support"
     surfaces "github.com/interfere-inc/terraform-provider-interfere/internal/sdk/surfaces"
     workspaces "github.com/interfere-inc/terraform-provider-interfere/internal/sdk/workspaces"
 )
@@ -19,7 +21,9 @@ type Client struct {
     Integrations *integrations.Client
     Workspaces *workspaces.Client
     Surfaces *surfaces.Client
+    Support *support.Client
     Keys *client.Client
+    SCIM *scimclient.Client
 
     options *core.RequestOptions
     baseURL string
@@ -33,7 +37,9 @@ func NewClient(opts ...option.RequestOption) *Client {
         Integrations: integrations.NewClient(options),
         Workspaces: workspaces.NewClient(options),
         Surfaces: surfaces.NewClient(options),
+        Support: support.NewClient(options),
         Keys: client.NewClient(options),
+        SCIM: scimclient.NewClient(options),
         options: options,
         baseURL: options.BaseURL,
         caller: internal.NewCaller(

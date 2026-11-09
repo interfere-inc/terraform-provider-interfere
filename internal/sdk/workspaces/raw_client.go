@@ -80,6 +80,53 @@ func (r *RawClient) Current(
     }, nil
 }
 
+func (r *RawClient) AddDomain(
+    ctx context.Context,
+    request *sdk.AddDomainWorkspacesRequest,
+    opts ...option.RequestOption,
+) (*core.Response[*sdk.MutationWorkspacesAddDomainResponse], error) {
+    options := core.NewRequestOptions(opts...)
+    baseURL := internal.ResolveBaseURL(
+        options.BaseURL,
+        r.baseURL,
+        "",
+    )
+    endpointURL := internal.EncodeURL(
+        baseURL + "/v3/workspaces/%v/actions/workspaces.addDomain",
+        request.WorkspaceSlug,
+    )
+    headers := internal.MergeHeaders(
+        r.options.ToHeader(),
+        options.ToHeader(),
+    )
+    headers.Add("Content-Type", "application/json")
+    var response *sdk.MutationWorkspacesAddDomainResponse
+    raw, err := r.caller.Call(
+        ctx,
+        &internal.CallParams{
+            URL: endpointURL,
+            Method: http.MethodPost,
+            Headers: headers,
+            MaxAttempts: options.MaxAttempts,
+            DisableRetries: options.DisableRetries,
+            BodyProperties: options.BodyProperties,
+            QueryParameters: options.QueryParameters,
+            Client: options.HTTPClient,
+            Request: request,
+            Response: &response,
+            ErrorDecoder: internal.NewErrorDecoder(sdk.ErrorCodes),
+        },
+    )
+    if err != nil {
+        return nil, err
+    }
+    return &core.Response[*sdk.MutationWorkspacesAddDomainResponse]{
+        StatusCode: raw.StatusCode,
+        Header: raw.Header,
+        Body: response,
+    }, nil
+}
+
 func (r *RawClient) AddProxyDomain(
     ctx context.Context,
     request *sdk.AddProxyDomainWorkspacesRequest,
@@ -121,6 +168,53 @@ func (r *RawClient) AddProxyDomain(
         return nil, err
     }
     return &core.Response[*sdk.MutationWorkspacesAddProxyDomainResponse]{
+        StatusCode: raw.StatusCode,
+        Header: raw.Header,
+        Body: response,
+    }, nil
+}
+
+func (r *RawClient) RemoveDomain(
+    ctx context.Context,
+    request *sdk.RemoveDomainWorkspacesRequest,
+    opts ...option.RequestOption,
+) (*core.Response[*sdk.MutationWorkspacesRemoveDomainResponse], error) {
+    options := core.NewRequestOptions(opts...)
+    baseURL := internal.ResolveBaseURL(
+        options.BaseURL,
+        r.baseURL,
+        "",
+    )
+    endpointURL := internal.EncodeURL(
+        baseURL + "/v3/workspaces/%v/actions/workspaces.removeDomain",
+        request.WorkspaceSlug,
+    )
+    headers := internal.MergeHeaders(
+        r.options.ToHeader(),
+        options.ToHeader(),
+    )
+    headers.Add("Content-Type", "application/json")
+    var response *sdk.MutationWorkspacesRemoveDomainResponse
+    raw, err := r.caller.Call(
+        ctx,
+        &internal.CallParams{
+            URL: endpointURL,
+            Method: http.MethodPost,
+            Headers: headers,
+            MaxAttempts: options.MaxAttempts,
+            DisableRetries: options.DisableRetries,
+            BodyProperties: options.BodyProperties,
+            QueryParameters: options.QueryParameters,
+            Client: options.HTTPClient,
+            Request: request,
+            Response: &response,
+            ErrorDecoder: internal.NewErrorDecoder(sdk.ErrorCodes),
+        },
+    )
+    if err != nil {
+        return nil, err
+    }
+    return &core.Response[*sdk.MutationWorkspacesRemoveDomainResponse]{
         StatusCode: raw.StatusCode,
         Header: raw.Header,
         Body: response,
@@ -174,6 +268,53 @@ func (r *RawClient) RemoveProxyDomain(
     }, nil
 }
 
+func (r *RawClient) UpdateAuthMethods(
+    ctx context.Context,
+    request *sdk.UpdateAuthMethodsWorkspacesRequest,
+    opts ...option.RequestOption,
+) (*core.Response[*sdk.MutationWorkspacesUpdateAuthMethodsResponse], error) {
+    options := core.NewRequestOptions(opts...)
+    baseURL := internal.ResolveBaseURL(
+        options.BaseURL,
+        r.baseURL,
+        "",
+    )
+    endpointURL := internal.EncodeURL(
+        baseURL + "/v3/workspaces/%v/actions/workspaces.updateAuthMethods",
+        request.WorkspaceSlug,
+    )
+    headers := internal.MergeHeaders(
+        r.options.ToHeader(),
+        options.ToHeader(),
+    )
+    headers.Add("Content-Type", "application/json")
+    var response *sdk.MutationWorkspacesUpdateAuthMethodsResponse
+    raw, err := r.caller.Call(
+        ctx,
+        &internal.CallParams{
+            URL: endpointURL,
+            Method: http.MethodPost,
+            Headers: headers,
+            MaxAttempts: options.MaxAttempts,
+            DisableRetries: options.DisableRetries,
+            BodyProperties: options.BodyProperties,
+            QueryParameters: options.QueryParameters,
+            Client: options.HTTPClient,
+            Request: request,
+            Response: &response,
+            ErrorDecoder: internal.NewErrorDecoder(sdk.ErrorCodes),
+        },
+    )
+    if err != nil {
+        return nil, err
+    }
+    return &core.Response[*sdk.MutationWorkspacesUpdateAuthMethodsResponse]{
+        StatusCode: raw.StatusCode,
+        Header: raw.Header,
+        Body: response,
+    }, nil
+}
+
 func (r *RawClient) UpdateBasics(
     ctx context.Context,
     request *sdk.UpdateBasicsWorkspacesRequest,
@@ -215,6 +356,192 @@ func (r *RawClient) UpdateBasics(
         return nil, err
     }
     return &core.Response[*sdk.MutationWorkspacesUpdateBasicsResponse]{
+        StatusCode: raw.StatusCode,
+        Header: raw.Header,
+        Body: response,
+    }, nil
+}
+
+func (r *RawClient) UpdateDomainEnrollmentMode(
+    ctx context.Context,
+    request *sdk.UpdateDomainEnrollmentModeWorkspacesRequest,
+    opts ...option.RequestOption,
+) (*core.Response[*sdk.MutationWorkspacesUpdateDomainEnrollmentModeResponse], error) {
+    options := core.NewRequestOptions(opts...)
+    baseURL := internal.ResolveBaseURL(
+        options.BaseURL,
+        r.baseURL,
+        "",
+    )
+    endpointURL := internal.EncodeURL(
+        baseURL + "/v3/workspaces/%v/actions/workspaces.updateDomainEnrollmentMode",
+        request.WorkspaceSlug,
+    )
+    headers := internal.MergeHeaders(
+        r.options.ToHeader(),
+        options.ToHeader(),
+    )
+    headers.Add("Content-Type", "application/json")
+    var response *sdk.MutationWorkspacesUpdateDomainEnrollmentModeResponse
+    raw, err := r.caller.Call(
+        ctx,
+        &internal.CallParams{
+            URL: endpointURL,
+            Method: http.MethodPost,
+            Headers: headers,
+            MaxAttempts: options.MaxAttempts,
+            DisableRetries: options.DisableRetries,
+            BodyProperties: options.BodyProperties,
+            QueryParameters: options.QueryParameters,
+            Client: options.HTTPClient,
+            Request: request,
+            Response: &response,
+            ErrorDecoder: internal.NewErrorDecoder(sdk.ErrorCodes),
+        },
+    )
+    if err != nil {
+        return nil, err
+    }
+    return &core.Response[*sdk.MutationWorkspacesUpdateDomainEnrollmentModeResponse]{
+        StatusCode: raw.StatusCode,
+        Header: raw.Header,
+        Body: response,
+    }, nil
+}
+
+func (r *RawClient) UpdateMemberWorkspaceCreation(
+    ctx context.Context,
+    request *sdk.UpdateMemberWorkspaceCreationWorkspacesRequest,
+    opts ...option.RequestOption,
+) (*core.Response[*sdk.MutationWorkspacesUpdateMemberWorkspaceCreationResponse], error) {
+    options := core.NewRequestOptions(opts...)
+    baseURL := internal.ResolveBaseURL(
+        options.BaseURL,
+        r.baseURL,
+        "",
+    )
+    endpointURL := internal.EncodeURL(
+        baseURL + "/v3/workspaces/%v/actions/workspaces.updateMemberWorkspaceCreation",
+        request.WorkspaceSlug,
+    )
+    headers := internal.MergeHeaders(
+        r.options.ToHeader(),
+        options.ToHeader(),
+    )
+    headers.Add("Content-Type", "application/json")
+    var response *sdk.MutationWorkspacesUpdateMemberWorkspaceCreationResponse
+    raw, err := r.caller.Call(
+        ctx,
+        &internal.CallParams{
+            URL: endpointURL,
+            Method: http.MethodPost,
+            Headers: headers,
+            MaxAttempts: options.MaxAttempts,
+            DisableRetries: options.DisableRetries,
+            BodyProperties: options.BodyProperties,
+            QueryParameters: options.QueryParameters,
+            Client: options.HTTPClient,
+            Request: request,
+            Response: &response,
+            ErrorDecoder: internal.NewErrorDecoder(sdk.ErrorCodes),
+        },
+    )
+    if err != nil {
+        return nil, err
+    }
+    return &core.Response[*sdk.MutationWorkspacesUpdateMemberWorkspaceCreationResponse]{
+        StatusCode: raw.StatusCode,
+        Header: raw.Header,
+        Body: response,
+    }, nil
+}
+
+func (r *RawClient) ReadNetworkRules(
+    ctx context.Context,
+    request *sdk.ReadNetworkRulesRequest,
+    opts ...option.RequestOption,
+) (*core.Response[*sdk.ReadNetworkRulesResponse], error) {
+    options := core.NewRequestOptions(opts...)
+    baseURL := internal.ResolveBaseURL(
+        options.BaseURL,
+        r.baseURL,
+        "",
+    )
+    endpointURL := internal.EncodeURL(
+        baseURL + "/v3/workspaces/%v/network/rules",
+        request.WorkspaceSlug,
+    )
+    headers := internal.MergeHeaders(
+        r.options.ToHeader(),
+        options.ToHeader(),
+    )
+    var response *sdk.ReadNetworkRulesResponse
+    raw, err := r.caller.Call(
+        ctx,
+        &internal.CallParams{
+            URL: endpointURL,
+            Method: http.MethodGet,
+            Headers: headers,
+            MaxAttempts: options.MaxAttempts,
+            DisableRetries: options.DisableRetries,
+            BodyProperties: options.BodyProperties,
+            QueryParameters: options.QueryParameters,
+            Client: options.HTTPClient,
+            Response: &response,
+            ErrorDecoder: internal.NewErrorDecoder(sdk.ErrorCodes),
+        },
+    )
+    if err != nil {
+        return nil, err
+    }
+    return &core.Response[*sdk.ReadNetworkRulesResponse]{
+        StatusCode: raw.StatusCode,
+        Header: raw.Header,
+        Body: response,
+    }, nil
+}
+
+func (r *RawClient) SaveNetworkRules(
+    ctx context.Context,
+    request *sdk.SaveNetworkRulesRequest,
+    opts ...option.RequestOption,
+) (*core.Response[*sdk.SaveNetworkRulesResponse], error) {
+    options := core.NewRequestOptions(opts...)
+    baseURL := internal.ResolveBaseURL(
+        options.BaseURL,
+        r.baseURL,
+        "",
+    )
+    endpointURL := internal.EncodeURL(
+        baseURL + "/v3/workspaces/%v/network/rules",
+        request.WorkspaceSlug,
+    )
+    headers := internal.MergeHeaders(
+        r.options.ToHeader(),
+        options.ToHeader(),
+    )
+    headers.Add("Content-Type", "application/json")
+    var response *sdk.SaveNetworkRulesResponse
+    raw, err := r.caller.Call(
+        ctx,
+        &internal.CallParams{
+            URL: endpointURL,
+            Method: http.MethodPut,
+            Headers: headers,
+            MaxAttempts: options.MaxAttempts,
+            DisableRetries: options.DisableRetries,
+            BodyProperties: options.BodyProperties,
+            QueryParameters: options.QueryParameters,
+            Client: options.HTTPClient,
+            Request: request,
+            Response: &response,
+            ErrorDecoder: internal.NewErrorDecoder(sdk.ErrorCodes),
+        },
+    )
+    if err != nil {
+        return nil, err
+    }
+    return &core.Response[*sdk.SaveNetworkRulesResponse]{
         StatusCode: raw.StatusCode,
         Header: raw.Header,
         Body: response,

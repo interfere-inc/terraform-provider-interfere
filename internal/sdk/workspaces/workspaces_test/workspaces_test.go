@@ -103,6 +103,36 @@ func TestWorkspacesCurrentWithWireMock(
     VerifyRequestCount(t, "TestWorkspacesCurrentWithWireMock", "POST", "/v3/workspaces/workspaceSlug/queries/workspaces.current", nil, 1)
 }
 
+func TestWorkspacesAddDomainWithWireMock(
+    t *testing.T,
+) {
+    WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+    	if WireMockBaseURL == "" {
+    		WireMockBaseURL = "http://localhost:8080"
+    	}
+    client := client.NewClient(
+        option.WithBaseURL(WireMockBaseURL),
+        option.WithToken("test-token"),
+    )
+        request := &sdk.AddDomainWorkspacesRequest{
+            WorkspaceSlug: "workspaceSlug",
+            Args: &sdk.AddDomainWorkspacesRequestArgs{
+                ID: "id",
+                Name: "name",
+            },
+        }
+    _, invocationErr :=     client.Workspaces.AddDomain(
+            context.TODO(),
+            request,
+            option.WithHTTPHeader(
+                http.Header{"X-Test-Id": []string{"TestWorkspacesAddDomainWithWireMock"}},
+            ),
+        )
+
+    require.NoError(t, invocationErr, "Client method call should succeed")
+    VerifyRequestCount(t, "TestWorkspacesAddDomainWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/workspaces.addDomain", nil, 1)
+}
+
 func TestWorkspacesAddProxyDomainWithWireMock(
     t *testing.T,
 ) {
@@ -131,6 +161,35 @@ func TestWorkspacesAddProxyDomainWithWireMock(
 
     require.NoError(t, invocationErr, "Client method call should succeed")
     VerifyRequestCount(t, "TestWorkspacesAddProxyDomainWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/workspaces.addProxyDomain", nil, 1)
+}
+
+func TestWorkspacesRemoveDomainWithWireMock(
+    t *testing.T,
+) {
+    WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+    	if WireMockBaseURL == "" {
+    		WireMockBaseURL = "http://localhost:8080"
+    	}
+    client := client.NewClient(
+        option.WithBaseURL(WireMockBaseURL),
+        option.WithToken("test-token"),
+    )
+        request := &sdk.RemoveDomainWorkspacesRequest{
+            WorkspaceSlug: "workspaceSlug",
+            Args: &sdk.RemoveDomainWorkspacesRequestArgs{
+                ClerkDomainID: "clerkDomainId",
+            },
+        }
+    _, invocationErr :=     client.Workspaces.RemoveDomain(
+            context.TODO(),
+            request,
+            option.WithHTTPHeader(
+                http.Header{"X-Test-Id": []string{"TestWorkspacesRemoveDomainWithWireMock"}},
+            ),
+        )
+
+    require.NoError(t, invocationErr, "Client method call should succeed")
+    VerifyRequestCount(t, "TestWorkspacesRemoveDomainWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/workspaces.removeDomain", nil, 1)
 }
 
 func TestWorkspacesRemoveProxyDomainWithWireMock(
@@ -162,6 +221,37 @@ func TestWorkspacesRemoveProxyDomainWithWireMock(
     VerifyRequestCount(t, "TestWorkspacesRemoveProxyDomainWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/workspaces.removeProxyDomain", nil, 1)
 }
 
+func TestWorkspacesUpdateAuthMethodsWithWireMock(
+    t *testing.T,
+) {
+    WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+    	if WireMockBaseURL == "" {
+    		WireMockBaseURL = "http://localhost:8080"
+    	}
+    client := client.NewClient(
+        option.WithBaseURL(WireMockBaseURL),
+        option.WithToken("test-token"),
+    )
+        request := &sdk.UpdateAuthMethodsWorkspacesRequest{
+            WorkspaceSlug: "workspaceSlug",
+            Args: &sdk.UpdateAuthMethodsWorkspacesRequestArgs{
+                Methods: []sdk.UpdateAuthMethodsWorkspacesRequestArgsMethodsItem{
+                    sdk.UpdateAuthMethodsWorkspacesRequestArgsMethodsItemEnterpriseSSO,
+                },
+            },
+        }
+    _, invocationErr :=     client.Workspaces.UpdateAuthMethods(
+            context.TODO(),
+            request,
+            option.WithHTTPHeader(
+                http.Header{"X-Test-Id": []string{"TestWorkspacesUpdateAuthMethodsWithWireMock"}},
+            ),
+        )
+
+    require.NoError(t, invocationErr, "Client method call should succeed")
+    VerifyRequestCount(t, "TestWorkspacesUpdateAuthMethodsWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/workspaces.updateAuthMethods", nil, 1)
+}
+
 func TestWorkspacesUpdateBasicsWithWireMock(
     t *testing.T,
 ) {
@@ -187,6 +277,124 @@ func TestWorkspacesUpdateBasicsWithWireMock(
 
     require.NoError(t, invocationErr, "Client method call should succeed")
     VerifyRequestCount(t, "TestWorkspacesUpdateBasicsWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/workspaces.updateBasics", nil, 1)
+}
+
+func TestWorkspacesUpdateDomainEnrollmentModeWithWireMock(
+    t *testing.T,
+) {
+    WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+    	if WireMockBaseURL == "" {
+    		WireMockBaseURL = "http://localhost:8080"
+    	}
+    client := client.NewClient(
+        option.WithBaseURL(WireMockBaseURL),
+        option.WithToken("test-token"),
+    )
+        request := &sdk.UpdateDomainEnrollmentModeWorkspacesRequest{
+            WorkspaceSlug: "workspaceSlug",
+            Args: &sdk.UpdateDomainEnrollmentModeWorkspacesRequestArgs{
+                ClerkDomainID: "clerkDomainId",
+                EnrollmentMode: sdk.UpdateDomainEnrollmentModeWorkspacesRequestArgsEnrollmentModeManualInvitation,
+            },
+        }
+    _, invocationErr :=     client.Workspaces.UpdateDomainEnrollmentMode(
+            context.TODO(),
+            request,
+            option.WithHTTPHeader(
+                http.Header{"X-Test-Id": []string{"TestWorkspacesUpdateDomainEnrollmentModeWithWireMock"}},
+            ),
+        )
+
+    require.NoError(t, invocationErr, "Client method call should succeed")
+    VerifyRequestCount(t, "TestWorkspacesUpdateDomainEnrollmentModeWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/workspaces.updateDomainEnrollmentMode", nil, 1)
+}
+
+func TestWorkspacesUpdateMemberWorkspaceCreationWithWireMock(
+    t *testing.T,
+) {
+    WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+    	if WireMockBaseURL == "" {
+    		WireMockBaseURL = "http://localhost:8080"
+    	}
+    client := client.NewClient(
+        option.WithBaseURL(WireMockBaseURL),
+        option.WithToken("test-token"),
+    )
+        request := &sdk.UpdateMemberWorkspaceCreationWorkspacesRequest{
+            WorkspaceSlug: "workspaceSlug",
+            Args: &sdk.UpdateMemberWorkspaceCreationWorkspacesRequestArgs{
+                AllowMemberWorkspaceCreation: true,
+            },
+        }
+    _, invocationErr :=     client.Workspaces.UpdateMemberWorkspaceCreation(
+            context.TODO(),
+            request,
+            option.WithHTTPHeader(
+                http.Header{"X-Test-Id": []string{"TestWorkspacesUpdateMemberWorkspaceCreationWithWireMock"}},
+            ),
+        )
+
+    require.NoError(t, invocationErr, "Client method call should succeed")
+    VerifyRequestCount(t, "TestWorkspacesUpdateMemberWorkspaceCreationWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/workspaces.updateMemberWorkspaceCreation", nil, 1)
+}
+
+func TestWorkspacesReadNetworkRulesWithWireMock(
+    t *testing.T,
+) {
+    WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+    	if WireMockBaseURL == "" {
+    		WireMockBaseURL = "http://localhost:8080"
+    	}
+    client := client.NewClient(
+        option.WithBaseURL(WireMockBaseURL),
+        option.WithToken("test-token"),
+    )
+        request := &sdk.ReadNetworkRulesRequest{
+            WorkspaceSlug: "workspaceSlug",
+        }
+    _, invocationErr :=     client.Workspaces.ReadNetworkRules(
+            context.TODO(),
+            request,
+            option.WithHTTPHeader(
+                http.Header{"X-Test-Id": []string{"TestWorkspacesReadNetworkRulesWithWireMock"}},
+            ),
+        )
+
+    require.NoError(t, invocationErr, "Client method call should succeed")
+    VerifyRequestCount(t, "TestWorkspacesReadNetworkRulesWithWireMock", "GET", "/v3/workspaces/workspaceSlug/network/rules", nil, 1)
+}
+
+func TestWorkspacesSaveNetworkRulesWithWireMock(
+    t *testing.T,
+) {
+    WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+    	if WireMockBaseURL == "" {
+    		WireMockBaseURL = "http://localhost:8080"
+    	}
+    client := client.NewClient(
+        option.WithBaseURL(WireMockBaseURL),
+        option.WithToken("test-token"),
+    )
+        request := &sdk.SaveNetworkRulesRequest{
+            WorkspaceSlug: "workspaceSlug",
+            Rules: []*sdk.SaveNetworkRulesRequestRulesItem{
+                &sdk.SaveNetworkRulesRequestRulesItem{
+                    ID: "id",
+                    Label: "label",
+                    Value: "value",
+                },
+            },
+        }
+    _, invocationErr :=     client.Workspaces.SaveNetworkRules(
+            context.TODO(),
+            request,
+            option.WithHTTPHeader(
+                http.Header{"X-Test-Id": []string{"TestWorkspacesSaveNetworkRulesWithWireMock"}},
+            ),
+        )
+
+    require.NoError(t, invocationErr, "Client method call should succeed")
+    VerifyRequestCount(t, "TestWorkspacesSaveNetworkRulesWithWireMock", "PUT", "/v3/workspaces/workspaceSlug/network/rules", nil, 1)
 }
 
 

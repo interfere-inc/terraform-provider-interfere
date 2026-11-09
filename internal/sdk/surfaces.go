@@ -233,6 +233,64 @@ func (g *GetBySlugIncludeDeletedSurfacesRequest) MarshalJSON() ([]byte, error) {
 }
 
 var (
+	listSurfacesRequestFieldWorkspaceSlug = big.NewInt(1 << 0)
+	listSurfacesRequestFieldArgs          = big.NewInt(1 << 1)
+)
+
+type ListSurfacesRequest struct {
+	// Workspace URL slug, using lowercase letters, numbers, and hyphens.
+	WorkspaceSlug string         `json:"-" url:"-"`
+	Args          map[string]any `json:"args,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (l *ListSurfacesRequest) require(field *big.Int) {
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
+	}
+	next.Or(next, field)
+	l.explicitFields = next
+}
+
+// SetWorkspaceSlug sets the WorkspaceSlug field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListSurfacesRequest) SetWorkspaceSlug(workspaceSlug string) {
+	l.WorkspaceSlug = workspaceSlug
+	l.require(listSurfacesRequestFieldWorkspaceSlug)
+}
+
+// SetArgs sets the Args field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListSurfacesRequest) SetArgs(args map[string]any) {
+	l.Args = args
+	l.require(listSurfacesRequestFieldArgs)
+}
+
+func (l *ListSurfacesRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListSurfacesRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*l = ListSurfacesRequest(body)
+	return nil
+}
+
+func (l *ListSurfacesRequest) MarshalJSON() ([]byte, error) {
+	type embed ListSurfacesRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
 	setAnonymousReplayPolicySurfacesRequestFieldWorkspaceSlug = big.NewInt(1 << 0)
 	setAnonymousReplayPolicySurfacesRequestFieldArgs          = big.NewInt(1 << 1)
 )
@@ -339,6 +397,64 @@ func (s *SetAnonymousUserTrackingSurfacesRequest) UnmarshalJSON(data []byte) err
 
 func (s *SetAnonymousUserTrackingSurfacesRequest) MarshalJSON() ([]byte, error) {
 	type embed SetAnonymousUserTrackingSurfacesRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
+	setSdkPluginSurfacesRequestFieldWorkspaceSlug = big.NewInt(1 << 0)
+	setSdkPluginSurfacesRequestFieldArgs          = big.NewInt(1 << 1)
+)
+
+type SetSdkPluginSurfacesRequest struct {
+	// Workspace URL slug, using lowercase letters, numbers, and hyphens.
+	WorkspaceSlug string                           `json:"-" url:"-"`
+	Args          *SetSdkPluginSurfacesRequestArgs `json:"args" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (s *SetSdkPluginSurfacesRequest) require(field *big.Int) {
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
+	}
+	next.Or(next, field)
+	s.explicitFields = next
+}
+
+// SetWorkspaceSlug sets the WorkspaceSlug field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetSdkPluginSurfacesRequest) SetWorkspaceSlug(workspaceSlug string) {
+	s.WorkspaceSlug = workspaceSlug
+	s.require(setSdkPluginSurfacesRequestFieldWorkspaceSlug)
+}
+
+// SetArgs sets the Args field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetSdkPluginSurfacesRequest) SetArgs(args *SetSdkPluginSurfacesRequestArgs) {
+	s.Args = args
+	s.require(setSdkPluginSurfacesRequestFieldArgs)
+}
+
+func (s *SetSdkPluginSurfacesRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler SetSdkPluginSurfacesRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*s = SetSdkPluginSurfacesRequest(body)
+	return nil
+}
+
+func (s *SetSdkPluginSurfacesRequest) MarshalJSON() ([]byte, error) {
+	type embed SetSdkPluginSurfacesRequest
 	var marshaler = struct {
 		embed
 	}{
@@ -1017,6 +1133,92 @@ func (m *MutationSurfacesSetAnonymousUserTrackingResponse) MarshalJSON() ([]byte
 }
 
 func (m *MutationSurfacesSetAnonymousUserTrackingResponse) String() string {
+	if m == nil {
+		return "<nil>"
+	}
+	if len(m.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(m); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", m)
+}
+
+var (
+	mutationSurfacesSetSdkPluginResponseFieldSuccess = big.NewInt(1 << 0)
+)
+
+type MutationSurfacesSetSdkPluginResponse struct {
+	Success bool `json:"success" url:"success"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (m *MutationSurfacesSetSdkPluginResponse) GetSuccess() bool {
+	if m == nil {
+		return false
+	}
+	return m.Success
+}
+
+func (m *MutationSurfacesSetSdkPluginResponse) GetExtraProperties() map[string]interface{} {
+	if m == nil {
+		return nil
+	}
+	return m.extraProperties
+}
+
+func (m *MutationSurfacesSetSdkPluginResponse) require(field *big.Int) {
+	next := new(big.Int)
+	if m.explicitFields != nil {
+		next.Set(m.explicitFields)
+	}
+	next.Or(next, field)
+	m.explicitFields = next
+}
+
+// SetSuccess sets the Success field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *MutationSurfacesSetSdkPluginResponse) SetSuccess(success bool) {
+	m.Success = success
+	m.require(mutationSurfacesSetSdkPluginResponseFieldSuccess)
+}
+
+func (m *MutationSurfacesSetSdkPluginResponse) UnmarshalJSON(data []byte) error {
+	type unmarshaler MutationSurfacesSetSdkPluginResponse
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*m = MutationSurfacesSetSdkPluginResponse(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *m)
+	if err != nil {
+		return err
+	}
+	m.extraProperties = extraProperties
+	m.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (m *MutationSurfacesSetSdkPluginResponse) MarshalJSON() ([]byte, error) {
+	type embed MutationSurfacesSetSdkPluginResponse
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*m),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, m.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (m *MutationSurfacesSetSdkPluginResponse) String() string {
 	if m == nil {
 		return "<nil>"
 	}
@@ -2010,6 +2212,901 @@ func (q QuerySurfacesGetBySlugIncludeDeletedResponseType) Ptr() *QuerySurfacesGe
 	return &q
 }
 
+type QuerySurfacesListResponse = []*QuerySurfacesListResponseItem
+
+var (
+	querySurfacesListResponseItemFieldCreatedAt               = big.NewInt(1 << 0)
+	querySurfacesListResponseItemFieldDeletedAt               = big.NewInt(1 << 1)
+	querySurfacesListResponseItemFieldUpdatedAt               = big.NewInt(1 << 2)
+	querySurfacesListResponseItemFieldAnonymousReplayPolicy   = big.NewInt(1 << 3)
+	querySurfacesListResponseItemFieldAnonymousUserTracking   = big.NewInt(1 << 4)
+	querySurfacesListResponseItemFieldDestinationConnectionID = big.NewInt(1 << 5)
+	querySurfacesListResponseItemFieldDestinationMappingID    = big.NewInt(1 << 6)
+	querySurfacesListResponseItemFieldDestinationMappingLabel = big.NewInt(1 << 7)
+	querySurfacesListResponseItemFieldDestinationMappingURL   = big.NewInt(1 << 8)
+	querySurfacesListResponseItemFieldEnvironmentFiltering    = big.NewInt(1 << 9)
+	querySurfacesListResponseItemFieldID                      = big.NewInt(1 << 10)
+	querySurfacesListResponseItemFieldName                    = big.NewInt(1 << 11)
+	querySurfacesListResponseItemFieldOnboardedAt             = big.NewInt(1 << 12)
+	querySurfacesListResponseItemFieldOrganizationID          = big.NewInt(1 << 13)
+	querySurfacesListResponseItemFieldPrimaryEnvironmentID    = big.NewInt(1 << 14)
+	querySurfacesListResponseItemFieldPrimaryEnvironmentName  = big.NewInt(1 << 15)
+	querySurfacesListResponseItemFieldSdkConfig               = big.NewInt(1 << 16)
+	querySurfacesListResponseItemFieldSlug                    = big.NewInt(1 << 17)
+	querySurfacesListResponseItemFieldSourceDatasourceID      = big.NewInt(1 << 18)
+	querySurfacesListResponseItemFieldSourceConnectionID      = big.NewInt(1 << 19)
+	querySurfacesListResponseItemFieldSourceMappingID         = big.NewInt(1 << 20)
+	querySurfacesListResponseItemFieldSourceMappingLabel      = big.NewInt(1 << 21)
+	querySurfacesListResponseItemFieldSourceMappingURL        = big.NewInt(1 << 22)
+	querySurfacesListResponseItemFieldSourceWorkingDirectory  = big.NewInt(1 << 23)
+	querySurfacesListResponseItemFieldType                    = big.NewInt(1 << 24)
+)
+
+// querySurfacesListResponseItemNullableFields maps the wire names of QuerySurfacesListResponseItem's nullable fields (required or optional) to their field bits.
+var querySurfacesListResponseItemNullableFields = map[string]*big.Int{
+	"deletedAt":               querySurfacesListResponseItemFieldDeletedAt,
+	"destinationConnectionId": querySurfacesListResponseItemFieldDestinationConnectionID,
+	"destinationMappingId":    querySurfacesListResponseItemFieldDestinationMappingID,
+	"destinationMappingLabel": querySurfacesListResponseItemFieldDestinationMappingLabel,
+	"destinationMappingUrl":   querySurfacesListResponseItemFieldDestinationMappingURL,
+	"onboardedAt":             querySurfacesListResponseItemFieldOnboardedAt,
+	"primaryEnvironmentId":    querySurfacesListResponseItemFieldPrimaryEnvironmentID,
+	"primaryEnvironmentName":  querySurfacesListResponseItemFieldPrimaryEnvironmentName,
+	"sdkConfig":               querySurfacesListResponseItemFieldSdkConfig,
+	"sourceDatasourceId":      querySurfacesListResponseItemFieldSourceDatasourceID,
+	"sourceConnectionId":      querySurfacesListResponseItemFieldSourceConnectionID,
+	"sourceMappingId":         querySurfacesListResponseItemFieldSourceMappingID,
+	"sourceMappingLabel":      querySurfacesListResponseItemFieldSourceMappingLabel,
+	"sourceMappingUrl":        querySurfacesListResponseItemFieldSourceMappingURL,
+	"sourceWorkingDirectory":  querySurfacesListResponseItemFieldSourceWorkingDirectory,
+}
+
+type QuerySurfacesListResponseItem struct {
+	CreatedAt               float64                                 `json:"createdAt" url:"createdAt"`
+	DeletedAt               *float64                                `json:"deletedAt,omitempty" url:"deletedAt,omitempty"`
+	UpdatedAt               float64                                 `json:"updatedAt" url:"updatedAt"`
+	AnonymousReplayPolicy   string                                  `json:"anonymousReplayPolicy" url:"anonymousReplayPolicy"`
+	AnonymousUserTracking   bool                                    `json:"anonymousUserTracking" url:"anonymousUserTracking"`
+	DestinationConnectionID *string                                 `json:"destinationConnectionId,omitempty" url:"destinationConnectionId,omitempty"`
+	DestinationMappingID    *string                                 `json:"destinationMappingId,omitempty" url:"destinationMappingId,omitempty"`
+	DestinationMappingLabel *string                                 `json:"destinationMappingLabel,omitempty" url:"destinationMappingLabel,omitempty"`
+	DestinationMappingURL   *string                                 `json:"destinationMappingUrl,omitempty" url:"destinationMappingUrl,omitempty"`
+	EnvironmentFiltering    bool                                    `json:"environmentFiltering" url:"environmentFiltering"`
+	ID                      string                                  `json:"id" url:"id"`
+	Name                    string                                  `json:"name" url:"name"`
+	OnboardedAt             *float64                                `json:"onboardedAt,omitempty" url:"onboardedAt,omitempty"`
+	OrganizationID          string                                  `json:"organizationId" url:"organizationId"`
+	PrimaryEnvironmentID    *string                                 `json:"primaryEnvironmentId,omitempty" url:"primaryEnvironmentId,omitempty"`
+	PrimaryEnvironmentName  *string                                 `json:"primaryEnvironmentName,omitempty" url:"primaryEnvironmentName,omitempty"`
+	SdkConfig               *QuerySurfacesListResponseItemSdkConfig `json:"sdkConfig,omitempty" url:"sdkConfig,omitempty"`
+	Slug                    string                                  `json:"slug" url:"slug"`
+	SourceDatasourceID      *string                                 `json:"sourceDatasourceId,omitempty" url:"sourceDatasourceId,omitempty"`
+	SourceConnectionID      *string                                 `json:"sourceConnectionId,omitempty" url:"sourceConnectionId,omitempty"`
+	SourceMappingID         *string                                 `json:"sourceMappingId,omitempty" url:"sourceMappingId,omitempty"`
+	SourceMappingLabel      *string                                 `json:"sourceMappingLabel,omitempty" url:"sourceMappingLabel,omitempty"`
+	SourceMappingURL        *string                                 `json:"sourceMappingUrl,omitempty" url:"sourceMappingUrl,omitempty"`
+	SourceWorkingDirectory  *string                                 `json:"sourceWorkingDirectory,omitempty" url:"sourceWorkingDirectory,omitempty"`
+	Type                    QuerySurfacesListResponseItemType       `json:"type" url:"type"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (q *QuerySurfacesListResponseItem) GetCreatedAt() float64 {
+	if q == nil {
+		return 0
+	}
+	return q.CreatedAt
+}
+
+func (q *QuerySurfacesListResponseItem) GetDeletedAt() *float64 {
+	if q == nil {
+		return nil
+	}
+	return q.DeletedAt
+}
+
+func (q *QuerySurfacesListResponseItem) GetUpdatedAt() float64 {
+	if q == nil {
+		return 0
+	}
+	return q.UpdatedAt
+}
+
+func (q *QuerySurfacesListResponseItem) GetAnonymousReplayPolicy() string {
+	if q == nil {
+		return ""
+	}
+	return q.AnonymousReplayPolicy
+}
+
+func (q *QuerySurfacesListResponseItem) GetAnonymousUserTracking() bool {
+	if q == nil {
+		return false
+	}
+	return q.AnonymousUserTracking
+}
+
+func (q *QuerySurfacesListResponseItem) GetDestinationConnectionID() *string {
+	if q == nil {
+		return nil
+	}
+	return q.DestinationConnectionID
+}
+
+func (q *QuerySurfacesListResponseItem) GetDestinationMappingID() *string {
+	if q == nil {
+		return nil
+	}
+	return q.DestinationMappingID
+}
+
+func (q *QuerySurfacesListResponseItem) GetDestinationMappingLabel() *string {
+	if q == nil {
+		return nil
+	}
+	return q.DestinationMappingLabel
+}
+
+func (q *QuerySurfacesListResponseItem) GetDestinationMappingURL() *string {
+	if q == nil {
+		return nil
+	}
+	return q.DestinationMappingURL
+}
+
+func (q *QuerySurfacesListResponseItem) GetEnvironmentFiltering() bool {
+	if q == nil {
+		return false
+	}
+	return q.EnvironmentFiltering
+}
+
+func (q *QuerySurfacesListResponseItem) GetID() string {
+	if q == nil {
+		return ""
+	}
+	return q.ID
+}
+
+func (q *QuerySurfacesListResponseItem) GetName() string {
+	if q == nil {
+		return ""
+	}
+	return q.Name
+}
+
+func (q *QuerySurfacesListResponseItem) GetOnboardedAt() *float64 {
+	if q == nil {
+		return nil
+	}
+	return q.OnboardedAt
+}
+
+func (q *QuerySurfacesListResponseItem) GetOrganizationID() string {
+	if q == nil {
+		return ""
+	}
+	return q.OrganizationID
+}
+
+func (q *QuerySurfacesListResponseItem) GetPrimaryEnvironmentID() *string {
+	if q == nil {
+		return nil
+	}
+	return q.PrimaryEnvironmentID
+}
+
+func (q *QuerySurfacesListResponseItem) GetPrimaryEnvironmentName() *string {
+	if q == nil {
+		return nil
+	}
+	return q.PrimaryEnvironmentName
+}
+
+func (q *QuerySurfacesListResponseItem) GetSdkConfig() *QuerySurfacesListResponseItemSdkConfig {
+	if q == nil {
+		return nil
+	}
+	return q.SdkConfig
+}
+
+func (q *QuerySurfacesListResponseItem) GetSlug() string {
+	if q == nil {
+		return ""
+	}
+	return q.Slug
+}
+
+func (q *QuerySurfacesListResponseItem) GetSourceDatasourceID() *string {
+	if q == nil {
+		return nil
+	}
+	return q.SourceDatasourceID
+}
+
+func (q *QuerySurfacesListResponseItem) GetSourceConnectionID() *string {
+	if q == nil {
+		return nil
+	}
+	return q.SourceConnectionID
+}
+
+func (q *QuerySurfacesListResponseItem) GetSourceMappingID() *string {
+	if q == nil {
+		return nil
+	}
+	return q.SourceMappingID
+}
+
+func (q *QuerySurfacesListResponseItem) GetSourceMappingLabel() *string {
+	if q == nil {
+		return nil
+	}
+	return q.SourceMappingLabel
+}
+
+func (q *QuerySurfacesListResponseItem) GetSourceMappingURL() *string {
+	if q == nil {
+		return nil
+	}
+	return q.SourceMappingURL
+}
+
+func (q *QuerySurfacesListResponseItem) GetSourceWorkingDirectory() *string {
+	if q == nil {
+		return nil
+	}
+	return q.SourceWorkingDirectory
+}
+
+func (q *QuerySurfacesListResponseItem) GetType() QuerySurfacesListResponseItemType {
+	if q == nil {
+		return ""
+	}
+	return q.Type
+}
+
+func (q *QuerySurfacesListResponseItem) GetExtraProperties() map[string]interface{} {
+	if q == nil {
+		return nil
+	}
+	return q.extraProperties
+}
+
+func (q *QuerySurfacesListResponseItem) require(field *big.Int) {
+	next := new(big.Int)
+	if q.explicitFields != nil {
+		next.Set(q.explicitFields)
+	}
+	next.Or(next, field)
+	q.explicitFields = next
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesListResponseItem) SetCreatedAt(createdAt float64) {
+	q.CreatedAt = createdAt
+	q.require(querySurfacesListResponseItemFieldCreatedAt)
+}
+
+// SetDeletedAt sets the DeletedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesListResponseItem) SetDeletedAt(deletedAt *float64) {
+	q.DeletedAt = deletedAt
+	q.require(querySurfacesListResponseItemFieldDeletedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesListResponseItem) SetUpdatedAt(updatedAt float64) {
+	q.UpdatedAt = updatedAt
+	q.require(querySurfacesListResponseItemFieldUpdatedAt)
+}
+
+// SetAnonymousReplayPolicy sets the AnonymousReplayPolicy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesListResponseItem) SetAnonymousReplayPolicy(anonymousReplayPolicy string) {
+	q.AnonymousReplayPolicy = anonymousReplayPolicy
+	q.require(querySurfacesListResponseItemFieldAnonymousReplayPolicy)
+}
+
+// SetAnonymousUserTracking sets the AnonymousUserTracking field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesListResponseItem) SetAnonymousUserTracking(anonymousUserTracking bool) {
+	q.AnonymousUserTracking = anonymousUserTracking
+	q.require(querySurfacesListResponseItemFieldAnonymousUserTracking)
+}
+
+// SetDestinationConnectionID sets the DestinationConnectionID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesListResponseItem) SetDestinationConnectionID(destinationConnectionID *string) {
+	q.DestinationConnectionID = destinationConnectionID
+	q.require(querySurfacesListResponseItemFieldDestinationConnectionID)
+}
+
+// SetDestinationMappingID sets the DestinationMappingID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesListResponseItem) SetDestinationMappingID(destinationMappingID *string) {
+	q.DestinationMappingID = destinationMappingID
+	q.require(querySurfacesListResponseItemFieldDestinationMappingID)
+}
+
+// SetDestinationMappingLabel sets the DestinationMappingLabel field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesListResponseItem) SetDestinationMappingLabel(destinationMappingLabel *string) {
+	q.DestinationMappingLabel = destinationMappingLabel
+	q.require(querySurfacesListResponseItemFieldDestinationMappingLabel)
+}
+
+// SetDestinationMappingURL sets the DestinationMappingURL field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesListResponseItem) SetDestinationMappingURL(destinationMappingURL *string) {
+	q.DestinationMappingURL = destinationMappingURL
+	q.require(querySurfacesListResponseItemFieldDestinationMappingURL)
+}
+
+// SetEnvironmentFiltering sets the EnvironmentFiltering field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesListResponseItem) SetEnvironmentFiltering(environmentFiltering bool) {
+	q.EnvironmentFiltering = environmentFiltering
+	q.require(querySurfacesListResponseItemFieldEnvironmentFiltering)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesListResponseItem) SetID(id string) {
+	q.ID = id
+	q.require(querySurfacesListResponseItemFieldID)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesListResponseItem) SetName(name string) {
+	q.Name = name
+	q.require(querySurfacesListResponseItemFieldName)
+}
+
+// SetOnboardedAt sets the OnboardedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesListResponseItem) SetOnboardedAt(onboardedAt *float64) {
+	q.OnboardedAt = onboardedAt
+	q.require(querySurfacesListResponseItemFieldOnboardedAt)
+}
+
+// SetOrganizationID sets the OrganizationID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesListResponseItem) SetOrganizationID(organizationID string) {
+	q.OrganizationID = organizationID
+	q.require(querySurfacesListResponseItemFieldOrganizationID)
+}
+
+// SetPrimaryEnvironmentID sets the PrimaryEnvironmentID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesListResponseItem) SetPrimaryEnvironmentID(primaryEnvironmentID *string) {
+	q.PrimaryEnvironmentID = primaryEnvironmentID
+	q.require(querySurfacesListResponseItemFieldPrimaryEnvironmentID)
+}
+
+// SetPrimaryEnvironmentName sets the PrimaryEnvironmentName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesListResponseItem) SetPrimaryEnvironmentName(primaryEnvironmentName *string) {
+	q.PrimaryEnvironmentName = primaryEnvironmentName
+	q.require(querySurfacesListResponseItemFieldPrimaryEnvironmentName)
+}
+
+// SetSdkConfig sets the SdkConfig field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesListResponseItem) SetSdkConfig(sdkConfig *QuerySurfacesListResponseItemSdkConfig) {
+	q.SdkConfig = sdkConfig
+	q.require(querySurfacesListResponseItemFieldSdkConfig)
+}
+
+// SetSlug sets the Slug field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesListResponseItem) SetSlug(slug string) {
+	q.Slug = slug
+	q.require(querySurfacesListResponseItemFieldSlug)
+}
+
+// SetSourceDatasourceID sets the SourceDatasourceID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesListResponseItem) SetSourceDatasourceID(sourceDatasourceID *string) {
+	q.SourceDatasourceID = sourceDatasourceID
+	q.require(querySurfacesListResponseItemFieldSourceDatasourceID)
+}
+
+// SetSourceConnectionID sets the SourceConnectionID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesListResponseItem) SetSourceConnectionID(sourceConnectionID *string) {
+	q.SourceConnectionID = sourceConnectionID
+	q.require(querySurfacesListResponseItemFieldSourceConnectionID)
+}
+
+// SetSourceMappingID sets the SourceMappingID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesListResponseItem) SetSourceMappingID(sourceMappingID *string) {
+	q.SourceMappingID = sourceMappingID
+	q.require(querySurfacesListResponseItemFieldSourceMappingID)
+}
+
+// SetSourceMappingLabel sets the SourceMappingLabel field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesListResponseItem) SetSourceMappingLabel(sourceMappingLabel *string) {
+	q.SourceMappingLabel = sourceMappingLabel
+	q.require(querySurfacesListResponseItemFieldSourceMappingLabel)
+}
+
+// SetSourceMappingURL sets the SourceMappingURL field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesListResponseItem) SetSourceMappingURL(sourceMappingURL *string) {
+	q.SourceMappingURL = sourceMappingURL
+	q.require(querySurfacesListResponseItemFieldSourceMappingURL)
+}
+
+// SetSourceWorkingDirectory sets the SourceWorkingDirectory field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesListResponseItem) SetSourceWorkingDirectory(sourceWorkingDirectory *string) {
+	q.SourceWorkingDirectory = sourceWorkingDirectory
+	q.require(querySurfacesListResponseItemFieldSourceWorkingDirectory)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesListResponseItem) SetType(type_ QuerySurfacesListResponseItemType) {
+	q.Type = type_
+	q.require(querySurfacesListResponseItemFieldType)
+}
+
+func (q *QuerySurfacesListResponseItem) UnmarshalJSON(data []byte) error {
+	type unmarshaler QuerySurfacesListResponseItem
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*q = QuerySurfacesListResponseItem(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *q)
+	if err != nil {
+		return err
+	}
+	q.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, querySurfacesListResponseItemNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		q.require(presentFields)
+	}
+	q.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (q *QuerySurfacesListResponseItem) MarshalJSON() ([]byte, error) {
+	type embed QuerySurfacesListResponseItem
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*q),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, q.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (q *QuerySurfacesListResponseItem) String() string {
+	if q == nil {
+		return "<nil>"
+	}
+	if len(q.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(q.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(q); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", q)
+}
+
+var (
+	querySurfacesListResponseItemSdkConfigFieldPlugins       = big.NewInt(1 << 0)
+	querySurfacesListResponseItemSdkConfigFieldServerTracing = big.NewInt(1 << 1)
+	querySurfacesListResponseItemSdkConfigFieldLogSourcing   = big.NewInt(1 << 2)
+	querySurfacesListResponseItemSdkConfigFieldPlatform      = big.NewInt(1 << 3)
+)
+
+type QuerySurfacesListResponseItemSdkConfig struct {
+	Plugins       *QuerySurfacesListResponseItemSdkConfigPlugins       `json:"plugins,omitempty" url:"plugins,omitempty"`
+	ServerTracing *QuerySurfacesListResponseItemSdkConfigServerTracing `json:"serverTracing,omitempty" url:"serverTracing,omitempty"`
+	LogSourcing   *QuerySurfacesListResponseItemSdkConfigLogSourcing   `json:"logSourcing,omitempty" url:"logSourcing,omitempty"`
+	Platform      *QuerySurfacesListResponseItemSdkConfigPlatform      `json:"platform,omitempty" url:"platform,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (q *QuerySurfacesListResponseItemSdkConfig) GetPlugins() *QuerySurfacesListResponseItemSdkConfigPlugins {
+	if q == nil {
+		return nil
+	}
+	return q.Plugins
+}
+
+func (q *QuerySurfacesListResponseItemSdkConfig) GetServerTracing() *QuerySurfacesListResponseItemSdkConfigServerTracing {
+	if q == nil {
+		return nil
+	}
+	return q.ServerTracing
+}
+
+func (q *QuerySurfacesListResponseItemSdkConfig) GetLogSourcing() *QuerySurfacesListResponseItemSdkConfigLogSourcing {
+	if q == nil {
+		return nil
+	}
+	return q.LogSourcing
+}
+
+func (q *QuerySurfacesListResponseItemSdkConfig) GetPlatform() *QuerySurfacesListResponseItemSdkConfigPlatform {
+	if q == nil {
+		return nil
+	}
+	return q.Platform
+}
+
+func (q *QuerySurfacesListResponseItemSdkConfig) GetExtraProperties() map[string]interface{} {
+	if q == nil {
+		return nil
+	}
+	return q.extraProperties
+}
+
+func (q *QuerySurfacesListResponseItemSdkConfig) require(field *big.Int) {
+	next := new(big.Int)
+	if q.explicitFields != nil {
+		next.Set(q.explicitFields)
+	}
+	next.Or(next, field)
+	q.explicitFields = next
+}
+
+// SetPlugins sets the Plugins field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesListResponseItemSdkConfig) SetPlugins(plugins *QuerySurfacesListResponseItemSdkConfigPlugins) {
+	q.Plugins = plugins
+	q.require(querySurfacesListResponseItemSdkConfigFieldPlugins)
+}
+
+// SetServerTracing sets the ServerTracing field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesListResponseItemSdkConfig) SetServerTracing(serverTracing *QuerySurfacesListResponseItemSdkConfigServerTracing) {
+	q.ServerTracing = serverTracing
+	q.require(querySurfacesListResponseItemSdkConfigFieldServerTracing)
+}
+
+// SetLogSourcing sets the LogSourcing field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesListResponseItemSdkConfig) SetLogSourcing(logSourcing *QuerySurfacesListResponseItemSdkConfigLogSourcing) {
+	q.LogSourcing = logSourcing
+	q.require(querySurfacesListResponseItemSdkConfigFieldLogSourcing)
+}
+
+// SetPlatform sets the Platform field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesListResponseItemSdkConfig) SetPlatform(platform *QuerySurfacesListResponseItemSdkConfigPlatform) {
+	q.Platform = platform
+	q.require(querySurfacesListResponseItemSdkConfigFieldPlatform)
+}
+
+func (q *QuerySurfacesListResponseItemSdkConfig) UnmarshalJSON(data []byte) error {
+	type unmarshaler QuerySurfacesListResponseItemSdkConfig
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*q = QuerySurfacesListResponseItemSdkConfig(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *q)
+	if err != nil {
+		return err
+	}
+	q.extraProperties = extraProperties
+	q.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (q *QuerySurfacesListResponseItemSdkConfig) MarshalJSON() ([]byte, error) {
+	type embed QuerySurfacesListResponseItemSdkConfig
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*q),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, q.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (q *QuerySurfacesListResponseItemSdkConfig) String() string {
+	if q == nil {
+		return "<nil>"
+	}
+	if len(q.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(q.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(q); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", q)
+}
+
+type QuerySurfacesListResponseItemSdkConfigLogSourcing string
+
+const (
+	QuerySurfacesListResponseItemSdkConfigLogSourcingSdk   QuerySurfacesListResponseItemSdkConfigLogSourcing = "sdk"
+	QuerySurfacesListResponseItemSdkConfigLogSourcingDrain QuerySurfacesListResponseItemSdkConfigLogSourcing = "drain"
+)
+
+func NewQuerySurfacesListResponseItemSdkConfigLogSourcingFromString(s string) (QuerySurfacesListResponseItemSdkConfigLogSourcing, error) {
+	switch s {
+	case "sdk":
+		return QuerySurfacesListResponseItemSdkConfigLogSourcingSdk, nil
+	case "drain":
+		return QuerySurfacesListResponseItemSdkConfigLogSourcingDrain, nil
+	}
+	var t QuerySurfacesListResponseItemSdkConfigLogSourcing
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (q QuerySurfacesListResponseItemSdkConfigLogSourcing) Ptr() *QuerySurfacesListResponseItemSdkConfigLogSourcing {
+	return &q
+}
+
+type QuerySurfacesListResponseItemSdkConfigPlatform string
+
+const (
+	QuerySurfacesListResponseItemSdkConfigPlatformVercel     QuerySurfacesListResponseItemSdkConfigPlatform = "vercel"
+	QuerySurfacesListResponseItemSdkConfigPlatformCloudflare QuerySurfacesListResponseItemSdkConfigPlatform = "cloudflare"
+)
+
+func NewQuerySurfacesListResponseItemSdkConfigPlatformFromString(s string) (QuerySurfacesListResponseItemSdkConfigPlatform, error) {
+	switch s {
+	case "vercel":
+		return QuerySurfacesListResponseItemSdkConfigPlatformVercel, nil
+	case "cloudflare":
+		return QuerySurfacesListResponseItemSdkConfigPlatformCloudflare, nil
+	}
+	var t QuerySurfacesListResponseItemSdkConfigPlatform
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (q QuerySurfacesListResponseItemSdkConfigPlatform) Ptr() *QuerySurfacesListResponseItemSdkConfigPlatform {
+	return &q
+}
+
+var (
+	querySurfacesListResponseItemSdkConfigPluginsFieldErrors     = big.NewInt(1 << 0)
+	querySurfacesListResponseItemSdkConfigPluginsFieldDevice     = big.NewInt(1 << 1)
+	querySurfacesListResponseItemSdkConfigPluginsFieldPageEvents = big.NewInt(1 << 2)
+	querySurfacesListResponseItemSdkConfigPluginsFieldRageClick  = big.NewInt(1 << 3)
+	querySurfacesListResponseItemSdkConfigPluginsFieldReplay     = big.NewInt(1 << 4)
+	querySurfacesListResponseItemSdkConfigPluginsFieldLogs       = big.NewInt(1 << 5)
+)
+
+type QuerySurfacesListResponseItemSdkConfigPlugins struct {
+	Errors     *bool `json:"errors,omitempty" url:"errors,omitempty"`
+	Device     *bool `json:"device,omitempty" url:"device,omitempty"`
+	PageEvents *bool `json:"pageEvents,omitempty" url:"pageEvents,omitempty"`
+	RageClick  *bool `json:"rageClick,omitempty" url:"rageClick,omitempty"`
+	Replay     *bool `json:"replay,omitempty" url:"replay,omitempty"`
+	Logs       *bool `json:"logs,omitempty" url:"logs,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (q *QuerySurfacesListResponseItemSdkConfigPlugins) GetErrors() *bool {
+	if q == nil {
+		return nil
+	}
+	return q.Errors
+}
+
+func (q *QuerySurfacesListResponseItemSdkConfigPlugins) GetDevice() *bool {
+	if q == nil {
+		return nil
+	}
+	return q.Device
+}
+
+func (q *QuerySurfacesListResponseItemSdkConfigPlugins) GetPageEvents() *bool {
+	if q == nil {
+		return nil
+	}
+	return q.PageEvents
+}
+
+func (q *QuerySurfacesListResponseItemSdkConfigPlugins) GetRageClick() *bool {
+	if q == nil {
+		return nil
+	}
+	return q.RageClick
+}
+
+func (q *QuerySurfacesListResponseItemSdkConfigPlugins) GetReplay() *bool {
+	if q == nil {
+		return nil
+	}
+	return q.Replay
+}
+
+func (q *QuerySurfacesListResponseItemSdkConfigPlugins) GetLogs() *bool {
+	if q == nil {
+		return nil
+	}
+	return q.Logs
+}
+
+func (q *QuerySurfacesListResponseItemSdkConfigPlugins) GetExtraProperties() map[string]interface{} {
+	if q == nil {
+		return nil
+	}
+	return q.extraProperties
+}
+
+func (q *QuerySurfacesListResponseItemSdkConfigPlugins) require(field *big.Int) {
+	next := new(big.Int)
+	if q.explicitFields != nil {
+		next.Set(q.explicitFields)
+	}
+	next.Or(next, field)
+	q.explicitFields = next
+}
+
+// SetErrors sets the Errors field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesListResponseItemSdkConfigPlugins) SetErrors(errors *bool) {
+	q.Errors = errors
+	q.require(querySurfacesListResponseItemSdkConfigPluginsFieldErrors)
+}
+
+// SetDevice sets the Device field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesListResponseItemSdkConfigPlugins) SetDevice(device *bool) {
+	q.Device = device
+	q.require(querySurfacesListResponseItemSdkConfigPluginsFieldDevice)
+}
+
+// SetPageEvents sets the PageEvents field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesListResponseItemSdkConfigPlugins) SetPageEvents(pageEvents *bool) {
+	q.PageEvents = pageEvents
+	q.require(querySurfacesListResponseItemSdkConfigPluginsFieldPageEvents)
+}
+
+// SetRageClick sets the RageClick field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesListResponseItemSdkConfigPlugins) SetRageClick(rageClick *bool) {
+	q.RageClick = rageClick
+	q.require(querySurfacesListResponseItemSdkConfigPluginsFieldRageClick)
+}
+
+// SetReplay sets the Replay field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesListResponseItemSdkConfigPlugins) SetReplay(replay *bool) {
+	q.Replay = replay
+	q.require(querySurfacesListResponseItemSdkConfigPluginsFieldReplay)
+}
+
+// SetLogs sets the Logs field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesListResponseItemSdkConfigPlugins) SetLogs(logs *bool) {
+	q.Logs = logs
+	q.require(querySurfacesListResponseItemSdkConfigPluginsFieldLogs)
+}
+
+func (q *QuerySurfacesListResponseItemSdkConfigPlugins) UnmarshalJSON(data []byte) error {
+	type unmarshaler QuerySurfacesListResponseItemSdkConfigPlugins
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*q = QuerySurfacesListResponseItemSdkConfigPlugins(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *q)
+	if err != nil {
+		return err
+	}
+	q.extraProperties = extraProperties
+	q.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (q *QuerySurfacesListResponseItemSdkConfigPlugins) MarshalJSON() ([]byte, error) {
+	type embed QuerySurfacesListResponseItemSdkConfigPlugins
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*q),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, q.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (q *QuerySurfacesListResponseItemSdkConfigPlugins) String() string {
+	if q == nil {
+		return "<nil>"
+	}
+	if len(q.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(q.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(q); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", q)
+}
+
+type QuerySurfacesListResponseItemSdkConfigServerTracing string
+
+const (
+	QuerySurfacesListResponseItemSdkConfigServerTracingFull  QuerySurfacesListResponseItemSdkConfigServerTracing = "full"
+	QuerySurfacesListResponseItemSdkConfigServerTracingDrain QuerySurfacesListResponseItemSdkConfigServerTracing = "drain"
+)
+
+func NewQuerySurfacesListResponseItemSdkConfigServerTracingFromString(s string) (QuerySurfacesListResponseItemSdkConfigServerTracing, error) {
+	switch s {
+	case "full":
+		return QuerySurfacesListResponseItemSdkConfigServerTracingFull, nil
+	case "drain":
+		return QuerySurfacesListResponseItemSdkConfigServerTracingDrain, nil
+	}
+	var t QuerySurfacesListResponseItemSdkConfigServerTracing
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (q QuerySurfacesListResponseItemSdkConfigServerTracing) Ptr() *QuerySurfacesListResponseItemSdkConfigServerTracing {
+	return &q
+}
+
+type QuerySurfacesListResponseItemType string
+
+const (
+	QuerySurfacesListResponseItemTypeElysia QuerySurfacesListResponseItemType = "elysia"
+	QuerySurfacesListResponseItemTypeNest   QuerySurfacesListResponseItemType = "nest"
+	QuerySurfacesListResponseItemTypeNextjs QuerySurfacesListResponseItemType = "nextjs"
+	QuerySurfacesListResponseItemTypePython QuerySurfacesListResponseItemType = "python"
+	QuerySurfacesListResponseItemTypeReact  QuerySurfacesListResponseItemType = "react"
+)
+
+func NewQuerySurfacesListResponseItemTypeFromString(s string) (QuerySurfacesListResponseItemType, error) {
+	switch s {
+	case "elysia":
+		return QuerySurfacesListResponseItemTypeElysia, nil
+	case "nest":
+		return QuerySurfacesListResponseItemTypeNest, nil
+	case "nextjs":
+		return QuerySurfacesListResponseItemTypeNextjs, nil
+	case "python":
+		return QuerySurfacesListResponseItemTypePython, nil
+	case "react":
+		return QuerySurfacesListResponseItemTypeReact, nil
+	}
+	var t QuerySurfacesListResponseItemType
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (q QuerySurfacesListResponseItemType) Ptr() *QuerySurfacesListResponseItemType {
+	return &q
+}
+
 // When sessions without an identified user record replay. Defaults to on_error when anonymous-user tracking is on, otherwise always.
 type CreateSurfaceRequestAnonymousReplayPolicy string
 
@@ -2683,6 +3780,153 @@ func (s *SetAnonymousUserTrackingSurfacesRequestArgs) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", s)
+}
+
+var (
+	setSdkPluginSurfacesRequestArgsFieldSurfaceSlug = big.NewInt(1 << 0)
+	setSdkPluginSurfacesRequestArgsFieldPlugin      = big.NewInt(1 << 1)
+	setSdkPluginSurfacesRequestArgsFieldEnabled     = big.NewInt(1 << 2)
+)
+
+type SetSdkPluginSurfacesRequestArgs struct {
+	// Surface URL slug, using lowercase letters, numbers, and hyphens.
+	SurfaceSlug string                                `json:"surfaceSlug" url:"surfaceSlug"`
+	Plugin      SetSdkPluginSurfacesRequestArgsPlugin `json:"plugin" url:"plugin"`
+	Enabled     bool                                  `json:"enabled" url:"enabled"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (s *SetSdkPluginSurfacesRequestArgs) GetSurfaceSlug() string {
+	if s == nil {
+		return ""
+	}
+	return s.SurfaceSlug
+}
+
+func (s *SetSdkPluginSurfacesRequestArgs) GetPlugin() SetSdkPluginSurfacesRequestArgsPlugin {
+	if s == nil {
+		return ""
+	}
+	return s.Plugin
+}
+
+func (s *SetSdkPluginSurfacesRequestArgs) GetEnabled() bool {
+	if s == nil {
+		return false
+	}
+	return s.Enabled
+}
+
+func (s *SetSdkPluginSurfacesRequestArgs) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
+	return s.extraProperties
+}
+
+func (s *SetSdkPluginSurfacesRequestArgs) require(field *big.Int) {
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
+	}
+	next.Or(next, field)
+	s.explicitFields = next
+}
+
+// SetSurfaceSlug sets the SurfaceSlug field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetSdkPluginSurfacesRequestArgs) SetSurfaceSlug(surfaceSlug string) {
+	s.SurfaceSlug = surfaceSlug
+	s.require(setSdkPluginSurfacesRequestArgsFieldSurfaceSlug)
+}
+
+// SetPlugin sets the Plugin field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetSdkPluginSurfacesRequestArgs) SetPlugin(plugin SetSdkPluginSurfacesRequestArgsPlugin) {
+	s.Plugin = plugin
+	s.require(setSdkPluginSurfacesRequestArgsFieldPlugin)
+}
+
+// SetEnabled sets the Enabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetSdkPluginSurfacesRequestArgs) SetEnabled(enabled bool) {
+	s.Enabled = enabled
+	s.require(setSdkPluginSurfacesRequestArgsFieldEnabled)
+}
+
+func (s *SetSdkPluginSurfacesRequestArgs) UnmarshalJSON(data []byte) error {
+	type unmarshaler SetSdkPluginSurfacesRequestArgs
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*s = SetSdkPluginSurfacesRequestArgs(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+	s.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (s *SetSdkPluginSurfacesRequestArgs) MarshalJSON() ([]byte, error) {
+	type embed SetSdkPluginSurfacesRequestArgs
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (s *SetSdkPluginSurfacesRequestArgs) String() string {
+	if s == nil {
+		return "<nil>"
+	}
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
+}
+
+type SetSdkPluginSurfacesRequestArgsPlugin string
+
+const (
+	SetSdkPluginSurfacesRequestArgsPluginReplay     SetSdkPluginSurfacesRequestArgsPlugin = "replay"
+	SetSdkPluginSurfacesRequestArgsPluginLogs       SetSdkPluginSurfacesRequestArgsPlugin = "logs"
+	SetSdkPluginSurfacesRequestArgsPluginPageEvents SetSdkPluginSurfacesRequestArgsPlugin = "pageEvents"
+	SetSdkPluginSurfacesRequestArgsPluginRageClick  SetSdkPluginSurfacesRequestArgsPlugin = "rageClick"
+)
+
+func NewSetSdkPluginSurfacesRequestArgsPluginFromString(s string) (SetSdkPluginSurfacesRequestArgsPlugin, error) {
+	switch s {
+	case "replay":
+		return SetSdkPluginSurfacesRequestArgsPluginReplay, nil
+	case "logs":
+		return SetSdkPluginSurfacesRequestArgsPluginLogs, nil
+	case "pageEvents":
+		return SetSdkPluginSurfacesRequestArgsPluginPageEvents, nil
+	case "rageClick":
+		return SetSdkPluginSurfacesRequestArgsPluginRageClick, nil
+	}
+	var t SetSdkPluginSurfacesRequestArgsPlugin
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (s SetSdkPluginSurfacesRequestArgsPlugin) Ptr() *SetSdkPluginSurfacesRequestArgsPlugin {
+	return &s
 }
 
 var (

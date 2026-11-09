@@ -80,6 +80,53 @@ func (r *RawClient) GetBySlugIncludeDeleted(
     }, nil
 }
 
+func (r *RawClient) List(
+    ctx context.Context,
+    request *sdk.ListSurfacesRequest,
+    opts ...option.RequestOption,
+) (*core.Response[sdk.QuerySurfacesListResponse], error) {
+    options := core.NewRequestOptions(opts...)
+    baseURL := internal.ResolveBaseURL(
+        options.BaseURL,
+        r.baseURL,
+        "",
+    )
+    endpointURL := internal.EncodeURL(
+        baseURL + "/v3/workspaces/%v/queries/surfaces.list",
+        request.WorkspaceSlug,
+    )
+    headers := internal.MergeHeaders(
+        r.options.ToHeader(),
+        options.ToHeader(),
+    )
+    headers.Add("Content-Type", "application/json")
+    var response sdk.QuerySurfacesListResponse
+    raw, err := r.caller.Call(
+        ctx,
+        &internal.CallParams{
+            URL: endpointURL,
+            Method: http.MethodPost,
+            Headers: headers,
+            MaxAttempts: options.MaxAttempts,
+            DisableRetries: options.DisableRetries,
+            BodyProperties: options.BodyProperties,
+            QueryParameters: options.QueryParameters,
+            Client: options.HTTPClient,
+            Request: request,
+            Response: &response,
+            ErrorDecoder: internal.NewErrorDecoder(sdk.ErrorCodes),
+        },
+    )
+    if err != nil {
+        return nil, err
+    }
+    return &core.Response[sdk.QuerySurfacesListResponse]{
+        StatusCode: raw.StatusCode,
+        Header: raw.Header,
+        Body: response,
+    }, nil
+}
+
 func (r *RawClient) Delete(
     ctx context.Context,
     request *sdk.DeleteSurfacesRequest,
@@ -215,6 +262,53 @@ func (r *RawClient) SetAnonymousUserTracking(
         return nil, err
     }
     return &core.Response[*sdk.MutationSurfacesSetAnonymousUserTrackingResponse]{
+        StatusCode: raw.StatusCode,
+        Header: raw.Header,
+        Body: response,
+    }, nil
+}
+
+func (r *RawClient) SetSdkPlugin(
+    ctx context.Context,
+    request *sdk.SetSdkPluginSurfacesRequest,
+    opts ...option.RequestOption,
+) (*core.Response[*sdk.MutationSurfacesSetSdkPluginResponse], error) {
+    options := core.NewRequestOptions(opts...)
+    baseURL := internal.ResolveBaseURL(
+        options.BaseURL,
+        r.baseURL,
+        "",
+    )
+    endpointURL := internal.EncodeURL(
+        baseURL + "/v3/workspaces/%v/actions/surfaces.setSdkPlugin",
+        request.WorkspaceSlug,
+    )
+    headers := internal.MergeHeaders(
+        r.options.ToHeader(),
+        options.ToHeader(),
+    )
+    headers.Add("Content-Type", "application/json")
+    var response *sdk.MutationSurfacesSetSdkPluginResponse
+    raw, err := r.caller.Call(
+        ctx,
+        &internal.CallParams{
+            URL: endpointURL,
+            Method: http.MethodPost,
+            Headers: headers,
+            MaxAttempts: options.MaxAttempts,
+            DisableRetries: options.DisableRetries,
+            BodyProperties: options.BodyProperties,
+            QueryParameters: options.QueryParameters,
+            Client: options.HTTPClient,
+            Request: request,
+            Response: &response,
+            ErrorDecoder: internal.NewErrorDecoder(sdk.ErrorCodes),
+        },
+    )
+    if err != nil {
+        return nil, err
+    }
+    return &core.Response[*sdk.MutationSurfacesSetSdkPluginResponse]{
         StatusCode: raw.StatusCode,
         Header: raw.Header,
         Body: response,

@@ -65,3 +65,30 @@ func (c *Client) ByIDIncludeDeleted(
     return response.Body, nil
 }
 
+// List domains associated with the workspace, including their verification and enrollment configuration. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation is read-only despite using POST. Permission-filtered queries may return an empty result; do not assume that proves the resource does not exist. Only use pagination arguments declared in the schema.
+// 
+// Example:
+// 
+// 	request := &sdk.ListDomainsRequest{
+// 	    WorkspaceSlug: "workspaceSlug",
+// 	}
+// 	_, err := client.Domains.List(
+// 	    context.TODO(),
+// 	    request,
+// 	)
+func (c *Client) List(
+    ctx context.Context,
+    request *sdk.ListDomainsRequest,
+    opts ...option.RequestOption,
+) (sdk.QueryDomainsForOrgResponse, error) {
+    response, err := c.WithRawResponse.List(
+        ctx,
+        request,
+        opts...,
+    )
+    if err != nil {
+        return nil, err
+    }
+    return response.Body, nil
+}
+

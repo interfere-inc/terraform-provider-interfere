@@ -62,6 +62,37 @@ func (c *Client) Current(
     return response.Body, nil
 }
 
+// Add a workspace domain. This changes domain configuration; inspect domains.list first. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.
+// 
+// Example:
+// 
+// 	request := &sdk.AddDomainWorkspacesRequest{
+// 	    WorkspaceSlug: "workspaceSlug",
+// 	    Args: &sdk.AddDomainWorkspacesRequestArgs{
+// 	        ID: "id",
+// 	        Name: "name",
+// 	    },
+// 	}
+// 	_, err := client.Workspaces.AddDomain(
+// 	    context.TODO(),
+// 	    request,
+// 	)
+func (c *Client) AddDomain(
+    ctx context.Context,
+    request *sdk.AddDomainWorkspacesRequest,
+    opts ...option.RequestOption,
+) (*sdk.MutationWorkspacesAddDomainResponse, error) {
+    response, err := c.WithRawResponse.AddDomain(
+        ctx,
+        request,
+        opts...,
+    )
+    if err != nil {
+        return nil, err
+    }
+    return response.Body, nil
+}
+
 // Add a tracking proxy domain to the workspace. Check domains.list and domains.proxyInUse first. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.
 // 
 // Example:
@@ -83,6 +114,36 @@ func (c *Client) AddProxyDomain(
     opts ...option.RequestOption,
 ) (*sdk.MutationWorkspacesAddProxyDomainResponse, error) {
     response, err := c.WithRawResponse.AddProxyDomain(
+        ctx,
+        request,
+        opts...,
+    )
+    if err != nil {
+        return nil, err
+    }
+    return response.Body, nil
+}
+
+// Remove a workspace domain identified from domains.list. Review authentication and enrollment implications first. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.
+// 
+// Example:
+// 
+// 	request := &sdk.RemoveDomainWorkspacesRequest{
+// 	    WorkspaceSlug: "workspaceSlug",
+// 	    Args: &sdk.RemoveDomainWorkspacesRequestArgs{
+// 	        ClerkDomainID: "clerkDomainId",
+// 	    },
+// 	}
+// 	_, err := client.Workspaces.RemoveDomain(
+// 	    context.TODO(),
+// 	    request,
+// 	)
+func (c *Client) RemoveDomain(
+    ctx context.Context,
+    request *sdk.RemoveDomainWorkspacesRequest,
+    opts ...option.RequestOption,
+) (*sdk.MutationWorkspacesRemoveDomainResponse, error) {
+    response, err := c.WithRawResponse.RemoveDomain(
         ctx,
         request,
         opts...,
@@ -123,6 +184,38 @@ func (c *Client) RemoveProxyDomain(
     return response.Body, nil
 }
 
+// Change allowed workspace authentication methods. Inspect existing configuration to avoid unintended sign-in restrictions. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.
+// 
+// Example:
+// 
+// 	request := &sdk.UpdateAuthMethodsWorkspacesRequest{
+// 	    WorkspaceSlug: "workspaceSlug",
+// 	    Args: &sdk.UpdateAuthMethodsWorkspacesRequestArgs{
+// 	        Methods: []sdk.UpdateAuthMethodsWorkspacesRequestArgsMethodsItem{
+// 	            sdk.UpdateAuthMethodsWorkspacesRequestArgsMethodsItemEnterpriseSSO,
+// 	        },
+// 	    },
+// 	}
+// 	_, err := client.Workspaces.UpdateAuthMethods(
+// 	    context.TODO(),
+// 	    request,
+// 	)
+func (c *Client) UpdateAuthMethods(
+    ctx context.Context,
+    request *sdk.UpdateAuthMethodsWorkspacesRequest,
+    opts ...option.RequestOption,
+) (*sdk.MutationWorkspacesUpdateAuthMethodsResponse, error) {
+    response, err := c.WithRawResponse.UpdateAuthMethods(
+        ctx,
+        request,
+        opts...,
+    )
+    if err != nil {
+        return nil, err
+    }
+    return response.Body, nil
+}
+
 // Update workspace name or other basic settings described by the input schema. Read workspaces.current first. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.
 // 
 // Example:
@@ -141,6 +234,128 @@ func (c *Client) UpdateBasics(
     opts ...option.RequestOption,
 ) (*sdk.MutationWorkspacesUpdateBasicsResponse, error) {
     response, err := c.WithRawResponse.UpdateBasics(
+        ctx,
+        request,
+        opts...,
+    )
+    if err != nil {
+        return nil, err
+    }
+    return response.Body, nil
+}
+
+// Change how users with a workspace domain can enroll. Inspect the domain and current enrollment policy first. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.
+// 
+// Example:
+// 
+// 	request := &sdk.UpdateDomainEnrollmentModeWorkspacesRequest{
+// 	    WorkspaceSlug: "workspaceSlug",
+// 	    Args: &sdk.UpdateDomainEnrollmentModeWorkspacesRequestArgs{
+// 	        ClerkDomainID: "clerkDomainId",
+// 	        EnrollmentMode: sdk.UpdateDomainEnrollmentModeWorkspacesRequestArgsEnrollmentModeManualInvitation,
+// 	    },
+// 	}
+// 	_, err := client.Workspaces.UpdateDomainEnrollmentMode(
+// 	    context.TODO(),
+// 	    request,
+// 	)
+func (c *Client) UpdateDomainEnrollmentMode(
+    ctx context.Context,
+    request *sdk.UpdateDomainEnrollmentModeWorkspacesRequest,
+    opts ...option.RequestOption,
+) (*sdk.MutationWorkspacesUpdateDomainEnrollmentModeResponse, error) {
+    response, err := c.WithRawResponse.UpdateDomainEnrollmentMode(
+        ctx,
+        request,
+        opts...,
+    )
+    if err != nil {
+        return nil, err
+    }
+    return response.Body, nil
+}
+
+// Change whether workspace members can create additional workspaces. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.
+// 
+// Example:
+// 
+// 	request := &sdk.UpdateMemberWorkspaceCreationWorkspacesRequest{
+// 	    WorkspaceSlug: "workspaceSlug",
+// 	    Args: &sdk.UpdateMemberWorkspaceCreationWorkspacesRequestArgs{
+// 	        AllowMemberWorkspaceCreation: true,
+// 	    },
+// 	}
+// 	_, err := client.Workspaces.UpdateMemberWorkspaceCreation(
+// 	    context.TODO(),
+// 	    request,
+// 	)
+func (c *Client) UpdateMemberWorkspaceCreation(
+    ctx context.Context,
+    request *sdk.UpdateMemberWorkspaceCreationWorkspacesRequest,
+    opts ...option.RequestOption,
+) (*sdk.MutationWorkspacesUpdateMemberWorkspaceCreationResponse, error) {
+    response, err := c.WithRawResponse.UpdateMemberWorkspaceCreation(
+        ctx,
+        request,
+        opts...,
+    )
+    if err != nil {
+        return nil, err
+    }
+    return response.Body, nil
+}
+
+// Returns the networks allowed to reach the workspace dashboard and API. An empty list means no restriction. Requires workspace authentication read permission.
+// 
+// Example:
+// 
+// 	request := &sdk.ReadNetworkRulesRequest{
+// 	    WorkspaceSlug: "workspaceSlug",
+// 	}
+// 	_, err := client.Workspaces.ReadNetworkRules(
+// 	    context.TODO(),
+// 	    request,
+// 	)
+func (c *Client) ReadNetworkRules(
+    ctx context.Context,
+    request *sdk.ReadNetworkRulesRequest,
+    opts ...option.RequestOption,
+) (*sdk.ReadNetworkRulesResponse, error) {
+    response, err := c.WithRawResponse.ReadNetworkRules(
+        ctx,
+        request,
+        opts...,
+    )
+    if err != nil {
+        return nil, err
+    }
+    return response.Body, nil
+}
+
+// Replaces the networks allowed to reach the workspace dashboard and API, and records an audit event. An empty list removes all restrictions. The saving administrator's connection must remain allowed.
+// 
+// Example:
+// 
+// 	request := &sdk.SaveNetworkRulesRequest{
+// 	    WorkspaceSlug: "workspaceSlug",
+// 	    Rules: []*sdk.SaveNetworkRulesRequestRulesItem{
+// 	        &sdk.SaveNetworkRulesRequestRulesItem{
+// 	            ID: "id",
+// 	            Label: "label",
+// 	            Value: "value",
+// 	        },
+// 	    },
+// 	}
+// 	_, err := client.Workspaces.SaveNetworkRules(
+// 	    context.TODO(),
+// 	    request,
+// 	)
+func (c *Client) SaveNetworkRules(
+    ctx context.Context,
+    request *sdk.SaveNetworkRulesRequest,
+    opts ...option.RequestOption,
+) (*sdk.SaveNetworkRulesResponse, error) {
+    response, err := c.WithRawResponse.SaveNetworkRules(
         ctx,
         request,
         opts...,

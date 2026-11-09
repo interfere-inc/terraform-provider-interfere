@@ -65,6 +65,33 @@ func (c *Client) GetBySlugIncludeDeleted(
     return response.Body, nil
 }
 
+// List active apps (surfaces) in the workspace. Start here to resolve an app name to its ID and slug before querying environments, releases or keys. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation is read-only despite using POST. Permission-filtered queries may return an empty result; do not assume that proves the resource does not exist. Only use pagination arguments declared in the schema.
+// 
+// Example:
+// 
+// 	request := &sdk.ListSurfacesRequest{
+// 	    WorkspaceSlug: "workspaceSlug",
+// 	}
+// 	_, err := client.Surfaces.List(
+// 	    context.TODO(),
+// 	    request,
+// 	)
+func (c *Client) List(
+    ctx context.Context,
+    request *sdk.ListSurfacesRequest,
+    opts ...option.RequestOption,
+) (sdk.QuerySurfacesListResponse, error) {
+    response, err := c.WithRawResponse.List(
+        ctx,
+        request,
+        opts...,
+    )
+    if err != nil {
+        return nil, err
+    }
+    return response.Body, nil
+}
+
 // Delete an app (surface). This is destructive; resolve its exact ID and slug with surfaces.list and verify the requested target. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.
 // 
 // Example:
@@ -147,6 +174,38 @@ func (c *Client) SetAnonymousUserTracking(
     opts ...option.RequestOption,
 ) (*sdk.MutationSurfacesSetAnonymousUserTrackingResponse, error) {
     response, err := c.WithRawResponse.SetAnonymousUserTracking(
+        ctx,
+        request,
+        opts...,
+    )
+    if err != nil {
+        return nil, err
+    }
+    return response.Body, nil
+}
+
+// Turn one browser SDK feature (replay, logs, pageEvents or rageClick) on or off for an app (surface). Other SDK settings are kept. Next.js and Vite apps bake this at build time, so it takes effect on their next build and deploy. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.
+// 
+// Example:
+// 
+// 	request := &sdk.SetSdkPluginSurfacesRequest{
+// 	    WorkspaceSlug: "workspaceSlug",
+// 	    Args: &sdk.SetSdkPluginSurfacesRequestArgs{
+// 	        SurfaceSlug: "surfaceSlug",
+// 	        Plugin: sdk.SetSdkPluginSurfacesRequestArgsPluginReplay,
+// 	        Enabled: true,
+// 	    },
+// 	}
+// 	_, err := client.Surfaces.SetSdkPlugin(
+// 	    context.TODO(),
+// 	    request,
+// 	)
+func (c *Client) SetSdkPlugin(
+    ctx context.Context,
+    request *sdk.SetSdkPluginSurfacesRequest,
+    opts ...option.RequestOption,
+) (*sdk.MutationSurfacesSetSdkPluginResponse, error) {
+    response, err := c.WithRawResponse.SetSdkPlugin(
         ctx,
         request,
         opts...,

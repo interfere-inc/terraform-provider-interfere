@@ -68,6 +68,64 @@ func (b *ByIDIncludeDeletedDomainsRequest) MarshalJSON() ([]byte, error) {
 }
 
 var (
+	listDomainsRequestFieldWorkspaceSlug = big.NewInt(1 << 0)
+	listDomainsRequestFieldArgs          = big.NewInt(1 << 1)
+)
+
+type ListDomainsRequest struct {
+	// Workspace URL slug, using lowercase letters, numbers, and hyphens.
+	WorkspaceSlug string         `json:"-" url:"-"`
+	Args          map[string]any `json:"args,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (l *ListDomainsRequest) require(field *big.Int) {
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
+	}
+	next.Or(next, field)
+	l.explicitFields = next
+}
+
+// SetWorkspaceSlug sets the WorkspaceSlug field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListDomainsRequest) SetWorkspaceSlug(workspaceSlug string) {
+	l.WorkspaceSlug = workspaceSlug
+	l.require(listDomainsRequestFieldWorkspaceSlug)
+}
+
+// SetArgs sets the Args field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListDomainsRequest) SetArgs(args map[string]any) {
+	l.Args = args
+	l.require(listDomainsRequestFieldArgs)
+}
+
+func (l *ListDomainsRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListDomainsRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*l = ListDomainsRequest(body)
+	return nil
+}
+
+func (l *ListDomainsRequest) MarshalJSON() ([]byte, error) {
+	type embed ListDomainsRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
 	queryDomainsByIDIncludeDeletedResponseFieldAffiliationEmailAddress = big.NewInt(1 << 0)
 	queryDomainsByIDIncludeDeletedResponseFieldClerkDomainID           = big.NewInt(1 << 1)
 	queryDomainsByIDIncludeDeletedResponseFieldDomainMetadata          = big.NewInt(1 << 2)
@@ -599,6 +657,543 @@ func NewQueryDomainsByIDIncludeDeletedResponseTypeFromString(s string) (QueryDom
 }
 
 func (q QueryDomainsByIDIncludeDeletedResponseType) Ptr() *QueryDomainsByIDIncludeDeletedResponseType {
+	return &q
+}
+
+type QueryDomainsForOrgResponse = []*QueryDomainsForOrgResponseItem
+
+var (
+	queryDomainsForOrgResponseItemFieldAffiliationEmailAddress = big.NewInt(1 << 0)
+	queryDomainsForOrgResponseItemFieldClerkDomainID           = big.NewInt(1 << 1)
+	queryDomainsForOrgResponseItemFieldDomainMetadata          = big.NewInt(1 << 2)
+	queryDomainsForOrgResponseItemFieldEnrollmentMode          = big.NewInt(1 << 3)
+	queryDomainsForOrgResponseItemFieldID                      = big.NewInt(1 << 4)
+	queryDomainsForOrgResponseItemFieldName                    = big.NewInt(1 << 5)
+	queryDomainsForOrgResponseItemFieldOrganizationID          = big.NewInt(1 << 6)
+	queryDomainsForOrgResponseItemFieldStatus                  = big.NewInt(1 << 7)
+	queryDomainsForOrgResponseItemFieldType                    = big.NewInt(1 << 8)
+	queryDomainsForOrgResponseItemFieldVerifiedAt              = big.NewInt(1 << 9)
+	queryDomainsForOrgResponseItemFieldCreatedAt               = big.NewInt(1 << 10)
+	queryDomainsForOrgResponseItemFieldDeletedAt               = big.NewInt(1 << 11)
+	queryDomainsForOrgResponseItemFieldUpdatedAt               = big.NewInt(1 << 12)
+)
+
+// queryDomainsForOrgResponseItemNullableFields maps the wire names of QueryDomainsForOrgResponseItem's nullable fields (required or optional) to their field bits.
+var queryDomainsForOrgResponseItemNullableFields = map[string]*big.Int{
+	"affiliationEmailAddress": queryDomainsForOrgResponseItemFieldAffiliationEmailAddress,
+	"clerkDomainId":           queryDomainsForOrgResponseItemFieldClerkDomainID,
+	"domainMetadata":          queryDomainsForOrgResponseItemFieldDomainMetadata,
+	"enrollmentMode":          queryDomainsForOrgResponseItemFieldEnrollmentMode,
+	"status":                  queryDomainsForOrgResponseItemFieldStatus,
+	"type":                    queryDomainsForOrgResponseItemFieldType,
+	"verifiedAt":              queryDomainsForOrgResponseItemFieldVerifiedAt,
+	"deletedAt":               queryDomainsForOrgResponseItemFieldDeletedAt,
+}
+
+type QueryDomainsForOrgResponseItem struct {
+	AffiliationEmailAddress *string                                       `json:"affiliationEmailAddress,omitempty" url:"affiliationEmailAddress,omitempty"`
+	ClerkDomainID           *string                                       `json:"clerkDomainId,omitempty" url:"clerkDomainId,omitempty"`
+	DomainMetadata          *QueryDomainsForOrgResponseItemDomainMetadata `json:"domainMetadata,omitempty" url:"domainMetadata,omitempty"`
+	EnrollmentMode          *string                                       `json:"enrollmentMode,omitempty" url:"enrollmentMode,omitempty"`
+	ID                      string                                        `json:"id" url:"id"`
+	Name                    string                                        `json:"name" url:"name"`
+	OrganizationID          string                                        `json:"organizationId" url:"organizationId"`
+	Status                  *QueryDomainsForOrgResponseItemStatus         `json:"status,omitempty" url:"status,omitempty"`
+	Type                    *QueryDomainsForOrgResponseItemType           `json:"type,omitempty" url:"type,omitempty"`
+	VerifiedAt              *float64                                      `json:"verifiedAt,omitempty" url:"verifiedAt,omitempty"`
+	CreatedAt               float64                                       `json:"createdAt" url:"createdAt"`
+	DeletedAt               *float64                                      `json:"deletedAt,omitempty" url:"deletedAt,omitempty"`
+	UpdatedAt               float64                                       `json:"updatedAt" url:"updatedAt"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (q *QueryDomainsForOrgResponseItem) GetAffiliationEmailAddress() *string {
+	if q == nil {
+		return nil
+	}
+	return q.AffiliationEmailAddress
+}
+
+func (q *QueryDomainsForOrgResponseItem) GetClerkDomainID() *string {
+	if q == nil {
+		return nil
+	}
+	return q.ClerkDomainID
+}
+
+func (q *QueryDomainsForOrgResponseItem) GetDomainMetadata() *QueryDomainsForOrgResponseItemDomainMetadata {
+	if q == nil {
+		return nil
+	}
+	return q.DomainMetadata
+}
+
+func (q *QueryDomainsForOrgResponseItem) GetEnrollmentMode() *string {
+	if q == nil {
+		return nil
+	}
+	return q.EnrollmentMode
+}
+
+func (q *QueryDomainsForOrgResponseItem) GetID() string {
+	if q == nil {
+		return ""
+	}
+	return q.ID
+}
+
+func (q *QueryDomainsForOrgResponseItem) GetName() string {
+	if q == nil {
+		return ""
+	}
+	return q.Name
+}
+
+func (q *QueryDomainsForOrgResponseItem) GetOrganizationID() string {
+	if q == nil {
+		return ""
+	}
+	return q.OrganizationID
+}
+
+func (q *QueryDomainsForOrgResponseItem) GetStatus() *QueryDomainsForOrgResponseItemStatus {
+	if q == nil {
+		return nil
+	}
+	return q.Status
+}
+
+func (q *QueryDomainsForOrgResponseItem) GetType() *QueryDomainsForOrgResponseItemType {
+	if q == nil {
+		return nil
+	}
+	return q.Type
+}
+
+func (q *QueryDomainsForOrgResponseItem) GetVerifiedAt() *float64 {
+	if q == nil {
+		return nil
+	}
+	return q.VerifiedAt
+}
+
+func (q *QueryDomainsForOrgResponseItem) GetCreatedAt() float64 {
+	if q == nil {
+		return 0
+	}
+	return q.CreatedAt
+}
+
+func (q *QueryDomainsForOrgResponseItem) GetDeletedAt() *float64 {
+	if q == nil {
+		return nil
+	}
+	return q.DeletedAt
+}
+
+func (q *QueryDomainsForOrgResponseItem) GetUpdatedAt() float64 {
+	if q == nil {
+		return 0
+	}
+	return q.UpdatedAt
+}
+
+func (q *QueryDomainsForOrgResponseItem) GetExtraProperties() map[string]interface{} {
+	if q == nil {
+		return nil
+	}
+	return q.extraProperties
+}
+
+func (q *QueryDomainsForOrgResponseItem) require(field *big.Int) {
+	next := new(big.Int)
+	if q.explicitFields != nil {
+		next.Set(q.explicitFields)
+	}
+	next.Or(next, field)
+	q.explicitFields = next
+}
+
+// SetAffiliationEmailAddress sets the AffiliationEmailAddress field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryDomainsForOrgResponseItem) SetAffiliationEmailAddress(affiliationEmailAddress *string) {
+	q.AffiliationEmailAddress = affiliationEmailAddress
+	q.require(queryDomainsForOrgResponseItemFieldAffiliationEmailAddress)
+}
+
+// SetClerkDomainID sets the ClerkDomainID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryDomainsForOrgResponseItem) SetClerkDomainID(clerkDomainID *string) {
+	q.ClerkDomainID = clerkDomainID
+	q.require(queryDomainsForOrgResponseItemFieldClerkDomainID)
+}
+
+// SetDomainMetadata sets the DomainMetadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryDomainsForOrgResponseItem) SetDomainMetadata(domainMetadata *QueryDomainsForOrgResponseItemDomainMetadata) {
+	q.DomainMetadata = domainMetadata
+	q.require(queryDomainsForOrgResponseItemFieldDomainMetadata)
+}
+
+// SetEnrollmentMode sets the EnrollmentMode field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryDomainsForOrgResponseItem) SetEnrollmentMode(enrollmentMode *string) {
+	q.EnrollmentMode = enrollmentMode
+	q.require(queryDomainsForOrgResponseItemFieldEnrollmentMode)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryDomainsForOrgResponseItem) SetID(id string) {
+	q.ID = id
+	q.require(queryDomainsForOrgResponseItemFieldID)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryDomainsForOrgResponseItem) SetName(name string) {
+	q.Name = name
+	q.require(queryDomainsForOrgResponseItemFieldName)
+}
+
+// SetOrganizationID sets the OrganizationID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryDomainsForOrgResponseItem) SetOrganizationID(organizationID string) {
+	q.OrganizationID = organizationID
+	q.require(queryDomainsForOrgResponseItemFieldOrganizationID)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryDomainsForOrgResponseItem) SetStatus(status *QueryDomainsForOrgResponseItemStatus) {
+	q.Status = status
+	q.require(queryDomainsForOrgResponseItemFieldStatus)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryDomainsForOrgResponseItem) SetType(type_ *QueryDomainsForOrgResponseItemType) {
+	q.Type = type_
+	q.require(queryDomainsForOrgResponseItemFieldType)
+}
+
+// SetVerifiedAt sets the VerifiedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryDomainsForOrgResponseItem) SetVerifiedAt(verifiedAt *float64) {
+	q.VerifiedAt = verifiedAt
+	q.require(queryDomainsForOrgResponseItemFieldVerifiedAt)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryDomainsForOrgResponseItem) SetCreatedAt(createdAt float64) {
+	q.CreatedAt = createdAt
+	q.require(queryDomainsForOrgResponseItemFieldCreatedAt)
+}
+
+// SetDeletedAt sets the DeletedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryDomainsForOrgResponseItem) SetDeletedAt(deletedAt *float64) {
+	q.DeletedAt = deletedAt
+	q.require(queryDomainsForOrgResponseItemFieldDeletedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryDomainsForOrgResponseItem) SetUpdatedAt(updatedAt float64) {
+	q.UpdatedAt = updatedAt
+	q.require(queryDomainsForOrgResponseItemFieldUpdatedAt)
+}
+
+func (q *QueryDomainsForOrgResponseItem) UnmarshalJSON(data []byte) error {
+	type unmarshaler QueryDomainsForOrgResponseItem
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*q = QueryDomainsForOrgResponseItem(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *q)
+	if err != nil {
+		return err
+	}
+	q.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, queryDomainsForOrgResponseItemNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		q.require(presentFields)
+	}
+	q.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (q *QueryDomainsForOrgResponseItem) MarshalJSON() ([]byte, error) {
+	type embed QueryDomainsForOrgResponseItem
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*q),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, q.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (q *QueryDomainsForOrgResponseItem) String() string {
+	if q == nil {
+		return "<nil>"
+	}
+	if len(q.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(q.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(q); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", q)
+}
+
+var (
+	queryDomainsForOrgResponseItemDomainMetadataFieldCfHostnameID = big.NewInt(1 << 0)
+	queryDomainsForOrgResponseItemDomainMetadataFieldCfSslStatus  = big.NewInt(1 << 1)
+	queryDomainsForOrgResponseItemDomainMetadataFieldLastError    = big.NewInt(1 << 2)
+	queryDomainsForOrgResponseItemDomainMetadataFieldProvider     = big.NewInt(1 << 3)
+)
+
+// queryDomainsForOrgResponseItemDomainMetadataNullableFields maps the wire names of QueryDomainsForOrgResponseItemDomainMetadata's nullable fields (required or optional) to their field bits.
+var queryDomainsForOrgResponseItemDomainMetadataNullableFields = map[string]*big.Int{
+	"cfSslStatus": queryDomainsForOrgResponseItemDomainMetadataFieldCfSslStatus,
+	"lastError":   queryDomainsForOrgResponseItemDomainMetadataFieldLastError,
+}
+
+type QueryDomainsForOrgResponseItemDomainMetadata struct {
+	CfHostnameID string `json:"cfHostnameId" url:"cfHostnameId"`
+	// Current TLS certificate provisioning status.
+	CfSslStatus *string                                               `json:"cfSslStatus,omitempty" url:"cfSslStatus,omitempty"`
+	LastError   *string                                               `json:"lastError,omitempty" url:"lastError,omitempty"`
+	Provider    *QueryDomainsForOrgResponseItemDomainMetadataProvider `json:"provider,omitempty" url:"provider,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (q *QueryDomainsForOrgResponseItemDomainMetadata) GetCfHostnameID() string {
+	if q == nil {
+		return ""
+	}
+	return q.CfHostnameID
+}
+
+func (q *QueryDomainsForOrgResponseItemDomainMetadata) GetCfSslStatus() *string {
+	if q == nil {
+		return nil
+	}
+	return q.CfSslStatus
+}
+
+func (q *QueryDomainsForOrgResponseItemDomainMetadata) GetLastError() *string {
+	if q == nil {
+		return nil
+	}
+	return q.LastError
+}
+
+func (q *QueryDomainsForOrgResponseItemDomainMetadata) GetProvider() *QueryDomainsForOrgResponseItemDomainMetadataProvider {
+	if q == nil {
+		return nil
+	}
+	return q.Provider
+}
+
+func (q *QueryDomainsForOrgResponseItemDomainMetadata) GetExtraProperties() map[string]interface{} {
+	if q == nil {
+		return nil
+	}
+	return q.extraProperties
+}
+
+func (q *QueryDomainsForOrgResponseItemDomainMetadata) require(field *big.Int) {
+	next := new(big.Int)
+	if q.explicitFields != nil {
+		next.Set(q.explicitFields)
+	}
+	next.Or(next, field)
+	q.explicitFields = next
+}
+
+// SetCfHostnameID sets the CfHostnameID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryDomainsForOrgResponseItemDomainMetadata) SetCfHostnameID(cfHostnameID string) {
+	q.CfHostnameID = cfHostnameID
+	q.require(queryDomainsForOrgResponseItemDomainMetadataFieldCfHostnameID)
+}
+
+// SetCfSslStatus sets the CfSslStatus field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryDomainsForOrgResponseItemDomainMetadata) SetCfSslStatus(cfSslStatus *string) {
+	q.CfSslStatus = cfSslStatus
+	q.require(queryDomainsForOrgResponseItemDomainMetadataFieldCfSslStatus)
+}
+
+// SetLastError sets the LastError field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryDomainsForOrgResponseItemDomainMetadata) SetLastError(lastError *string) {
+	q.LastError = lastError
+	q.require(queryDomainsForOrgResponseItemDomainMetadataFieldLastError)
+}
+
+// SetProvider sets the Provider field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryDomainsForOrgResponseItemDomainMetadata) SetProvider(provider *QueryDomainsForOrgResponseItemDomainMetadataProvider) {
+	q.Provider = provider
+	q.require(queryDomainsForOrgResponseItemDomainMetadataFieldProvider)
+}
+
+func (q *QueryDomainsForOrgResponseItemDomainMetadata) UnmarshalJSON(data []byte) error {
+	type unmarshaler QueryDomainsForOrgResponseItemDomainMetadata
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*q = QueryDomainsForOrgResponseItemDomainMetadata(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *q)
+	if err != nil {
+		return err
+	}
+	q.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, queryDomainsForOrgResponseItemDomainMetadataNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		q.require(presentFields)
+	}
+	q.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (q *QueryDomainsForOrgResponseItemDomainMetadata) MarshalJSON() ([]byte, error) {
+	type embed QueryDomainsForOrgResponseItemDomainMetadata
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*q),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, q.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (q *QueryDomainsForOrgResponseItemDomainMetadata) String() string {
+	if q == nil {
+		return "<nil>"
+	}
+	if len(q.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(q.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(q); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", q)
+}
+
+type QueryDomainsForOrgResponseItemDomainMetadataProvider string
+
+const (
+	QueryDomainsForOrgResponseItemDomainMetadataProviderCloudflare  QueryDomainsForOrgResponseItemDomainMetadataProvider = "cloudflare"
+	QueryDomainsForOrgResponseItemDomainMetadataProviderAws         QueryDomainsForOrgResponseItemDomainMetadataProvider = "aws"
+	QueryDomainsForOrgResponseItemDomainMetadataProviderVercel      QueryDomainsForOrgResponseItemDomainMetadataProvider = "vercel"
+	QueryDomainsForOrgResponseItemDomainMetadataProviderGodaddy     QueryDomainsForOrgResponseItemDomainMetadataProvider = "godaddy"
+	QueryDomainsForOrgResponseItemDomainMetadataProviderNamecheap   QueryDomainsForOrgResponseItemDomainMetadataProvider = "namecheap"
+	QueryDomainsForOrgResponseItemDomainMetadataProviderSquarespace QueryDomainsForOrgResponseItemDomainMetadataProvider = "squarespace"
+	QueryDomainsForOrgResponseItemDomainMetadataProviderGoogleCloud QueryDomainsForOrgResponseItemDomainMetadataProvider = "google-cloud"
+	QueryDomainsForOrgResponseItemDomainMetadataProviderGeneric     QueryDomainsForOrgResponseItemDomainMetadataProvider = "generic"
+)
+
+func NewQueryDomainsForOrgResponseItemDomainMetadataProviderFromString(s string) (QueryDomainsForOrgResponseItemDomainMetadataProvider, error) {
+	switch s {
+	case "cloudflare":
+		return QueryDomainsForOrgResponseItemDomainMetadataProviderCloudflare, nil
+	case "aws":
+		return QueryDomainsForOrgResponseItemDomainMetadataProviderAws, nil
+	case "vercel":
+		return QueryDomainsForOrgResponseItemDomainMetadataProviderVercel, nil
+	case "godaddy":
+		return QueryDomainsForOrgResponseItemDomainMetadataProviderGodaddy, nil
+	case "namecheap":
+		return QueryDomainsForOrgResponseItemDomainMetadataProviderNamecheap, nil
+	case "squarespace":
+		return QueryDomainsForOrgResponseItemDomainMetadataProviderSquarespace, nil
+	case "google-cloud":
+		return QueryDomainsForOrgResponseItemDomainMetadataProviderGoogleCloud, nil
+	case "generic":
+		return QueryDomainsForOrgResponseItemDomainMetadataProviderGeneric, nil
+	}
+	var t QueryDomainsForOrgResponseItemDomainMetadataProvider
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (q QueryDomainsForOrgResponseItemDomainMetadataProvider) Ptr() *QueryDomainsForOrgResponseItemDomainMetadataProvider {
+	return &q
+}
+
+type QueryDomainsForOrgResponseItemStatus string
+
+const (
+	QueryDomainsForOrgResponseItemStatusPending              QueryDomainsForOrgResponseItemStatus = "pending"
+	QueryDomainsForOrgResponseItemStatusActive               QueryDomainsForOrgResponseItemStatus = "active"
+	QueryDomainsForOrgResponseItemStatusFailed               QueryDomainsForOrgResponseItemStatus = "failed"
+	QueryDomainsForOrgResponseItemStatusRequiresReactivation QueryDomainsForOrgResponseItemStatus = "requires_reactivation"
+)
+
+func NewQueryDomainsForOrgResponseItemStatusFromString(s string) (QueryDomainsForOrgResponseItemStatus, error) {
+	switch s {
+	case "pending":
+		return QueryDomainsForOrgResponseItemStatusPending, nil
+	case "active":
+		return QueryDomainsForOrgResponseItemStatusActive, nil
+	case "failed":
+		return QueryDomainsForOrgResponseItemStatusFailed, nil
+	case "requires_reactivation":
+		return QueryDomainsForOrgResponseItemStatusRequiresReactivation, nil
+	}
+	var t QueryDomainsForOrgResponseItemStatus
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (q QueryDomainsForOrgResponseItemStatus) Ptr() *QueryDomainsForOrgResponseItemStatus {
+	return &q
+}
+
+type QueryDomainsForOrgResponseItemType string
+
+const (
+	QueryDomainsForOrgResponseItemTypeClerk QueryDomainsForOrgResponseItemType = "clerk"
+	QueryDomainsForOrgResponseItemTypeProxy QueryDomainsForOrgResponseItemType = "proxy"
+)
+
+func NewQueryDomainsForOrgResponseItemTypeFromString(s string) (QueryDomainsForOrgResponseItemType, error) {
+	switch s {
+	case "clerk":
+		return QueryDomainsForOrgResponseItemTypeClerk, nil
+	case "proxy":
+		return QueryDomainsForOrgResponseItemTypeProxy, nil
+	}
+	var t QueryDomainsForOrgResponseItemType
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (q QueryDomainsForOrgResponseItemType) Ptr() *QueryDomainsForOrgResponseItemType {
 	return &q
 }
 
