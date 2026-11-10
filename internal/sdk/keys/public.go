@@ -4,6 +4,7 @@ package keys
 
 import (
 	json "encoding/json"
+	fmt "fmt"
 	internal "github.com/interfere-inc/terraform-provider-interfere/internal/sdk/internal"
 	big "math/big"
 )
@@ -178,4 +179,149 @@ func (g *GetPublicRequest) SetSurfaceSlug(surfaceSlug string) {
 func (g *GetPublicRequest) SetPublicKeyID(publicKeyID string) {
 	g.PublicKeyID = publicKeyID
 	g.require(getPublicRequestFieldPublicKeyID)
+}
+
+var (
+	listForSurfacePublicRequestFieldWorkspaceSlug = big.NewInt(1 << 0)
+	listForSurfacePublicRequestFieldArgs          = big.NewInt(1 << 1)
+)
+
+type ListForSurfacePublicRequest struct {
+	// Workspace URL slug, using lowercase letters, numbers, and hyphens.
+	WorkspaceSlug string                           `json:"-" url:"-"`
+	Args          *ListForSurfacePublicRequestArgs `json:"args" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (l *ListForSurfacePublicRequest) require(field *big.Int) {
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
+	}
+	next.Or(next, field)
+	l.explicitFields = next
+}
+
+// SetWorkspaceSlug sets the WorkspaceSlug field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListForSurfacePublicRequest) SetWorkspaceSlug(workspaceSlug string) {
+	l.WorkspaceSlug = workspaceSlug
+	l.require(listForSurfacePublicRequestFieldWorkspaceSlug)
+}
+
+// SetArgs sets the Args field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListForSurfacePublicRequest) SetArgs(args *ListForSurfacePublicRequestArgs) {
+	l.Args = args
+	l.require(listForSurfacePublicRequestFieldArgs)
+}
+
+func (l *ListForSurfacePublicRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListForSurfacePublicRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*l = ListForSurfacePublicRequest(body)
+	return nil
+}
+
+func (l *ListForSurfacePublicRequest) MarshalJSON() ([]byte, error) {
+	type embed ListForSurfacePublicRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
+	listForSurfacePublicRequestArgsFieldSurfaceSlug = big.NewInt(1 << 0)
+)
+
+type ListForSurfacePublicRequestArgs struct {
+	// Surface URL slug, using lowercase letters, numbers, and hyphens.
+	SurfaceSlug string `json:"surfaceSlug" url:"surfaceSlug"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListForSurfacePublicRequestArgs) GetSurfaceSlug() string {
+	if l == nil {
+		return ""
+	}
+	return l.SurfaceSlug
+}
+
+func (l *ListForSurfacePublicRequestArgs) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListForSurfacePublicRequestArgs) require(field *big.Int) {
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
+	}
+	next.Or(next, field)
+	l.explicitFields = next
+}
+
+// SetSurfaceSlug sets the SurfaceSlug field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListForSurfacePublicRequestArgs) SetSurfaceSlug(surfaceSlug string) {
+	l.SurfaceSlug = surfaceSlug
+	l.require(listForSurfacePublicRequestArgsFieldSurfaceSlug)
+}
+
+func (l *ListForSurfacePublicRequestArgs) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListForSurfacePublicRequestArgs
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListForSurfacePublicRequestArgs(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListForSurfacePublicRequestArgs) MarshalJSON() ([]byte, error) {
+	type embed ListForSurfacePublicRequestArgs
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListForSurfacePublicRequestArgs) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
 }

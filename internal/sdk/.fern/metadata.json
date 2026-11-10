@@ -8,7 +8,8 @@
     "alwaysSendRequiredProperties": true,
     "maxRetries": 0
   },
-  "originGitCommit": "3da1e77f645a6c6143b4174315aed5365d961d35",
+  "originGitCommit": "18e4df575bfd1397e0886cd31f4b83d9c40e402c",
   "originGitCommitIsDirty": true,
-  "invokedBy": "manual"
+  "invokedBy": "ci",
+  "ciProvider": "github"
 }

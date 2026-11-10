@@ -72,11 +72,11 @@ func (c *ConflictError) GetBody() any {
 // Access denied
 type ForbiddenError struct {
 	*core.APIError
-	Body *ForbiddenErrorBody
+	Body any
 }
 
 func (f *ForbiddenError) UnmarshalJSON(data []byte) error {
-	var body *ForbiddenErrorBody
+	var body any
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
@@ -93,7 +93,7 @@ func (f *ForbiddenError) Unwrap() error {
 	return f.APIError
 }
 
-func (f *ForbiddenError) GetBody() *ForbiddenErrorBody {
+func (f *ForbiddenError) GetBody() any {
 	if f == nil {
 		return nil
 	}

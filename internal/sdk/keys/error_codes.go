@@ -25,11 +25,6 @@ var ErrorCodes internal.ErrorCodes = internal.ErrorCodes{
             APIError: apiError,
         }
     },
-    409: func(apiError *core.APIError) error {
-        return &sdk.ConflictError{
-            APIError: apiError,
-        }
-    },
     503: func(apiError *core.APIError) error {
         return &sdk.ServiceUnavailableError{
             APIError: apiError,
@@ -37,6 +32,11 @@ var ErrorCodes internal.ErrorCodes = internal.ErrorCodes{
     },
     404: func(apiError *core.APIError) error {
         return &sdk.NotFoundError{
+            APIError: apiError,
+        }
+    },
+    409: func(apiError *core.APIError) error {
+        return &sdk.ConflictError{
             APIError: apiError,
         }
     },

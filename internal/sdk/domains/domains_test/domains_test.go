@@ -106,4 +106,30 @@ func TestDomainsByIDIncludeDeletedWithWireMock(
     VerifyRequestCount(t, "TestDomainsByIDIncludeDeletedWithWireMock", "POST", "/v3/workspaces/workspaceSlug/queries/domains.byIdIncludeDeleted", nil, 1)
 }
 
+func TestDomainsListWithWireMock(
+    t *testing.T,
+) {
+    WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+    	if WireMockBaseURL == "" {
+    		WireMockBaseURL = "http://localhost:8080"
+    	}
+    client := client.NewClient(
+        option.WithBaseURL(WireMockBaseURL),
+        option.WithToken("test-token"),
+    )
+        request := &sdk.ListDomainsRequest{
+            WorkspaceSlug: "workspaceSlug",
+        }
+    _, invocationErr :=     client.Domains.List(
+            context.TODO(),
+            request,
+            option.WithHTTPHeader(
+                http.Header{"X-Test-Id": []string{"TestDomainsListWithWireMock"}},
+            ),
+        )
+
+    require.NoError(t, invocationErr, "Client method call should succeed")
+    VerifyRequestCount(t, "TestDomainsListWithWireMock", "POST", "/v3/workspaces/workspaceSlug/queries/domains.forOrg", nil, 1)
+}
+
 

@@ -106,6 +106,32 @@ func TestSurfacesGetBySlugIncludeDeletedWithWireMock(
     VerifyRequestCount(t, "TestSurfacesGetBySlugIncludeDeletedWithWireMock", "POST", "/v3/workspaces/workspaceSlug/queries/surfaces.getBySlugIncludeDeleted", nil, 1)
 }
 
+func TestSurfacesListWithWireMock(
+    t *testing.T,
+) {
+    WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+    	if WireMockBaseURL == "" {
+    		WireMockBaseURL = "http://localhost:8080"
+    	}
+    client := client.NewClient(
+        option.WithBaseURL(WireMockBaseURL),
+        option.WithToken("test-token"),
+    )
+        request := &sdk.ListSurfacesRequest{
+            WorkspaceSlug: "workspaceSlug",
+        }
+    _, invocationErr :=     client.Surfaces.List(
+            context.TODO(),
+            request,
+            option.WithHTTPHeader(
+                http.Header{"X-Test-Id": []string{"TestSurfacesListWithWireMock"}},
+            ),
+        )
+
+    require.NoError(t, invocationErr, "Client method call should succeed")
+    VerifyRequestCount(t, "TestSurfacesListWithWireMock", "POST", "/v3/workspaces/workspaceSlug/queries/surfaces.list", nil, 1)
+}
+
 func TestSurfacesDeleteWithWireMock(
     t *testing.T,
 ) {
@@ -193,6 +219,37 @@ func TestSurfacesSetAnonymousUserTrackingWithWireMock(
 
     require.NoError(t, invocationErr, "Client method call should succeed")
     VerifyRequestCount(t, "TestSurfacesSetAnonymousUserTrackingWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/surfaces.setAnonymousUserTracking", nil, 1)
+}
+
+func TestSurfacesSetSdkPluginWithWireMock(
+    t *testing.T,
+) {
+    WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+    	if WireMockBaseURL == "" {
+    		WireMockBaseURL = "http://localhost:8080"
+    	}
+    client := client.NewClient(
+        option.WithBaseURL(WireMockBaseURL),
+        option.WithToken("test-token"),
+    )
+        request := &sdk.SetSdkPluginSurfacesRequest{
+            WorkspaceSlug: "workspaceSlug",
+            Args: &sdk.SetSdkPluginSurfacesRequestArgs{
+                SurfaceSlug: "surfaceSlug",
+                Plugin: sdk.SetSdkPluginSurfacesRequestArgsPluginReplay,
+                Enabled: true,
+            },
+        }
+    _, invocationErr :=     client.Surfaces.SetSdkPlugin(
+            context.TODO(),
+            request,
+            option.WithHTTPHeader(
+                http.Header{"X-Test-Id": []string{"TestSurfacesSetSdkPluginWithWireMock"}},
+            ),
+        )
+
+    require.NoError(t, invocationErr, "Client method call should succeed")
+    VerifyRequestCount(t, "TestSurfacesSetSdkPluginWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/surfaces.setSdkPlugin", nil, 1)
 }
 
 func TestSurfacesUpdateNameWithWireMock(

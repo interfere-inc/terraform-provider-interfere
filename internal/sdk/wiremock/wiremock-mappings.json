@@ -37,6 +37,42 @@
       }
     },
     {
+      "id": "55a66acc-5b8b-43a9-a622-c57ee65fc0b0",
+      "name": "Read domains.forOrg - default",
+      "request": {
+        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/queries/domains.forOrg",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        },
+        "pathParameters": {
+          "workspaceSlug": {
+            "equalTo": "workspaceSlug"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "[\n  {\n    \"affiliationEmailAddress\": \"affiliationEmailAddress\",\n    \"clerkDomainId\": \"clerkDomainId\",\n    \"domainMetadata\": {\n      \"cfHostnameId\": \"cfHostnameId\",\n      \"cfSslStatus\": \"cfSslStatus\",\n      \"lastError\": \"lastError\",\n      \"provider\": \"cloudflare\"\n    },\n    \"enrollmentMode\": \"enrollmentMode\",\n    \"id\": \"id\",\n    \"name\": \"name\",\n    \"organizationId\": \"organizationId\",\n    \"status\": \"pending\",\n    \"type\": \"clerk\",\n    \"verifiedAt\": 1.1,\n    \"createdAt\": 1.1,\n    \"deletedAt\": 1.1,\n    \"updatedAt\": 1.1\n  }\n]",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "55a66acc-5b8b-43a9-a622-c57ee65fc0b0",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "01eba5dd-3894-42f2-8aff-125844b77f27",
       "name": "Read integrations.installations - default",
       "request": {
@@ -253,6 +289,42 @@
       }
     },
     {
+      "id": "12d824c8-4b2f-4493-84af-855fd8f5fdfc",
+      "name": "Run workspaces.addDomain - default",
+      "request": {
+        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/actions/workspaces.addDomain",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        },
+        "pathParameters": {
+          "workspaceSlug": {
+            "equalTo": "workspaceSlug"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"success\": true\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "12d824c8-4b2f-4493-84af-855fd8f5fdfc",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "32180a70-7461-4d00-ad0a-c026ea93b239",
       "name": "Run workspaces.addProxyDomain - default",
       "request": {
@@ -277,6 +349,42 @@
         }
       },
       "uuid": "32180a70-7461-4d00-ad0a-c026ea93b239",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "ffd5d844-75d8-4929-8035-da0601fc5a26",
+      "name": "Run workspaces.removeDomain - default",
+      "request": {
+        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/actions/workspaces.removeDomain",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        },
+        "pathParameters": {
+          "workspaceSlug": {
+            "equalTo": "workspaceSlug"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"success\": true\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "ffd5d844-75d8-4929-8035-da0601fc5a26",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -325,6 +433,42 @@
       }
     },
     {
+      "id": "d0c90faa-2df8-4254-b308-aa0b522568c9",
+      "name": "Run workspaces.updateAuthMethods - default",
+      "request": {
+        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/actions/workspaces.updateAuthMethods",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        },
+        "pathParameters": {
+          "workspaceSlug": {
+            "equalTo": "workspaceSlug"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"success\": true\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "d0c90faa-2df8-4254-b308-aa0b522568c9",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "a8a77a24-49d4-4b2e-a7d8-37a959690bef",
       "name": "Run workspaces.updateBasics - default",
       "request": {
@@ -361,6 +505,150 @@
       }
     },
     {
+      "id": "1b39514c-d7a0-4986-8476-e64558506b41",
+      "name": "Run workspaces.updateDomainEnrollmentMode - default",
+      "request": {
+        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/actions/workspaces.updateDomainEnrollmentMode",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        },
+        "pathParameters": {
+          "workspaceSlug": {
+            "equalTo": "workspaceSlug"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"success\": true\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "1b39514c-d7a0-4986-8476-e64558506b41",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "1b81ba2d-7cd6-4dee-bd6f-8452baa2052a",
+      "name": "Run workspaces.updateMemberWorkspaceCreation - default",
+      "request": {
+        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/actions/workspaces.updateMemberWorkspaceCreation",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        },
+        "pathParameters": {
+          "workspaceSlug": {
+            "equalTo": "workspaceSlug"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"success\": true\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "1b81ba2d-7cd6-4dee-bd6f-8452baa2052a",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "a89e6d66-7819-498a-8d67-eba843b5fbec",
+      "name": "Read workspace network rules - default",
+      "request": {
+        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/network/rules",
+        "method": "GET",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        },
+        "pathParameters": {
+          "workspaceSlug": {
+            "equalTo": "workspaceSlug"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"rules\": [\n    {\n      \"id\": \"id\",\n      \"label\": \"label\",\n      \"value\": \"value\"\n    }\n  ]\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "a89e6d66-7819-498a-8d67-eba843b5fbec",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "76c62930-46a5-4644-b155-8daf13ea5df4",
+      "name": "Save workspace network rules - default",
+      "request": {
+        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/network/rules",
+        "method": "PUT",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        },
+        "pathParameters": {
+          "workspaceSlug": {
+            "equalTo": "workspaceSlug"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"success\": true\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "76c62930-46a5-4644-b155-8daf13ea5df4",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "6f221ee7-f858-4c5e-9648-95b02b1d63b1",
       "name": "Read surfaces.getBySlugIncludeDeleted - default",
       "request": {
@@ -385,6 +673,42 @@
         }
       },
       "uuid": "6f221ee7-f858-4c5e-9648-95b02b1d63b1",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "fd7d0efa-a654-425b-9ee9-562942018bde",
+      "name": "Read surfaces.list - default",
+      "request": {
+        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/queries/surfaces.list",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        },
+        "pathParameters": {
+          "workspaceSlug": {
+            "equalTo": "workspaceSlug"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "[\n  {\n    \"createdAt\": 1.1,\n    \"deletedAt\": 1.1,\n    \"updatedAt\": 1.1,\n    \"anonymousReplayPolicy\": \"anonymousReplayPolicy\",\n    \"anonymousUserTracking\": true,\n    \"destinationConnectionId\": \"destinationConnectionId\",\n    \"destinationMappingId\": \"destinationMappingId\",\n    \"destinationMappingLabel\": \"destinationMappingLabel\",\n    \"destinationMappingUrl\": \"destinationMappingUrl\",\n    \"environmentFiltering\": true,\n    \"id\": \"id\",\n    \"name\": \"name\",\n    \"onboardedAt\": 1.1,\n    \"organizationId\": \"organizationId\",\n    \"primaryEnvironmentId\": \"primaryEnvironmentId\",\n    \"primaryEnvironmentName\": \"primaryEnvironmentName\",\n    \"sdkConfig\": {\n      \"serverTracing\": \"full\",\n      \"logSourcing\": \"sdk\",\n      \"platform\": \"vercel\"\n    },\n    \"slug\": \"slug\",\n    \"sourceDatasourceId\": \"sourceDatasourceId\",\n    \"sourceConnectionId\": \"sourceConnectionId\",\n    \"sourceMappingId\": \"sourceMappingId\",\n    \"sourceMappingLabel\": \"sourceMappingLabel\",\n    \"sourceMappingUrl\": \"sourceMappingUrl\",\n    \"sourceWorkingDirectory\": \"sourceWorkingDirectory\",\n    \"type\": \"elysia\"\n  }\n]",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "fd7d0efa-a654-425b-9ee9-562942018bde",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -505,6 +829,42 @@
       }
     },
     {
+      "id": "1d1f2e11-1117-4c31-ba55-fb2d9615ac1d",
+      "name": "Run surfaces.setSdkPlugin - default",
+      "request": {
+        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/actions/surfaces.setSdkPlugin",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        },
+        "pathParameters": {
+          "workspaceSlug": {
+            "equalTo": "workspaceSlug"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"success\": true\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "1d1f2e11-1117-4c31-ba55-fb2d9615ac1d",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "6cc9674f-8bfa-4fbb-8f51-80060b05c671",
       "name": "Run surfaces.updateName - default",
       "request": {
@@ -577,10 +937,10 @@
       }
     },
     {
-      "id": "c65b9e2c-3c50-486f-9aa6-e15138687b0b",
-      "name": "Create workspace API key - default",
+      "id": "5eddbd42-01db-4432-9ea8-20c9157ac2f4",
+      "name": "Run workspaces.updateSupportAccess - default",
       "request": {
-        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/api-keys",
+        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/actions/workspaces.updateSupportAccess",
         "method": "POST",
         "headers": {
           "Authorization": {
@@ -595,90 +955,48 @@
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"apiKey\": {\n    \"id\": \"id\",\n    \"name\": \"name\",\n    \"secret\": \"secret\"\n  }\n}",
-        "headers": {
-          "Content-Type": "application/json"
-        }
-      },
-      "uuid": "c65b9e2c-3c50-486f-9aa6-e15138687b0b",
-      "persistent": true,
-      "priority": 3,
-      "metadata": {
-        "mocklab": {
-          "created": {
-            "at": "2020-01-01T00:00:00.000Z",
-            "via": "SYSTEM"
-          }
-        }
-      }
-    },
-    {
-      "id": "1f743fbc-d8e7-4551-a499-588134efa2a9",
-      "name": "Read private key metadata - default",
-      "request": {
-        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/api-keys/{apiKeyId}",
-        "method": "GET",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        },
-        "pathParameters": {
-          "workspaceSlug": {
-            "equalTo": "workspaceSlug"
-          },
-          "apiKeyId": {
-            "equalTo": "apiKeyId"
-          }
-        }
-      },
-      "response": {
-        "status": 200,
-        "body": "{\n  \"id\": \"id\",\n  \"version\": \"version\",\n  \"name\": \"name\",\n  \"surfaceSlug\": \"surfaceSlug\",\n  \"scopes\": [\n    \"org:telemetry:write\"\n  ],\n  \"secondsUntilExpiration\": 1,\n  \"expiresAt\": 1,\n  \"revoked\": true\n}",
-        "headers": {
-          "Content-Type": "application/json"
-        }
-      },
-      "uuid": "1f743fbc-d8e7-4551-a499-588134efa2a9",
-      "persistent": true,
-      "priority": 3,
-      "metadata": {
-        "mocklab": {
-          "created": {
-            "at": "2020-01-01T00:00:00.000Z",
-            "via": "SYSTEM"
-          }
-        }
-      }
-    },
-    {
-      "id": "9d8daa64-1885-4fdd-b10c-9a250d025af0",
-      "name": "Revoke workspace API key - default",
-      "request": {
-        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/api-keys/{apiKeyId}",
-        "method": "DELETE",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        },
-        "pathParameters": {
-          "workspaceSlug": {
-            "equalTo": "workspaceSlug"
-          },
-          "apiKeyId": {
-            "equalTo": "apiKeyId"
-          }
-        }
-      },
-      "response": {
-        "status": 200,
         "body": "{\n  \"success\": true\n}",
         "headers": {
           "Content-Type": "application/json"
         }
       },
-      "uuid": "9d8daa64-1885-4fdd-b10c-9a250d025af0",
+      "uuid": "5eddbd42-01db-4432-9ea8-20c9157ac2f4",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "d9544097-fff1-4f3b-95a3-2e50b6fe58eb",
+      "name": "Read publicKeys.forSurface - default",
+      "request": {
+        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/queries/publicKeys.forSurface",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        },
+        "pathParameters": {
+          "workspaceSlug": {
+            "equalTo": "workspaceSlug"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "[\n  {\n    \"createdAt\": 1.1,\n    \"deletedAt\": 1.1,\n    \"updatedAt\": 1.1,\n    \"content\": \"content\",\n    \"id\": \"id\",\n    \"lastUsedAt\": 1.1,\n    \"name\": \"name\",\n    \"surfaceId\": \"surfaceId\"\n  }\n]",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "d9544097-fff1-4f3b-95a3-2e50b6fe58eb",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -812,9 +1130,231 @@
           }
         }
       }
+    },
+    {
+      "id": "c65b9e2c-3c50-486f-9aa6-e15138687b0b",
+      "name": "Create workspace API key - default",
+      "request": {
+        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/api-keys",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        },
+        "pathParameters": {
+          "workspaceSlug": {
+            "equalTo": "workspaceSlug"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"apiKey\": {\n    \"id\": \"id\",\n    \"name\": \"name\",\n    \"secret\": \"secret\"\n  }\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "c65b9e2c-3c50-486f-9aa6-e15138687b0b",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "1f743fbc-d8e7-4551-a499-588134efa2a9",
+      "name": "Read private key metadata - default",
+      "request": {
+        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/api-keys/{apiKeyId}",
+        "method": "GET",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        },
+        "pathParameters": {
+          "workspaceSlug": {
+            "equalTo": "workspaceSlug"
+          },
+          "apiKeyId": {
+            "equalTo": "apiKeyId"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"id\": \"id\",\n  \"version\": \"version\",\n  \"name\": \"name\",\n  \"surfaceSlug\": \"surfaceSlug\",\n  \"scopes\": [\n    \"org:telemetry:write\"\n  ],\n  \"secondsUntilExpiration\": 1,\n  \"expiresAt\": 1,\n  \"revoked\": true\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "1f743fbc-d8e7-4551-a499-588134efa2a9",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "9d8daa64-1885-4fdd-b10c-9a250d025af0",
+      "name": "Revoke workspace API key - default",
+      "request": {
+        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/api-keys/{apiKeyId}",
+        "method": "DELETE",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        },
+        "pathParameters": {
+          "workspaceSlug": {
+            "equalTo": "workspaceSlug"
+          },
+          "apiKeyId": {
+            "equalTo": "apiKeyId"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"success\": true\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "9d8daa64-1885-4fdd-b10c-9a250d025af0",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "a7145c41-07d8-489e-bcd6-81d9735ad020",
+      "name": "Read scimGroups.forOrg - default",
+      "request": {
+        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/queries/scimGroups.forOrg",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        },
+        "pathParameters": {
+          "workspaceSlug": {
+            "equalTo": "workspaceSlug"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "[\n  {\n    \"clerkScimDirectoryId\": \"clerkScimDirectoryId\",\n    \"id\": \"id\",\n    \"memberCount\": 1,\n    \"organizationId\": \"organizationId\",\n    \"precedence\": 1,\n    \"roleKey\": \"roleKey\",\n    \"scimGroupDisplayName\": \"scimGroupDisplayName\",\n    \"scimGroupId\": \"scimGroupId\",\n    \"createdAt\": 1.1,\n    \"deletedAt\": 1.1,\n    \"updatedAt\": 1.1\n  }\n]",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "a7145c41-07d8-489e-bcd6-81d9735ad020",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "a1f21038-e59b-4943-93b1-ddc9d7c59b8e",
+      "name": "Run workspaces.reorderScimGroupRoles - default",
+      "request": {
+        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/actions/workspaces.reorderScimGroupRoles",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        },
+        "pathParameters": {
+          "workspaceSlug": {
+            "equalTo": "workspaceSlug"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"success\": true\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "a1f21038-e59b-4943-93b1-ddc9d7c59b8e",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "d09e62ad-1d34-4ff9-858a-577729fa3945",
+      "name": "Run workspaces.setScimGroupRole - default",
+      "request": {
+        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/actions/workspaces.setScimGroupRole",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        },
+        "pathParameters": {
+          "workspaceSlug": {
+            "equalTo": "workspaceSlug"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"success\": true\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "d09e62ad-1d34-4ff9-858a-577729fa3945",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
     }
   ],
   "meta": {
-    "total": 22
+    "total": 37
   }
 }

@@ -11,8 +11,8 @@ import (
 
 
 type Client struct {
-    Private *private.Client
     Public *public.Client
+    Private *private.Client
 
     options *core.RequestOptions
     baseURL string
@@ -21,8 +21,8 @@ type Client struct {
 
 func NewClient(options *core.RequestOptions) *Client {
     return &Client{
-        Private: private.NewClient(options),
         Public: public.NewClient(options),
+        Private: private.NewClient(options),
         options: options,
         baseURL: options.BaseURL,
         caller: internal.NewCaller(

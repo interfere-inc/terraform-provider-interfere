@@ -36,6 +36,36 @@ func NewClient(options *core.RequestOptions) *Client {
     }
 }
 
+// List publishable key records for an app (surface). These are separate from private build API keys. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation is read-only despite using POST. Permission-filtered queries may return an empty result; do not assume that proves the resource does not exist. Only use pagination arguments declared in the schema.
+// 
+// Example:
+// 
+// 	request := &keys.ListForSurfacePublicRequest{
+// 	    WorkspaceSlug: "workspaceSlug",
+// 	    Args: &keys.ListForSurfacePublicRequestArgs{
+// 	        SurfaceSlug: "surfaceSlug",
+// 	    },
+// 	}
+// 	_, err := client.Keys.Public.ListForSurface(
+// 	    context.TODO(),
+// 	    request,
+// 	)
+func (c *Client) ListForSurface(
+    ctx context.Context,
+    request *keys.ListForSurfacePublicRequest,
+    opts ...option.RequestOption,
+) (sdk.QueryPublicKeysForSurfaceResponse, error) {
+    response, err := c.WithRawResponse.ListForSurface(
+        ctx,
+        request,
+        opts...,
+    )
+    if err != nil {
+        return nil, err
+    }
+    return response.Body, nil
+}
+
 // Creates a publishable key for the app (surface).
 // 
 // Example:

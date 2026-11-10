@@ -1388,6 +1388,178 @@ func (f ForbiddenErrorBodyZeroCode) Ptr() *ForbiddenErrorBodyZeroCode {
 	return &f
 }
 
+var (
+	mutationWorkspacesReorderSCIMGroupRolesResponseFieldSuccess = big.NewInt(1 << 0)
+)
+
+type MutationWorkspacesReorderSCIMGroupRolesResponse struct {
+	Success bool `json:"success" url:"success"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (m *MutationWorkspacesReorderSCIMGroupRolesResponse) GetSuccess() bool {
+	if m == nil {
+		return false
+	}
+	return m.Success
+}
+
+func (m *MutationWorkspacesReorderSCIMGroupRolesResponse) GetExtraProperties() map[string]interface{} {
+	if m == nil {
+		return nil
+	}
+	return m.extraProperties
+}
+
+func (m *MutationWorkspacesReorderSCIMGroupRolesResponse) require(field *big.Int) {
+	next := new(big.Int)
+	if m.explicitFields != nil {
+		next.Set(m.explicitFields)
+	}
+	next.Or(next, field)
+	m.explicitFields = next
+}
+
+// SetSuccess sets the Success field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *MutationWorkspacesReorderSCIMGroupRolesResponse) SetSuccess(success bool) {
+	m.Success = success
+	m.require(mutationWorkspacesReorderSCIMGroupRolesResponseFieldSuccess)
+}
+
+func (m *MutationWorkspacesReorderSCIMGroupRolesResponse) UnmarshalJSON(data []byte) error {
+	type unmarshaler MutationWorkspacesReorderSCIMGroupRolesResponse
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*m = MutationWorkspacesReorderSCIMGroupRolesResponse(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *m)
+	if err != nil {
+		return err
+	}
+	m.extraProperties = extraProperties
+	m.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (m *MutationWorkspacesReorderSCIMGroupRolesResponse) MarshalJSON() ([]byte, error) {
+	type embed MutationWorkspacesReorderSCIMGroupRolesResponse
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*m),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, m.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (m *MutationWorkspacesReorderSCIMGroupRolesResponse) String() string {
+	if m == nil {
+		return "<nil>"
+	}
+	if len(m.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(m); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", m)
+}
+
+var (
+	mutationWorkspacesSetSCIMGroupRoleResponseFieldSuccess = big.NewInt(1 << 0)
+)
+
+type MutationWorkspacesSetSCIMGroupRoleResponse struct {
+	Success bool `json:"success" url:"success"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (m *MutationWorkspacesSetSCIMGroupRoleResponse) GetSuccess() bool {
+	if m == nil {
+		return false
+	}
+	return m.Success
+}
+
+func (m *MutationWorkspacesSetSCIMGroupRoleResponse) GetExtraProperties() map[string]interface{} {
+	if m == nil {
+		return nil
+	}
+	return m.extraProperties
+}
+
+func (m *MutationWorkspacesSetSCIMGroupRoleResponse) require(field *big.Int) {
+	next := new(big.Int)
+	if m.explicitFields != nil {
+		next.Set(m.explicitFields)
+	}
+	next.Or(next, field)
+	m.explicitFields = next
+}
+
+// SetSuccess sets the Success field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *MutationWorkspacesSetSCIMGroupRoleResponse) SetSuccess(success bool) {
+	m.Success = success
+	m.require(mutationWorkspacesSetSCIMGroupRoleResponseFieldSuccess)
+}
+
+func (m *MutationWorkspacesSetSCIMGroupRoleResponse) UnmarshalJSON(data []byte) error {
+	type unmarshaler MutationWorkspacesSetSCIMGroupRoleResponse
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*m = MutationWorkspacesSetSCIMGroupRoleResponse(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *m)
+	if err != nil {
+		return err
+	}
+	m.extraProperties = extraProperties
+	m.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (m *MutationWorkspacesSetSCIMGroupRoleResponse) MarshalJSON() ([]byte, error) {
+	type embed MutationWorkspacesSetSCIMGroupRoleResponse
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*m),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, m.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (m *MutationWorkspacesSetSCIMGroupRoleResponse) String() string {
+	if m == nil {
+		return "<nil>"
+	}
+	if len(m.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(m); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", m)
+}
+
 type NotFoundErrorBody struct {
 	NotFoundErrorBodyCode *NotFoundErrorBodyCode
 	RPCUnexpectedError    *RPCUnexpectedError
@@ -1987,6 +2159,481 @@ func NewNotFoundErrorBodyZeroCodeFromString(s string) (NotFoundErrorBodyZeroCode
 
 func (n NotFoundErrorBodyZeroCode) Ptr() *NotFoundErrorBodyZeroCode {
 	return &n
+}
+
+type QueryPublicKeysForSurfaceResponse = []*QueryPublicKeysForSurfaceResponseItem
+
+var (
+	queryPublicKeysForSurfaceResponseItemFieldCreatedAt  = big.NewInt(1 << 0)
+	queryPublicKeysForSurfaceResponseItemFieldDeletedAt  = big.NewInt(1 << 1)
+	queryPublicKeysForSurfaceResponseItemFieldUpdatedAt  = big.NewInt(1 << 2)
+	queryPublicKeysForSurfaceResponseItemFieldContent    = big.NewInt(1 << 3)
+	queryPublicKeysForSurfaceResponseItemFieldID         = big.NewInt(1 << 4)
+	queryPublicKeysForSurfaceResponseItemFieldLastUsedAt = big.NewInt(1 << 5)
+	queryPublicKeysForSurfaceResponseItemFieldName       = big.NewInt(1 << 6)
+	queryPublicKeysForSurfaceResponseItemFieldSurfaceID  = big.NewInt(1 << 7)
+)
+
+// queryPublicKeysForSurfaceResponseItemNullableFields maps the wire names of QueryPublicKeysForSurfaceResponseItem's nullable fields (required or optional) to their field bits.
+var queryPublicKeysForSurfaceResponseItemNullableFields = map[string]*big.Int{
+	"deletedAt":  queryPublicKeysForSurfaceResponseItemFieldDeletedAt,
+	"lastUsedAt": queryPublicKeysForSurfaceResponseItemFieldLastUsedAt,
+}
+
+type QueryPublicKeysForSurfaceResponseItem struct {
+	CreatedAt  float64  `json:"createdAt" url:"createdAt"`
+	DeletedAt  *float64 `json:"deletedAt,omitempty" url:"deletedAt,omitempty"`
+	UpdatedAt  float64  `json:"updatedAt" url:"updatedAt"`
+	Content    string   `json:"content" url:"content"`
+	ID         string   `json:"id" url:"id"`
+	LastUsedAt *float64 `json:"lastUsedAt,omitempty" url:"lastUsedAt,omitempty"`
+	Name       string   `json:"name" url:"name"`
+	SurfaceID  string   `json:"surfaceId" url:"surfaceId"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (q *QueryPublicKeysForSurfaceResponseItem) GetCreatedAt() float64 {
+	if q == nil {
+		return 0
+	}
+	return q.CreatedAt
+}
+
+func (q *QueryPublicKeysForSurfaceResponseItem) GetDeletedAt() *float64 {
+	if q == nil {
+		return nil
+	}
+	return q.DeletedAt
+}
+
+func (q *QueryPublicKeysForSurfaceResponseItem) GetUpdatedAt() float64 {
+	if q == nil {
+		return 0
+	}
+	return q.UpdatedAt
+}
+
+func (q *QueryPublicKeysForSurfaceResponseItem) GetContent() string {
+	if q == nil {
+		return ""
+	}
+	return q.Content
+}
+
+func (q *QueryPublicKeysForSurfaceResponseItem) GetID() string {
+	if q == nil {
+		return ""
+	}
+	return q.ID
+}
+
+func (q *QueryPublicKeysForSurfaceResponseItem) GetLastUsedAt() *float64 {
+	if q == nil {
+		return nil
+	}
+	return q.LastUsedAt
+}
+
+func (q *QueryPublicKeysForSurfaceResponseItem) GetName() string {
+	if q == nil {
+		return ""
+	}
+	return q.Name
+}
+
+func (q *QueryPublicKeysForSurfaceResponseItem) GetSurfaceID() string {
+	if q == nil {
+		return ""
+	}
+	return q.SurfaceID
+}
+
+func (q *QueryPublicKeysForSurfaceResponseItem) GetExtraProperties() map[string]interface{} {
+	if q == nil {
+		return nil
+	}
+	return q.extraProperties
+}
+
+func (q *QueryPublicKeysForSurfaceResponseItem) require(field *big.Int) {
+	next := new(big.Int)
+	if q.explicitFields != nil {
+		next.Set(q.explicitFields)
+	}
+	next.Or(next, field)
+	q.explicitFields = next
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryPublicKeysForSurfaceResponseItem) SetCreatedAt(createdAt float64) {
+	q.CreatedAt = createdAt
+	q.require(queryPublicKeysForSurfaceResponseItemFieldCreatedAt)
+}
+
+// SetDeletedAt sets the DeletedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryPublicKeysForSurfaceResponseItem) SetDeletedAt(deletedAt *float64) {
+	q.DeletedAt = deletedAt
+	q.require(queryPublicKeysForSurfaceResponseItemFieldDeletedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryPublicKeysForSurfaceResponseItem) SetUpdatedAt(updatedAt float64) {
+	q.UpdatedAt = updatedAt
+	q.require(queryPublicKeysForSurfaceResponseItemFieldUpdatedAt)
+}
+
+// SetContent sets the Content field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryPublicKeysForSurfaceResponseItem) SetContent(content string) {
+	q.Content = content
+	q.require(queryPublicKeysForSurfaceResponseItemFieldContent)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryPublicKeysForSurfaceResponseItem) SetID(id string) {
+	q.ID = id
+	q.require(queryPublicKeysForSurfaceResponseItemFieldID)
+}
+
+// SetLastUsedAt sets the LastUsedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryPublicKeysForSurfaceResponseItem) SetLastUsedAt(lastUsedAt *float64) {
+	q.LastUsedAt = lastUsedAt
+	q.require(queryPublicKeysForSurfaceResponseItemFieldLastUsedAt)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryPublicKeysForSurfaceResponseItem) SetName(name string) {
+	q.Name = name
+	q.require(queryPublicKeysForSurfaceResponseItemFieldName)
+}
+
+// SetSurfaceID sets the SurfaceID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryPublicKeysForSurfaceResponseItem) SetSurfaceID(surfaceID string) {
+	q.SurfaceID = surfaceID
+	q.require(queryPublicKeysForSurfaceResponseItemFieldSurfaceID)
+}
+
+func (q *QueryPublicKeysForSurfaceResponseItem) UnmarshalJSON(data []byte) error {
+	type unmarshaler QueryPublicKeysForSurfaceResponseItem
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*q = QueryPublicKeysForSurfaceResponseItem(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *q)
+	if err != nil {
+		return err
+	}
+	q.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, queryPublicKeysForSurfaceResponseItemNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		q.require(presentFields)
+	}
+	q.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (q *QueryPublicKeysForSurfaceResponseItem) MarshalJSON() ([]byte, error) {
+	type embed QueryPublicKeysForSurfaceResponseItem
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*q),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, q.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (q *QueryPublicKeysForSurfaceResponseItem) String() string {
+	if q == nil {
+		return "<nil>"
+	}
+	if len(q.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(q.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(q); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", q)
+}
+
+type QuerySCIMGroupsForOrgResponse = []*QuerySCIMGroupsForOrgResponseItem
+
+var (
+	querySCIMGroupsForOrgResponseItemFieldClerkSCIMDirectoryID = big.NewInt(1 << 0)
+	querySCIMGroupsForOrgResponseItemFieldID                   = big.NewInt(1 << 1)
+	querySCIMGroupsForOrgResponseItemFieldMemberCount          = big.NewInt(1 << 2)
+	querySCIMGroupsForOrgResponseItemFieldOrganizationID       = big.NewInt(1 << 3)
+	querySCIMGroupsForOrgResponseItemFieldPrecedence           = big.NewInt(1 << 4)
+	querySCIMGroupsForOrgResponseItemFieldRoleKey              = big.NewInt(1 << 5)
+	querySCIMGroupsForOrgResponseItemFieldSCIMGroupDisplayName = big.NewInt(1 << 6)
+	querySCIMGroupsForOrgResponseItemFieldSCIMGroupID          = big.NewInt(1 << 7)
+	querySCIMGroupsForOrgResponseItemFieldCreatedAt            = big.NewInt(1 << 8)
+	querySCIMGroupsForOrgResponseItemFieldDeletedAt            = big.NewInt(1 << 9)
+	querySCIMGroupsForOrgResponseItemFieldUpdatedAt            = big.NewInt(1 << 10)
+)
+
+// querySCIMGroupsForOrgResponseItemNullableFields maps the wire names of QuerySCIMGroupsForOrgResponseItem's nullable fields (required or optional) to their field bits.
+var querySCIMGroupsForOrgResponseItemNullableFields = map[string]*big.Int{
+	"precedence": querySCIMGroupsForOrgResponseItemFieldPrecedence,
+	"roleKey":    querySCIMGroupsForOrgResponseItemFieldRoleKey,
+	"deletedAt":  querySCIMGroupsForOrgResponseItemFieldDeletedAt,
+}
+
+type QuerySCIMGroupsForOrgResponseItem struct {
+	ClerkSCIMDirectoryID string   `json:"clerkScimDirectoryId" url:"clerkScimDirectoryId"`
+	ID                   string   `json:"id" url:"id"`
+	MemberCount          int      `json:"memberCount" url:"memberCount"`
+	OrganizationID       string   `json:"organizationId" url:"organizationId"`
+	Precedence           *int     `json:"precedence,omitempty" url:"precedence,omitempty"`
+	RoleKey              *string  `json:"roleKey,omitempty" url:"roleKey,omitempty"`
+	SCIMGroupDisplayName string   `json:"scimGroupDisplayName" url:"scimGroupDisplayName"`
+	SCIMGroupID          string   `json:"scimGroupId" url:"scimGroupId"`
+	CreatedAt            float64  `json:"createdAt" url:"createdAt"`
+	DeletedAt            *float64 `json:"deletedAt,omitempty" url:"deletedAt,omitempty"`
+	UpdatedAt            float64  `json:"updatedAt" url:"updatedAt"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (q *QuerySCIMGroupsForOrgResponseItem) GetClerkSCIMDirectoryID() string {
+	if q == nil {
+		return ""
+	}
+	return q.ClerkSCIMDirectoryID
+}
+
+func (q *QuerySCIMGroupsForOrgResponseItem) GetID() string {
+	if q == nil {
+		return ""
+	}
+	return q.ID
+}
+
+func (q *QuerySCIMGroupsForOrgResponseItem) GetMemberCount() int {
+	if q == nil {
+		return 0
+	}
+	return q.MemberCount
+}
+
+func (q *QuerySCIMGroupsForOrgResponseItem) GetOrganizationID() string {
+	if q == nil {
+		return ""
+	}
+	return q.OrganizationID
+}
+
+func (q *QuerySCIMGroupsForOrgResponseItem) GetPrecedence() *int {
+	if q == nil {
+		return nil
+	}
+	return q.Precedence
+}
+
+func (q *QuerySCIMGroupsForOrgResponseItem) GetRoleKey() *string {
+	if q == nil {
+		return nil
+	}
+	return q.RoleKey
+}
+
+func (q *QuerySCIMGroupsForOrgResponseItem) GetSCIMGroupDisplayName() string {
+	if q == nil {
+		return ""
+	}
+	return q.SCIMGroupDisplayName
+}
+
+func (q *QuerySCIMGroupsForOrgResponseItem) GetSCIMGroupID() string {
+	if q == nil {
+		return ""
+	}
+	return q.SCIMGroupID
+}
+
+func (q *QuerySCIMGroupsForOrgResponseItem) GetCreatedAt() float64 {
+	if q == nil {
+		return 0
+	}
+	return q.CreatedAt
+}
+
+func (q *QuerySCIMGroupsForOrgResponseItem) GetDeletedAt() *float64 {
+	if q == nil {
+		return nil
+	}
+	return q.DeletedAt
+}
+
+func (q *QuerySCIMGroupsForOrgResponseItem) GetUpdatedAt() float64 {
+	if q == nil {
+		return 0
+	}
+	return q.UpdatedAt
+}
+
+func (q *QuerySCIMGroupsForOrgResponseItem) GetExtraProperties() map[string]interface{} {
+	if q == nil {
+		return nil
+	}
+	return q.extraProperties
+}
+
+func (q *QuerySCIMGroupsForOrgResponseItem) require(field *big.Int) {
+	next := new(big.Int)
+	if q.explicitFields != nil {
+		next.Set(q.explicitFields)
+	}
+	next.Or(next, field)
+	q.explicitFields = next
+}
+
+// SetClerkSCIMDirectoryID sets the ClerkSCIMDirectoryID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySCIMGroupsForOrgResponseItem) SetClerkSCIMDirectoryID(clerkSCIMDirectoryID string) {
+	q.ClerkSCIMDirectoryID = clerkSCIMDirectoryID
+	q.require(querySCIMGroupsForOrgResponseItemFieldClerkSCIMDirectoryID)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySCIMGroupsForOrgResponseItem) SetID(id string) {
+	q.ID = id
+	q.require(querySCIMGroupsForOrgResponseItemFieldID)
+}
+
+// SetMemberCount sets the MemberCount field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySCIMGroupsForOrgResponseItem) SetMemberCount(memberCount int) {
+	q.MemberCount = memberCount
+	q.require(querySCIMGroupsForOrgResponseItemFieldMemberCount)
+}
+
+// SetOrganizationID sets the OrganizationID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySCIMGroupsForOrgResponseItem) SetOrganizationID(organizationID string) {
+	q.OrganizationID = organizationID
+	q.require(querySCIMGroupsForOrgResponseItemFieldOrganizationID)
+}
+
+// SetPrecedence sets the Precedence field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySCIMGroupsForOrgResponseItem) SetPrecedence(precedence *int) {
+	q.Precedence = precedence
+	q.require(querySCIMGroupsForOrgResponseItemFieldPrecedence)
+}
+
+// SetRoleKey sets the RoleKey field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySCIMGroupsForOrgResponseItem) SetRoleKey(roleKey *string) {
+	q.RoleKey = roleKey
+	q.require(querySCIMGroupsForOrgResponseItemFieldRoleKey)
+}
+
+// SetSCIMGroupDisplayName sets the SCIMGroupDisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySCIMGroupsForOrgResponseItem) SetSCIMGroupDisplayName(scimGroupDisplayName string) {
+	q.SCIMGroupDisplayName = scimGroupDisplayName
+	q.require(querySCIMGroupsForOrgResponseItemFieldSCIMGroupDisplayName)
+}
+
+// SetSCIMGroupID sets the SCIMGroupID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySCIMGroupsForOrgResponseItem) SetSCIMGroupID(scimGroupID string) {
+	q.SCIMGroupID = scimGroupID
+	q.require(querySCIMGroupsForOrgResponseItemFieldSCIMGroupID)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySCIMGroupsForOrgResponseItem) SetCreatedAt(createdAt float64) {
+	q.CreatedAt = createdAt
+	q.require(querySCIMGroupsForOrgResponseItemFieldCreatedAt)
+}
+
+// SetDeletedAt sets the DeletedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySCIMGroupsForOrgResponseItem) SetDeletedAt(deletedAt *float64) {
+	q.DeletedAt = deletedAt
+	q.require(querySCIMGroupsForOrgResponseItemFieldDeletedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySCIMGroupsForOrgResponseItem) SetUpdatedAt(updatedAt float64) {
+	q.UpdatedAt = updatedAt
+	q.require(querySCIMGroupsForOrgResponseItemFieldUpdatedAt)
+}
+
+func (q *QuerySCIMGroupsForOrgResponseItem) UnmarshalJSON(data []byte) error {
+	type unmarshaler QuerySCIMGroupsForOrgResponseItem
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*q = QuerySCIMGroupsForOrgResponseItem(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *q)
+	if err != nil {
+		return err
+	}
+	q.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, querySCIMGroupsForOrgResponseItemNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		q.require(presentFields)
+	}
+	q.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (q *QuerySCIMGroupsForOrgResponseItem) MarshalJSON() ([]byte, error) {
+	type embed QuerySCIMGroupsForOrgResponseItem
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*q),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, q.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (q *QuerySCIMGroupsForOrgResponseItem) String() string {
+	if q == nil {
+		return "<nil>"
+	}
+	if len(q.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(q.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(q); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", q)
 }
 
 var (
