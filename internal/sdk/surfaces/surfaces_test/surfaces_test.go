@@ -252,6 +252,36 @@ func TestSurfacesSetSdkPluginWithWireMock(
     VerifyRequestCount(t, "TestSurfacesSetSdkPluginWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/surfaces.setSdkPlugin", nil, 1)
 }
 
+func TestSurfacesSetTracingOwnershipWithWireMock(
+    t *testing.T,
+) {
+    WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+    	if WireMockBaseURL == "" {
+    		WireMockBaseURL = "http://localhost:8080"
+    	}
+    client := client.NewClient(
+        option.WithBaseURL(WireMockBaseURL),
+        option.WithToken("test-token"),
+    )
+        request := &sdk.SetTracingOwnershipSurfacesRequest{
+            WorkspaceSlug: "workspaceSlug",
+            Args: &sdk.SetTracingOwnershipSurfacesRequestArgs{
+                SurfaceSlug: "surfaceSlug",
+                TracingOwnership: sdk.SetTracingOwnershipSurfacesRequestArgsTracingOwnershipManaged,
+            },
+        }
+    _, invocationErr :=     client.Surfaces.SetTracingOwnership(
+            context.TODO(),
+            request,
+            option.WithHTTPHeader(
+                http.Header{"X-Test-Id": []string{"TestSurfacesSetTracingOwnershipWithWireMock"}},
+            ),
+        )
+
+    require.NoError(t, invocationErr, "Client method call should succeed")
+    VerifyRequestCount(t, "TestSurfacesSetTracingOwnershipWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/surfaces.setTracingOwnership", nil, 1)
+}
+
 func TestSurfacesUpdateNameWithWireMock(
     t *testing.T,
 ) {

@@ -1704,6 +1704,78 @@ _, err := client.Surfaces.SetSdkPlugin(
 </dl>
 </details>
 
+<details><summary><code>client.Surfaces.SetTracingOwnership(WorkspaceSlug, request) -> *sdk.MutationSurfacesSetTracingOwnershipResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Choose who owns OpenTelemetry tracing for an app (surface): managed (Interfere installs tracing) or application (the app already runs its own OpenTelemetry provider and Interfere writes no OpenTelemetry globals). Other SDK settings are kept. Next.js and Vite apps bake this at build time, so it takes effect on their next build and deploy. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &sdk.SetTracingOwnershipSurfacesRequest{
+    WorkspaceSlug: "workspaceSlug",
+    Args: &sdk.SetTracingOwnershipSurfacesRequestArgs{
+        SurfaceSlug: "surfaceSlug",
+        TracingOwnership: sdk.SetTracingOwnershipSurfacesRequestArgsTracingOwnershipManaged,
+    },
+}
+_, err := client.Surfaces.SetTracingOwnership(
+    context.TODO(),
+    request,
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**workspaceSlug:** `string` — Workspace URL slug, using lowercase letters, numbers, and hyphens.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**args:** `*sdk.SetTracingOwnershipSurfacesRequestArgs` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.Surfaces.UpdateName(WorkspaceSlug, request) -> *sdk.MutationSurfacesUpdateNameResponse</code></summary>
 <dl>
 <dd>

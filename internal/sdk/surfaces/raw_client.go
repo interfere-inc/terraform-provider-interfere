@@ -315,6 +315,53 @@ func (r *RawClient) SetSdkPlugin(
     }, nil
 }
 
+func (r *RawClient) SetTracingOwnership(
+    ctx context.Context,
+    request *sdk.SetTracingOwnershipSurfacesRequest,
+    opts ...option.RequestOption,
+) (*core.Response[*sdk.MutationSurfacesSetTracingOwnershipResponse], error) {
+    options := core.NewRequestOptions(opts...)
+    baseURL := internal.ResolveBaseURL(
+        options.BaseURL,
+        r.baseURL,
+        "",
+    )
+    endpointURL := internal.EncodeURL(
+        baseURL + "/v3/workspaces/%v/actions/surfaces.setTracingOwnership",
+        request.WorkspaceSlug,
+    )
+    headers := internal.MergeHeaders(
+        r.options.ToHeader(),
+        options.ToHeader(),
+    )
+    headers.Add("Content-Type", "application/json")
+    var response *sdk.MutationSurfacesSetTracingOwnershipResponse
+    raw, err := r.caller.Call(
+        ctx,
+        &internal.CallParams{
+            URL: endpointURL,
+            Method: http.MethodPost,
+            Headers: headers,
+            MaxAttempts: options.MaxAttempts,
+            DisableRetries: options.DisableRetries,
+            BodyProperties: options.BodyProperties,
+            QueryParameters: options.QueryParameters,
+            Client: options.HTTPClient,
+            Request: request,
+            Response: &response,
+            ErrorDecoder: internal.NewErrorDecoder(sdk.ErrorCodes),
+        },
+    )
+    if err != nil {
+        return nil, err
+    }
+    return &core.Response[*sdk.MutationSurfacesSetTracingOwnershipResponse]{
+        StatusCode: raw.StatusCode,
+        Header: raw.Header,
+        Body: response,
+    }, nil
+}
+
 func (r *RawClient) UpdateName(
     ctx context.Context,
     request *sdk.UpdateNameSurfacesRequest,

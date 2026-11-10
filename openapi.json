@@ -2644,6 +2644,14 @@
                       "cloudflare"
                     ],
                     "type": "string"
+                  },
+                  "tracingOwnership": {
+                    "enum": [
+                      "managed",
+                      "application"
+                    ],
+                    "type": "string",
+                    "description": "Who owns OpenTelemetry for the surface: managed (Interfere constructs the providers) or application (the host does, Interfere correlates)."
                   }
                 }
               },
@@ -3002,6 +3010,14 @@
                         "cloudflare"
                       ],
                       "type": "string"
+                    },
+                    "tracingOwnership": {
+                      "enum": [
+                        "managed",
+                        "application"
+                      ],
+                      "type": "string",
+                      "description": "Who owns OpenTelemetry for the surface: managed (Interfere constructs the providers) or application (the host does, Interfere correlates)."
                     }
                   }
                 },
@@ -3375,6 +3391,18 @@
         ]
       },
       "Mutation_surfaces_setSdkPluginResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "const": true,
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "success"
+        ]
+      },
+      "Mutation_surfaces_setTracingOwnershipResponse": {
         "type": "object",
         "properties": {
           "success": {
@@ -6725,6 +6753,102 @@
           }
         },
         "x-fern-sdk-method-name": "setSdkPlugin",
+        "x-cloudflare-labels": [
+          "cf-api-endpoint"
+        ],
+        "security": [
+          {
+            "clerkSession": []
+          }
+        ],
+        "x-internal": false,
+        "x-fern-sdk-group-name": [
+          "surfaces"
+        ]
+      }
+    },
+    "/v3/workspaces/{workspaceSlug}/actions/surfaces.setTracingOwnership": {
+      "post": {
+        "operationId": "mutation_surfaces_setTracingOwnership",
+        "summary": "Run surfaces.setTracingOwnership",
+        "description": "Choose who owns OpenTelemetry tracing for an app (surface): managed (Interfere installs tracing) or application (the app already runs its own OpenTelemetry provider and Interfere writes no OpenTelemetry globals). Other SDK settings are kept. Next.js and Vite apps bake this at build time, so it takes effect on their next build and deploy. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.",
+        "tags": [
+          "Workspaces"
+        ],
+        "parameters": [
+          {
+            "name": "workspaceSlug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Workspace URL slug, using lowercase letters, numbers, and hyphens."
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "args": {
+                    "type": "object",
+                    "properties": {
+                      "surfaceSlug": {
+                        "type": "string",
+                        "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+                        "description": "Surface URL slug, using lowercase letters, numbers, and hyphens."
+                      },
+                      "tracingOwnership": {
+                        "enum": [
+                          "managed",
+                          "application"
+                        ],
+                        "type": "string",
+                        "description": "Who owns OpenTelemetry for the surface: managed (Interfere constructs the providers) or application (the host does, Interfere correlates)."
+                      }
+                    },
+                    "required": [
+                      "surfaceSlug",
+                      "tracingOwnership"
+                    ]
+                  }
+                },
+                "required": [
+                  "args"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mutation_surfaces_setTracingOwnershipResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/RpcValidationError"
+          },
+          "401": {
+            "$ref": "#/components/responses/ErrorResponse_b32e7e47d27147b78e9ca9c8927315e0c48a5a54a03868590623df7e2ff7d2af"
+          },
+          "403": {
+            "$ref": "#/components/responses/ErrorResponse_10ef468de4a2f3d5e1e4a4bcd9c19369a4c535898d4ecea2b48444857aece895"
+          },
+          "503": {
+            "$ref": "#/components/responses/ErrorResponse_a4a8a71ed4a33ddc602b7e2cf4dd0b51ef37c46db1b01870377abdbd6cbda1b5"
+          }
+        },
+        "x-fern-sdk-method-name": "setTracingOwnership",
         "x-cloudflare-labels": [
           "cf-api-endpoint"
         ],
