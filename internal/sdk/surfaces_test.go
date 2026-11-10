@@ -792,6 +792,90 @@ func TestSettersMarkExplicitSetSdkPluginSurfacesRequest(t *testing.T) {
 
 }
 
+func TestSettersSetTracingOwnershipSurfacesRequest(t *testing.T) {
+	t.Run("SetWorkspaceSlug", func(t *testing.T) {
+		obj := &SetTracingOwnershipSurfacesRequest{}
+		var fernTestValueWorkspaceSlug string
+		obj.SetWorkspaceSlug(fernTestValueWorkspaceSlug)
+		assert.Equal(t, fernTestValueWorkspaceSlug, obj.WorkspaceSlug)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetArgs", func(t *testing.T) {
+		obj := &SetTracingOwnershipSurfacesRequest{}
+		var fernTestValueArgs *SetTracingOwnershipSurfacesRequestArgs
+		obj.SetArgs(fernTestValueArgs)
+		assert.Equal(t, fernTestValueArgs, obj.Args)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestSettersMarkExplicitSetTracingOwnershipSurfacesRequest(t *testing.T) {
+	t.Run("SetWorkspaceSlug_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &SetTracingOwnershipSurfacesRequest{}
+		var fernTestValueWorkspaceSlug string
+
+		// Act
+		obj.SetWorkspaceSlug(fernTestValueWorkspaceSlug)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetArgs_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &SetTracingOwnershipSurfacesRequest{}
+		var fernTestValueArgs *SetTracingOwnershipSurfacesRequestArgs
+
+		// Act
+		obj.SetArgs(fernTestValueArgs)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
 func TestSettersCreateSurfaceResponse(t *testing.T) {
 	t.Run("SetAPIKey", func(t *testing.T) {
 		obj := &CreateSurfaceResponse{}
@@ -1714,6 +1798,77 @@ func TestSettersMarkExplicitMutationSurfacesSetSdkPluginResponse(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &MutationSurfacesSetSdkPluginResponse{}
+		var fernTestValueSuccess bool
+
+		// Act
+		obj.SetSuccess(fernTestValueSuccess)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersMutationSurfacesSetTracingOwnershipResponse(t *testing.T) {
+	t.Run("SetSuccess", func(t *testing.T) {
+		obj := &MutationSurfacesSetTracingOwnershipResponse{}
+		var fernTestValueSuccess bool
+		obj.SetSuccess(fernTestValueSuccess)
+		assert.Equal(t, fernTestValueSuccess, obj.Success)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersMutationSurfacesSetTracingOwnershipResponse(t *testing.T) {
+	t.Run("GetSuccess", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &MutationSurfacesSetTracingOwnershipResponse{}
+		var expected bool
+		obj.Success = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetSuccess(), "getter should return the property value")
+	})
+
+	t.Run("GetSuccess_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *MutationSurfacesSetTracingOwnershipResponse
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetSuccess() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitMutationSurfacesSetTracingOwnershipResponse(t *testing.T) {
+	t.Run("SetSuccess_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &MutationSurfacesSetTracingOwnershipResponse{}
 		var fernTestValueSuccess bool
 
 		// Act
@@ -3556,6 +3711,14 @@ func TestSettersQuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig(t *testing
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetTracingOwnership", func(t *testing.T) {
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig{}
+		var fernTestValueTracingOwnership *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigTracingOwnership
+		obj.SetTracingOwnership(fernTestValueTracingOwnership)
+		assert.Equal(t, fernTestValueTracingOwnership, obj.TracingOwnership)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 }
 
 func TestGettersQuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig(t *testing.T) {
@@ -3691,6 +3854,39 @@ func TestGettersQuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig(t *testing
 		_ = obj.GetPlatform() // Should return zero value
 	})
 
+	t.Run("GetTracingOwnership", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig{}
+		var expected *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigTracingOwnership
+		obj.TracingOwnership = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetTracingOwnership(), "getter should return the property value")
+	})
+
+	t.Run("GetTracingOwnership_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig{}
+		obj.TracingOwnership = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetTracingOwnership(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetTracingOwnership_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetTracingOwnership() // Should return zero value
+	})
+
 }
 
 func TestSettersMarkExplicitQuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig(t *testing.T) {
@@ -3795,6 +3991,37 @@ func TestSettersMarkExplicitQuerySurfacesGetBySlugIncludeDeletedResponseSdkConfi
 
 		// Act
 		obj.SetPlatform(fernTestValuePlatform)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetTracingOwnership_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig{}
+		var fernTestValueTracingOwnership *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigTracingOwnership
+
+		// Act
+		obj.SetTracingOwnership(fernTestValueTracingOwnership)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -6003,6 +6230,14 @@ func TestSettersQuerySurfacesListResponseItemSdkConfig(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetTracingOwnership", func(t *testing.T) {
+		obj := &QuerySurfacesListResponseItemSdkConfig{}
+		var fernTestValueTracingOwnership *QuerySurfacesListResponseItemSdkConfigTracingOwnership
+		obj.SetTracingOwnership(fernTestValueTracingOwnership)
+		assert.Equal(t, fernTestValueTracingOwnership, obj.TracingOwnership)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 }
 
 func TestGettersQuerySurfacesListResponseItemSdkConfig(t *testing.T) {
@@ -6138,6 +6373,39 @@ func TestGettersQuerySurfacesListResponseItemSdkConfig(t *testing.T) {
 		_ = obj.GetPlatform() // Should return zero value
 	})
 
+	t.Run("GetTracingOwnership", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesListResponseItemSdkConfig{}
+		var expected *QuerySurfacesListResponseItemSdkConfigTracingOwnership
+		obj.TracingOwnership = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetTracingOwnership(), "getter should return the property value")
+	})
+
+	t.Run("GetTracingOwnership_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesListResponseItemSdkConfig{}
+		obj.TracingOwnership = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetTracingOwnership(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetTracingOwnership_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *QuerySurfacesListResponseItemSdkConfig
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetTracingOwnership() // Should return zero value
+	})
+
 }
 
 func TestSettersMarkExplicitQuerySurfacesListResponseItemSdkConfig(t *testing.T) {
@@ -6242,6 +6510,37 @@ func TestSettersMarkExplicitQuerySurfacesListResponseItemSdkConfig(t *testing.T)
 
 		// Act
 		obj.SetPlatform(fernTestValuePlatform)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetTracingOwnership_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &QuerySurfacesListResponseItemSdkConfig{}
+		var fernTestValueTracingOwnership *QuerySurfacesListResponseItemSdkConfigTracingOwnership
+
+		// Act
+		obj.SetTracingOwnership(fernTestValueTracingOwnership)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -7464,6 +7763,139 @@ func TestSettersMarkExplicitSetSdkPluginSurfacesRequestArgs(t *testing.T) {
 
 }
 
+func TestSettersSetTracingOwnershipSurfacesRequestArgs(t *testing.T) {
+	t.Run("SetSurfaceSlug", func(t *testing.T) {
+		obj := &SetTracingOwnershipSurfacesRequestArgs{}
+		var fernTestValueSurfaceSlug string
+		obj.SetSurfaceSlug(fernTestValueSurfaceSlug)
+		assert.Equal(t, fernTestValueSurfaceSlug, obj.SurfaceSlug)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetTracingOwnership", func(t *testing.T) {
+		obj := &SetTracingOwnershipSurfacesRequestArgs{}
+		var fernTestValueTracingOwnership SetTracingOwnershipSurfacesRequestArgsTracingOwnership
+		obj.SetTracingOwnership(fernTestValueTracingOwnership)
+		assert.Equal(t, fernTestValueTracingOwnership, obj.TracingOwnership)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersSetTracingOwnershipSurfacesRequestArgs(t *testing.T) {
+	t.Run("GetSurfaceSlug", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &SetTracingOwnershipSurfacesRequestArgs{}
+		var expected string
+		obj.SurfaceSlug = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetSurfaceSlug(), "getter should return the property value")
+	})
+
+	t.Run("GetSurfaceSlug_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *SetTracingOwnershipSurfacesRequestArgs
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetSurfaceSlug() // Should return zero value
+	})
+
+	t.Run("GetTracingOwnership", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &SetTracingOwnershipSurfacesRequestArgs{}
+		var expected SetTracingOwnershipSurfacesRequestArgsTracingOwnership
+		obj.TracingOwnership = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetTracingOwnership(), "getter should return the property value")
+	})
+
+	t.Run("GetTracingOwnership_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *SetTracingOwnershipSurfacesRequestArgs
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetTracingOwnership() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitSetTracingOwnershipSurfacesRequestArgs(t *testing.T) {
+	t.Run("SetSurfaceSlug_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &SetTracingOwnershipSurfacesRequestArgs{}
+		var fernTestValueSurfaceSlug string
+
+		// Act
+		obj.SetSurfaceSlug(fernTestValueSurfaceSlug)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetTracingOwnership_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &SetTracingOwnershipSurfacesRequestArgs{}
+		var fernTestValueTracingOwnership SetTracingOwnershipSurfacesRequestArgsTracingOwnership
+
+		// Act
+		obj.SetTracingOwnership(fernTestValueTracingOwnership)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
 func TestSettersUpdateNameSurfacesRequestArgs(t *testing.T) {
 	t.Run("SetName", func(t *testing.T) {
 		obj := &UpdateNameSurfacesRequestArgs{}
@@ -8011,6 +8443,39 @@ func TestJSONMarshalingMutationSurfacesSetSdkPluginResponse(t *testing.T) {
 	})
 }
 
+func TestJSONMarshalingMutationSurfacesSetTracingOwnershipResponse(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &MutationSurfacesSetTracingOwnershipResponse{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled MutationSurfacesSetTracingOwnershipResponse
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj MutationSurfacesSetTracingOwnershipResponse
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj MutationSurfacesSetTracingOwnershipResponse
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
 func TestJSONMarshalingMutationSurfacesUpdateNameResponse(t *testing.T) {
 	t.Run("MarshalUnmarshal", func(t *testing.T) {
 		t.Parallel()
@@ -8336,6 +8801,39 @@ func TestJSONMarshalingSetSdkPluginSurfacesRequestArgs(t *testing.T) {
 	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
 		t.Parallel()
 		var obj SetSdkPluginSurfacesRequestArgs
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingSetTracingOwnershipSurfacesRequestArgs(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &SetTracingOwnershipSurfacesRequestArgs{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled SetTracingOwnershipSurfacesRequestArgs
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj SetTracingOwnershipSurfacesRequestArgs
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj SetTracingOwnershipSurfacesRequestArgs
 		err := json.Unmarshal([]byte(`{}`), &obj)
 		assert.NoError(t, err, "unmarshaling empty object should succeed")
 	})
@@ -8691,6 +9189,22 @@ func TestStringMutationSurfacesSetSdkPluginResponse(t *testing.T) {
 	})
 }
 
+func TestStringMutationSurfacesSetTracingOwnershipResponse(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &MutationSurfacesSetTracingOwnershipResponse{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *MutationSurfacesSetTracingOwnershipResponse
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
 func TestStringMutationSurfacesUpdateNameResponse(t *testing.T) {
 	t.Run("StringMethod", func(t *testing.T) {
 		t.Parallel()
@@ -8846,6 +9360,22 @@ func TestStringSetSdkPluginSurfacesRequestArgs(t *testing.T) {
 	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *SetSdkPluginSurfacesRequestArgs
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringSetTracingOwnershipSurfacesRequestArgs(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &SetTracingOwnershipSurfacesRequestArgs{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *SetTracingOwnershipSurfacesRequestArgs
 		result := obj.String()
 		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
 	})
@@ -9309,6 +9839,35 @@ func TestEnumQuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigServerTracing(
 	})
 }
 
+func TestEnumQuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigTracingOwnership(t *testing.T) {
+	t.Run("NewFromString_managed", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewQuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigTracingOwnershipFromString("managed")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigTracingOwnership("managed"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_application", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewQuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigTracingOwnershipFromString("application")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigTracingOwnership("application"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewQuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigTracingOwnershipFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewQuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigTracingOwnershipFromString("managed")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
 func TestEnumQuerySurfacesGetBySlugIncludeDeletedResponseType(t *testing.T) {
 	t.Run("NewFromString_elysia", func(t *testing.T) {
 		t.Parallel()
@@ -9446,6 +10005,35 @@ func TestEnumQuerySurfacesListResponseItemSdkConfigServerTracing(t *testing.T) {
 	})
 }
 
+func TestEnumQuerySurfacesListResponseItemSdkConfigTracingOwnership(t *testing.T) {
+	t.Run("NewFromString_managed", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewQuerySurfacesListResponseItemSdkConfigTracingOwnershipFromString("managed")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, QuerySurfacesListResponseItemSdkConfigTracingOwnership("managed"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_application", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewQuerySurfacesListResponseItemSdkConfigTracingOwnershipFromString("application")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, QuerySurfacesListResponseItemSdkConfigTracingOwnership("application"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewQuerySurfacesListResponseItemSdkConfigTracingOwnershipFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewQuerySurfacesListResponseItemSdkConfigTracingOwnershipFromString("managed")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
 func TestEnumQuerySurfacesListResponseItemType(t *testing.T) {
 	t.Run("NewFromString_elysia", func(t *testing.T) {
 		t.Parallel()
@@ -9568,6 +10156,35 @@ func TestEnumSetSdkPluginSurfacesRequestArgsPlugin(t *testing.T) {
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewSetSdkPluginSurfacesRequestArgsPluginFromString("replay")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumSetTracingOwnershipSurfacesRequestArgsTracingOwnership(t *testing.T) {
+	t.Run("NewFromString_managed", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewSetTracingOwnershipSurfacesRequestArgsTracingOwnershipFromString("managed")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, SetTracingOwnershipSurfacesRequestArgsTracingOwnership("managed"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_application", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewSetTracingOwnershipSurfacesRequestArgsTracingOwnershipFromString("application")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, SetTracingOwnershipSurfacesRequestArgsTracingOwnership("application"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewSetTracingOwnershipSurfacesRequestArgsTracingOwnershipFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewSetTracingOwnershipSurfacesRequestArgsTracingOwnershipFromString("managed")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -9805,6 +10422,29 @@ func TestExtraPropertiesMutationSurfacesSetSdkPluginResponse(t *testing.T) {
 	})
 }
 
+func TestExtraPropertiesMutationSurfacesSetTracingOwnershipResponse(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &MutationSurfacesSetTracingOwnershipResponse{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *MutationSurfacesSetTracingOwnershipResponse
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
 func TestExtraPropertiesMutationSurfacesUpdateNameResponse(t *testing.T) {
 	t.Run("GetExtraProperties", func(t *testing.T) {
 		t.Parallel()
@@ -10030,6 +10670,29 @@ func TestExtraPropertiesSetSdkPluginSurfacesRequestArgs(t *testing.T) {
 	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *SetSdkPluginSurfacesRequestArgs
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesSetTracingOwnershipSurfacesRequestArgs(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &SetTracingOwnershipSurfacesRequestArgs{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *SetTracingOwnershipSurfacesRequestArgs
 		extraProps := obj.GetExtraProperties()
 		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
 	})

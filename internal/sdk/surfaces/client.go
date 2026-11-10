@@ -216,6 +216,37 @@ func (c *Client) SetSdkPlugin(
     return response.Body, nil
 }
 
+// Choose who owns OpenTelemetry tracing for an app (surface): managed (Interfere installs tracing) or application (the app already runs its own OpenTelemetry provider and Interfere writes no OpenTelemetry globals). Other SDK settings are kept. Next.js and Vite apps bake this at build time, so it takes effect on their next build and deploy. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.
+// 
+// Example:
+// 
+// 	request := &sdk.SetTracingOwnershipSurfacesRequest{
+// 	    WorkspaceSlug: "workspaceSlug",
+// 	    Args: &sdk.SetTracingOwnershipSurfacesRequestArgs{
+// 	        SurfaceSlug: "surfaceSlug",
+// 	        TracingOwnership: sdk.SetTracingOwnershipSurfacesRequestArgsTracingOwnershipManaged,
+// 	    },
+// 	}
+// 	_, err := client.Surfaces.SetTracingOwnership(
+// 	    context.TODO(),
+// 	    request,
+// 	)
+func (c *Client) SetTracingOwnership(
+    ctx context.Context,
+    request *sdk.SetTracingOwnershipSurfacesRequest,
+    opts ...option.RequestOption,
+) (*sdk.MutationSurfacesSetTracingOwnershipResponse, error) {
+    response, err := c.WithRawResponse.SetTracingOwnership(
+        ctx,
+        request,
+        opts...,
+    )
+    if err != nil {
+        return nil, err
+    }
+    return response.Body, nil
+}
+
 // Rename an app (surface). Resolve its ID with surfaces.list and preserve the rest of its settings. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.
 // 
 // Example:

@@ -465,6 +465,64 @@ func (s *SetSdkPluginSurfacesRequest) MarshalJSON() ([]byte, error) {
 }
 
 var (
+	setTracingOwnershipSurfacesRequestFieldWorkspaceSlug = big.NewInt(1 << 0)
+	setTracingOwnershipSurfacesRequestFieldArgs          = big.NewInt(1 << 1)
+)
+
+type SetTracingOwnershipSurfacesRequest struct {
+	// Workspace URL slug, using lowercase letters, numbers, and hyphens.
+	WorkspaceSlug string                                  `json:"-" url:"-"`
+	Args          *SetTracingOwnershipSurfacesRequestArgs `json:"args" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (s *SetTracingOwnershipSurfacesRequest) require(field *big.Int) {
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
+	}
+	next.Or(next, field)
+	s.explicitFields = next
+}
+
+// SetWorkspaceSlug sets the WorkspaceSlug field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetTracingOwnershipSurfacesRequest) SetWorkspaceSlug(workspaceSlug string) {
+	s.WorkspaceSlug = workspaceSlug
+	s.require(setTracingOwnershipSurfacesRequestFieldWorkspaceSlug)
+}
+
+// SetArgs sets the Args field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetTracingOwnershipSurfacesRequest) SetArgs(args *SetTracingOwnershipSurfacesRequestArgs) {
+	s.Args = args
+	s.require(setTracingOwnershipSurfacesRequestFieldArgs)
+}
+
+func (s *SetTracingOwnershipSurfacesRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler SetTracingOwnershipSurfacesRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*s = SetTracingOwnershipSurfacesRequest(body)
+	return nil
+}
+
+func (s *SetTracingOwnershipSurfacesRequest) MarshalJSON() ([]byte, error) {
+	type embed SetTracingOwnershipSurfacesRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
 	createSurfaceResponseFieldAPIKey    = big.NewInt(1 << 0)
 	createSurfaceResponseFieldPublicKey = big.NewInt(1 << 1)
 	createSurfaceResponseFieldSurface   = big.NewInt(1 << 2)
@@ -1234,6 +1292,92 @@ func (m *MutationSurfacesSetSdkPluginResponse) String() string {
 }
 
 var (
+	mutationSurfacesSetTracingOwnershipResponseFieldSuccess = big.NewInt(1 << 0)
+)
+
+type MutationSurfacesSetTracingOwnershipResponse struct {
+	Success bool `json:"success" url:"success"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (m *MutationSurfacesSetTracingOwnershipResponse) GetSuccess() bool {
+	if m == nil {
+		return false
+	}
+	return m.Success
+}
+
+func (m *MutationSurfacesSetTracingOwnershipResponse) GetExtraProperties() map[string]interface{} {
+	if m == nil {
+		return nil
+	}
+	return m.extraProperties
+}
+
+func (m *MutationSurfacesSetTracingOwnershipResponse) require(field *big.Int) {
+	next := new(big.Int)
+	if m.explicitFields != nil {
+		next.Set(m.explicitFields)
+	}
+	next.Or(next, field)
+	m.explicitFields = next
+}
+
+// SetSuccess sets the Success field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *MutationSurfacesSetTracingOwnershipResponse) SetSuccess(success bool) {
+	m.Success = success
+	m.require(mutationSurfacesSetTracingOwnershipResponseFieldSuccess)
+}
+
+func (m *MutationSurfacesSetTracingOwnershipResponse) UnmarshalJSON(data []byte) error {
+	type unmarshaler MutationSurfacesSetTracingOwnershipResponse
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*m = MutationSurfacesSetTracingOwnershipResponse(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *m)
+	if err != nil {
+		return err
+	}
+	m.extraProperties = extraProperties
+	m.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (m *MutationSurfacesSetTracingOwnershipResponse) MarshalJSON() ([]byte, error) {
+	type embed MutationSurfacesSetTracingOwnershipResponse
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*m),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, m.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (m *MutationSurfacesSetTracingOwnershipResponse) String() string {
+	if m == nil {
+		return "<nil>"
+	}
+	if len(m.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(m); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", m)
+}
+
+var (
 	mutationSurfacesUpdateNameResponseFieldSuccess = big.NewInt(1 << 0)
 )
 
@@ -1816,10 +1960,11 @@ func (q *QuerySurfacesGetBySlugIncludeDeletedResponse) String() string {
 }
 
 var (
-	querySurfacesGetBySlugIncludeDeletedResponseSdkConfigFieldPlugins       = big.NewInt(1 << 0)
-	querySurfacesGetBySlugIncludeDeletedResponseSdkConfigFieldServerTracing = big.NewInt(1 << 1)
-	querySurfacesGetBySlugIncludeDeletedResponseSdkConfigFieldLogSourcing   = big.NewInt(1 << 2)
-	querySurfacesGetBySlugIncludeDeletedResponseSdkConfigFieldPlatform      = big.NewInt(1 << 3)
+	querySurfacesGetBySlugIncludeDeletedResponseSdkConfigFieldPlugins          = big.NewInt(1 << 0)
+	querySurfacesGetBySlugIncludeDeletedResponseSdkConfigFieldServerTracing    = big.NewInt(1 << 1)
+	querySurfacesGetBySlugIncludeDeletedResponseSdkConfigFieldLogSourcing      = big.NewInt(1 << 2)
+	querySurfacesGetBySlugIncludeDeletedResponseSdkConfigFieldPlatform         = big.NewInt(1 << 3)
+	querySurfacesGetBySlugIncludeDeletedResponseSdkConfigFieldTracingOwnership = big.NewInt(1 << 4)
 )
 
 type QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig struct {
@@ -1827,6 +1972,8 @@ type QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig struct {
 	ServerTracing *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigServerTracing `json:"serverTracing,omitempty" url:"serverTracing,omitempty"`
 	LogSourcing   *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigLogSourcing   `json:"logSourcing,omitempty" url:"logSourcing,omitempty"`
 	Platform      *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlatform      `json:"platform,omitempty" url:"platform,omitempty"`
+	// Who owns OpenTelemetry for the surface: managed (Interfere constructs the providers) or application (the host does, Interfere correlates).
+	TracingOwnership *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigTracingOwnership `json:"tracingOwnership,omitempty" url:"tracingOwnership,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -1861,6 +2008,13 @@ func (q *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig) GetPlatform() *Q
 		return nil
 	}
 	return q.Platform
+}
+
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig) GetTracingOwnership() *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigTracingOwnership {
+	if q == nil {
+		return nil
+	}
+	return q.TracingOwnership
 }
 
 func (q *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig) GetExtraProperties() map[string]interface{} {
@@ -1905,6 +2059,13 @@ func (q *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig) SetLogSourcing(l
 func (q *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig) SetPlatform(platform *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigPlatform) {
 	q.Platform = platform
 	q.require(querySurfacesGetBySlugIncludeDeletedResponseSdkConfigFieldPlatform)
+}
+
+// SetTracingOwnership sets the TracingOwnership field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig) SetTracingOwnership(tracingOwnership *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigTracingOwnership) {
+	q.TracingOwnership = tracingOwnership
+	q.require(querySurfacesGetBySlugIncludeDeletedResponseSdkConfigFieldTracingOwnership)
 }
 
 func (q *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfig) UnmarshalJSON(data []byte) error {
@@ -2178,6 +2339,29 @@ func NewQuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigServerTracingFromSt
 }
 
 func (q QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigServerTracing) Ptr() *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigServerTracing {
+	return &q
+}
+
+// Who owns OpenTelemetry for the surface: managed (Interfere constructs the providers) or application (the host does, Interfere correlates).
+type QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigTracingOwnership string
+
+const (
+	QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigTracingOwnershipManaged     QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigTracingOwnership = "managed"
+	QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigTracingOwnershipApplication QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigTracingOwnership = "application"
+)
+
+func NewQuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigTracingOwnershipFromString(s string) (QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigTracingOwnership, error) {
+	switch s {
+	case "managed":
+		return QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigTracingOwnershipManaged, nil
+	case "application":
+		return QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigTracingOwnershipApplication, nil
+	}
+	var t QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigTracingOwnership
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (q QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigTracingOwnership) Ptr() *QuerySurfacesGetBySlugIncludeDeletedResponseSdkConfigTracingOwnership {
 	return &q
 }
 
@@ -2711,10 +2895,11 @@ func (q *QuerySurfacesListResponseItem) String() string {
 }
 
 var (
-	querySurfacesListResponseItemSdkConfigFieldPlugins       = big.NewInt(1 << 0)
-	querySurfacesListResponseItemSdkConfigFieldServerTracing = big.NewInt(1 << 1)
-	querySurfacesListResponseItemSdkConfigFieldLogSourcing   = big.NewInt(1 << 2)
-	querySurfacesListResponseItemSdkConfigFieldPlatform      = big.NewInt(1 << 3)
+	querySurfacesListResponseItemSdkConfigFieldPlugins          = big.NewInt(1 << 0)
+	querySurfacesListResponseItemSdkConfigFieldServerTracing    = big.NewInt(1 << 1)
+	querySurfacesListResponseItemSdkConfigFieldLogSourcing      = big.NewInt(1 << 2)
+	querySurfacesListResponseItemSdkConfigFieldPlatform         = big.NewInt(1 << 3)
+	querySurfacesListResponseItemSdkConfigFieldTracingOwnership = big.NewInt(1 << 4)
 )
 
 type QuerySurfacesListResponseItemSdkConfig struct {
@@ -2722,6 +2907,8 @@ type QuerySurfacesListResponseItemSdkConfig struct {
 	ServerTracing *QuerySurfacesListResponseItemSdkConfigServerTracing `json:"serverTracing,omitempty" url:"serverTracing,omitempty"`
 	LogSourcing   *QuerySurfacesListResponseItemSdkConfigLogSourcing   `json:"logSourcing,omitempty" url:"logSourcing,omitempty"`
 	Platform      *QuerySurfacesListResponseItemSdkConfigPlatform      `json:"platform,omitempty" url:"platform,omitempty"`
+	// Who owns OpenTelemetry for the surface: managed (Interfere constructs the providers) or application (the host does, Interfere correlates).
+	TracingOwnership *QuerySurfacesListResponseItemSdkConfigTracingOwnership `json:"tracingOwnership,omitempty" url:"tracingOwnership,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -2756,6 +2943,13 @@ func (q *QuerySurfacesListResponseItemSdkConfig) GetPlatform() *QuerySurfacesLis
 		return nil
 	}
 	return q.Platform
+}
+
+func (q *QuerySurfacesListResponseItemSdkConfig) GetTracingOwnership() *QuerySurfacesListResponseItemSdkConfigTracingOwnership {
+	if q == nil {
+		return nil
+	}
+	return q.TracingOwnership
 }
 
 func (q *QuerySurfacesListResponseItemSdkConfig) GetExtraProperties() map[string]interface{} {
@@ -2800,6 +2994,13 @@ func (q *QuerySurfacesListResponseItemSdkConfig) SetLogSourcing(logSourcing *Que
 func (q *QuerySurfacesListResponseItemSdkConfig) SetPlatform(platform *QuerySurfacesListResponseItemSdkConfigPlatform) {
 	q.Platform = platform
 	q.require(querySurfacesListResponseItemSdkConfigFieldPlatform)
+}
+
+// SetTracingOwnership sets the TracingOwnership field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QuerySurfacesListResponseItemSdkConfig) SetTracingOwnership(tracingOwnership *QuerySurfacesListResponseItemSdkConfigTracingOwnership) {
+	q.TracingOwnership = tracingOwnership
+	q.require(querySurfacesListResponseItemSdkConfigFieldTracingOwnership)
 }
 
 func (q *QuerySurfacesListResponseItemSdkConfig) UnmarshalJSON(data []byte) error {
@@ -3073,6 +3274,29 @@ func NewQuerySurfacesListResponseItemSdkConfigServerTracingFromString(s string) 
 }
 
 func (q QuerySurfacesListResponseItemSdkConfigServerTracing) Ptr() *QuerySurfacesListResponseItemSdkConfigServerTracing {
+	return &q
+}
+
+// Who owns OpenTelemetry for the surface: managed (Interfere constructs the providers) or application (the host does, Interfere correlates).
+type QuerySurfacesListResponseItemSdkConfigTracingOwnership string
+
+const (
+	QuerySurfacesListResponseItemSdkConfigTracingOwnershipManaged     QuerySurfacesListResponseItemSdkConfigTracingOwnership = "managed"
+	QuerySurfacesListResponseItemSdkConfigTracingOwnershipApplication QuerySurfacesListResponseItemSdkConfigTracingOwnership = "application"
+)
+
+func NewQuerySurfacesListResponseItemSdkConfigTracingOwnershipFromString(s string) (QuerySurfacesListResponseItemSdkConfigTracingOwnership, error) {
+	switch s {
+	case "managed":
+		return QuerySurfacesListResponseItemSdkConfigTracingOwnershipManaged, nil
+	case "application":
+		return QuerySurfacesListResponseItemSdkConfigTracingOwnershipApplication, nil
+	}
+	var t QuerySurfacesListResponseItemSdkConfigTracingOwnership
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (q QuerySurfacesListResponseItemSdkConfigTracingOwnership) Ptr() *QuerySurfacesListResponseItemSdkConfigTracingOwnership {
 	return &q
 }
 
@@ -3926,6 +4150,133 @@ func NewSetSdkPluginSurfacesRequestArgsPluginFromString(s string) (SetSdkPluginS
 }
 
 func (s SetSdkPluginSurfacesRequestArgsPlugin) Ptr() *SetSdkPluginSurfacesRequestArgsPlugin {
+	return &s
+}
+
+var (
+	setTracingOwnershipSurfacesRequestArgsFieldSurfaceSlug      = big.NewInt(1 << 0)
+	setTracingOwnershipSurfacesRequestArgsFieldTracingOwnership = big.NewInt(1 << 1)
+)
+
+type SetTracingOwnershipSurfacesRequestArgs struct {
+	// Surface URL slug, using lowercase letters, numbers, and hyphens.
+	SurfaceSlug string `json:"surfaceSlug" url:"surfaceSlug"`
+	// Who owns OpenTelemetry for the surface: managed (Interfere constructs the providers) or application (the host does, Interfere correlates).
+	TracingOwnership SetTracingOwnershipSurfacesRequestArgsTracingOwnership `json:"tracingOwnership" url:"tracingOwnership"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (s *SetTracingOwnershipSurfacesRequestArgs) GetSurfaceSlug() string {
+	if s == nil {
+		return ""
+	}
+	return s.SurfaceSlug
+}
+
+func (s *SetTracingOwnershipSurfacesRequestArgs) GetTracingOwnership() SetTracingOwnershipSurfacesRequestArgsTracingOwnership {
+	if s == nil {
+		return ""
+	}
+	return s.TracingOwnership
+}
+
+func (s *SetTracingOwnershipSurfacesRequestArgs) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
+	return s.extraProperties
+}
+
+func (s *SetTracingOwnershipSurfacesRequestArgs) require(field *big.Int) {
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
+	}
+	next.Or(next, field)
+	s.explicitFields = next
+}
+
+// SetSurfaceSlug sets the SurfaceSlug field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetTracingOwnershipSurfacesRequestArgs) SetSurfaceSlug(surfaceSlug string) {
+	s.SurfaceSlug = surfaceSlug
+	s.require(setTracingOwnershipSurfacesRequestArgsFieldSurfaceSlug)
+}
+
+// SetTracingOwnership sets the TracingOwnership field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetTracingOwnershipSurfacesRequestArgs) SetTracingOwnership(tracingOwnership SetTracingOwnershipSurfacesRequestArgsTracingOwnership) {
+	s.TracingOwnership = tracingOwnership
+	s.require(setTracingOwnershipSurfacesRequestArgsFieldTracingOwnership)
+}
+
+func (s *SetTracingOwnershipSurfacesRequestArgs) UnmarshalJSON(data []byte) error {
+	type unmarshaler SetTracingOwnershipSurfacesRequestArgs
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*s = SetTracingOwnershipSurfacesRequestArgs(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+	s.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (s *SetTracingOwnershipSurfacesRequestArgs) MarshalJSON() ([]byte, error) {
+	type embed SetTracingOwnershipSurfacesRequestArgs
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (s *SetTracingOwnershipSurfacesRequestArgs) String() string {
+	if s == nil {
+		return "<nil>"
+	}
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
+}
+
+// Who owns OpenTelemetry for the surface: managed (Interfere constructs the providers) or application (the host does, Interfere correlates).
+type SetTracingOwnershipSurfacesRequestArgsTracingOwnership string
+
+const (
+	SetTracingOwnershipSurfacesRequestArgsTracingOwnershipManaged     SetTracingOwnershipSurfacesRequestArgsTracingOwnership = "managed"
+	SetTracingOwnershipSurfacesRequestArgsTracingOwnershipApplication SetTracingOwnershipSurfacesRequestArgsTracingOwnership = "application"
+)
+
+func NewSetTracingOwnershipSurfacesRequestArgsTracingOwnershipFromString(s string) (SetTracingOwnershipSurfacesRequestArgsTracingOwnership, error) {
+	switch s {
+	case "managed":
+		return SetTracingOwnershipSurfacesRequestArgsTracingOwnershipManaged, nil
+	case "application":
+		return SetTracingOwnershipSurfacesRequestArgsTracingOwnershipApplication, nil
+	}
+	var t SetTracingOwnershipSurfacesRequestArgsTracingOwnership
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (s SetTracingOwnershipSurfacesRequestArgsTracingOwnership) Ptr() *SetTracingOwnershipSurfacesRequestArgsTracingOwnership {
 	return &s
 }
 
