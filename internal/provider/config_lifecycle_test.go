@@ -47,6 +47,14 @@ project_id=%q
 		{ResourceName: "interfere_surface_destination.test", ImportState: true, ImportStateId: "example/" + surfaceSlug, ImportStateVerify: true},
 		{Config: config("repo-2", "apps/api", "project-2"), Check: resource.TestCheckResourceAttr("interfere_surface_repository.test", "repository_id", "repo-2")},
 		{PreConfig: func() { f.mu.Lock(); f.repository = "drift"; f.project = "drift"; f.mu.Unlock() }, Config: config("repo-2", "apps/api", "project-2")},
+		{PreConfig: func() { f.mu.Lock(); f.source = nil; f.mu.Unlock() }, Config: config("repo-2", "apps/api", "project-2"), Check: func(_ *terraform.State) error {
+			f.mu.Lock()
+			defer f.mu.Unlock()
+			if f.source == nil || f.repository != "repo-2" {
+				return fmt.Errorf("Dormant repository mapping was not relinked")
+			}
+			return nil
+		}},
 		{PreConfig: func() {
 			f.mu.Lock()
 			f.source = nil

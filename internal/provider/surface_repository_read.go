@@ -35,11 +35,11 @@ func (r *surfaceRepositoryResource) Read(ctx context.Context, req resource.ReadR
 		resp.Diagnostics.AddError("Unable to read mapping", err.Error())
 		return
 	}
-	if remote.DeletedAt != nil || (remote.SourceConnectionID == nil && remote.SourceMappingID == nil) {
+	if remote.DeletedAt != nil || remote.SourceConnectionID == nil {
 		resp.State.RemoveResource(ctx)
 		return
 	}
-	if remote.SourceConnectionID == nil || remote.SourceMappingID == nil {
+	if remote.SourceMappingID == nil {
 		resp.Diagnostics.AddError("Invalid mapping", "The API returned an incomplete mapping. State was preserved.")
 		return
 	}
