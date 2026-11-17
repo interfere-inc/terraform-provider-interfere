@@ -1,0 +1,29 @@
+---
+page_title: "{{.RenderedProviderName}} Provider"
+description: |-
+  Manage workspace configuration and credentials for Interfere services.
+---
+
+# {{.RenderedProviderName}} Provider
+
+Manage workspace configuration and credentials with a workspace API key supplied as `INTERFERE_TOKEN`. Grant only the management permissions required by your resources.
+
+## SDK credentials
+
+SDK 13.0.x setup uses a workspace secret and a stable service name. Supply the secret as `INTERFERE_API_KEY` to the build with `release:write`, and to the server with `org:telemetry:write` for server telemetry. The framework plugin registers the release, bakes its release token into the browser bundle, and handles source maps automatically. Keep the secret out of browser code.
+
+Configure `serviceName` in `withInterfere()` or `interfere()`; it defaults to the unscoped package name. Terraform does not need to create an App or a public key for this setup.
+
+Use `interfere_private_key` to manage a workspace secret. Its `secret` output is sensitive and stored in Terraform state.
+
+## Legacy compatibility
+
+App resources (`interfere_surface*`) and `surface_slug` key scoping are deprecated in provider 0.x and removed in provider 1.0. Public-key resources remain documented for legacy clients. Review the schema for your pinned provider version before upgrading; do not add these resources for a new SDK service.
+
+When retiring legacy resources, stop Terraform management without destroying retained data. On the compatible provider version, use a `removed` block with `lifecycle { destroy = false }` and review the plan before upgrading.
+
+## Example Usage
+
+{{ tffile .ExampleFile }}
+
+{{ .SchemaMarkdown | trimspace }}

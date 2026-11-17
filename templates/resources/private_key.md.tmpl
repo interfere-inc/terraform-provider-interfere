@@ -1,0 +1,30 @@
+---
+page_title: "{{.Name}} {{.Type}} - {{.RenderedProviderName}}"
+subcategory: ""
+description: |-
+{{ .Description | plainmarkdown | trimspace | prefixlines "  " }}
+---
+
+# {{.Name}} ({{.Type}})
+
+Use a workspace key for SDK builds and server telemetry. Supply a separate workspace management credential as `INTERFERE_TOKEN` to Terraform, with `org:workspace_auth:read` and `org:workspace_auth:write` and permission to grant the requested scopes.
+
+SDK 13.0.x setup uses a workspace secret and a stable service name. Supply the secret as `INTERFERE_API_KEY` to the build with `release:write`, and to the server with `org:telemetry:write` for server telemetry. The framework plugin registers the release, bakes its release token into the browser bundle, and handles source maps automatically. Keep the secret out of browser code.
+
+Configure `serviceName` in `withInterfere()` or `interfere()`; it defaults to the unscoped package name. Terraform does not need to create an App or a public key for this setup.
+
+The created `secret` is sensitive and stored in Terraform state. Import restores metadata only, not the secret.
+
+The 0.x `surface_slug` option is deprecated; omit it for a workspace key. Provider 1.0 removes that option.
+
+{{ .Description | trimspace }}
+
+## Example Usage
+
+{{ tffile .ExampleFile }}
+
+{{ .SchemaMarkdown | trimspace }}
+
+## Import
+
+{{ codefile "shell" .ImportFile }}

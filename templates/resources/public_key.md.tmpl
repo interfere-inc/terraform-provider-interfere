@@ -1,0 +1,26 @@
+---
+page_title: "{{.Name}} {{.Type}} - {{.RenderedProviderName}}"
+subcategory: ""
+description: |-
+{{ .Description | plainmarkdown | trimspace | prefixlines "  " }}
+---
+
+# {{.Name}} ({{.Type}})
+
+~> **Deprecated legacy setup.** Public keys are retained for compatibility with existing clients. New SDK 13.0.x services use a workspace secret and a build-generated release token; do not create a public key for keyless setup.
+
+SDK 13.0.x setup uses a workspace secret and a stable service name. Supply the secret as `INTERFERE_API_KEY` to the build with `release:write`, and to the server with `org:telemetry:write` for server telemetry. The framework plugin registers the release, bakes its release token into the browser bundle, and handles source maps automatically. Keep the secret out of browser code.
+
+Configure `serviceName` in `withInterfere()` or `interfere()`; it defaults to the unscoped package name. Terraform does not need to create an App or a public key for this setup.
+
+{{ .Description | trimspace }}
+
+## Example Usage
+
+{{ tffile .ExampleFile }}
+
+{{ .SchemaMarkdown | trimspace }}
+
+## Import
+
+{{ codefile "shell" .ImportFile }}

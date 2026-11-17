@@ -1,5 +1,11 @@
 # terraform-provider-interfere
 
+## Unreleased
+
+### Documentation
+
+- Describe SDK 13.0.x setup with a workspace secret and service name, build-generated release tokens, and automatic source maps. Retain provider 0.x App resources and public-key documentation with deprecation notes. Provider 1.0 removes App resources and `surface_slug` key scoping; its schema must be generated from the matching provider code before release. Historical entries below describe their original versions.
+
 ## 0.9.0
 
 ### Minor Changes

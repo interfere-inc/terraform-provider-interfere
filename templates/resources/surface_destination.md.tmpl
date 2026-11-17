@@ -1,0 +1,22 @@
+---
+page_title: "{{.Name}} {{.Type}} - {{.RenderedProviderName}}"
+subcategory: ""
+description: |-
+{{ .Description | plainmarkdown | trimspace | prefixlines "  " }}
+---
+
+# {{.Name}} ({{.Type}})
+
+~> **Deprecated in provider 0.x; removed in 1.0.** This page documents retained legacy compatibility. New SDK services use a workspace secret and stable service name; this resource is not a setup prerequisite. Preserve retained data when stopping Terraform management: use a `removed` block with `lifecycle { destroy = false }` on the compatible provider version and review the plan before upgrading.
+
+{{ .Description | trimspace }}
+
+## Example Usage
+
+{{ tffile .ExampleFile }}
+
+{{ .SchemaMarkdown | trimspace }}
+
+## Import
+
+{{ codefile "shell" .ImportFile }}

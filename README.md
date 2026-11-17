@@ -1,6 +1,6 @@
 # Interfere Terraform provider
 
-Manage existing workspace settings, surfaces, integration mappings, tracking domains, and private and public API keys with Terraform Plugin Framework and a Fern-generated Go client. Install it from the [Terraform Registry](https://registry.terraform.io/providers/interfere-inc/interfere/latest).
+Manage workspace settings, tracking domains, and workspace API keys with Terraform Plugin Framework and a Fern-generated Go client. Install it from the [Terraform Registry](https://registry.terraform.io/providers/interfere-inc/interfere/latest).
 
 | Resource                        | Behavior                                                                                                                            |
 | ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
@@ -11,6 +11,14 @@ Manage existing workspace settings, surfaces, integration mappings, tracking dom
 | `interfere_surface`             | Creates, reads, renames, deletes, and imports surfaces.                                                                             |
 | `interfere_private_key`         | Creates and revokes workspace or surface keys with explicit scopes and optional expiry. Configuration changes replace the key.      |
 | `interfere_public_key`          | Creates, reads, imports, and revokes surface publishable keys. External rotation refreshes the current value.                       |
+
+## SDK 13.0.x setup
+
+Create a workspace secret with `release:write` and supply it as `INTERFERE_API_KEY` in the build environment. For server telemetry, also grant `org:telemetry:write` and provide the secret to the server runtime. Configure a stable `serviceName` in `withInterfere()` or `interfere()`; it defaults to the unscoped package name. The framework plugin registers the release, bakes its token into the browser bundle, and handles source maps automatically. Keep the secret out of browser code.
+
+The table above includes retained provider 0.x compatibility resources. App resources (`interfere_surface*`) and `surface_slug` key scoping are deprecated in 0.x and removed in provider 1.0. Public-key setup is deprecated for new services. Use workspace private keys for keyless SDK setup.
+
+Before upgrading to provider 1.0, review the versioned schema and stop managing retired resources without destroying retained data: use a `removed` block with `lifecycle { destroy = false }` on the compatible provider version and review its plan.
 
 ## Install
 
@@ -64,7 +72,7 @@ provider_installation {
 }
 ```
 
-Set `TF_CLI_CONFIG_FILE` to that file. Set `INTERFERE_TOKEN` through your shell or secret manager to a workspace API key with `org:surfaces:read`, `org:surfaces:write`, and `org:surfaces:delete`. Session and delegated OAuth access tokens also work. Release-only surface keys cannot manage workspace resources.
+Set `TF_CLI_CONFIG_FILE` to that file. Set `INTERFERE_TOKEN` through your shell or secret manager to a workspace API key with the permissions required by the workspace resources you manage. Session and delegated OAuth access tokens also work. Release-only keys cannot manage workspace resources.
 
 Create a workspace key through `POST /v3/workspaces/{workspaceSlug}/api-keys` using an authenticated workspace user with `org:workspace_auth:write` and the permissions being granted:
 
@@ -72,7 +80,7 @@ Create a workspace key through `POST /v3/workspaces/{workspaceSlug}/api-keys` us
 {
   "idempotencyKey": "11111111-1111-4111-8111-111111111111",
   "name": "Terraform",
-  "scopes": ["org:surfaces:read", "org:surfaces:write", "org:surfaces:delete"],
+  "scopes": ["org:workspace_auth:read", "org:workspace_auth:write"],
   "secondsUntilExpiration": null
 }
 ```
@@ -91,7 +99,7 @@ terraform import interfere_workspace.team existing-workspace
 
 ## Private keys
 
-See `examples/private-key/main.tf` for both workspace API access and surface release keys. Omit `surface_slug` for a workspace key. Set `seconds_until_expiration` to a positive number of seconds, or omit it for no expiry. The `expires_at` output is Unix milliseconds or null.
+Use `interfere_private_key` for a workspace secret. The [registry example](docs/resources/private_key.md) grants SDK release and telemetry permissions. Omit the deprecated 0.x `surface_slug` option. Set `seconds_until_expiration` to a positive number of seconds, or omit it for no expiry. The `expires_at` output is Unix milliseconds or null.
 
 Workspace keys require `org:workspace_auth:read` and `org:workspace_auth:write` on the provider credential. Surface keys require `org:surfaces:read` and `org:surfaces:write`. The credential must also hold every permission being granted; release and ingest grants require surface write permission.
 
@@ -105,7 +113,9 @@ For an imported key, match its scopes and lifetime in configuration. Omit `idemp
 
 Refresh never fetches a secret. External rotation of a key created by Terraform reports an error instead of presenting the old secret as current; import it for metadata-only management or replace it with a new key.
 
-## Public keys
+## Legacy public keys
+
+Public-key setup is deprecated. This section documents existing 0.x integrations; SDK 13.0.x production builds use the release token baked by the framework plugin.
 
 Use `interfere_public_key` for a surface's publishable browser credential. Its `content` output can feed build parameters. Creation requires surface write permission; refresh and import require surface read permission.
 
@@ -117,7 +127,9 @@ terraform import interfere_public_key.browser existing-workspace/existing-surfac
 
 Match the imported key's name and omit `idempotency_key` for automatic creation identities. External rotation updates `content` on refresh. Changing the name, workspace, or surface replaces the key. Use a distinct name with `create_before_destroy`. Revocation or deletion of the parent surface removes the resource from state. Destroy revokes the current value and its rotation grace-period values.
 
-## Surfaces
+## Legacy surfaces
+
+These 0.x resources are deprecated and removed in provider 1.0. They are not prerequisites for the keyless SDK setup above.
 
 Use `examples/surface/main.tf`, supply `workspace_slug`, then run `terraform plan`. For local development, the override loads your built provider without `terraform init`. Run `terraform apply` only against a workspace where you intend to create a surface.
 
@@ -149,7 +161,9 @@ The public repository's release workflow builds eight OS/architecture combinatio
 
 Before publishing a release, deploy the corresponding API changes and run acceptance tests against a disposable workspace.
 
-## Surface settings and integration mappings
+## Legacy surface settings and integration mappings
+
+These 0.x mappings are deprecated and removed in provider 1.0. Missing repository or deployment mappings do not disable keyless SDK capture.
 
 Set `anonymous_user_tracking` on `interfere_surface` to manage collection of anonymous-user telemetry. Omit it to preserve the API setting. Set `anonymous_replay_policy` to `always`, `on_error` or `never` to choose when sessions without an identified user record session replay; omit it to preserve the API setting. Changes update the existing surface in place. SDK plugin, tracing, and log-sourcing configuration are not managed by this version.
 
@@ -167,6 +181,6 @@ Import using `workspace-slug/domain-UUID`. Omit `idempotency_key` to generate UU
 
 ## Data sources
 
-`data.interfere_workspace` looks up workspace identity, name, and residency with `org:workspace_basics:read`. `data.interfere_surface` reads surface identity, type, anonymous-user tracking and anonymous replay policy with `org:surfaces:read`. Neither takes ownership of the object.
+`data.interfere_workspace` looks up workspace identity, name, and residency with `org:workspace_basics:read`. The deprecated 0.x `data.interfere_surface` reads surface identity, type, anonymous-user tracking and anonymous replay policy with `org:surfaces:read`. Neither takes ownership of the object.
 
 `data.interfere_integration` looks up an installation using `integration_provider` and requires `org:integration_settings:read`. When multiple installations match, set `integration_id` explicitly. Missing, ambiguous, or inaccessible results produce an error. Only installation identity, provider, and status enter state; installation credentials and provider metadata do not.
