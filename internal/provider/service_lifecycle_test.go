@@ -22,7 +22,6 @@ import (
 )
 
 const serviceFixtureID = "75000000-0000-4000-8000-000000000001"
-const legacyAppFixtureID = "75000000-0000-4000-8000-000000000002"
 
 type serviceFixture struct {
 	mu          sync.Mutex
@@ -30,13 +29,11 @@ type serviceFixture struct {
 	serviceType string
 	settings    *serviceWebsiteSettings
 	readStatus  int
-	alias       *string
 }
 
 func newServiceFixture(t *testing.T) *serviceFixture {
 	t.Helper()
-	id := serviceFixtureID
-	f := &serviceFixture{serviceType: "backend", alias: &id}
+	f := &serviceFixture{serviceType: "backend"}
 	f.server = httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		f.mu.Lock()
 		defer f.mu.Unlock()
@@ -49,7 +46,6 @@ func newServiceFixture(t *testing.T) *serviceFixture {
 		var input struct {
 			Args struct {
 				ServiceID       string                  `json:"serviceId"`
-				SurfaceSlug     string                  `json:"surfaceSlug"`
 				Type            string                  `json:"type"`
 				WebsiteSettings *serviceWebsiteSettings `json:"websiteSettings"`
 			} `json:"args"`
@@ -76,13 +72,6 @@ func newServiceFixture(t *testing.T) *serviceFixture {
 			result = remote
 		case "/v3/workspaces/example/queries/services.forWorkspace":
 			result = []any{remote}
-		case "/v3/workspaces/example/queries/surfaces.getBySlugIncludeDeleted":
-			if input.Args.SurfaceSlug != "legacy-web" {
-				t.Error("Wrong App identity")
-				w.WriteHeader(404)
-				return
-			}
-			result = map[string]any{"id": legacyAppFixtureID, "slug": "legacy-web", "name": "Legacy web", "type": "react", "serviceId": f.alias, "deletedAt": nil}
 		case "/v3/workspaces/example/actions/services.setType":
 			if input.Args.ServiceID != serviceFixtureID {
 				t.Error("Wrong service mutation identity")
@@ -178,35 +167,13 @@ func TestServiceReadFailurePreservesState(t *testing.T) {
 	}
 }
 
-func TestLegacyServiceAliasResolution(t *testing.T) {
-	f := newServiceFixture(t)
-	r := &serviceResource{client: client.NewClient(option.WithToken("fixture-token"), option.WithBaseURL(f.server.URL), option.WithoutRetries())}
-	payload, err := json.Marshal(legacyServiceIdentity{ID: legacyAppFixtureID, WorkspaceSlug: "example", Slug: "legacy-web"})
-	require.NoError(t, err)
-	for _, alias := range []*string{nil, f.alias} {
-		f.alias = alias
-		data := serviceModel{ID: types.StringValue(legacyAppFixtureID), WorkspaceSlug: types.StringValue("example")}
-		err := r.resolveLegacyIdentity(context.Background(), &data, payload)
-		if alias == nil {
-			require.Error(t, err)
-			require.Equal(t, legacyAppFixtureID, data.ID.ValueString())
-		} else {
-			require.NoError(t, err)
-			require.Equal(t, serviceFixtureID, data.ID.ValueString())
-		}
-	}
-	foreign := serviceModel{ID: types.StringValue(legacyAppFixtureID), WorkspaceSlug: types.StringValue("other-workspace")}
-	require.Error(t, r.resolveLegacyIdentity(context.Background(), &foreign, payload))
-}
-
-func TestLegacyServiceStateMovesWithoutConfiguredClient(t *testing.T) {
+func TestServiceRefusesLegacyAppStateMove(t *testing.T) {
 	server, err := providerserver.NewProtocol6WithError(New("test")())()
 	require.NoError(t, err)
-	payload, err := json.Marshal(legacyServiceIdentity{ID: legacyAppFixtureID, WorkspaceSlug: "example", Slug: "legacy-web", Name: "Legacy web"})
+	payload, err := json.Marshal(map[string]string{"id": "75000000-0000-4000-8000-000000000002", "workspace_slug": "example", "slug": "legacy-web", "name": "Legacy web"})
 	require.NoError(t, err)
 	response, err := server.MoveResourceState(context.Background(), &tfprotov6.MoveResourceStateRequest{SourceProviderAddress: "registry.terraform.io/interfere-inc/interfere", SourceTypeName: "interfere_surface", SourceSchemaVersion: 0, TargetTypeName: "interfere_service", SourceState: &tfprotov6.RawState{JSON: payload}})
 	require.NoError(t, err)
-	require.Empty(t, response.Diagnostics)
-	require.NotNil(t, response.TargetState)
-	require.NotEmpty(t, response.TargetPrivate)
+	require.NotEmpty(t, response.Diagnostics)
+	require.Nil(t, response.TargetState)
 }

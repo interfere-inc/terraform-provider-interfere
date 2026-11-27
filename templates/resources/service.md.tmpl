@@ -21,15 +21,23 @@ The provider credential needs `org:integration_settings:read` and `org:services:
 
 {{ codefile "shell" .ImportFile }}
 
-## Migrating a legacy App resource
+## Migrating from `interfere_surface`
 
-Terraform 1.8 or later supports moving an `interfere_surface` resource into this resource. Keep the existing workspace slug and set `id` to the App's canonical service UUID. Replace the old resource configuration, then add:
+Provider 1.0 has no `interfere_surface` resource and cannot move its state. With Terraform 1.7 or later, replace the old resource configuration with `interfere_service`, set `id` to the service UUID that replaced the App (find it with `data.interfere_services`), and add:
 
 ```terraform
-moved {
+removed {
   from = interfere_surface.website
-  to   = interfere_service.website
+
+  lifecycle {
+    destroy = false
+  }
+}
+
+import {
+  to = interfere_service.website
+  id = "example-workspace/00000000-0000-4000-8000-000000000000"
 }
 ```
 
-Run a normal `terraform plan` with refresh enabled. The provider preserves the old App identity during the offline state move and resolves its canonical service during refresh. Missing aliases, changed identities, and permission failures stop migration while preserving state. Migration creates no App, credential, or service, and never deletes retained telemetry. After a successful apply, remove the `moved` block when every workspace using the configuration has migrated.
+The `removed` block stops managing the old resource without deleting anything, and the `import` block adopts the service. Plan and apply, then delete both blocks. The upgrade creates no App, credential, or service, and never deletes retained telemetry.

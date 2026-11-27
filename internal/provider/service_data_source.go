@@ -80,11 +80,11 @@ func (r *servicesDataSource) Read(ctx context.Context, req datasource.ReadReques
 	}
 	items := []serviceListItem{}
 	for _, item := range remote {
-		if item == nil || !uuidPattern.MatchString(item.ID) || item.Name == "" || (item.Type != nil && !validServiceType(*item.Type)) {
+		if item == nil || !uuidPattern.MatchString(item.ID) || item.Name == "" || !validServiceType(item.Type) {
 			resp.Diagnostics.AddError("Invalid service response", "The API returned an incomplete service.")
 			return
 		}
-		items = append(items, serviceListItem{ID: types.StringValue(item.ID), Name: types.StringValue(item.Name), Namespace: types.StringPointerValue(item.Namespace), Type: types.StringPointerValue(item.Type)})
+		items = append(items, serviceListItem{ID: types.StringValue(item.ID), Name: types.StringValue(item.Name), Namespace: types.StringPointerValue(item.Namespace), Type: types.StringValue(item.Type)})
 	}
 	value, ok := objectSet(ctx, datasource_services.ServicesValue{}.AttributeTypes(ctx), items)
 	if !ok {

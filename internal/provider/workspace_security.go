@@ -154,9 +154,9 @@ func (r *workspaceResource) applySecurity(ctx context.Context, data *workspaceMo
 	if granted != remote.ImpersonationGranted || !expiry.Equal(remoteSupportExpiry(remote)) {
 		args := &sdk.SetAccessSupportRequestArgs{}
 		args.SetImpersonationGranted(granted)
-		var expiresAt *float64
+		var expiresAt *int
 		if !expiry.IsNull() {
-			value := float64(expiry.ValueInt64())
+			value := int(expiry.ValueInt64())
 			expiresAt = &value
 		}
 		args.SetImpersonationExpiresAt(expiresAt)

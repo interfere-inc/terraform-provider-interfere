@@ -1,8 +1,9 @@
 FERN ?= bunx --package fern-api@5.193.2 fern
 OPENAPI_GENERATOR ?= go run github.com/hashicorp/terraform-plugin-codegen-openapi/cmd/tfplugingen-openapi@v0.3.0
+SPEC ?= openapi.json
 FRAMEWORK_GENERATOR ?= go run github.com/hashicorp/terraform-plugin-codegen-framework/cmd/tfplugingen-framework@v0.4.1
 
-.PHONY: generate generate-sdk generate-schemas check-generated build test check docs
+.PHONY: generate generate-sdk generate-schemas check-generated check-build build test check docs
 .NOTPARALLEL: generate check-generated
 
 generate: generate-sdk generate-schemas docs
@@ -34,3 +35,11 @@ check:
 
 docs:
 	go run github.com/hashicorp/terraform-plugin-docs/cmd/tfplugindocs@v0.25.0 generate --provider-name interfere --rendered-provider-name Interfere
+
+check-build:
+	@command -v go >/dev/null && command -v docker >/dev/null || { echo "check-build needs go and docker to generate the Go SDK and compile the provider" >&2; exit 1; }
+	test "$$(shasum -a 256 $(SPEC) | cut -d ' ' -f 1)" = "$$(cat openapi.sha256)"
+	if [ "$(SPEC)" != openapi.json ]; then cp $(SPEC) openapi.json; fi
+	$(MAKE) generate-sdk
+	go build ./...
+	go vet ./internal/provider

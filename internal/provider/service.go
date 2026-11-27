@@ -44,7 +44,7 @@ func (r *serviceResource) read(ctx context.Context, data *serviceModel) error {
 	if err != nil {
 		return errors.New(apiError(err))
 	}
-	if remote == nil || remote.ID != data.ID.ValueString() || remote.Name == "" || (remote.Type != nil && !validServiceType(*remote.Type)) {
+	if remote == nil || remote.ID != data.ID.ValueString() || remote.Name == "" || !validServiceType(remote.Type) {
 		return errors.New("The API returned no service or an unexpected service identity. Verify workspace access; Terraform state was preserved.")
 	}
 	settings, err := serviceSettingsValue(ctx, remote.WebsiteSettings)
@@ -53,7 +53,7 @@ func (r *serviceResource) read(ctx context.Context, data *serviceModel) error {
 	}
 	data.Name = types.StringValue(remote.Name)
 	data.Namespace = types.StringPointerValue(remote.Namespace)
-	data.Type = types.StringPointerValue(remote.Type)
+	data.Type = types.StringValue(remote.Type)
 	data.WebsiteSettings = settings
 	return nil
 }
@@ -64,27 +64,11 @@ func (r *serviceResource) Read(ctx context.Context, req resource.ReadRequest, re
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	if req.Private != nil {
-		payload, diagnostics := req.Private.GetKey(ctx, legacyServiceStateKey)
-		resp.Diagnostics.Append(diagnostics...)
-		if resp.Diagnostics.HasError() {
-			return
-		}
-		if len(payload) > 0 {
-			if err := r.resolveLegacyIdentity(ctx, &data, payload); err != nil {
-				resp.Diagnostics.AddError("Unable to migrate App state", err.Error())
-				return
-			}
-		}
-	}
 	if err := r.read(ctx, &data); err != nil {
 		resp.Diagnostics.AddError("Unable to read service", err.Error())
 		return
 	}
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
-	if !resp.Diagnostics.HasError() && resp.Private != nil {
-		resp.Diagnostics.Append(resp.Private.SetKey(ctx, legacyServiceStateKey, nil)...)
-	}
 }
 
 func (r *serviceResource) apply(ctx context.Context, data *serviceModel) error {

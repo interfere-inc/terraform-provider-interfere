@@ -108,7 +108,7 @@ Use `interfere_service` with `workspace_slug` and the existing service UUID in `
 
 `data.interfere_service` looks up one service by UUID. `data.interfere_services` lists up to 500 services ordered by namespace, name, and ID. Use the singular lookup for identities outside that list.
 
-Import with `terraform import interfere_service.website workspace-slug/service-uuid`. Terraform 1.8+ can migrate an existing `interfere_surface` using a `moved` block; see the upgrade instructions in `CHANGELOG.md`. Run the migration with refresh enabled so the provider can resolve the stored App identity to its canonical service.
+Import with `terraform import interfere_service.website workspace-slug/service-uuid`. To replace an existing `interfere_surface`, stop managing it with a `removed` block and `lifecycle { destroy = false }`, and adopt the service with an `import` block; see the upgrade instructions in `CHANGELOG.md`.
 
 ## Private keys
 
