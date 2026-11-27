@@ -6,6 +6,8 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/objectplanmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/interfere-inc/terraform-provider-interfere/internal/resource_service"
@@ -24,6 +26,11 @@ func (r *serviceResource) Schema(ctx context.Context, _ resource.SchemaRequest, 
 	typeAttribute.Optional = true
 	typeAttribute.Validators = []validator.String{stringvalidator.OneOf("unclassified", "other", "backend", "website")}
 	resp.Schema.Attributes["type"] = typeAttribute
+	for _, field := range []string{"name", "namespace", "type"} {
+		attribute := resp.Schema.Attributes[field].(schema.StringAttribute)
+		attribute.PlanModifiers = append(attribute.PlanModifiers, stringplanmodifier.UseStateForUnknown())
+		resp.Schema.Attributes[field] = attribute
+	}
 	settings := resp.Schema.Attributes["website_settings"].(schema.SingleNestedAttribute)
 	settings.CustomType = nil
 	settings.Optional = true
@@ -45,5 +52,6 @@ func (r *serviceResource) Schema(ctx context.Context, _ resource.SchemaRequest, 
 		plugins.Attributes[field] = attribute
 	}
 	settings.Attributes["plugins"] = plugins
+	settings.PlanModifiers = []planmodifier.Object{objectplanmodifier.UseStateForUnknown()}
 	resp.Schema.Attributes["website_settings"] = settings
 }

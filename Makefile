@@ -40,6 +40,8 @@ check-build:
 	@command -v go >/dev/null && command -v docker >/dev/null || { echo "check-build needs go and docker to generate the Go SDK and compile the provider" >&2; exit 1; }
 	test "$$(shasum -a 256 $(SPEC) | cut -d ' ' -f 1)" = "$$(cat openapi.sha256)"
 	if [ "$(SPEC)" != openapi.json ]; then cp $(SPEC) openapi.json; fi
-	$(MAKE) generate-sdk
+	$(MAKE) generate-sdk generate-schemas
+	git diff --exit-code -- openapi.sha256 'internal/resource_*' 'internal/datasource_*'
 	go build ./...
 	go vet ./internal/provider
+	go test ./internal/provider -count=1

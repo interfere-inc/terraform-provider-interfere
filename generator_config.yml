@@ -27,6 +27,7 @@ resources:
           "firstTelemetryAt",
           "pausedAt",
           "archivedAt",
+          "mergedIntoId",
         ]
       attributes:
         overrides:
@@ -209,6 +210,7 @@ data_sources:
           "firstTelemetryAt",
           "pausedAt",
           "archivedAt",
+          "mergedIntoId",
           "websiteSettings",
         ]
       attributes:
