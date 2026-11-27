@@ -18,14 +18,6 @@ func TestSettersCreatePrivateRequest(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetSurfaceSlug", func(t *testing.T) {
-		obj := &CreatePrivateRequest{}
-		var fernTestValueSurfaceSlug *string
-		obj.SetSurfaceSlug(fernTestValueSurfaceSlug)
-		assert.Equal(t, fernTestValueSurfaceSlug, obj.SurfaceSlug)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 	t.Run("SetIdempotencyKey", func(t *testing.T) {
 		obj := &CreatePrivateRequest{}
 		var fernTestValueIdempotencyKey string
@@ -69,37 +61,6 @@ func TestSettersMarkExplicitCreatePrivateRequest(t *testing.T) {
 
 		// Act
 		obj.SetWorkspaceSlug(fernTestValueWorkspaceSlug)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetSurfaceSlug_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &CreatePrivateRequest{}
-		var fernTestValueSurfaceSlug *string
-
-		// Act
-		obj.SetSurfaceSlug(fernTestValueSurfaceSlug)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -446,6 +407,41 @@ func TestEnumCreatePrivateRequestScopesItem(t *testing.T) {
 		assert.Equal(t, CreatePrivateRequestScopesItem("org:surfaces:delete"), val, "enum value should match expected wire value")
 	})
 
+	t.Run("NewFromString_org_services_read", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewCreatePrivateRequestScopesItemFromString("org:services:read")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, CreatePrivateRequestScopesItem("org:services:read"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_org_services_write", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewCreatePrivateRequestScopesItemFromString("org:services:write")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, CreatePrivateRequestScopesItem("org:services:write"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_org_customers_read", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewCreatePrivateRequestScopesItemFromString("org:customers:read")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, CreatePrivateRequestScopesItem("org:customers:read"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_org_tiers_read", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewCreatePrivateRequestScopesItemFromString("org:tiers:read")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, CreatePrivateRequestScopesItem("org:tiers:read"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_org_tiers_write", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewCreatePrivateRequestScopesItemFromString("org:tiers:write")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, CreatePrivateRequestScopesItem("org:tiers:write"), val, "enum value should match expected wire value")
+	})
+
 	t.Run("NewFromString_org_problems_read", func(t *testing.T) {
 		t.Parallel()
 		val, err := NewCreatePrivateRequestScopesItemFromString("org:problems:read")
@@ -458,6 +454,13 @@ func TestEnumCreatePrivateRequestScopesItem(t *testing.T) {
 		val, err := NewCreatePrivateRequestScopesItemFromString("org:problems:write")
 		assert.NoError(t, err, "valid enum value should not return error")
 		assert.Equal(t, CreatePrivateRequestScopesItem("org:problems:write"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_org_findings_read", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewCreatePrivateRequestScopesItemFromString("org:findings:read")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, CreatePrivateRequestScopesItem("org:findings:read"), val, "enum value should match expected wire value")
 	})
 
 	t.Run("NewFromString_org_support_read", func(t *testing.T) {
@@ -558,6 +561,20 @@ func TestEnumCreatePrivateRequestScopesItem(t *testing.T) {
 		assert.Equal(t, CreatePrivateRequestScopesItem("org:workspace_domains:write"), val, "enum value should match expected wire value")
 	})
 
+	t.Run("NewFromString_org_api_keys_read", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewCreatePrivateRequestScopesItemFromString("org:api_keys:read")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, CreatePrivateRequestScopesItem("org:api_keys:read"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_org_api_keys_write", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewCreatePrivateRequestScopesItemFromString("org:api_keys:write")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, CreatePrivateRequestScopesItem("org:api_keys:write"), val, "enum value should match expected wire value")
+	})
+
 	t.Run("NewFromString_org_workspace_auth_read", func(t *testing.T) {
 		t.Parallel()
 		val, err := NewCreatePrivateRequestScopesItemFromString("org:workspace_auth:read")
@@ -591,13 +608,6 @@ func TestEnumCreatePrivateRequestScopesItem(t *testing.T) {
 		val, err := NewCreatePrivateRequestScopesItemFromString("release:write")
 		assert.NoError(t, err, "valid enum value should not return error")
 		assert.Equal(t, CreatePrivateRequestScopesItem("release:write"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_ingest_write", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewCreatePrivateRequestScopesItemFromString("ingest:write")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, CreatePrivateRequestScopesItem("ingest:write"), val, "enum value should match expected wire value")
 	})
 
 	t.Run("NewFromString_Invalid", func(t *testing.T) {

@@ -456,6 +456,145 @@ func (r *RawClient) UpdateMemberWorkspaceCreation(
     }, nil
 }
 
+func (r *RawClient) CreateWorkspacePublicKey(
+    ctx context.Context,
+    request *sdk.CreateWorkspacePublicKeyRequest,
+    opts ...option.RequestOption,
+) (*core.Response[*sdk.CreateWorkspacePublicKeyResponse], error) {
+    options := core.NewRequestOptions(opts...)
+    baseURL := internal.ResolveBaseURL(
+        options.BaseURL,
+        r.baseURL,
+        "",
+    )
+    endpointURL := internal.EncodeURL(
+        baseURL + "/v3/workspaces/%v/publicKeys",
+        request.WorkspaceSlug,
+    )
+    headers := internal.MergeHeaders(
+        r.options.ToHeader(),
+        options.ToHeader(),
+    )
+    headers.Add("Content-Type", "application/json")
+    var response *sdk.CreateWorkspacePublicKeyResponse
+    raw, err := r.caller.Call(
+        ctx,
+        &internal.CallParams{
+            URL: endpointURL,
+            Method: http.MethodPost,
+            Headers: headers,
+            MaxAttempts: options.MaxAttempts,
+            DisableRetries: options.DisableRetries,
+            BodyProperties: options.BodyProperties,
+            QueryParameters: options.QueryParameters,
+            Client: options.HTTPClient,
+            Request: request,
+            Response: &response,
+            ErrorDecoder: internal.NewErrorDecoder(sdk.ErrorCodes),
+        },
+    )
+    if err != nil {
+        return nil, err
+    }
+    return &core.Response[*sdk.CreateWorkspacePublicKeyResponse]{
+        StatusCode: raw.StatusCode,
+        Header: raw.Header,
+        Body: response,
+    }, nil
+}
+
+func (r *RawClient) ReadWorkspacePublicKey(
+    ctx context.Context,
+    request *sdk.ReadWorkspacePublicKeyRequest,
+    opts ...option.RequestOption,
+) (*core.Response[*sdk.ReadWorkspacePublicKeyResponse], error) {
+    options := core.NewRequestOptions(opts...)
+    baseURL := internal.ResolveBaseURL(
+        options.BaseURL,
+        r.baseURL,
+        "",
+    )
+    endpointURL := internal.EncodeURL(
+        baseURL + "/v3/workspaces/%v/publicKeys/%v",
+        request.WorkspaceSlug,
+        request.PublicKeyID,
+    )
+    headers := internal.MergeHeaders(
+        r.options.ToHeader(),
+        options.ToHeader(),
+    )
+    var response *sdk.ReadWorkspacePublicKeyResponse
+    raw, err := r.caller.Call(
+        ctx,
+        &internal.CallParams{
+            URL: endpointURL,
+            Method: http.MethodGet,
+            Headers: headers,
+            MaxAttempts: options.MaxAttempts,
+            DisableRetries: options.DisableRetries,
+            BodyProperties: options.BodyProperties,
+            QueryParameters: options.QueryParameters,
+            Client: options.HTTPClient,
+            Response: &response,
+            ErrorDecoder: internal.NewErrorDecoder(sdk.ErrorCodes),
+        },
+    )
+    if err != nil {
+        return nil, err
+    }
+    return &core.Response[*sdk.ReadWorkspacePublicKeyResponse]{
+        StatusCode: raw.StatusCode,
+        Header: raw.Header,
+        Body: response,
+    }, nil
+}
+
+func (r *RawClient) RevokeWorkspacePublicKey(
+    ctx context.Context,
+    request *sdk.RevokeWorkspacePublicKeyRequest,
+    opts ...option.RequestOption,
+) (*core.Response[*sdk.RevokeWorkspacePublicKeyResponse], error) {
+    options := core.NewRequestOptions(opts...)
+    baseURL := internal.ResolveBaseURL(
+        options.BaseURL,
+        r.baseURL,
+        "",
+    )
+    endpointURL := internal.EncodeURL(
+        baseURL + "/v3/workspaces/%v/publicKeys/%v",
+        request.WorkspaceSlug,
+        request.PublicKeyID,
+    )
+    headers := internal.MergeHeaders(
+        r.options.ToHeader(),
+        options.ToHeader(),
+    )
+    var response *sdk.RevokeWorkspacePublicKeyResponse
+    raw, err := r.caller.Call(
+        ctx,
+        &internal.CallParams{
+            URL: endpointURL,
+            Method: http.MethodDelete,
+            Headers: headers,
+            MaxAttempts: options.MaxAttempts,
+            DisableRetries: options.DisableRetries,
+            BodyProperties: options.BodyProperties,
+            QueryParameters: options.QueryParameters,
+            Client: options.HTTPClient,
+            Response: &response,
+            ErrorDecoder: internal.NewErrorDecoder(sdk.ErrorCodes),
+        },
+    )
+    if err != nil {
+        return nil, err
+    }
+    return &core.Response[*sdk.RevokeWorkspacePublicKeyResponse]{
+        StatusCode: raw.StatusCode,
+        Header: raw.Header,
+        Body: response,
+    }, nil
+}
+
 func (r *RawClient) ReadNetworkRules(
     ctx context.Context,
     request *sdk.ReadNetworkRulesRequest,

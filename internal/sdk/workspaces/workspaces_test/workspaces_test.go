@@ -338,6 +338,88 @@ func TestWorkspacesUpdateMemberWorkspaceCreationWithWireMock(
     VerifyRequestCount(t, "TestWorkspacesUpdateMemberWorkspaceCreationWithWireMock", "POST", "/v3/workspaces/workspaceSlug/actions/workspaces.updateMemberWorkspaceCreation", nil, 1)
 }
 
+func TestWorkspacesCreateWorkspacePublicKeyWithWireMock(
+    t *testing.T,
+) {
+    WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+    	if WireMockBaseURL == "" {
+    		WireMockBaseURL = "http://localhost:8080"
+    	}
+    client := client.NewClient(
+        option.WithBaseURL(WireMockBaseURL),
+        option.WithToken("test-token"),
+    )
+        request := &sdk.CreateWorkspacePublicKeyRequest{
+            WorkspaceSlug: "workspaceSlug",
+            IdempotencyKey: "idempotencyKey",
+            Name: "name",
+        }
+    _, invocationErr :=     client.Workspaces.CreateWorkspacePublicKey(
+            context.TODO(),
+            request,
+            option.WithHTTPHeader(
+                http.Header{"X-Test-Id": []string{"TestWorkspacesCreateWorkspacePublicKeyWithWireMock"}},
+            ),
+        )
+
+    require.NoError(t, invocationErr, "Client method call should succeed")
+    VerifyRequestCount(t, "TestWorkspacesCreateWorkspacePublicKeyWithWireMock", "POST", "/v3/workspaces/workspaceSlug/publicKeys", nil, 1)
+}
+
+func TestWorkspacesReadWorkspacePublicKeyWithWireMock(
+    t *testing.T,
+) {
+    WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+    	if WireMockBaseURL == "" {
+    		WireMockBaseURL = "http://localhost:8080"
+    	}
+    client := client.NewClient(
+        option.WithBaseURL(WireMockBaseURL),
+        option.WithToken("test-token"),
+    )
+        request := &sdk.ReadWorkspacePublicKeyRequest{
+            WorkspaceSlug: "workspaceSlug",
+            PublicKeyID: "publicKeyId",
+        }
+    _, invocationErr :=     client.Workspaces.ReadWorkspacePublicKey(
+            context.TODO(),
+            request,
+            option.WithHTTPHeader(
+                http.Header{"X-Test-Id": []string{"TestWorkspacesReadWorkspacePublicKeyWithWireMock"}},
+            ),
+        )
+
+    require.NoError(t, invocationErr, "Client method call should succeed")
+    VerifyRequestCount(t, "TestWorkspacesReadWorkspacePublicKeyWithWireMock", "GET", "/v3/workspaces/workspaceSlug/publicKeys/publicKeyId", nil, 1)
+}
+
+func TestWorkspacesRevokeWorkspacePublicKeyWithWireMock(
+    t *testing.T,
+) {
+    WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+    	if WireMockBaseURL == "" {
+    		WireMockBaseURL = "http://localhost:8080"
+    	}
+    client := client.NewClient(
+        option.WithBaseURL(WireMockBaseURL),
+        option.WithToken("test-token"),
+    )
+        request := &sdk.RevokeWorkspacePublicKeyRequest{
+            WorkspaceSlug: "workspaceSlug",
+            PublicKeyID: "publicKeyId",
+        }
+    _, invocationErr :=     client.Workspaces.RevokeWorkspacePublicKey(
+            context.TODO(),
+            request,
+            option.WithHTTPHeader(
+                http.Header{"X-Test-Id": []string{"TestWorkspacesRevokeWorkspacePublicKeyWithWireMock"}},
+            ),
+        )
+
+    require.NoError(t, invocationErr, "Client method call should succeed")
+    VerifyRequestCount(t, "TestWorkspacesRevokeWorkspacePublicKeyWithWireMock", "DELETE", "/v3/workspaces/workspaceSlug/publicKeys/publicKeyId", nil, 1)
+}
+
 func TestWorkspacesReadNetworkRulesWithWireMock(
     t *testing.T,
 ) {

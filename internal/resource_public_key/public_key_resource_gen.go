@@ -36,11 +36,6 @@ func PublicKeyResourceSchema(ctx context.Context) schema.Schema {
 					stringvalidator.LengthBetween(1, 64),
 				},
 			},
-			"surface_slug": schema.StringAttribute{
-				Computed:            true,
-				Description:         "Surface URL slug, using lowercase letters, numbers, and hyphens.",
-				MarkdownDescription: "Surface URL slug, using lowercase letters, numbers, and hyphens.",
-			},
 			"workspace_slug": schema.StringAttribute{
 				Optional:            true,
 				Computed:            true,
@@ -59,6 +54,5 @@ type PublicKeyModel struct {
 	Id             types.String `tfsdk:"id"`
 	IdempotencyKey types.String `tfsdk:"idempotency_key"`
 	Name           types.String `tfsdk:"name"`
-	SurfaceSlug    types.String `tfsdk:"surface_slug"`
 	WorkspaceSlug  types.String `tfsdk:"workspace_slug"`
 }

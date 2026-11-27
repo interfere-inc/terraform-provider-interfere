@@ -66,26 +66,26 @@ func (c *Client) ListForSurface(
     return response.Body, nil
 }
 
-// Creates a publishable key for the app (surface).
+// List workspace-scoped publishable key records (surfaceId null). Every app in the workspace can ship a workspace key; these are separate from app keys and from private build API keys. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation is read-only despite using POST. Permission-filtered queries may return an empty result; do not assume that proves the resource does not exist. Only use pagination arguments declared in the schema.
 // 
 // Example:
 // 
-// 	request := &keys.CreatePublicRequest{
+// 	request := &keys.ForWorkspacePublicRequest{
 // 	    WorkspaceSlug: "workspaceSlug",
-// 	    SurfaceSlug: "surfaceSlug",
-// 	    IdempotencyKey: "idempotencyKey",
-// 	    Name: "name",
+// 	    Args: map[string]any{
+// 	        "key": "value",
+// 	    },
 // 	}
-// 	_, err := client.Keys.Public.Create(
+// 	_, err := client.Keys.Public.ForWorkspace(
 // 	    context.TODO(),
 // 	    request,
 // 	)
-func (c *Client) Create(
+func (c *Client) ForWorkspace(
     ctx context.Context,
-    request *keys.CreatePublicRequest,
+    request *keys.ForWorkspacePublicRequest,
     opts ...option.RequestOption,
-) (*sdk.CreateSurfacePublicKeyResponse, error) {
-    response, err := c.WithRawResponse.Create(
+) (sdk.QueryPublicKeysForWorkspaceResponse, error) {
+    response, err := c.WithRawResponse.ForWorkspace(
         ctx,
         request,
         opts...,
@@ -96,7 +96,7 @@ func (c *Client) Create(
     return response.Body, nil
 }
 
-// Reads a publishable key's identity, current value and revocation status. Requires app read permission. Revoked keys and keys belonging to deleted apps report revoked: true.
+// Reads a publishable key's identity, current value and revocation status. Requires app read permission. Revoked keys report revoked: true, and so do keys of a deleted app unless the key is still mapped to a service and keeps ingesting.
 // 
 // Example:
 // 

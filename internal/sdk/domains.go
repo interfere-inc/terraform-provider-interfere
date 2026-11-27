@@ -133,12 +133,13 @@ var (
 	queryDomainsByIDIncludeDeletedResponseFieldID                      = big.NewInt(1 << 4)
 	queryDomainsByIDIncludeDeletedResponseFieldName                    = big.NewInt(1 << 5)
 	queryDomainsByIDIncludeDeletedResponseFieldOrganizationID          = big.NewInt(1 << 6)
-	queryDomainsByIDIncludeDeletedResponseFieldStatus                  = big.NewInt(1 << 7)
-	queryDomainsByIDIncludeDeletedResponseFieldType                    = big.NewInt(1 << 8)
-	queryDomainsByIDIncludeDeletedResponseFieldVerifiedAt              = big.NewInt(1 << 9)
-	queryDomainsByIDIncludeDeletedResponseFieldCreatedAt               = big.NewInt(1 << 10)
-	queryDomainsByIDIncludeDeletedResponseFieldDeletedAt               = big.NewInt(1 << 11)
-	queryDomainsByIDIncludeDeletedResponseFieldUpdatedAt               = big.NewInt(1 << 12)
+	queryDomainsByIDIncludeDeletedResponseFieldOwnershipVerifiedAt     = big.NewInt(1 << 7)
+	queryDomainsByIDIncludeDeletedResponseFieldStatus                  = big.NewInt(1 << 8)
+	queryDomainsByIDIncludeDeletedResponseFieldType                    = big.NewInt(1 << 9)
+	queryDomainsByIDIncludeDeletedResponseFieldVerifiedAt              = big.NewInt(1 << 10)
+	queryDomainsByIDIncludeDeletedResponseFieldCreatedAt               = big.NewInt(1 << 11)
+	queryDomainsByIDIncludeDeletedResponseFieldDeletedAt               = big.NewInt(1 << 12)
+	queryDomainsByIDIncludeDeletedResponseFieldUpdatedAt               = big.NewInt(1 << 13)
 )
 
 // queryDomainsByIDIncludeDeletedResponseNullableFields maps the wire names of QueryDomainsByIDIncludeDeletedResponse's nullable fields (required or optional) to their field bits.
@@ -147,6 +148,7 @@ var queryDomainsByIDIncludeDeletedResponseNullableFields = map[string]*big.Int{
 	"clerkDomainId":           queryDomainsByIDIncludeDeletedResponseFieldClerkDomainID,
 	"domainMetadata":          queryDomainsByIDIncludeDeletedResponseFieldDomainMetadata,
 	"enrollmentMode":          queryDomainsByIDIncludeDeletedResponseFieldEnrollmentMode,
+	"ownershipVerifiedAt":     queryDomainsByIDIncludeDeletedResponseFieldOwnershipVerifiedAt,
 	"status":                  queryDomainsByIDIncludeDeletedResponseFieldStatus,
 	"type":                    queryDomainsByIDIncludeDeletedResponseFieldType,
 	"verifiedAt":              queryDomainsByIDIncludeDeletedResponseFieldVerifiedAt,
@@ -161,6 +163,7 @@ type QueryDomainsByIDIncludeDeletedResponse struct {
 	ID                      string                                                `json:"id" url:"id"`
 	Name                    string                                                `json:"name" url:"name"`
 	OrganizationID          string                                                `json:"organizationId" url:"organizationId"`
+	OwnershipVerifiedAt     *float64                                              `json:"ownershipVerifiedAt,omitempty" url:"ownershipVerifiedAt,omitempty"`
 	Status                  *QueryDomainsByIDIncludeDeletedResponseStatus         `json:"status,omitempty" url:"status,omitempty"`
 	Type                    *QueryDomainsByIDIncludeDeletedResponseType           `json:"type,omitempty" url:"type,omitempty"`
 	VerifiedAt              *float64                                              `json:"verifiedAt,omitempty" url:"verifiedAt,omitempty"`
@@ -222,6 +225,13 @@ func (q *QueryDomainsByIDIncludeDeletedResponse) GetOrganizationID() string {
 		return ""
 	}
 	return q.OrganizationID
+}
+
+func (q *QueryDomainsByIDIncludeDeletedResponse) GetOwnershipVerifiedAt() *float64 {
+	if q == nil {
+		return nil
+	}
+	return q.OwnershipVerifiedAt
 }
 
 func (q *QueryDomainsByIDIncludeDeletedResponse) GetStatus() *QueryDomainsByIDIncludeDeletedResponseStatus {
@@ -329,6 +339,13 @@ func (q *QueryDomainsByIDIncludeDeletedResponse) SetName(name string) {
 func (q *QueryDomainsByIDIncludeDeletedResponse) SetOrganizationID(organizationID string) {
 	q.OrganizationID = organizationID
 	q.require(queryDomainsByIDIncludeDeletedResponseFieldOrganizationID)
+}
+
+// SetOwnershipVerifiedAt sets the OwnershipVerifiedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryDomainsByIDIncludeDeletedResponse) SetOwnershipVerifiedAt(ownershipVerifiedAt *float64) {
+	q.OwnershipVerifiedAt = ownershipVerifiedAt
+	q.require(queryDomainsByIDIncludeDeletedResponseFieldOwnershipVerifiedAt)
 }
 
 // SetStatus sets the Status field and marks it as non-optional;
@@ -670,12 +687,13 @@ var (
 	queryDomainsForOrgResponseItemFieldID                      = big.NewInt(1 << 4)
 	queryDomainsForOrgResponseItemFieldName                    = big.NewInt(1 << 5)
 	queryDomainsForOrgResponseItemFieldOrganizationID          = big.NewInt(1 << 6)
-	queryDomainsForOrgResponseItemFieldStatus                  = big.NewInt(1 << 7)
-	queryDomainsForOrgResponseItemFieldType                    = big.NewInt(1 << 8)
-	queryDomainsForOrgResponseItemFieldVerifiedAt              = big.NewInt(1 << 9)
-	queryDomainsForOrgResponseItemFieldCreatedAt               = big.NewInt(1 << 10)
-	queryDomainsForOrgResponseItemFieldDeletedAt               = big.NewInt(1 << 11)
-	queryDomainsForOrgResponseItemFieldUpdatedAt               = big.NewInt(1 << 12)
+	queryDomainsForOrgResponseItemFieldOwnershipVerifiedAt     = big.NewInt(1 << 7)
+	queryDomainsForOrgResponseItemFieldStatus                  = big.NewInt(1 << 8)
+	queryDomainsForOrgResponseItemFieldType                    = big.NewInt(1 << 9)
+	queryDomainsForOrgResponseItemFieldVerifiedAt              = big.NewInt(1 << 10)
+	queryDomainsForOrgResponseItemFieldCreatedAt               = big.NewInt(1 << 11)
+	queryDomainsForOrgResponseItemFieldDeletedAt               = big.NewInt(1 << 12)
+	queryDomainsForOrgResponseItemFieldUpdatedAt               = big.NewInt(1 << 13)
 )
 
 // queryDomainsForOrgResponseItemNullableFields maps the wire names of QueryDomainsForOrgResponseItem's nullable fields (required or optional) to their field bits.
@@ -684,6 +702,7 @@ var queryDomainsForOrgResponseItemNullableFields = map[string]*big.Int{
 	"clerkDomainId":           queryDomainsForOrgResponseItemFieldClerkDomainID,
 	"domainMetadata":          queryDomainsForOrgResponseItemFieldDomainMetadata,
 	"enrollmentMode":          queryDomainsForOrgResponseItemFieldEnrollmentMode,
+	"ownershipVerifiedAt":     queryDomainsForOrgResponseItemFieldOwnershipVerifiedAt,
 	"status":                  queryDomainsForOrgResponseItemFieldStatus,
 	"type":                    queryDomainsForOrgResponseItemFieldType,
 	"verifiedAt":              queryDomainsForOrgResponseItemFieldVerifiedAt,
@@ -698,6 +717,7 @@ type QueryDomainsForOrgResponseItem struct {
 	ID                      string                                        `json:"id" url:"id"`
 	Name                    string                                        `json:"name" url:"name"`
 	OrganizationID          string                                        `json:"organizationId" url:"organizationId"`
+	OwnershipVerifiedAt     *float64                                      `json:"ownershipVerifiedAt,omitempty" url:"ownershipVerifiedAt,omitempty"`
 	Status                  *QueryDomainsForOrgResponseItemStatus         `json:"status,omitempty" url:"status,omitempty"`
 	Type                    *QueryDomainsForOrgResponseItemType           `json:"type,omitempty" url:"type,omitempty"`
 	VerifiedAt              *float64                                      `json:"verifiedAt,omitempty" url:"verifiedAt,omitempty"`
@@ -759,6 +779,13 @@ func (q *QueryDomainsForOrgResponseItem) GetOrganizationID() string {
 		return ""
 	}
 	return q.OrganizationID
+}
+
+func (q *QueryDomainsForOrgResponseItem) GetOwnershipVerifiedAt() *float64 {
+	if q == nil {
+		return nil
+	}
+	return q.OwnershipVerifiedAt
 }
 
 func (q *QueryDomainsForOrgResponseItem) GetStatus() *QueryDomainsForOrgResponseItemStatus {
@@ -866,6 +893,13 @@ func (q *QueryDomainsForOrgResponseItem) SetName(name string) {
 func (q *QueryDomainsForOrgResponseItem) SetOrganizationID(organizationID string) {
 	q.OrganizationID = organizationID
 	q.require(queryDomainsForOrgResponseItemFieldOrganizationID)
+}
+
+// SetOwnershipVerifiedAt sets the OwnershipVerifiedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryDomainsForOrgResponseItem) SetOwnershipVerifiedAt(ownershipVerifiedAt *float64) {
+	q.OwnershipVerifiedAt = ownershipVerifiedAt
+	q.require(queryDomainsForOrgResponseItemFieldOwnershipVerifiedAt)
 }
 
 // SetStatus sets the Status field and marks it as non-optional;

@@ -81,11 +81,11 @@ func (r *RawClient) ListForSurface(
     }, nil
 }
 
-func (r *RawClient) Create(
+func (r *RawClient) ForWorkspace(
     ctx context.Context,
-    request *keys.CreatePublicRequest,
+    request *keys.ForWorkspacePublicRequest,
     opts ...option.RequestOption,
-) (*core.Response[*sdk.CreateSurfacePublicKeyResponse], error) {
+) (*core.Response[sdk.QueryPublicKeysForWorkspaceResponse], error) {
     options := core.NewRequestOptions(opts...)
     baseURL := internal.ResolveBaseURL(
         options.BaseURL,
@@ -93,16 +93,15 @@ func (r *RawClient) Create(
         "",
     )
     endpointURL := internal.EncodeURL(
-        baseURL + "/v3/workspaces/%v/surfaces/%v/publicKeys",
+        baseURL + "/v3/workspaces/%v/queries/publicKeys.forWorkspace",
         request.WorkspaceSlug,
-        request.SurfaceSlug,
     )
     headers := internal.MergeHeaders(
         r.options.ToHeader(),
         options.ToHeader(),
     )
     headers.Add("Content-Type", "application/json")
-    var response *sdk.CreateSurfacePublicKeyResponse
+    var response sdk.QueryPublicKeysForWorkspaceResponse
     raw, err := r.caller.Call(
         ctx,
         &internal.CallParams{
@@ -122,7 +121,7 @@ func (r *RawClient) Create(
     if err != nil {
         return nil, err
     }
-    return &core.Response[*sdk.CreateSurfacePublicKeyResponse]{
+    return &core.Response[sdk.QueryPublicKeysForWorkspaceResponse]{
         StatusCode: raw.StatusCode,
         Header: raw.Header,
         Body: response,

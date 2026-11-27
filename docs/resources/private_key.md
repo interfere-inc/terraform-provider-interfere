@@ -3,12 +3,12 @@
 page_title: "interfere_private_key Resource - Interfere"
 subcategory: ""
 description: |-
-  Manage a workspace or surface private API key. Optional surface_slug selects a surface. Grants and lifetime changes replace the key. Creation UUIDs are generated automatically unless explicitly configured. secret is sensitive and is stored in Terraform state. Import retrieves metadata only, never the secret.
+  Manage a workspace private API key. Grants and lifetime changes replace the key. Creation UUIDs are generated automatically unless explicitly configured. secret is sensitive and is stored in Terraform state. Import retrieves metadata only, never the secret.
 ---
 
 # interfere_private_key (Resource)
 
-Manage a workspace or surface private API key. Optional surface_slug selects a surface. Grants and lifetime changes replace the key. Creation UUIDs are generated automatically unless explicitly configured. secret is sensitive and is stored in Terraform state. Import retrieves metadata only, never the secret.
+Manage a workspace private API key. Grants and lifetime changes replace the key. Creation UUIDs are generated automatically unless explicitly configured. secret is sensitive and is stored in Terraform state. Import retrieves metadata only, never the secret.
 
 ## Example Usage
 
@@ -16,7 +16,7 @@ Manage a workspace or surface private API key. Optional surface_slug selects a s
 resource "interfere_private_key" "automation" {
   workspace_slug           = "example"
   name                     = "Automation"
-  scopes                   = ["org:surfaces:read"]
+  scopes                   = ["org:problems:read"]
   seconds_until_expiration = 2592000
 }
 ```
@@ -34,7 +34,6 @@ resource "interfere_private_key" "automation" {
 
 - `idempotency_key` (String) Creation UUID, generated automatically when omitted. Explicit UUIDs remain supported for recovering an uncertain creation. Reuse that UUID to retry; use a fresh UUID for replacement.
 - `seconds_until_expiration` (Number) Positive lifetime in seconds, or null for no expiry. Omit for no expiry. Changing this value replaces the key.
-- `surface_slug` (String) Surface URL slug, using lowercase letters, numbers, and hyphens.
 
 ### Read-Only
 

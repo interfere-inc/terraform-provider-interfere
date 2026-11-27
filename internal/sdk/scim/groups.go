@@ -402,9 +402,14 @@ func (s *SetRoleGroupsRequestArgs) String() string {
 type SetRoleGroupsRequestArgsRoleKey string
 
 const (
-	SetRoleGroupsRequestArgsRoleKeyOrgOwner  SetRoleGroupsRequestArgsRoleKey = "org:owner"
-	SetRoleGroupsRequestArgsRoleKeyOrgAdmin  SetRoleGroupsRequestArgsRoleKey = "org:admin"
-	SetRoleGroupsRequestArgsRoleKeyOrgMember SetRoleGroupsRequestArgsRoleKey = "org:member"
+	SetRoleGroupsRequestArgsRoleKeyOrgOwner   SetRoleGroupsRequestArgsRoleKey = "org:owner"
+	SetRoleGroupsRequestArgsRoleKeyOrgAdmin   SetRoleGroupsRequestArgsRoleKey = "org:admin"
+	SetRoleGroupsRequestArgsRoleKeyOrgMember  SetRoleGroupsRequestArgsRoleKey = "org:member"
+	SetRoleGroupsRequestArgsRoleKeyOrgProduct SetRoleGroupsRequestArgsRoleKey = "org:product"
+	SetRoleGroupsRequestArgsRoleKeyOrgSupport SetRoleGroupsRequestArgsRoleKey = "org:support"
+	SetRoleGroupsRequestArgsRoleKeyOrgViewer  SetRoleGroupsRequestArgsRoleKey = "org:viewer"
+	SetRoleGroupsRequestArgsRoleKeyOrgBilling SetRoleGroupsRequestArgsRoleKey = "org:billing"
+	SetRoleGroupsRequestArgsRoleKeyOrgAuditor SetRoleGroupsRequestArgsRoleKey = "org:auditor"
 )
 
 func NewSetRoleGroupsRequestArgsRoleKeyFromString(s string) (SetRoleGroupsRequestArgsRoleKey, error) {
@@ -415,6 +420,16 @@ func NewSetRoleGroupsRequestArgsRoleKeyFromString(s string) (SetRoleGroupsReques
 		return SetRoleGroupsRequestArgsRoleKeyOrgAdmin, nil
 	case "org:member":
 		return SetRoleGroupsRequestArgsRoleKeyOrgMember, nil
+	case "org:product":
+		return SetRoleGroupsRequestArgsRoleKeyOrgProduct, nil
+	case "org:support":
+		return SetRoleGroupsRequestArgsRoleKeyOrgSupport, nil
+	case "org:viewer":
+		return SetRoleGroupsRequestArgsRoleKeyOrgViewer, nil
+	case "org:billing":
+		return SetRoleGroupsRequestArgsRoleKeyOrgBilling, nil
+	case "org:auditor":
+		return SetRoleGroupsRequestArgsRoleKeyOrgAuditor, nil
 	}
 	var t SetRoleGroupsRequestArgsRoleKey
 	return "", fmt.Errorf("%s is not a valid %T", s, t)

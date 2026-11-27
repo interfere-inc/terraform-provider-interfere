@@ -305,6 +305,91 @@ func (c *Client) UpdateMemberWorkspaceCreation(
     return response.Body, nil
 }
 
+// Creates a publishable key for the whole workspace. Every app in the workspace can ship it; the gateway resolves the app from the telemetry. Requires workspace authentication write permission. Reuse the same idempotency key and request after an uncertain response.
+// 
+// Example:
+// 
+// 	request := &sdk.CreateWorkspacePublicKeyRequest{
+// 	    WorkspaceSlug: "workspaceSlug",
+// 	    IdempotencyKey: "idempotencyKey",
+// 	    Name: "name",
+// 	}
+// 	_, err := client.Workspaces.CreateWorkspacePublicKey(
+// 	    context.TODO(),
+// 	    request,
+// 	)
+func (c *Client) CreateWorkspacePublicKey(
+    ctx context.Context,
+    request *sdk.CreateWorkspacePublicKeyRequest,
+    opts ...option.RequestOption,
+) (*sdk.CreateWorkspacePublicKeyResponse, error) {
+    response, err := c.WithRawResponse.CreateWorkspacePublicKey(
+        ctx,
+        request,
+        opts...,
+    )
+    if err != nil {
+        return nil, err
+    }
+    return response.Body, nil
+}
+
+// Reads a workspace publishable key's identity, current value and revocation status. Requires workspace authentication read or app read permission.
+// 
+// Example:
+// 
+// 	request := &sdk.ReadWorkspacePublicKeyRequest{
+// 	    WorkspaceSlug: "workspaceSlug",
+// 	    PublicKeyID: "publicKeyId",
+// 	}
+// 	_, err := client.Workspaces.ReadWorkspacePublicKey(
+// 	    context.TODO(),
+// 	    request,
+// 	)
+func (c *Client) ReadWorkspacePublicKey(
+    ctx context.Context,
+    request *sdk.ReadWorkspacePublicKeyRequest,
+    opts ...option.RequestOption,
+) (*sdk.ReadWorkspacePublicKeyResponse, error) {
+    response, err := c.WithRawResponse.ReadWorkspacePublicKey(
+        ctx,
+        request,
+        opts...,
+    )
+    if err != nil {
+        return nil, err
+    }
+    return response.Body, nil
+}
+
+// Revokes a workspace publishable key and all its rotation grace-period values. Every app shipping this key stops authenticating, so confirm with the user before revoking the last live workspace key. Requires workspace authentication write permission. Repeating revocation of an existing key succeeds without changing its revocation time.
+// 
+// Example:
+// 
+// 	request := &sdk.RevokeWorkspacePublicKeyRequest{
+// 	    WorkspaceSlug: "workspaceSlug",
+// 	    PublicKeyID: "publicKeyId",
+// 	}
+// 	_, err := client.Workspaces.RevokeWorkspacePublicKey(
+// 	    context.TODO(),
+// 	    request,
+// 	)
+func (c *Client) RevokeWorkspacePublicKey(
+    ctx context.Context,
+    request *sdk.RevokeWorkspacePublicKeyRequest,
+    opts ...option.RequestOption,
+) (*sdk.RevokeWorkspacePublicKeyResponse, error) {
+    response, err := c.WithRawResponse.RevokeWorkspacePublicKey(
+        ctx,
+        request,
+        opts...,
+    )
+    if err != nil {
+        return nil, err
+    }
+    return response.Body, nil
+}
+
 // Returns the networks allowed to reach the workspace dashboard and API. An empty list means no restriction. Requires workspace authentication read permission.
 // 
 // Example:

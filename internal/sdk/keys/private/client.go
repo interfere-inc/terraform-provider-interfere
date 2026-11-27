@@ -36,7 +36,7 @@ func NewClient(options *core.RequestOptions) *Client {
     }
 }
 
-// Creates a private API key with explicit scopes and expiration. Supply surfaceSlug for an app key; omit it for a workspace key. Grants cannot exceed the caller's permissions. Reuse the same idempotency key and request after an uncertain response.
+// Creates a workspace secret API key with explicit scopes and expiration. One key with the release:write scope publishes releases for every app in the workspace. Grants cannot exceed the caller's permissions. Reuse the same idempotency key and request after an uncertain response.
 // 
 // Example:
 // 

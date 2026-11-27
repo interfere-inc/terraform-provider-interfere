@@ -256,13 +256,13 @@ func (c *ConflictErrorBodyCode) String() string {
 type ConflictErrorBodyCodeCode string
 
 const (
-	ConflictErrorBodyCodeCodeSurfaceKeyConflict ConflictErrorBodyCodeCode = "SURFACE_KEY_CONFLICT"
+	ConflictErrorBodyCodeCodeNetworkPolicyLockout ConflictErrorBodyCodeCode = "NETWORK_POLICY_LOCKOUT"
 )
 
 func NewConflictErrorBodyCodeCodeFromString(s string) (ConflictErrorBodyCodeCode, error) {
 	switch s {
-	case "SURFACE_KEY_CONFLICT":
-		return ConflictErrorBodyCodeCodeSurfaceKeyConflict, nil
+	case "NETWORK_POLICY_LOCKOUT":
+		return ConflictErrorBodyCodeCodeNetworkPolicyLockout, nil
 	}
 	var t ConflictErrorBodyCodeCode
 	return "", fmt.Errorf("%s is not a valid %T", s, t)
@@ -270,448 +270,6 @@ func NewConflictErrorBodyCodeCodeFromString(s string) (ConflictErrorBodyCodeCode
 
 func (c ConflictErrorBodyCodeCode) Ptr() *ConflictErrorBodyCodeCode {
 	return &c
-}
-
-var (
-	conflictErrorBodyOneFieldDefined = big.NewInt(1 << 0)
-	conflictErrorBodyOneFieldCode    = big.NewInt(1 << 1)
-	conflictErrorBodyOneFieldStatus  = big.NewInt(1 << 2)
-	conflictErrorBodyOneFieldMessage = big.NewInt(1 << 3)
-	conflictErrorBodyOneFieldData    = big.NewInt(1 << 4)
-)
-
-type ConflictErrorBodyOne struct {
-	Defined string                   `json:"defined" url:"defined"`
-	Code    ConflictErrorBodyOneCode `json:"code" url:"code"`
-	Status  string                   `json:"status" url:"status"`
-	Message string                   `json:"message" url:"message"`
-	Data    any                      `json:"data,omitempty" url:"data,omitempty"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (c *ConflictErrorBodyOne) GetDefined() string {
-	if c == nil {
-		return ""
-	}
-	return c.Defined
-}
-
-func (c *ConflictErrorBodyOne) GetCode() ConflictErrorBodyOneCode {
-	if c == nil {
-		return ""
-	}
-	return c.Code
-}
-
-func (c *ConflictErrorBodyOne) GetStatus() string {
-	if c == nil {
-		return ""
-	}
-	return c.Status
-}
-
-func (c *ConflictErrorBodyOne) GetMessage() string {
-	if c == nil {
-		return ""
-	}
-	return c.Message
-}
-
-func (c *ConflictErrorBodyOne) GetData() any {
-	if c == nil {
-		return nil
-	}
-	return c.Data
-}
-
-func (c *ConflictErrorBodyOne) GetExtraProperties() map[string]interface{} {
-	if c == nil {
-		return nil
-	}
-	return c.extraProperties
-}
-
-func (c *ConflictErrorBodyOne) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
-	}
-	next.Or(next, field)
-	c.explicitFields = next
-}
-
-// SetDefined sets the Defined field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConflictErrorBodyOne) SetDefined(defined string) {
-	c.Defined = defined
-	c.require(conflictErrorBodyOneFieldDefined)
-}
-
-// SetCode sets the Code field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConflictErrorBodyOne) SetCode(code ConflictErrorBodyOneCode) {
-	c.Code = code
-	c.require(conflictErrorBodyOneFieldCode)
-}
-
-// SetStatus sets the Status field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConflictErrorBodyOne) SetStatus(status string) {
-	c.Status = status
-	c.require(conflictErrorBodyOneFieldStatus)
-}
-
-// SetMessage sets the Message field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConflictErrorBodyOne) SetMessage(message string) {
-	c.Message = message
-	c.require(conflictErrorBodyOneFieldMessage)
-}
-
-// SetData sets the Data field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConflictErrorBodyOne) SetData(data any) {
-	c.Data = data
-	c.require(conflictErrorBodyOneFieldData)
-}
-
-func (c *ConflictErrorBodyOne) UnmarshalJSON(data []byte) error {
-	type unmarshaler ConflictErrorBodyOne
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*c = ConflictErrorBodyOne(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *c)
-	if err != nil {
-		return err
-	}
-	c.extraProperties = extraProperties
-	c.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (c *ConflictErrorBodyOne) MarshalJSON() ([]byte, error) {
-	type embed ConflictErrorBodyOne
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*c),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (c *ConflictErrorBodyOne) String() string {
-	if c == nil {
-		return "<nil>"
-	}
-	if len(c.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(c); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", c)
-}
-
-type ConflictErrorBodyOneCode string
-
-const (
-	ConflictErrorBodyOneCodeSurfaceKeyConflict ConflictErrorBodyOneCode = "SURFACE_KEY_CONFLICT"
-)
-
-func NewConflictErrorBodyOneCodeFromString(s string) (ConflictErrorBodyOneCode, error) {
-	switch s {
-	case "SURFACE_KEY_CONFLICT":
-		return ConflictErrorBodyOneCodeSurfaceKeyConflict, nil
-	}
-	var t ConflictErrorBodyOneCode
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (c ConflictErrorBodyOneCode) Ptr() *ConflictErrorBodyOneCode {
-	return &c
-}
-
-var (
-	conflictErrorBodyZeroFieldDefined = big.NewInt(1 << 0)
-	conflictErrorBodyZeroFieldCode    = big.NewInt(1 << 1)
-	conflictErrorBodyZeroFieldStatus  = big.NewInt(1 << 2)
-	conflictErrorBodyZeroFieldMessage = big.NewInt(1 << 3)
-	conflictErrorBodyZeroFieldData    = big.NewInt(1 << 4)
-)
-
-type ConflictErrorBodyZero struct {
-	Defined string                    `json:"defined" url:"defined"`
-	Code    ConflictErrorBodyZeroCode `json:"code" url:"code"`
-	Status  string                    `json:"status" url:"status"`
-	Message string                    `json:"message" url:"message"`
-	Data    any                       `json:"data,omitempty" url:"data,omitempty"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (c *ConflictErrorBodyZero) GetDefined() string {
-	if c == nil {
-		return ""
-	}
-	return c.Defined
-}
-
-func (c *ConflictErrorBodyZero) GetCode() ConflictErrorBodyZeroCode {
-	if c == nil {
-		return ""
-	}
-	return c.Code
-}
-
-func (c *ConflictErrorBodyZero) GetStatus() string {
-	if c == nil {
-		return ""
-	}
-	return c.Status
-}
-
-func (c *ConflictErrorBodyZero) GetMessage() string {
-	if c == nil {
-		return ""
-	}
-	return c.Message
-}
-
-func (c *ConflictErrorBodyZero) GetData() any {
-	if c == nil {
-		return nil
-	}
-	return c.Data
-}
-
-func (c *ConflictErrorBodyZero) GetExtraProperties() map[string]interface{} {
-	if c == nil {
-		return nil
-	}
-	return c.extraProperties
-}
-
-func (c *ConflictErrorBodyZero) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
-	}
-	next.Or(next, field)
-	c.explicitFields = next
-}
-
-// SetDefined sets the Defined field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConflictErrorBodyZero) SetDefined(defined string) {
-	c.Defined = defined
-	c.require(conflictErrorBodyZeroFieldDefined)
-}
-
-// SetCode sets the Code field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConflictErrorBodyZero) SetCode(code ConflictErrorBodyZeroCode) {
-	c.Code = code
-	c.require(conflictErrorBodyZeroFieldCode)
-}
-
-// SetStatus sets the Status field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConflictErrorBodyZero) SetStatus(status string) {
-	c.Status = status
-	c.require(conflictErrorBodyZeroFieldStatus)
-}
-
-// SetMessage sets the Message field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConflictErrorBodyZero) SetMessage(message string) {
-	c.Message = message
-	c.require(conflictErrorBodyZeroFieldMessage)
-}
-
-// SetData sets the Data field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConflictErrorBodyZero) SetData(data any) {
-	c.Data = data
-	c.require(conflictErrorBodyZeroFieldData)
-}
-
-func (c *ConflictErrorBodyZero) UnmarshalJSON(data []byte) error {
-	type unmarshaler ConflictErrorBodyZero
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*c = ConflictErrorBodyZero(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *c)
-	if err != nil {
-		return err
-	}
-	c.extraProperties = extraProperties
-	c.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (c *ConflictErrorBodyZero) MarshalJSON() ([]byte, error) {
-	type embed ConflictErrorBodyZero
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*c),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (c *ConflictErrorBodyZero) String() string {
-	if c == nil {
-		return "<nil>"
-	}
-	if len(c.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(c); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", c)
-}
-
-type ConflictErrorBodyZeroCode string
-
-const (
-	ConflictErrorBodyZeroCodeSurfaceCreationConflict ConflictErrorBodyZeroCode = "SURFACE_CREATION_CONFLICT"
-)
-
-func NewConflictErrorBodyZeroCodeFromString(s string) (ConflictErrorBodyZeroCode, error) {
-	switch s {
-	case "SURFACE_CREATION_CONFLICT":
-		return ConflictErrorBodyZeroCodeSurfaceCreationConflict, nil
-	}
-	var t ConflictErrorBodyZeroCode
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (c ConflictErrorBodyZeroCode) Ptr() *ConflictErrorBodyZeroCode {
-	return &c
-}
-
-var (
-	createSurfacePublicKeyResponseFieldContent = big.NewInt(1 << 0)
-	createSurfacePublicKeyResponseFieldName    = big.NewInt(1 << 1)
-)
-
-type CreateSurfacePublicKeyResponse struct {
-	// Publishable credential for browser SDK configuration.
-	Content string `json:"content" url:"content"`
-	// Display name of the key.
-	Name string `json:"name" url:"name"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (c *CreateSurfacePublicKeyResponse) GetContent() string {
-	if c == nil {
-		return ""
-	}
-	return c.Content
-}
-
-func (c *CreateSurfacePublicKeyResponse) GetName() string {
-	if c == nil {
-		return ""
-	}
-	return c.Name
-}
-
-func (c *CreateSurfacePublicKeyResponse) GetExtraProperties() map[string]interface{} {
-	if c == nil {
-		return nil
-	}
-	return c.extraProperties
-}
-
-func (c *CreateSurfacePublicKeyResponse) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
-	}
-	next.Or(next, field)
-	c.explicitFields = next
-}
-
-// SetContent sets the Content field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateSurfacePublicKeyResponse) SetContent(content string) {
-	c.Content = content
-	c.require(createSurfacePublicKeyResponseFieldContent)
-}
-
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateSurfacePublicKeyResponse) SetName(name string) {
-	c.Name = name
-	c.require(createSurfacePublicKeyResponseFieldName)
-}
-
-func (c *CreateSurfacePublicKeyResponse) UnmarshalJSON(data []byte) error {
-	type unmarshaler CreateSurfacePublicKeyResponse
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*c = CreateSurfacePublicKeyResponse(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *c)
-	if err != nil {
-		return err
-	}
-	c.extraProperties = extraProperties
-	c.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (c *CreateSurfacePublicKeyResponse) MarshalJSON() ([]byte, error) {
-	type embed CreateSurfacePublicKeyResponse
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*c),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (c *CreateSurfacePublicKeyResponse) String() string {
-	if c == nil {
-		return "<nil>"
-	}
-	if len(c.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(c); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", c)
 }
 
 var (
@@ -1823,372 +1381,37 @@ func (n NotFoundErrorBodyCodeCode) Ptr() *NotFoundErrorBodyCodeCode {
 	return &n
 }
 
-var (
-	notFoundErrorBodyOneFieldDefined = big.NewInt(1 << 0)
-	notFoundErrorBodyOneFieldCode    = big.NewInt(1 << 1)
-	notFoundErrorBodyOneFieldStatus  = big.NewInt(1 << 2)
-	notFoundErrorBodyOneFieldMessage = big.NewInt(1 << 3)
-	notFoundErrorBodyOneFieldData    = big.NewInt(1 << 4)
-)
-
-type NotFoundErrorBodyOne struct {
-	Defined string                   `json:"defined" url:"defined"`
-	Code    NotFoundErrorBodyOneCode `json:"code" url:"code"`
-	Status  string                   `json:"status" url:"status"`
-	Message string                   `json:"message" url:"message"`
-	Data    any                      `json:"data,omitempty" url:"data,omitempty"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (n *NotFoundErrorBodyOne) GetDefined() string {
-	if n == nil {
-		return ""
-	}
-	return n.Defined
-}
-
-func (n *NotFoundErrorBodyOne) GetCode() NotFoundErrorBodyOneCode {
-	if n == nil {
-		return ""
-	}
-	return n.Code
-}
-
-func (n *NotFoundErrorBodyOne) GetStatus() string {
-	if n == nil {
-		return ""
-	}
-	return n.Status
-}
-
-func (n *NotFoundErrorBodyOne) GetMessage() string {
-	if n == nil {
-		return ""
-	}
-	return n.Message
-}
-
-func (n *NotFoundErrorBodyOne) GetData() any {
-	if n == nil {
-		return nil
-	}
-	return n.Data
-}
-
-func (n *NotFoundErrorBodyOne) GetExtraProperties() map[string]interface{} {
-	if n == nil {
-		return nil
-	}
-	return n.extraProperties
-}
-
-func (n *NotFoundErrorBodyOne) require(field *big.Int) {
-	next := new(big.Int)
-	if n.explicitFields != nil {
-		next.Set(n.explicitFields)
-	}
-	next.Or(next, field)
-	n.explicitFields = next
-}
-
-// SetDefined sets the Defined field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (n *NotFoundErrorBodyOne) SetDefined(defined string) {
-	n.Defined = defined
-	n.require(notFoundErrorBodyOneFieldDefined)
-}
-
-// SetCode sets the Code field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (n *NotFoundErrorBodyOne) SetCode(code NotFoundErrorBodyOneCode) {
-	n.Code = code
-	n.require(notFoundErrorBodyOneFieldCode)
-}
-
-// SetStatus sets the Status field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (n *NotFoundErrorBodyOne) SetStatus(status string) {
-	n.Status = status
-	n.require(notFoundErrorBodyOneFieldStatus)
-}
-
-// SetMessage sets the Message field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (n *NotFoundErrorBodyOne) SetMessage(message string) {
-	n.Message = message
-	n.require(notFoundErrorBodyOneFieldMessage)
-}
-
-// SetData sets the Data field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (n *NotFoundErrorBodyOne) SetData(data any) {
-	n.Data = data
-	n.require(notFoundErrorBodyOneFieldData)
-}
-
-func (n *NotFoundErrorBodyOne) UnmarshalJSON(data []byte) error {
-	type unmarshaler NotFoundErrorBodyOne
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*n = NotFoundErrorBodyOne(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *n)
-	if err != nil {
-		return err
-	}
-	n.extraProperties = extraProperties
-	n.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (n *NotFoundErrorBodyOne) MarshalJSON() ([]byte, error) {
-	type embed NotFoundErrorBodyOne
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*n),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, n.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (n *NotFoundErrorBodyOne) String() string {
-	if n == nil {
-		return "<nil>"
-	}
-	if len(n.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(n); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", n)
-}
-
-type NotFoundErrorBodyOneCode string
-
-const (
-	NotFoundErrorBodyOneCodeWorkspaceNotFound NotFoundErrorBodyOneCode = "WORKSPACE_NOT_FOUND"
-)
-
-func NewNotFoundErrorBodyOneCodeFromString(s string) (NotFoundErrorBodyOneCode, error) {
-	switch s {
-	case "WORKSPACE_NOT_FOUND":
-		return NotFoundErrorBodyOneCodeWorkspaceNotFound, nil
-	}
-	var t NotFoundErrorBodyOneCode
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (n NotFoundErrorBodyOneCode) Ptr() *NotFoundErrorBodyOneCode {
-	return &n
-}
-
-var (
-	notFoundErrorBodyZeroFieldDefined = big.NewInt(1 << 0)
-	notFoundErrorBodyZeroFieldCode    = big.NewInt(1 << 1)
-	notFoundErrorBodyZeroFieldStatus  = big.NewInt(1 << 2)
-	notFoundErrorBodyZeroFieldMessage = big.NewInt(1 << 3)
-	notFoundErrorBodyZeroFieldData    = big.NewInt(1 << 4)
-)
-
-type NotFoundErrorBodyZero struct {
-	Defined string                    `json:"defined" url:"defined"`
-	Code    NotFoundErrorBodyZeroCode `json:"code" url:"code"`
-	Status  string                    `json:"status" url:"status"`
-	Message string                    `json:"message" url:"message"`
-	Data    any                       `json:"data,omitempty" url:"data,omitempty"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (n *NotFoundErrorBodyZero) GetDefined() string {
-	if n == nil {
-		return ""
-	}
-	return n.Defined
-}
-
-func (n *NotFoundErrorBodyZero) GetCode() NotFoundErrorBodyZeroCode {
-	if n == nil {
-		return ""
-	}
-	return n.Code
-}
-
-func (n *NotFoundErrorBodyZero) GetStatus() string {
-	if n == nil {
-		return ""
-	}
-	return n.Status
-}
-
-func (n *NotFoundErrorBodyZero) GetMessage() string {
-	if n == nil {
-		return ""
-	}
-	return n.Message
-}
-
-func (n *NotFoundErrorBodyZero) GetData() any {
-	if n == nil {
-		return nil
-	}
-	return n.Data
-}
-
-func (n *NotFoundErrorBodyZero) GetExtraProperties() map[string]interface{} {
-	if n == nil {
-		return nil
-	}
-	return n.extraProperties
-}
-
-func (n *NotFoundErrorBodyZero) require(field *big.Int) {
-	next := new(big.Int)
-	if n.explicitFields != nil {
-		next.Set(n.explicitFields)
-	}
-	next.Or(next, field)
-	n.explicitFields = next
-}
-
-// SetDefined sets the Defined field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (n *NotFoundErrorBodyZero) SetDefined(defined string) {
-	n.Defined = defined
-	n.require(notFoundErrorBodyZeroFieldDefined)
-}
-
-// SetCode sets the Code field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (n *NotFoundErrorBodyZero) SetCode(code NotFoundErrorBodyZeroCode) {
-	n.Code = code
-	n.require(notFoundErrorBodyZeroFieldCode)
-}
-
-// SetStatus sets the Status field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (n *NotFoundErrorBodyZero) SetStatus(status string) {
-	n.Status = status
-	n.require(notFoundErrorBodyZeroFieldStatus)
-}
-
-// SetMessage sets the Message field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (n *NotFoundErrorBodyZero) SetMessage(message string) {
-	n.Message = message
-	n.require(notFoundErrorBodyZeroFieldMessage)
-}
-
-// SetData sets the Data field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (n *NotFoundErrorBodyZero) SetData(data any) {
-	n.Data = data
-	n.require(notFoundErrorBodyZeroFieldData)
-}
-
-func (n *NotFoundErrorBodyZero) UnmarshalJSON(data []byte) error {
-	type unmarshaler NotFoundErrorBodyZero
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*n = NotFoundErrorBodyZero(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *n)
-	if err != nil {
-		return err
-	}
-	n.extraProperties = extraProperties
-	n.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (n *NotFoundErrorBodyZero) MarshalJSON() ([]byte, error) {
-	type embed NotFoundErrorBodyZero
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*n),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, n.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (n *NotFoundErrorBodyZero) String() string {
-	if n == nil {
-		return "<nil>"
-	}
-	if len(n.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(n); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", n)
-}
-
-type NotFoundErrorBodyZeroCode string
-
-const (
-	NotFoundErrorBodyZeroCodeSurfaceNotFound NotFoundErrorBodyZeroCode = "SURFACE_NOT_FOUND"
-)
-
-func NewNotFoundErrorBodyZeroCodeFromString(s string) (NotFoundErrorBodyZeroCode, error) {
-	switch s {
-	case "SURFACE_NOT_FOUND":
-		return NotFoundErrorBodyZeroCodeSurfaceNotFound, nil
-	}
-	var t NotFoundErrorBodyZeroCode
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (n NotFoundErrorBodyZeroCode) Ptr() *NotFoundErrorBodyZeroCode {
-	return &n
-}
-
 type QueryPublicKeysForSurfaceResponse = []*QueryPublicKeysForSurfaceResponseItem
 
 var (
-	queryPublicKeysForSurfaceResponseItemFieldCreatedAt  = big.NewInt(1 << 0)
-	queryPublicKeysForSurfaceResponseItemFieldDeletedAt  = big.NewInt(1 << 1)
-	queryPublicKeysForSurfaceResponseItemFieldUpdatedAt  = big.NewInt(1 << 2)
-	queryPublicKeysForSurfaceResponseItemFieldContent    = big.NewInt(1 << 3)
-	queryPublicKeysForSurfaceResponseItemFieldID         = big.NewInt(1 << 4)
-	queryPublicKeysForSurfaceResponseItemFieldLastUsedAt = big.NewInt(1 << 5)
-	queryPublicKeysForSurfaceResponseItemFieldName       = big.NewInt(1 << 6)
-	queryPublicKeysForSurfaceResponseItemFieldSurfaceID  = big.NewInt(1 << 7)
+	queryPublicKeysForSurfaceResponseItemFieldCreatedAt      = big.NewInt(1 << 0)
+	queryPublicKeysForSurfaceResponseItemFieldDeletedAt      = big.NewInt(1 << 1)
+	queryPublicKeysForSurfaceResponseItemFieldUpdatedAt      = big.NewInt(1 << 2)
+	queryPublicKeysForSurfaceResponseItemFieldContent        = big.NewInt(1 << 3)
+	queryPublicKeysForSurfaceResponseItemFieldID             = big.NewInt(1 << 4)
+	queryPublicKeysForSurfaceResponseItemFieldLastUsedAt     = big.NewInt(1 << 5)
+	queryPublicKeysForSurfaceResponseItemFieldName           = big.NewInt(1 << 6)
+	queryPublicKeysForSurfaceResponseItemFieldOrganizationID = big.NewInt(1 << 7)
+	queryPublicKeysForSurfaceResponseItemFieldSurfaceID      = big.NewInt(1 << 8)
 )
 
 // queryPublicKeysForSurfaceResponseItemNullableFields maps the wire names of QueryPublicKeysForSurfaceResponseItem's nullable fields (required or optional) to their field bits.
 var queryPublicKeysForSurfaceResponseItemNullableFields = map[string]*big.Int{
 	"deletedAt":  queryPublicKeysForSurfaceResponseItemFieldDeletedAt,
 	"lastUsedAt": queryPublicKeysForSurfaceResponseItemFieldLastUsedAt,
+	"surfaceId":  queryPublicKeysForSurfaceResponseItemFieldSurfaceID,
 }
 
 type QueryPublicKeysForSurfaceResponseItem struct {
-	CreatedAt  float64  `json:"createdAt" url:"createdAt"`
-	DeletedAt  *float64 `json:"deletedAt,omitempty" url:"deletedAt,omitempty"`
-	UpdatedAt  float64  `json:"updatedAt" url:"updatedAt"`
-	Content    string   `json:"content" url:"content"`
-	ID         string   `json:"id" url:"id"`
-	LastUsedAt *float64 `json:"lastUsedAt,omitempty" url:"lastUsedAt,omitempty"`
-	Name       string   `json:"name" url:"name"`
-	SurfaceID  string   `json:"surfaceId" url:"surfaceId"`
+	CreatedAt      float64  `json:"createdAt" url:"createdAt"`
+	DeletedAt      *float64 `json:"deletedAt,omitempty" url:"deletedAt,omitempty"`
+	UpdatedAt      float64  `json:"updatedAt" url:"updatedAt"`
+	Content        string   `json:"content" url:"content"`
+	ID             string   `json:"id" url:"id"`
+	LastUsedAt     *float64 `json:"lastUsedAt,omitempty" url:"lastUsedAt,omitempty"`
+	Name           string   `json:"name" url:"name"`
+	OrganizationID string   `json:"organizationId" url:"organizationId"`
+	SurfaceID      *string  `json:"surfaceId,omitempty" url:"surfaceId,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -2246,9 +1469,16 @@ func (q *QueryPublicKeysForSurfaceResponseItem) GetName() string {
 	return q.Name
 }
 
-func (q *QueryPublicKeysForSurfaceResponseItem) GetSurfaceID() string {
+func (q *QueryPublicKeysForSurfaceResponseItem) GetOrganizationID() string {
 	if q == nil {
 		return ""
+	}
+	return q.OrganizationID
+}
+
+func (q *QueryPublicKeysForSurfaceResponseItem) GetSurfaceID() *string {
+	if q == nil {
+		return nil
 	}
 	return q.SurfaceID
 }
@@ -2318,9 +1548,16 @@ func (q *QueryPublicKeysForSurfaceResponseItem) SetName(name string) {
 	q.require(queryPublicKeysForSurfaceResponseItemFieldName)
 }
 
+// SetOrganizationID sets the OrganizationID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryPublicKeysForSurfaceResponseItem) SetOrganizationID(organizationID string) {
+	q.OrganizationID = organizationID
+	q.require(queryPublicKeysForSurfaceResponseItemFieldOrganizationID)
+}
+
 // SetSurfaceID sets the SurfaceID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (q *QueryPublicKeysForSurfaceResponseItem) SetSurfaceID(surfaceID string) {
+func (q *QueryPublicKeysForSurfaceResponseItem) SetSurfaceID(surfaceID *string) {
 	q.SurfaceID = surfaceID
 	q.require(queryPublicKeysForSurfaceResponseItemFieldSurfaceID)
 }
@@ -2360,6 +1597,236 @@ func (q *QueryPublicKeysForSurfaceResponseItem) MarshalJSON() ([]byte, error) {
 }
 
 func (q *QueryPublicKeysForSurfaceResponseItem) String() string {
+	if q == nil {
+		return "<nil>"
+	}
+	if len(q.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(q.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(q); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", q)
+}
+
+type QueryPublicKeysForWorkspaceResponse = []*QueryPublicKeysForWorkspaceResponseItem
+
+var (
+	queryPublicKeysForWorkspaceResponseItemFieldCreatedAt      = big.NewInt(1 << 0)
+	queryPublicKeysForWorkspaceResponseItemFieldDeletedAt      = big.NewInt(1 << 1)
+	queryPublicKeysForWorkspaceResponseItemFieldUpdatedAt      = big.NewInt(1 << 2)
+	queryPublicKeysForWorkspaceResponseItemFieldContent        = big.NewInt(1 << 3)
+	queryPublicKeysForWorkspaceResponseItemFieldID             = big.NewInt(1 << 4)
+	queryPublicKeysForWorkspaceResponseItemFieldLastUsedAt     = big.NewInt(1 << 5)
+	queryPublicKeysForWorkspaceResponseItemFieldName           = big.NewInt(1 << 6)
+	queryPublicKeysForWorkspaceResponseItemFieldOrganizationID = big.NewInt(1 << 7)
+	queryPublicKeysForWorkspaceResponseItemFieldSurfaceID      = big.NewInt(1 << 8)
+)
+
+// queryPublicKeysForWorkspaceResponseItemNullableFields maps the wire names of QueryPublicKeysForWorkspaceResponseItem's nullable fields (required or optional) to their field bits.
+var queryPublicKeysForWorkspaceResponseItemNullableFields = map[string]*big.Int{
+	"deletedAt":  queryPublicKeysForWorkspaceResponseItemFieldDeletedAt,
+	"lastUsedAt": queryPublicKeysForWorkspaceResponseItemFieldLastUsedAt,
+	"surfaceId":  queryPublicKeysForWorkspaceResponseItemFieldSurfaceID,
+}
+
+type QueryPublicKeysForWorkspaceResponseItem struct {
+	CreatedAt      float64  `json:"createdAt" url:"createdAt"`
+	DeletedAt      *float64 `json:"deletedAt,omitempty" url:"deletedAt,omitempty"`
+	UpdatedAt      float64  `json:"updatedAt" url:"updatedAt"`
+	Content        string   `json:"content" url:"content"`
+	ID             string   `json:"id" url:"id"`
+	LastUsedAt     *float64 `json:"lastUsedAt,omitempty" url:"lastUsedAt,omitempty"`
+	Name           string   `json:"name" url:"name"`
+	OrganizationID string   `json:"organizationId" url:"organizationId"`
+	SurfaceID      *string  `json:"surfaceId,omitempty" url:"surfaceId,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (q *QueryPublicKeysForWorkspaceResponseItem) GetCreatedAt() float64 {
+	if q == nil {
+		return 0
+	}
+	return q.CreatedAt
+}
+
+func (q *QueryPublicKeysForWorkspaceResponseItem) GetDeletedAt() *float64 {
+	if q == nil {
+		return nil
+	}
+	return q.DeletedAt
+}
+
+func (q *QueryPublicKeysForWorkspaceResponseItem) GetUpdatedAt() float64 {
+	if q == nil {
+		return 0
+	}
+	return q.UpdatedAt
+}
+
+func (q *QueryPublicKeysForWorkspaceResponseItem) GetContent() string {
+	if q == nil {
+		return ""
+	}
+	return q.Content
+}
+
+func (q *QueryPublicKeysForWorkspaceResponseItem) GetID() string {
+	if q == nil {
+		return ""
+	}
+	return q.ID
+}
+
+func (q *QueryPublicKeysForWorkspaceResponseItem) GetLastUsedAt() *float64 {
+	if q == nil {
+		return nil
+	}
+	return q.LastUsedAt
+}
+
+func (q *QueryPublicKeysForWorkspaceResponseItem) GetName() string {
+	if q == nil {
+		return ""
+	}
+	return q.Name
+}
+
+func (q *QueryPublicKeysForWorkspaceResponseItem) GetOrganizationID() string {
+	if q == nil {
+		return ""
+	}
+	return q.OrganizationID
+}
+
+func (q *QueryPublicKeysForWorkspaceResponseItem) GetSurfaceID() *string {
+	if q == nil {
+		return nil
+	}
+	return q.SurfaceID
+}
+
+func (q *QueryPublicKeysForWorkspaceResponseItem) GetExtraProperties() map[string]interface{} {
+	if q == nil {
+		return nil
+	}
+	return q.extraProperties
+}
+
+func (q *QueryPublicKeysForWorkspaceResponseItem) require(field *big.Int) {
+	next := new(big.Int)
+	if q.explicitFields != nil {
+		next.Set(q.explicitFields)
+	}
+	next.Or(next, field)
+	q.explicitFields = next
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryPublicKeysForWorkspaceResponseItem) SetCreatedAt(createdAt float64) {
+	q.CreatedAt = createdAt
+	q.require(queryPublicKeysForWorkspaceResponseItemFieldCreatedAt)
+}
+
+// SetDeletedAt sets the DeletedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryPublicKeysForWorkspaceResponseItem) SetDeletedAt(deletedAt *float64) {
+	q.DeletedAt = deletedAt
+	q.require(queryPublicKeysForWorkspaceResponseItemFieldDeletedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryPublicKeysForWorkspaceResponseItem) SetUpdatedAt(updatedAt float64) {
+	q.UpdatedAt = updatedAt
+	q.require(queryPublicKeysForWorkspaceResponseItemFieldUpdatedAt)
+}
+
+// SetContent sets the Content field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryPublicKeysForWorkspaceResponseItem) SetContent(content string) {
+	q.Content = content
+	q.require(queryPublicKeysForWorkspaceResponseItemFieldContent)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryPublicKeysForWorkspaceResponseItem) SetID(id string) {
+	q.ID = id
+	q.require(queryPublicKeysForWorkspaceResponseItemFieldID)
+}
+
+// SetLastUsedAt sets the LastUsedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryPublicKeysForWorkspaceResponseItem) SetLastUsedAt(lastUsedAt *float64) {
+	q.LastUsedAt = lastUsedAt
+	q.require(queryPublicKeysForWorkspaceResponseItemFieldLastUsedAt)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryPublicKeysForWorkspaceResponseItem) SetName(name string) {
+	q.Name = name
+	q.require(queryPublicKeysForWorkspaceResponseItemFieldName)
+}
+
+// SetOrganizationID sets the OrganizationID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryPublicKeysForWorkspaceResponseItem) SetOrganizationID(organizationID string) {
+	q.OrganizationID = organizationID
+	q.require(queryPublicKeysForWorkspaceResponseItemFieldOrganizationID)
+}
+
+// SetSurfaceID sets the SurfaceID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryPublicKeysForWorkspaceResponseItem) SetSurfaceID(surfaceID *string) {
+	q.SurfaceID = surfaceID
+	q.require(queryPublicKeysForWorkspaceResponseItemFieldSurfaceID)
+}
+
+func (q *QueryPublicKeysForWorkspaceResponseItem) UnmarshalJSON(data []byte) error {
+	type unmarshaler QueryPublicKeysForWorkspaceResponseItem
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*q = QueryPublicKeysForWorkspaceResponseItem(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *q)
+	if err != nil {
+		return err
+	}
+	q.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, queryPublicKeysForWorkspaceResponseItemNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		q.require(presentFields)
+	}
+	q.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (q *QueryPublicKeysForWorkspaceResponseItem) MarshalJSON() ([]byte, error) {
+	type embed QueryPublicKeysForWorkspaceResponseItem
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*q),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, q.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (q *QueryPublicKeysForWorkspaceResponseItem) String() string {
 	if q == nil {
 		return "<nil>"
 	}
@@ -2862,8 +2329,14 @@ const (
 	ReadPrivateKeyResponseScopesItemOrgSurfacesRead               ReadPrivateKeyResponseScopesItem = "org:surfaces:read"
 	ReadPrivateKeyResponseScopesItemOrgSurfacesWrite              ReadPrivateKeyResponseScopesItem = "org:surfaces:write"
 	ReadPrivateKeyResponseScopesItemOrgSurfacesDelete             ReadPrivateKeyResponseScopesItem = "org:surfaces:delete"
+	ReadPrivateKeyResponseScopesItemOrgServicesRead               ReadPrivateKeyResponseScopesItem = "org:services:read"
+	ReadPrivateKeyResponseScopesItemOrgServicesWrite              ReadPrivateKeyResponseScopesItem = "org:services:write"
+	ReadPrivateKeyResponseScopesItemOrgCustomersRead              ReadPrivateKeyResponseScopesItem = "org:customers:read"
+	ReadPrivateKeyResponseScopesItemOrgTiersRead                  ReadPrivateKeyResponseScopesItem = "org:tiers:read"
+	ReadPrivateKeyResponseScopesItemOrgTiersWrite                 ReadPrivateKeyResponseScopesItem = "org:tiers:write"
 	ReadPrivateKeyResponseScopesItemOrgProblemsRead               ReadPrivateKeyResponseScopesItem = "org:problems:read"
 	ReadPrivateKeyResponseScopesItemOrgProblemsWrite              ReadPrivateKeyResponseScopesItem = "org:problems:write"
+	ReadPrivateKeyResponseScopesItemOrgFindingsRead               ReadPrivateKeyResponseScopesItem = "org:findings:read"
 	ReadPrivateKeyResponseScopesItemOrgSupportRead                ReadPrivateKeyResponseScopesItem = "org:support:read"
 	ReadPrivateKeyResponseScopesItemOrgSupportWrite               ReadPrivateKeyResponseScopesItem = "org:support:write"
 	ReadPrivateKeyResponseScopesItemOrgReplaysRead                ReadPrivateKeyResponseScopesItem = "org:replays:read"
@@ -2878,6 +2351,8 @@ const (
 	ReadPrivateKeyResponseScopesItemOrgWorkspaceBasicsWrite       ReadPrivateKeyResponseScopesItem = "org:workspace_basics:write"
 	ReadPrivateKeyResponseScopesItemOrgWorkspaceDomainsRead       ReadPrivateKeyResponseScopesItem = "org:workspace_domains:read"
 	ReadPrivateKeyResponseScopesItemOrgWorkspaceDomainsWrite      ReadPrivateKeyResponseScopesItem = "org:workspace_domains:write"
+	ReadPrivateKeyResponseScopesItemOrgAPIKeysRead                ReadPrivateKeyResponseScopesItem = "org:api_keys:read"
+	ReadPrivateKeyResponseScopesItemOrgAPIKeysWrite               ReadPrivateKeyResponseScopesItem = "org:api_keys:write"
 	ReadPrivateKeyResponseScopesItemOrgWorkspaceAuthRead          ReadPrivateKeyResponseScopesItem = "org:workspace_auth:read"
 	ReadPrivateKeyResponseScopesItemOrgWorkspaceAuthWrite         ReadPrivateKeyResponseScopesItem = "org:workspace_auth:write"
 	ReadPrivateKeyResponseScopesItemOrgWorkspaceDestroy           ReadPrivateKeyResponseScopesItem = "org:workspace:destroy"
@@ -2896,10 +2371,22 @@ func NewReadPrivateKeyResponseScopesItemFromString(s string) (ReadPrivateKeyResp
 		return ReadPrivateKeyResponseScopesItemOrgSurfacesWrite, nil
 	case "org:surfaces:delete":
 		return ReadPrivateKeyResponseScopesItemOrgSurfacesDelete, nil
+	case "org:services:read":
+		return ReadPrivateKeyResponseScopesItemOrgServicesRead, nil
+	case "org:services:write":
+		return ReadPrivateKeyResponseScopesItemOrgServicesWrite, nil
+	case "org:customers:read":
+		return ReadPrivateKeyResponseScopesItemOrgCustomersRead, nil
+	case "org:tiers:read":
+		return ReadPrivateKeyResponseScopesItemOrgTiersRead, nil
+	case "org:tiers:write":
+		return ReadPrivateKeyResponseScopesItemOrgTiersWrite, nil
 	case "org:problems:read":
 		return ReadPrivateKeyResponseScopesItemOrgProblemsRead, nil
 	case "org:problems:write":
 		return ReadPrivateKeyResponseScopesItemOrgProblemsWrite, nil
+	case "org:findings:read":
+		return ReadPrivateKeyResponseScopesItemOrgFindingsRead, nil
 	case "org:support:read":
 		return ReadPrivateKeyResponseScopesItemOrgSupportRead, nil
 	case "org:support:write":
@@ -2928,6 +2415,10 @@ func NewReadPrivateKeyResponseScopesItemFromString(s string) (ReadPrivateKeyResp
 		return ReadPrivateKeyResponseScopesItemOrgWorkspaceDomainsRead, nil
 	case "org:workspace_domains:write":
 		return ReadPrivateKeyResponseScopesItemOrgWorkspaceDomainsWrite, nil
+	case "org:api_keys:read":
+		return ReadPrivateKeyResponseScopesItemOrgAPIKeysRead, nil
+	case "org:api_keys:write":
+		return ReadPrivateKeyResponseScopesItemOrgAPIKeysWrite, nil
 	case "org:workspace_auth:read":
 		return ReadPrivateKeyResponseScopesItemOrgWorkspaceAuthRead, nil
 	case "org:workspace_auth:write":

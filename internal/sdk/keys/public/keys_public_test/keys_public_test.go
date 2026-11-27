@@ -106,7 +106,7 @@ func TestKeysPublicListForSurfaceWithWireMock(
     VerifyRequestCount(t, "TestKeysPublicListForSurfaceWithWireMock", "POST", "/v3/workspaces/workspaceSlug/queries/publicKeys.forSurface", nil, 1)
 }
 
-func TestKeysPublicCreateWithWireMock(
+func TestKeysPublicForWorkspaceWithWireMock(
     t *testing.T,
 ) {
     WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -117,22 +117,22 @@ func TestKeysPublicCreateWithWireMock(
         option.WithBaseURL(WireMockBaseURL),
         option.WithToken("test-token"),
     )
-        request := &keys.CreatePublicRequest{
+        request := &keys.ForWorkspacePublicRequest{
             WorkspaceSlug: "workspaceSlug",
-            SurfaceSlug: "surfaceSlug",
-            IdempotencyKey: "idempotencyKey",
-            Name: "name",
+            Args: map[string]any{
+                "key": "value",
+            },
         }
-    _, invocationErr :=     client.Keys.Public.Create(
+    _, invocationErr :=     client.Keys.Public.ForWorkspace(
             context.TODO(),
             request,
             option.WithHTTPHeader(
-                http.Header{"X-Test-Id": []string{"TestKeysPublicCreateWithWireMock"}},
+                http.Header{"X-Test-Id": []string{"TestKeysPublicForWorkspaceWithWireMock"}},
             ),
         )
 
     require.NoError(t, invocationErr, "Client method call should succeed")
-    VerifyRequestCount(t, "TestKeysPublicCreateWithWireMock", "POST", "/v3/workspaces/workspaceSlug/surfaces/surfaceSlug/publicKeys", nil, 1)
+    VerifyRequestCount(t, "TestKeysPublicForWorkspaceWithWireMock", "POST", "/v3/workspaces/workspaceSlug/queries/publicKeys.forWorkspace", nil, 1)
 }
 
 func TestKeysPublicGetWithWireMock(
