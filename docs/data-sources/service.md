@@ -29,7 +29,6 @@ data "interfere_service" "website" {
 
 ### Read-Only
 
-- `merged_into_id` (String)
 - `name` (String) Telemetry service name.
 - `namespace` (String) Telemetry service namespace, when supplied.
 - `type` (String) Service type: unclassified, other, backend, or website.

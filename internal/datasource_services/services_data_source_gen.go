@@ -29,9 +29,6 @@ func ServicesDataSourceSchema(ctx context.Context) schema.Schema {
 							Description:         "Unique service identifier.",
 							MarkdownDescription: "Unique service identifier.",
 						},
-						"merged_into_id": schema.StringAttribute{
-							Computed: true,
-						},
 						"name": schema.StringAttribute{
 							Computed:            true,
 							Description:         "Telemetry service name.",
@@ -116,24 +113,6 @@ func (t ServicesType) ValueFromObject(ctx context.Context, in basetypes.ObjectVa
 			fmt.Sprintf(`id expected to be basetypes.StringValue, was: %T`, idAttribute))
 	}
 
-	mergedIntoIdAttribute, ok := attributes["merged_into_id"]
-
-	if !ok {
-		diags.AddError(
-			"Attribute Missing",
-			`merged_into_id is missing from object`)
-
-		return nil, diags
-	}
-
-	mergedIntoIdVal, ok := mergedIntoIdAttribute.(basetypes.StringValue)
-
-	if !ok {
-		diags.AddError(
-			"Attribute Wrong Type",
-			fmt.Sprintf(`merged_into_id expected to be basetypes.StringValue, was: %T`, mergedIntoIdAttribute))
-	}
-
 	nameAttribute, ok := attributes["name"]
 
 	if !ok {
@@ -194,7 +173,6 @@ func (t ServicesType) ValueFromObject(ctx context.Context, in basetypes.ObjectVa
 
 	return ServicesValue{
 		Id:           idVal,
-		MergedIntoId: mergedIntoIdVal,
 		Name:         nameVal,
 		Namespace:    namespaceVal,
 		ServicesType: typeVal,
@@ -283,24 +261,6 @@ func NewServicesValue(attributeTypes map[string]attr.Type, attributes map[string
 			fmt.Sprintf(`id expected to be basetypes.StringValue, was: %T`, idAttribute))
 	}
 
-	mergedIntoIdAttribute, ok := attributes["merged_into_id"]
-
-	if !ok {
-		diags.AddError(
-			"Attribute Missing",
-			`merged_into_id is missing from object`)
-
-		return NewServicesValueUnknown(), diags
-	}
-
-	mergedIntoIdVal, ok := mergedIntoIdAttribute.(basetypes.StringValue)
-
-	if !ok {
-		diags.AddError(
-			"Attribute Wrong Type",
-			fmt.Sprintf(`merged_into_id expected to be basetypes.StringValue, was: %T`, mergedIntoIdAttribute))
-	}
-
 	nameAttribute, ok := attributes["name"]
 
 	if !ok {
@@ -361,7 +321,6 @@ func NewServicesValue(attributeTypes map[string]attr.Type, attributes map[string
 
 	return ServicesValue{
 		Id:           idVal,
-		MergedIntoId: mergedIntoIdVal,
 		Name:         nameVal,
 		Namespace:    namespaceVal,
 		ServicesType: typeVal,
@@ -438,7 +397,6 @@ var _ basetypes.ObjectValuable = ServicesValue{}
 
 type ServicesValue struct {
 	Id           basetypes.StringValue `tfsdk:"id"`
-	MergedIntoId basetypes.StringValue `tfsdk:"merged_into_id"`
 	Name         basetypes.StringValue `tfsdk:"name"`
 	Namespace    basetypes.StringValue `tfsdk:"namespace"`
 	ServicesType basetypes.StringValue `tfsdk:"type"`
@@ -446,13 +404,12 @@ type ServicesValue struct {
 }
 
 func (v ServicesValue) ToTerraformValue(ctx context.Context) (tftypes.Value, error) {
-	attrTypes := make(map[string]tftypes.Type, 5)
+	attrTypes := make(map[string]tftypes.Type, 4)
 
 	var val tftypes.Value
 	var err error
 
 	attrTypes["id"] = basetypes.StringType{}.TerraformType(ctx)
-	attrTypes["merged_into_id"] = basetypes.StringType{}.TerraformType(ctx)
 	attrTypes["name"] = basetypes.StringType{}.TerraformType(ctx)
 	attrTypes["namespace"] = basetypes.StringType{}.TerraformType(ctx)
 	attrTypes["type"] = basetypes.StringType{}.TerraformType(ctx)
@@ -461,7 +418,7 @@ func (v ServicesValue) ToTerraformValue(ctx context.Context) (tftypes.Value, err
 
 	switch v.state {
 	case attr.ValueStateKnown:
-		vals := make(map[string]tftypes.Value, 5)
+		vals := make(map[string]tftypes.Value, 4)
 
 		val, err = v.Id.ToTerraformValue(ctx)
 
@@ -470,14 +427,6 @@ func (v ServicesValue) ToTerraformValue(ctx context.Context) (tftypes.Value, err
 		}
 
 		vals["id"] = val
-
-		val, err = v.MergedIntoId.ToTerraformValue(ctx)
-
-		if err != nil {
-			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
-		}
-
-		vals["merged_into_id"] = val
 
 		val, err = v.Name.ToTerraformValue(ctx)
 
@@ -533,11 +482,10 @@ func (v ServicesValue) ToObjectValue(ctx context.Context) (basetypes.ObjectValue
 	var diags diag.Diagnostics
 
 	attributeTypes := map[string]attr.Type{
-		"id":             basetypes.StringType{},
-		"merged_into_id": basetypes.StringType{},
-		"name":           basetypes.StringType{},
-		"namespace":      basetypes.StringType{},
-		"type":           basetypes.StringType{},
+		"id":        basetypes.StringType{},
+		"name":      basetypes.StringType{},
+		"namespace": basetypes.StringType{},
+		"type":      basetypes.StringType{},
 	}
 
 	if v.IsNull() {
@@ -551,11 +499,10 @@ func (v ServicesValue) ToObjectValue(ctx context.Context) (basetypes.ObjectValue
 	objVal, diags := types.ObjectValue(
 		attributeTypes,
 		map[string]attr.Value{
-			"id":             v.Id,
-			"merged_into_id": v.MergedIntoId,
-			"name":           v.Name,
-			"namespace":      v.Namespace,
-			"type":           v.ServicesType,
+			"id":        v.Id,
+			"name":      v.Name,
+			"namespace": v.Namespace,
+			"type":      v.ServicesType,
 		})
 
 	return objVal, diags
@@ -577,10 +524,6 @@ func (v ServicesValue) Equal(o attr.Value) bool {
 	}
 
 	if !v.Id.Equal(other.Id) {
-		return false
-	}
-
-	if !v.MergedIntoId.Equal(other.MergedIntoId) {
 		return false
 	}
 
@@ -609,10 +552,9 @@ func (v ServicesValue) Type(ctx context.Context) attr.Type {
 
 func (v ServicesValue) AttributeTypes(ctx context.Context) map[string]attr.Type {
 	return map[string]attr.Type{
-		"id":             basetypes.StringType{},
-		"merged_into_id": basetypes.StringType{},
-		"name":           basetypes.StringType{},
-		"namespace":      basetypes.StringType{},
-		"type":           basetypes.StringType{},
+		"id":        basetypes.StringType{},
+		"name":      basetypes.StringType{},
+		"namespace": basetypes.StringType{},
+		"type":      basetypes.StringType{},
 	}
 }

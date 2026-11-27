@@ -35,7 +35,6 @@ data "interfere_services" "workspace" {
 Read-Only:
 
 - `id` (String) Unique service identifier.
-- `merged_into_id` (String)
 - `name` (String) Telemetry service name.
 - `namespace` (String) Telemetry service namespace, when supplied.
 - `type` (String) Service type: unclassified, other, backend, or website.

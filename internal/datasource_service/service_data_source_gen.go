@@ -26,9 +26,6 @@ func ServiceDataSourceSchema(ctx context.Context) schema.Schema {
 				Description:         "Unique service identifier. Applying adopts this existing service.",
 				MarkdownDescription: "Unique service identifier. Applying adopts this existing service.",
 			},
-			"merged_into_id": schema.StringAttribute{
-				Computed: true,
-			},
 			"name": schema.StringAttribute{
 				Computed:            true,
 				Description:         "Telemetry service name.",
@@ -109,7 +106,6 @@ func ServiceDataSourceSchema(ctx context.Context) schema.Schema {
 
 type ServiceModel struct {
 	Id              types.String         `tfsdk:"id"`
-	MergedIntoId    types.String         `tfsdk:"merged_into_id"`
 	Name            types.String         `tfsdk:"name"`
 	Namespace       types.String         `tfsdk:"namespace"`
 	Type            types.String         `tfsdk:"type"`
