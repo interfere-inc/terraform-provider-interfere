@@ -22,9 +22,7 @@ func TestConfigurationResourcesPreserveStateOnReadFailure(t *testing.T) {
 				resource resource.Resource
 				model    any
 			}{
-				"repository":  {&surfaceRepositoryResource{client: c}, surfaceRepositoryModel{ID: types.StringValue(surfaceID), WorkspaceSlug: types.StringValue("example"), SurfaceSlug: types.StringValue(surfaceSlug), IntegrationID: types.StringValue("integration-1"), MappingID: types.StringValue("repo-1")}},
-				"destination": {&surfaceDestinationResource{client: c}, surfaceDestinationModel{ID: types.StringValue(surfaceID), WorkspaceSlug: types.StringValue("example"), SurfaceSlug: types.StringValue(surfaceSlug), IntegrationID: types.StringValue("destination-1"), MappingID: types.StringValue("project-1")}},
-				"domain":      {&trackingDomainResource{client: c}, trackingDomainModel{ID: types.StringValue(attemptID), WorkspaceSlug: types.StringValue("example"), Name: types.StringValue("track.example.com"), IdempotencyKey: types.StringValue(attemptID)}},
+				"domain": {&trackingDomainResource{client: c}, trackingDomainModel{ID: types.StringValue(attemptID), WorkspaceSlug: types.StringValue("example"), Name: types.StringValue("track.example.com"), IdempotencyKey: types.StringValue(attemptID)}},
 			}
 			for name, tc := range cases {
 				t.Run(name, func(t *testing.T) {
@@ -47,19 +45,5 @@ func TestConfigurationResourcesPreserveStateOnReadFailure(t *testing.T) {
 				})
 			}
 		})
-	}
-}
-
-func TestMappingRefusesToAdoptDifferentMapping(t *testing.T) {
-	f := newConfigFixture(t)
-	f.source = "other-integration"
-	f.repository = "other-repository"
-	r := &surfaceRepositoryResource{client: client.NewClient(option.WithToken("fixture-token"), option.WithBaseURL(f.server.URL), option.WithoutRetries())}
-	data := surfaceRepositoryModel{WorkspaceSlug: types.StringValue("example"), SurfaceSlug: types.StringValue(surfaceSlug), IntegrationID: types.StringValue("integration-1"), MappingID: types.StringValue("repo-1")}
-	if err := r.write(context.Background(), &data, true); err == nil {
-		t.Fatal("Creation silently replaced an existing mapping")
-	}
-	if f.source != "other-integration" || f.repository != "other-repository" {
-		t.Fatal("Existing mapping was changed")
 	}
 }

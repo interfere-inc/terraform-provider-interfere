@@ -29,7 +29,7 @@ func (r *workspaceResource) apply(ctx context.Context, data *workspaceModel, pre
 	}
 	data.Id = types.StringValue(remote.ID)
 	data.DataResidencyLocation = types.StringValue(string(remote.DataResidencyLocation))
-	return nil
+	return r.applySecurity(ctx, data, remote)
 }
 
 func (r *workspaceResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {

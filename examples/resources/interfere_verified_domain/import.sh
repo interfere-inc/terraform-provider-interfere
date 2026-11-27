@@ -1,0 +1,1 @@
+terraform import interfere_verified_domain.company example/example.com

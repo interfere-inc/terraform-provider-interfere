@@ -10,11 +10,11 @@ import (
 
 func (r *publicKeyResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
 	parts := strings.Split(req.ID, "/")
-	if len(parts) != 3 || !slugPattern.MatchString(parts[0]) || !slugPattern.MatchString(parts[1]) || !uuidPattern.MatchString(parts[2]) {
-		resp.Diagnostics.AddError("Invalid public key import ID", "Use workspace-slug/surface-slug/key-uuid.")
+	if len(parts) != 2 || !slugPattern.MatchString(parts[0]) || !uuidPattern.MatchString(parts[1]) {
+		resp.Diagnostics.AddError("Invalid public key import ID", "Use workspace-slug/key-uuid.")
 		return
 	}
-	data := publicKeyModel{WorkspaceSlug: types.StringValue(parts[0]), SurfaceSlug: types.StringValue(parts[1]), Id: types.StringValue(parts[2]), IdempotencyKey: types.StringValue(parts[2])}
+	data := publicKeyModel{WorkspaceSlug: types.StringValue(parts[0]), Id: types.StringValue(parts[1]), IdempotencyKey: types.StringValue(parts[1])}
 	remote, err := r.read(ctx, data)
 	if err != nil {
 		resp.Diagnostics.AddError("Unable to import public key", err.Error())

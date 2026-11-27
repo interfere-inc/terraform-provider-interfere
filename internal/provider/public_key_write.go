@@ -6,7 +6,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/interfere-inc/terraform-provider-interfere/internal/sdk/keys"
+	"github.com/interfere-inc/terraform-provider-interfere/internal/sdk"
 	"github.com/interfere-inc/terraform-provider-interfere/internal/sdk/option"
 )
 
@@ -17,7 +17,7 @@ func (r *publicKeyResource) Create(ctx context.Context, req resource.CreateReque
 		return
 	}
 	data.IdempotencyKey = creationIdentity(data.IdempotencyKey)
-	created, err := r.client.Keys.Public.Create(ctx, &keys.CreatePublicRequest{WorkspaceSlug: data.WorkspaceSlug.ValueString(), SurfaceSlug: data.SurfaceSlug.ValueString(), IdempotencyKey: data.IdempotencyKey.ValueString(), Name: data.Name.ValueString()}, option.WithMaxAttempts(3))
+	created, err := r.client.Workspaces.CreateWorkspacePublicKey(ctx, &sdk.CreateWorkspacePublicKeyRequest{WorkspaceSlug: data.WorkspaceSlug.ValueString(), IdempotencyKey: data.IdempotencyKey.ValueString(), Name: data.Name.ValueString()}, option.WithMaxAttempts(3))
 	if err != nil {
 		resp.Diagnostics.AddError("Unable to create public key", creationError(data.IdempotencyKey, apiError(err)))
 		return
@@ -59,7 +59,7 @@ func (r *publicKeyResource) Delete(ctx context.Context, req resource.DeleteReque
 	if remote.Revoked {
 		return
 	}
-	result, err := r.client.Keys.Public.Delete(ctx, &keys.DeletePublicRequest{WorkspaceSlug: data.WorkspaceSlug.ValueString(), SurfaceSlug: data.SurfaceSlug.ValueString(), PublicKeyID: data.Id.ValueString()})
+	result, err := r.client.Workspaces.RevokeWorkspacePublicKey(ctx, &sdk.RevokeWorkspacePublicKeyRequest{WorkspaceSlug: data.WorkspaceSlug.ValueString(), PublicKeyID: data.Id.ValueString()})
 	if err != nil {
 		resp.Diagnostics.AddError("Unable to revoke public key", apiError(err))
 		return

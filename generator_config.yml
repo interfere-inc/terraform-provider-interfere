@@ -1,6 +1,45 @@
 provider:
   name: "interfere"
 resources:
+  service:
+    create:
+      path: "/v3/workspaces/{workspaceSlug}/actions/services.setWebsiteSettings"
+      method: "POST"
+    read: &service_read
+      path: "/v3/workspaces/{workspaceSlug}/queries/services.byId"
+      method: "POST"
+    schema: &service_schema
+      ignores:
+        [
+          "args",
+          "success",
+          "organizationId",
+          "resource",
+          "connectionId",
+          "destinationResource",
+          "sourceDatasourceId",
+          "sourceWorkingDirectory",
+          "reportableEnvironment",
+          "typeSource",
+          "createdAt",
+          "updatedAt",
+          "lastSeenAt",
+          "firstTelemetryAt",
+          "pausedAt",
+          "archivedAt",
+        ]
+      attributes:
+        overrides:
+          id:
+            description: "Unique service identifier. Applying adopts this existing service."
+          name:
+            description: "Telemetry service name."
+          namespace:
+            description: "Telemetry service namespace, when supplied."
+          type:
+            description: "Service type: unclassified, other, backend, or website."
+          websiteSettings:
+            description: "Service-owned website settings. Omit to preserve the stored settings."
   workspace:
     create:
       path: "/v3/workspaces/{workspaceSlug}/actions/workspaces.updateBasics"
@@ -14,16 +53,17 @@ resources:
           "args",
           "success",
           "slug",
-          "allowMemberWorkspaceCreation",
+          "autoAssignProblems",
+          "autoCreateApps",
+          "defaultWebsiteSettings",
+          "defaultSurfaceId",
           "clerkOrgId",
           "clerkUpdatedAt",
           "demoResetAt",
           "demoResetStatus",
           "demoWorkspace",
-          "enabledAuthMethods",
+          "environmentFiltering",
           "imageUrl",
-          "impersonationExpiresAt",
-          "impersonationGranted",
           "onboardingCompletedAt",
           "residencyPolicy",
           "stripeCustomerId",
@@ -39,53 +79,14 @@ resources:
             description: "Display name of the workspace."
           dataResidencyLocation:
             description: "Region where workspace data is stored. Set when the workspace is created."
-  surface:
-    create:
-      path: "/v3/workspaces/{workspaceSlug}/surfaces"
-      method: "POST"
-    read: &surface_read
-      path: "/v3/workspaces/{workspaceSlug}/queries/surfaces.getBySlugIncludeDeleted"
-      method: "POST"
-    schema: &surface_schema
-      ignores:
-        [
-          "apiKey",
-          "publicKey",
-          "surface",
-          "deletedAt",
-          "sourceConnectionId",
-          "sourceMappingId",
-          "sourceWorkingDirectory",
-          "destinationConnectionId",
-          "destinationMappingId",
-          "createdAt",
-          "updatedAt",
-          "destinationMappingLabel",
-          "destinationMappingUrl",
-          "environmentFiltering",
-          "onboardedAt",
-          "organizationId",
-          "primaryEnvironmentId",
-          "primaryEnvironmentName",
-          "sdkConfig",
-          "sourceDatasourceId",
-          "sourceMappingLabel",
-          "sourceMappingUrl",
-        ]
-      attributes:
-        overrides:
-          id:
-            description: "Unique surface identifier."
-          name:
-            description: "Display name of the surface."
-          slug:
-            description: "Surface URL slug, using lowercase letters, numbers, and hyphens."
-          type:
-            description: "Application framework used by the surface."
-          anonymousUserTracking:
-            description: "Whether anonymous-user telemetry is collected."
-          anonymousReplayPolicy:
-            description: "When sessions without an identified user record session replay: always, on_error (only once an error occurs) or never. Defaults to on_error when anonymous-user tracking is on, otherwise always."
+          allowMemberWorkspaceCreation:
+            description: "Whether workspace members can create additional workspaces."
+          enabledAuthMethods:
+            description: "Sign-in methods members can use: enterprise_sso, oauth_google, oauth_github, oauth_vercel, passkey, email_code, and password. Must include passkey and email_code. Null means the workspace uses the default methods."
+          impersonationGranted:
+            description: "Whether Interfere support may access the workspace by impersonation."
+          impersonationExpiresAt:
+            description: "When support access ends, in Unix milliseconds. Null keeps access until it is turned off."
   private_key:
     create:
       path: "/v3/workspaces/{workspaceSlug}/api-keys"
@@ -94,66 +95,22 @@ resources:
       path: "/v3/workspaces/{workspaceSlug}/api-keys/{apiKeyId}"
       method: "GET"
     schema:
-      ignores: ["revoked", "apiKey.id", "apiKey.name"]
+      ignores: ["revoked", "apiKey.id", "apiKey.name", "surfaceSlug"]
       attributes:
         aliases:
           apiKeyId: "id"
   public_key:
     create:
-      path: "/v3/workspaces/{workspaceSlug}/surfaces/{surfaceSlug}/publicKeys"
+      path: "/v3/workspaces/{workspaceSlug}/publicKeys"
       method: "POST"
     read:
-      path: "/v3/workspaces/{workspaceSlug}/surfaces/{surfaceSlug}/publicKeys/{publicKeyId}"
+      path: "/v3/workspaces/{workspaceSlug}/publicKeys/{publicKeyId}"
       method: "GET"
     schema:
       ignores: ["revoked"]
       attributes:
         aliases:
           publicKeyId: "id"
-  surface_repository:
-    create:
-      path: "/v3/workspaces/{workspaceSlug}/actions/integrations.linkSurfaceToRepository"
-      method: "POST"
-    read: *surface_read
-    schema: &surface_repository_schema
-      ignores:
-        [
-          "success",
-          "name",
-          "slug",
-          "type",
-          "anonymousReplayPolicy",
-          "anonymousUserTracking",
-          "deletedAt",
-          "sourceConnectionId",
-          "sourceMappingId",
-          "sourceWorkingDirectory",
-          "destinationConnectionId",
-          "destinationMappingId",
-          "createdAt",
-          "updatedAt",
-          "destinationMappingLabel",
-          "destinationMappingUrl",
-          "environmentFiltering",
-          "onboardedAt",
-          "organizationId",
-          "primaryEnvironmentId",
-          "primaryEnvironmentName",
-          "sdkConfig",
-          "sourceDatasourceId",
-          "sourceMappingLabel",
-          "sourceMappingUrl",
-        ]
-      attributes:
-        overrides:
-          id:
-            description: "Unique surface identifier."
-  surface_destination:
-    create:
-      path: "/v3/workspaces/{workspaceSlug}/actions/integrations.linkSurfaceToDestination"
-      method: "POST"
-    read: *surface_read
-    schema: *surface_repository_schema
   tracking_domain:
     create:
       path: "/v3/workspaces/{workspaceSlug}/actions/workspaces.addProxyDomain"
@@ -175,6 +132,7 @@ resources:
           "clerkDomainId",
           "enrollmentMode",
           "organizationId",
+          "ownershipVerifiedAt",
           "verifiedAt",
           "createdAt",
           "updatedAt",
@@ -187,13 +145,136 @@ resources:
             description: "Lowercase fully qualified tracking hostname, without a trailing dot."
           status:
             description: "Current hostname verification status."
+  network_rules:
+    create:
+      path: "/v3/workspaces/{workspaceSlug}/network/rules"
+      method: "PUT"
+    read:
+      path: "/v3/workspaces/{workspaceSlug}/network/rules"
+      method: "GET"
+    schema:
+      ignores: ["success", "rules.id"]
+  verified_domain:
+    create:
+      path: "/v3/workspaces/{workspaceSlug}/actions/workspaces.addDomain"
+      method: "POST"
+    read:
+      path: "/v3/workspaces/{workspaceSlug}/queries/domains.forOrg"
+      method: "POST"
+    schema:
+      ignores: ["success"]
+      attributes:
+        overrides:
+          args.id:
+            description: "Unique verified domain identifier."
+          args.name:
+            description: "Lowercase email domain, such as example.com."
+  scim_group_role_mappings:
+    create:
+      path: "/v3/workspaces/{workspaceSlug}/actions/workspaces.reorderScimGroupRoles"
+      method: "POST"
+    read:
+      path: "/v3/workspaces/{workspaceSlug}/queries/scimGroups.forOrg"
+      method: "POST"
+    schema:
+      ignores: ["success", "args.ids"]
+      attributes:
+        overrides:
+          args.clerkScimDirectoryId:
+            description: "Identifier of the SCIM directory whose group role mappings this resource manages."
 data_sources:
+  service:
+    read: *service_read
+    schema: *service_schema
+  services:
+    read:
+      path: "/v3/workspaces/{workspaceSlug}/queries/services.forWorkspace"
+      method: "POST"
+    schema:
+      ignores:
+        [
+          "args",
+          "organizationId",
+          "resource",
+          "connectionId",
+          "destinationResource",
+          "sourceDatasourceId",
+          "sourceDatasource",
+          "sourceWorkingDirectory",
+          "reportableEnvironment",
+          "typeSource",
+          "createdAt",
+          "updatedAt",
+          "lastSeenAt",
+          "firstTelemetryAt",
+          "pausedAt",
+          "archivedAt",
+          "websiteSettings",
+        ]
+      attributes:
+        overrides:
+          services.id:
+            description: "Unique service identifier."
+          services.name:
+            description: "Telemetry service name."
+          services.namespace:
+            description: "Telemetry service namespace, when supplied."
+          services.type:
+            description: "Service type: unclassified, other, backend, or website."
   workspace:
     read: *workspace_read
     schema: *workspace_schema
-  surface:
-    read: *surface_read
-    schema: *surface_schema
+  public_keys:
+    read:
+      path: "/v3/workspaces/{workspaceSlug}/queries/publicKeys.forWorkspace"
+      method: "POST"
+    schema:
+      ignores:
+        [
+          "createdAt",
+          "deletedAt",
+          "updatedAt",
+          "lastUsedAt",
+          "surfaceId",
+          "organizationId",
+        ]
+      attributes:
+        overrides:
+          public_keys.id:
+            description: "Unique public key identifier."
+          public_keys.name:
+            description: "Display name of the public key."
+          public_keys.content:
+            description: "Publishable browser credential. It is not a secret."
+  tracking_domain:
+    read:
+      path: "/v3/workspaces/{workspaceSlug}/queries/domains.forOrg"
+      method: "POST"
+    schema:
+      ignores:
+        [
+          "affiliationEmailAddress",
+          "clerkDomainId",
+          "createdAt",
+          "deletedAt",
+          "domainMetadata.cfHostnameId",
+          "domainMetadata.lastError",
+          "domainMetadata.provider",
+          "enrollmentMode",
+          "organizationId",
+          "ownershipVerifiedAt",
+          "type",
+          "updatedAt",
+          "verifiedAt",
+        ]
+      attributes:
+        overrides:
+          tracking_domain.id:
+            description: "Unique tracking domain identifier."
+          tracking_domain.name:
+            description: "Lowercase fully qualified tracking hostname, without a trailing dot."
+          tracking_domain.status:
+            description: "Current hostname verification status."
   integration:
     read:
       path: "/v3/workspaces/{workspaceSlug}/queries/integrations.installations"

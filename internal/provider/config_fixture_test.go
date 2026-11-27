@@ -12,16 +12,15 @@ import (
 )
 
 type configFixture struct {
-	mu                                                  sync.Mutex
-	server                                              *httptest.Server
-	source, repository, directory, destination, project any
-	domain, domainDeleted                               bool
-	domainStatus                                        string
-	readStatus                                          int
-	acknowledge                                         bool
-	integrations                                        []map[string]any
-	domainID, domainName                                string
-	domainIdentities                                    []string
+	mu                    sync.Mutex
+	server                *httptest.Server
+	domain, domainDeleted bool
+	domainStatus          string
+	readStatus            int
+	acknowledge           bool
+	integrations          []map[string]any
+	domainID, domainName  string
+	domainIdentities      []string
 }
 
 func newConfigFixture(t *testing.T) *configFixture {
@@ -53,16 +52,17 @@ func newConfigFixture(t *testing.T) *configFixture {
 			return
 		}
 		handlers := map[string]func(){
-			"queries/surfaces.getBySlugIncludeDeleted": func() {
-				if body.Args["surfaceSlug"] != surfaceSlug {
-					t.Error("Wrong surface")
-				}
-				write(map[string]any{"id": surfaceID, "slug": surfaceSlug, "name": "Example", "type": "react", "deletedAt": nil, "anonymousReplayPolicy": "on_error", "anonymousUserTracking": true, "sourceConnectionId": f.source, "sourceMappingId": f.repository, "sourceWorkingDirectory": f.directory, "destinationConnectionId": f.destination, "destinationMappingId": f.project})
-			},
 			"queries/workspaces.current": func() {
-				write(map[string]any{"id": surfaceID, "slug": "example", "name": "Example", "dataResidencyLocation": "us"})
+				write(map[string]any{"id": workspaceID, "slug": "example", "name": "Example", "dataResidencyLocation": "us"})
 			},
 			"queries/integrations.installations": func() { write(f.integrations) },
+			"queries/domains.forOrg": func() {
+				if !f.domain {
+					write([]any{})
+					return
+				}
+				write([]map[string]any{{"id": "verified-domain", "name": f.domainName, "type": "clerk", "deletedAt": nil, "status": nil}, {"id": f.domainID, "name": f.domainName, "type": "proxy", "deletedAt": nil, "status": f.domainStatus, "domainMetadata": map[string]any{"cfHostnameId": "cf-domain", "cfSslStatus": f.domainStatus, "lastError": nil}}})
+			},
 			"queries/domains.byIdIncludeDeleted": func() {
 				if body.Args["domainId"] != f.domainID {
 					t.Error("Wrong domain identity")
@@ -76,36 +76,6 @@ func newConfigFixture(t *testing.T) *configFixture {
 					deleted = 1234
 				}
 				write(map[string]any{"id": f.domainID, "name": f.domainName, "type": "proxy", "deletedAt": deleted, "status": f.domainStatus, "domainMetadata": map[string]any{"cfHostnameId": "cf-domain", "cfSslStatus": f.domainStatus, "lastError": nil}})
-			},
-			"actions/integrations.linkSurfaceToRepository": func() {
-				if f.acknowledge {
-					f.source = body.Args["connectionId"]
-					f.repository = body.Args["repositoryId"]
-					f.directory = body.Args["workingDirectory"]
-				}
-				write(map[string]any{"success": f.acknowledge})
-			},
-			"actions/integrations.linkSurfaceToDestination": func() {
-				if f.acknowledge {
-					f.destination = body.Args["connectionId"]
-					f.project = body.Args["projectId"]
-				}
-				write(map[string]any{"success": f.acknowledge})
-			},
-			"actions/integrations.unlinkSurfaceMapping": func() {
-				if f.acknowledge {
-					f.source = nil
-					f.repository = nil
-					f.directory = nil
-				}
-				write(map[string]any{"success": f.acknowledge})
-			},
-			"actions/integrations.unlinkSurfaceDestinationMapping": func() {
-				if f.acknowledge {
-					f.destination = nil
-					f.project = nil
-				}
-				write(map[string]any{"success": f.acknowledge})
 			},
 			"actions/workspaces.addProxyDomain": func() {
 				id, ok := body.Args["id"].(string)

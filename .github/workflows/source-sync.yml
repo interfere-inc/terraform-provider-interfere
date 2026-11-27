@@ -1,0 +1,50 @@
+name: Source sync
+on:
+  push:
+    branches: [source-sync]
+permissions:
+  contents: read
+concurrency:
+  group: source-sync
+  cancel-in-progress: true
+jobs:
+  generate:
+    if: github.repository == 'interfere-inc/terraform-provider-interfere'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+      pull-requests: write
+      actions: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: source-sync
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6
+        with:
+          bun-version: "1.4.0"
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
+        with:
+          node-version: "24"
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e
+        with:
+          go-version: "1.27.4"
+          cache: true
+      - uses: hashicorp/setup-terraform@b9cd54a3c349d3f38e8881555d616ced269862dd
+        with:
+          terraform_version: "v1.17.2"
+          terraform_wrapper: false
+      - run: bun install --frozen-lockfile --ignore-scripts
+      - name: Regenerate the SDK, schemas and docs against the deployed API
+        run: bun scripts/sync-generate.ts
+      - name: Commit the generated files to the sync branch
+        run: |
+          git diff --cached --quiet && exit 0
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit --quiet --message "chore: regenerate the provider against the deployed API"
+          git push --quiet origin HEAD:source-sync
+      - name: Open the sync pull request and run its checks
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh pr view source-sync --json number >/dev/null 2>&1 || gh pr create --base main --head source-sync --title "chore: sync the provider source" --body "Provider source from the development repository, with the SDK, schemas and docs regenerated against the deployed API."
+          gh workflow run check.yml --ref source-sync

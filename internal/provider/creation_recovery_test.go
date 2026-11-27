@@ -25,8 +25,8 @@ func TestCreationRecoveryAfterExhaustedRetries(t *testing.T) {
 	r.Schema(ctx, resource.SchemaRequest{}, &schema)
 	data := publicKeyModel{
 		Id: types.StringUnknown(), IdempotencyKey: types.StringUnknown(),
-		WorkspaceSlug: types.StringValue("example"), SurfaceSlug: types.StringValue(surfaceSlug),
-		Name: types.StringValue("Recovery"), Content: types.StringUnknown(),
+		WorkspaceSlug: types.StringValue("example"),
+		Name:          types.StringValue("Recovery"), Content: types.StringUnknown(),
 	}
 	plan := tfsdk.Plan{Schema: schema.Schema}
 	require.False(t, plan.Set(ctx, data).HasError())
@@ -56,17 +56,17 @@ func TestCreationRecoveryAfterExhaustedRetries(t *testing.T) {
 
 func TestCreationDoesNotRetryPermissionFailures(t *testing.T) {
 	ctx := context.Background()
-	f := newSurfaceFixture(t)
+	f := newPublicKeyFixture(t)
 	f.writeStatus = 403
-	r := &surfaceResource{client: client.NewClient(option.WithToken("fixture-token"), option.WithBaseURL(f.server.URL), option.WithoutRetries())}
+	r := &publicKeyResource{client: client.NewClient(option.WithToken("fixture-token"), option.WithBaseURL(f.server.URL), option.WithoutRetries())}
 	var schema resource.SchemaResponse
 	r.Schema(ctx, resource.SchemaRequest{}, &schema)
 	plan := tfsdk.Plan{Schema: schema.Schema}
-	require.False(t, plan.Set(ctx, surfaceModel{IdempotencyKey: types.StringValue(attemptID), WorkspaceSlug: types.StringValue("example"), Name: types.StringValue("Example"), Type: types.StringValue("react")}).HasError())
+	require.False(t, plan.Set(ctx, publicKeyModel{Id: types.StringUnknown(), IdempotencyKey: types.StringValue(attemptID), WorkspaceSlug: types.StringValue("example"), Name: types.StringValue("Example"), Content: types.StringUnknown()}).HasError())
 	response := resource.CreateResponse{State: tfsdk.State{Schema: schema.Schema, Raw: plan.Raw}}
 	r.Create(ctx, resource.CreateRequest{Plan: plan}, &response)
 	require.True(t, response.Diagnostics.HasError())
-	require.Equal(t, 1, f.creates)
+	require.Len(t, f.createIdentities, 1)
 }
 
 func TestPrivateKeyRecoveryRetainsTheOriginalSecret(t *testing.T) {
@@ -79,7 +79,7 @@ func TestPrivateKeyRecoveryRetainsTheOriginalSecret(t *testing.T) {
 	data := privateKeyModel{
 		IdempotencyKey: types.StringUnknown(), WorkspaceSlug: types.StringValue("example"),
 		Name:   types.StringValue("Recovery"),
-		Scopes: types.ListValueMust(types.StringType, []attr.Value{types.StringValue("org:surfaces:read")}),
+		Scopes: types.ListValueMust(types.StringType, []attr.Value{types.StringValue("org:problems:read")}),
 	}
 	plan := tfsdk.Plan{Schema: schema.Schema}
 	require.False(t, plan.Set(ctx, data).HasError())

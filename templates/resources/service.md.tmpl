@@ -1,0 +1,35 @@
+---
+page_title: "{{.Name}} {{.Type}} - {{.RenderedProviderName}}"
+subcategory: ""
+description: |-
+{{ .Description | plainmarkdown | trimspace | prefixlines "  " }}
+---
+
+# {{.Name}} ({{.Type}})
+
+{{ .Description | trimspace }}
+
+The provider credential needs `org:integration_settings:read` and `org:services:write`. The service can exist without an App. Omit `type` or `website_settings` to preserve the current value. When supplied, `website_settings` replaces the complete service settings object, including the plugin overrides. Omitted plugin overrides use the SDK defaults.
+
+## Example Usage
+
+{{ tffile .ExampleFile }}
+
+{{ .SchemaMarkdown | trimspace }}
+
+## Import
+
+{{ codefile "shell" .ImportFile }}
+
+## Migrating a legacy App resource
+
+Terraform 1.8 or later supports moving an `interfere_surface` resource into this resource. Keep the existing workspace slug and set `id` to the App's canonical service UUID. Replace the old resource configuration, then add:
+
+```terraform
+moved {
+  from = interfere_surface.website
+  to   = interfere_service.website
+}
+```
+
+Run a normal `terraform plan` with refresh enabled. The provider preserves the old App identity during the offline state move and resolves its canonical service during refresh. Missing aliases, changed identities, and permission failures stop migration while preserving state. Migration creates no App, credential, or service, and never deletes retained telemetry. After a successful apply, remove the `moved` block when every workspace using the configuration has migrated.

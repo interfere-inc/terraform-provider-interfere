@@ -1,0 +1,1 @@
+terraform import interfere_scim_group_role_mappings.okta example/scim_dir_2abc

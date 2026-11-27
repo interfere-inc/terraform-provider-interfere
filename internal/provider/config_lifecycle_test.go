@@ -10,10 +10,9 @@ import (
 	"github.com/hashicorp/terraform-plugin-testing/terraform"
 )
 
-func TestSurfaceMappingsLifecycle(t *testing.T) {
+func TestWorkspaceAndIntegrationDataSources(t *testing.T) {
 	f := newConfigFixture(t)
-	config := func(repository, directory, project string) string {
-		return fmt.Sprintf(`
+	config := fmt.Sprintf(`
 provider "interfere" {
 token="fixture-token"
 base_url=%q
@@ -25,52 +24,10 @@ data "interfere_integration" "test" {
 workspace_slug=data.interfere_workspace.test.workspace_slug
 integration_provider="github"
 }
-resource "interfere_surface_repository" "test" {
-workspace_slug="example"
-surface_slug=%q
-integration_id=data.interfere_integration.test.id
-repository_id=%q
-working_directory=%q
-}
-resource "interfere_surface_destination" "test" {
-workspace_slug="example"
-surface_slug=%q
-integration_id="destination-1"
-project_id=%q
-}
-`, f.server.URL, surfaceSlug, repository, directory, surfaceSlug, project)
-	}
+`, f.server.URL)
 	factories := map[string]func() (tfprotov6.ProviderServer, error){"interfere": providerserver.NewProtocol6WithError(New("test")())}
 	resource.UnitTest(t, resource.TestCase{ProtoV6ProviderFactories: factories, Steps: []resource.TestStep{
-		{Config: config("repo-1", "apps/web", "project-1"), Check: resource.ComposeAggregateTestCheckFunc(resource.TestCheckResourceAttr("interfere_surface_repository.test", "id", surfaceID), resource.TestCheckResourceAttr("interfere_surface_destination.test", "project_id", "project-1"), resource.TestCheckResourceAttr("data.interfere_workspace.test", "name", "Example"), resource.TestCheckResourceAttr("data.interfere_integration.test", "status", "connected"))},
-		{ResourceName: "interfere_surface_repository.test", ImportState: true, ImportStateId: "example/" + surfaceSlug, ImportStateVerify: true},
-		{ResourceName: "interfere_surface_destination.test", ImportState: true, ImportStateId: "example/" + surfaceSlug, ImportStateVerify: true},
-		{Config: config("repo-2", "apps/api", "project-2"), Check: resource.TestCheckResourceAttr("interfere_surface_repository.test", "repository_id", "repo-2")},
-		{PreConfig: func() { f.mu.Lock(); f.repository = "drift"; f.project = "drift"; f.mu.Unlock() }, Config: config("repo-2", "apps/api", "project-2")},
-		{PreConfig: func() { f.mu.Lock(); f.source = nil; f.mu.Unlock() }, Config: config("repo-2", "apps/api", "project-2"), Check: func(_ *terraform.State) error {
-			f.mu.Lock()
-			defer f.mu.Unlock()
-			if f.source == nil || f.repository != "repo-2" {
-				return fmt.Errorf("Dormant repository mapping was not relinked")
-			}
-			return nil
-		}},
-		{PreConfig: func() {
-			f.mu.Lock()
-			f.source = nil
-			f.repository = nil
-			f.directory = nil
-			f.destination = nil
-			f.project = nil
-			f.mu.Unlock()
-		}, Config: config("repo-2", "apps/api", "project-2")},
-	}, CheckDestroy: func(_ *terraform.State) error {
-		f.mu.Lock()
-		defer f.mu.Unlock()
-		if f.source != nil || f.destination != nil {
-			return fmt.Errorf("Mappings were not unlinked")
-		}
-		return nil
+		{Config: config, Check: resource.ComposeAggregateTestCheckFunc(resource.TestCheckResourceAttr("data.interfere_workspace.test", "name", "Example"), resource.TestCheckResourceAttr("data.interfere_integration.test", "status", "connected"))},
 	}})
 }
 

@@ -21,3 +21,11 @@ export function schemaChangeset(previous: string, next: string, version: string)
   const bump = version.startsWith("0.") ? "minor" : "major";
   return `---\n"terraform-provider-interfere": ${bump}\n---\n\nRegenerate the provider against the deployed Terraform API contract (${schemaHash(previous)} → ${schemaHash(next)}). Review generated schema changes and lifecycle compatibility before publishing.\n`;
 }
+
+export async function downloadSchema(): Promise<string> {
+  const response = await fetch("https://api.interfere.com/openapi-terraform.json", {
+    signal: AbortSignal.timeout(60_000),
+  });
+  if (!response.ok) throw new Error(`Terraform schema download failed: HTTP ${response.status}`);
+  return canonicalSchema(await response.text());
+}

@@ -21,7 +21,7 @@ func (r *privateKeyResource) Create(ctx context.Context, req resource.CreateRequ
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	request := &keys.CreatePrivateRequest{WorkspaceSlug: data.WorkspaceSlug.ValueString(), SurfaceSlug: data.SurfaceSlug.ValueStringPointer(), Name: data.Name.ValueString(), IdempotencyKey: data.IdempotencyKey.ValueString()}
+	request := &keys.CreatePrivateRequest{WorkspaceSlug: data.WorkspaceSlug.ValueString(), Name: data.Name.ValueString(), IdempotencyKey: data.IdempotencyKey.ValueString()}
 	for _, scope := range scopes {
 		request.Scopes = append(request.Scopes, keys.CreatePrivateRequestScopesItem(scope))
 	}

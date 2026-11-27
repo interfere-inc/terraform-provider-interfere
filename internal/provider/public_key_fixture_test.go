@@ -8,7 +8,7 @@ import (
 	"sync"
 	"testing"
 
-	"github.com/interfere-inc/terraform-provider-interfere/internal/sdk/keys"
+	"github.com/interfere-inc/terraform-provider-interfere/internal/sdk"
 )
 
 type publicKeyFixture struct {
@@ -17,6 +17,7 @@ type publicKeyFixture struct {
 	keys             map[string]map[string]any
 	creates, deletes int
 	readStatus       int
+	writeStatus      int
 	readBody         any
 	acknowledge      bool
 	createFailures   int
@@ -40,14 +41,29 @@ func newPublicKeyFixture(t *testing.T) *publicKeyFixture {
 				t.Error(err)
 			}
 		}
-		root := "/v3/workspaces/example/surfaces/example-surface/publicKeys"
+		root := "/v3/workspaces/example/publicKeys"
+		if r.URL.Path == "/v3/workspaces/example/queries/publicKeys.forWorkspace" && r.Method == http.MethodPost {
+			items := []map[string]any{}
+			for _, key := range f.keys {
+				if key["revoked"] != true {
+					items = append(items, key)
+				}
+			}
+			write(items)
+			return
+		}
 		if r.URL.Path == root && r.Method == http.MethodPost {
-			var body keys.CreatePublicRequest
+			var body sdk.CreateWorkspacePublicKeyRequest
 			if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
 				t.Error(err)
 				return
 			}
 			f.createIdentities = append(f.createIdentities, body.IdempotencyKey)
+			if f.writeStatus != 0 {
+				w.WriteHeader(f.writeStatus)
+				write(map[string]string{"message": "fixture-secret-must-not-leak"})
+				return
+			}
 			key := f.keys[body.IdempotencyKey]
 			if key != nil && (key["revoked"] == true || key["name"] != body.Name) {
 				w.WriteHeader(409)
@@ -56,7 +72,7 @@ func newPublicKeyFixture(t *testing.T) *publicKeyFixture {
 			}
 			if key == nil {
 				f.creates++
-				key = map[string]any{"id": body.IdempotencyKey, "name": body.Name, "surfaceSlug": "example-surface", "content": "interfere_public_us_" + body.IdempotencyKey, "revoked": false}
+				key = map[string]any{"id": body.IdempotencyKey, "name": body.Name, "surfaceId": nil, "content": "interfere_public_us_" + body.IdempotencyKey, "revoked": false}
 				f.keys[body.IdempotencyKey] = key
 			}
 			if f.createFailures > 0 {
