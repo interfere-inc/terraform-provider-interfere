@@ -24,7 +24,7 @@ func fixturePrivateKey(t *testing.T, f *keyFixture) (*privateKeyResource, tfsdk.
 	model.Version = types.StringValue("ak_original")
 	model.Name = types.StringValue("Managed key")
 	model.WorkspaceSlug = types.StringValue("example")
-	model.Scopes = types.ListValueMust(types.StringType, []attr.Value{types.StringValue("org:surfaces:read")})
+	model.Scopes = types.ListValueMust(types.StringType, []attr.Value{types.StringValue("org:problems:read")})
 	model.Secret = types.StringValue("fixture-secret")
 	var response resource.SchemaResponse
 	r.Schema(context.Background(), resource.SchemaRequest{}, &response)
@@ -48,7 +48,7 @@ func TestPrivateKeyReadPreservesStateAndSecretOnFailure(t *testing.T) {
 		"permission":           {403, map[string]string{"message": "fixture-secret"}},
 		"outage":               {503, map[string]string{"message": "fixture-secret"}},
 		"unclassified missing": {404, map[string]string{"message": "fixture-secret"}},
-		"rotation":             {0, map[string]any{"id": attemptID, "version": "ak_rotated", "name": "Managed key", "scopes": []string{"org:surfaces:read"}, "surfaceSlug": nil, "secondsUntilExpiration": nil, "expiresAt": nil, "revoked": false}},
+		"rotation":             {0, map[string]any{"id": attemptID, "version": "ak_rotated", "name": "Managed key", "scopes": []string{"org:problems:read"}, "surfaceSlug": nil, "secondsUntilExpiration": nil, "expiresAt": nil, "revoked": false}},
 	} {
 		t.Run(name, func(t *testing.T) {
 			f := newKeyFixture(t)
@@ -75,7 +75,7 @@ func TestPrivateKeyReadRemovesKnownInactiveKeys(t *testing.T) {
 			f.readStatus = 404
 			f.readBody = map[string]string{"code": "SURFACE_KEY_NOT_FOUND"}
 		} else {
-			f.readBody = map[string]any{"id": attemptID, "version": "ak_original", "name": "Managed key", "scopes": []string{"org:surfaces:read"}, "surfaceSlug": nil, "secondsUntilExpiration": nil, "expiresAt": nil, "revoked": true}
+			f.readBody = map[string]any{"id": attemptID, "version": "ak_original", "name": "Managed key", "scopes": []string{"org:problems:read"}, "surfaceSlug": nil, "secondsUntilExpiration": nil, "expiresAt": nil, "revoked": true}
 		}
 		r, state := fixturePrivateKey(t, f)
 		response := resource.ReadResponse{State: state}

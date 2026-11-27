@@ -3,19 +3,18 @@
 page_title: "interfere_public_key Resource - Interfere"
 subcategory: ""
 description: |-
-  Manage a surface's publishable key. Configuration changes replace the key. Creation UUIDs are generated automatically unless explicitly configured. Import using workspace-slug/surface-slug/key-uuid. External rotation refreshes content; destruction revokes the key and its rotation grace-period values.
+  Manage a workspace publishable key. Configuration changes replace the key. Creation UUIDs are generated automatically unless explicitly configured. Import using workspace-slug/key-uuid. External rotation refreshes content; destruction revokes the key and its rotation grace-period values.
 ---
 
 # interfere_public_key (Resource)
 
-Manage a surface's publishable key. Configuration changes replace the key. Creation UUIDs are generated automatically unless explicitly configured. Import using workspace-slug/surface-slug/key-uuid. External rotation refreshes content; destruction revokes the key and its rotation grace-period values.
+Manage a workspace publishable key. Configuration changes replace the key. Creation UUIDs are generated automatically unless explicitly configured. Import using workspace-slug/key-uuid. External rotation refreshes content; destruction revokes the key and its rotation grace-period values.
 
 ## Example Usage
 
 ```terraform
 resource "interfere_public_key" "browser" {
   workspace_slug = "example"
-  surface_slug   = "web"
   name           = "Browser"
 }
 ```
@@ -26,7 +25,6 @@ resource "interfere_public_key" "browser" {
 ### Required
 
 - `name` (String) Display name of the key.
-- `surface_slug` (String) Surface URL slug, using lowercase letters, numbers, and hyphens.
 - `workspace_slug` (String) Workspace URL slug, using lowercase letters, numbers, and hyphens.
 
 ### Optional
@@ -47,5 +45,5 @@ The [`terraform import` command](https://developer.hashicorp.com/terraform/cli/c
 ```shell
 #!/bin/bash
 
-terraform import interfere_public_key.browser example/web/11111111-1111-4111-8111-111111111111
+terraform import interfere_public_key.browser example/11111111-1111-4111-8111-111111111111
 ```

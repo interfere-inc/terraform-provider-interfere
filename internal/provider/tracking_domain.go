@@ -13,6 +13,8 @@ import (
 	"github.com/interfere-inc/terraform-provider-interfere/internal/sdk/client"
 )
 
+const trackingCNAMETarget = "proxy.interfere.domains"
+
 type trackingDomainResource struct{ client *client.Client }
 type trackingDomainModel struct {
 	ID             types.String `tfsdk:"id"`

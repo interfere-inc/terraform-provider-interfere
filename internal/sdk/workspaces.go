@@ -126,6 +126,74 @@ func (a *AddProxyDomainWorkspacesRequest) MarshalJSON() ([]byte, error) {
 }
 
 var (
+	createWorkspacePublicKeyRequestFieldWorkspaceSlug  = big.NewInt(1 << 0)
+	createWorkspacePublicKeyRequestFieldIdempotencyKey = big.NewInt(1 << 1)
+	createWorkspacePublicKeyRequestFieldName           = big.NewInt(1 << 2)
+)
+
+type CreateWorkspacePublicKeyRequest struct {
+	// Workspace URL slug, using lowercase letters, numbers, and hyphens.
+	WorkspaceSlug  string `json:"-" url:"-"`
+	IdempotencyKey string `json:"idempotencyKey" url:"-"`
+	// Display name of the key.
+	Name string `json:"name" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (c *CreateWorkspacePublicKeyRequest) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+// SetWorkspaceSlug sets the WorkspaceSlug field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateWorkspacePublicKeyRequest) SetWorkspaceSlug(workspaceSlug string) {
+	c.WorkspaceSlug = workspaceSlug
+	c.require(createWorkspacePublicKeyRequestFieldWorkspaceSlug)
+}
+
+// SetIdempotencyKey sets the IdempotencyKey field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateWorkspacePublicKeyRequest) SetIdempotencyKey(idempotencyKey string) {
+	c.IdempotencyKey = idempotencyKey
+	c.require(createWorkspacePublicKeyRequestFieldIdempotencyKey)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateWorkspacePublicKeyRequest) SetName(name string) {
+	c.Name = name
+	c.require(createWorkspacePublicKeyRequestFieldName)
+}
+
+func (c *CreateWorkspacePublicKeyRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateWorkspacePublicKeyRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*c = CreateWorkspacePublicKeyRequest(body)
+	return nil
+}
+
+func (c *CreateWorkspacePublicKeyRequest) MarshalJSON() ([]byte, error) {
+	type embed CreateWorkspacePublicKeyRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
 	currentWorkspacesRequestFieldWorkspaceSlug = big.NewInt(1 << 0)
 	currentWorkspacesRequestFieldArgs          = big.NewInt(1 << 1)
 )
@@ -209,6 +277,43 @@ func (r *ReadNetworkRulesRequest) require(field *big.Int) {
 func (r *ReadNetworkRulesRequest) SetWorkspaceSlug(workspaceSlug string) {
 	r.WorkspaceSlug = workspaceSlug
 	r.require(readNetworkRulesRequestFieldWorkspaceSlug)
+}
+
+var (
+	readWorkspacePublicKeyRequestFieldWorkspaceSlug = big.NewInt(1 << 0)
+	readWorkspacePublicKeyRequestFieldPublicKeyID   = big.NewInt(1 << 1)
+)
+
+type ReadWorkspacePublicKeyRequest struct {
+	// Workspace URL slug, using lowercase letters, numbers, and hyphens.
+	WorkspaceSlug string `json:"-" url:"-"`
+	PublicKeyID   string `json:"-" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (r *ReadWorkspacePublicKeyRequest) require(field *big.Int) {
+	next := new(big.Int)
+	if r.explicitFields != nil {
+		next.Set(r.explicitFields)
+	}
+	next.Or(next, field)
+	r.explicitFields = next
+}
+
+// SetWorkspaceSlug sets the WorkspaceSlug field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ReadWorkspacePublicKeyRequest) SetWorkspaceSlug(workspaceSlug string) {
+	r.WorkspaceSlug = workspaceSlug
+	r.require(readWorkspacePublicKeyRequestFieldWorkspaceSlug)
+}
+
+// SetPublicKeyID sets the PublicKeyID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ReadWorkspacePublicKeyRequest) SetPublicKeyID(publicKeyID string) {
+	r.PublicKeyID = publicKeyID
+	r.require(readWorkspacePublicKeyRequestFieldPublicKeyID)
 }
 
 var (
@@ -328,6 +433,43 @@ func (r *RemoveProxyDomainWorkspacesRequest) MarshalJSON() ([]byte, error) {
 }
 
 var (
+	revokeWorkspacePublicKeyRequestFieldWorkspaceSlug = big.NewInt(1 << 0)
+	revokeWorkspacePublicKeyRequestFieldPublicKeyID   = big.NewInt(1 << 1)
+)
+
+type RevokeWorkspacePublicKeyRequest struct {
+	// Workspace URL slug, using lowercase letters, numbers, and hyphens.
+	WorkspaceSlug string `json:"-" url:"-"`
+	PublicKeyID   string `json:"-" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (r *RevokeWorkspacePublicKeyRequest) require(field *big.Int) {
+	next := new(big.Int)
+	if r.explicitFields != nil {
+		next.Set(r.explicitFields)
+	}
+	next.Or(next, field)
+	r.explicitFields = next
+}
+
+// SetWorkspaceSlug sets the WorkspaceSlug field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RevokeWorkspacePublicKeyRequest) SetWorkspaceSlug(workspaceSlug string) {
+	r.WorkspaceSlug = workspaceSlug
+	r.require(revokeWorkspacePublicKeyRequestFieldWorkspaceSlug)
+}
+
+// SetPublicKeyID sets the PublicKeyID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RevokeWorkspacePublicKeyRequest) SetPublicKeyID(publicKeyID string) {
+	r.PublicKeyID = publicKeyID
+	r.require(revokeWorkspacePublicKeyRequestFieldPublicKeyID)
+}
+
+var (
 	saveNetworkRulesRequestFieldWorkspaceSlug = big.NewInt(1 << 0)
 	saveNetworkRulesRequestFieldRules         = big.NewInt(1 << 1)
 )
@@ -383,6 +525,110 @@ func (s *SaveNetworkRulesRequest) MarshalJSON() ([]byte, error) {
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
 	return json.Marshal(explicitMarshaler)
+}
+
+var (
+	createWorkspacePublicKeyResponseFieldContent = big.NewInt(1 << 0)
+	createWorkspacePublicKeyResponseFieldName    = big.NewInt(1 << 1)
+)
+
+type CreateWorkspacePublicKeyResponse struct {
+	// Publishable credential for browser SDK configuration.
+	Content string `json:"content" url:"content"`
+	// Display name of the key.
+	Name string `json:"name" url:"name"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateWorkspacePublicKeyResponse) GetContent() string {
+	if c == nil {
+		return ""
+	}
+	return c.Content
+}
+
+func (c *CreateWorkspacePublicKeyResponse) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CreateWorkspacePublicKeyResponse) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CreateWorkspacePublicKeyResponse) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+// SetContent sets the Content field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateWorkspacePublicKeyResponse) SetContent(content string) {
+	c.Content = content
+	c.require(createWorkspacePublicKeyResponseFieldContent)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateWorkspacePublicKeyResponse) SetName(name string) {
+	c.Name = name
+	c.require(createWorkspacePublicKeyResponseFieldName)
+}
+
+func (c *CreateWorkspacePublicKeyResponse) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateWorkspacePublicKeyResponse
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateWorkspacePublicKeyResponse(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateWorkspacePublicKeyResponse) MarshalJSON() ([]byte, error) {
+	type embed CreateWorkspacePublicKeyResponse
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateWorkspacePublicKeyResponse) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
 }
 
 var (
@@ -1075,30 +1321,36 @@ func (m *MutationWorkspacesUpdateMemberWorkspaceCreationResponse) String() strin
 
 var (
 	queryWorkspacesCurrentResponseFieldAllowMemberWorkspaceCreation = big.NewInt(1 << 0)
-	queryWorkspacesCurrentResponseFieldClerkOrgID                   = big.NewInt(1 << 1)
-	queryWorkspacesCurrentResponseFieldClerkUpdatedAt               = big.NewInt(1 << 2)
-	queryWorkspacesCurrentResponseFieldDataResidencyLocation        = big.NewInt(1 << 3)
-	queryWorkspacesCurrentResponseFieldDemoResetAt                  = big.NewInt(1 << 4)
-	queryWorkspacesCurrentResponseFieldDemoResetStatus              = big.NewInt(1 << 5)
-	queryWorkspacesCurrentResponseFieldDemoWorkspace                = big.NewInt(1 << 6)
-	queryWorkspacesCurrentResponseFieldEnabledAuthMethods           = big.NewInt(1 << 7)
-	queryWorkspacesCurrentResponseFieldID                           = big.NewInt(1 << 8)
-	queryWorkspacesCurrentResponseFieldImageURL                     = big.NewInt(1 << 9)
-	queryWorkspacesCurrentResponseFieldImpersonationExpiresAt       = big.NewInt(1 << 10)
-	queryWorkspacesCurrentResponseFieldImpersonationGranted         = big.NewInt(1 << 11)
-	queryWorkspacesCurrentResponseFieldName                         = big.NewInt(1 << 12)
-	queryWorkspacesCurrentResponseFieldOnboardingCompletedAt        = big.NewInt(1 << 13)
-	queryWorkspacesCurrentResponseFieldResidencyPolicy              = big.NewInt(1 << 14)
-	queryWorkspacesCurrentResponseFieldSlug                         = big.NewInt(1 << 15)
-	queryWorkspacesCurrentResponseFieldStripeCustomerID             = big.NewInt(1 << 16)
-	queryWorkspacesCurrentResponseFieldCreatedAt                    = big.NewInt(1 << 17)
-	queryWorkspacesCurrentResponseFieldDeletedAt                    = big.NewInt(1 << 18)
-	queryWorkspacesCurrentResponseFieldUpdatedAt                    = big.NewInt(1 << 19)
+	queryWorkspacesCurrentResponseFieldAutoAssignProblems           = big.NewInt(1 << 1)
+	queryWorkspacesCurrentResponseFieldAutoCreateApps               = big.NewInt(1 << 2)
+	queryWorkspacesCurrentResponseFieldClerkOrgID                   = big.NewInt(1 << 3)
+	queryWorkspacesCurrentResponseFieldClerkUpdatedAt               = big.NewInt(1 << 4)
+	queryWorkspacesCurrentResponseFieldDataResidencyLocation        = big.NewInt(1 << 5)
+	queryWorkspacesCurrentResponseFieldDefaultSurfaceID             = big.NewInt(1 << 6)
+	queryWorkspacesCurrentResponseFieldDefaultWebsiteSettings       = big.NewInt(1 << 7)
+	queryWorkspacesCurrentResponseFieldDemoResetAt                  = big.NewInt(1 << 8)
+	queryWorkspacesCurrentResponseFieldDemoResetStatus              = big.NewInt(1 << 9)
+	queryWorkspacesCurrentResponseFieldDemoWorkspace                = big.NewInt(1 << 10)
+	queryWorkspacesCurrentResponseFieldEnabledAuthMethods           = big.NewInt(1 << 11)
+	queryWorkspacesCurrentResponseFieldEnvironmentFiltering         = big.NewInt(1 << 12)
+	queryWorkspacesCurrentResponseFieldID                           = big.NewInt(1 << 13)
+	queryWorkspacesCurrentResponseFieldImageURL                     = big.NewInt(1 << 14)
+	queryWorkspacesCurrentResponseFieldImpersonationExpiresAt       = big.NewInt(1 << 15)
+	queryWorkspacesCurrentResponseFieldImpersonationGranted         = big.NewInt(1 << 16)
+	queryWorkspacesCurrentResponseFieldName                         = big.NewInt(1 << 17)
+	queryWorkspacesCurrentResponseFieldOnboardingCompletedAt        = big.NewInt(1 << 18)
+	queryWorkspacesCurrentResponseFieldResidencyPolicy              = big.NewInt(1 << 19)
+	queryWorkspacesCurrentResponseFieldSlug                         = big.NewInt(1 << 20)
+	queryWorkspacesCurrentResponseFieldStripeCustomerID             = big.NewInt(1 << 21)
+	queryWorkspacesCurrentResponseFieldCreatedAt                    = big.NewInt(1 << 22)
+	queryWorkspacesCurrentResponseFieldDeletedAt                    = big.NewInt(1 << 23)
+	queryWorkspacesCurrentResponseFieldUpdatedAt                    = big.NewInt(1 << 24)
 )
 
 // queryWorkspacesCurrentResponseNullableFields maps the wire names of QueryWorkspacesCurrentResponse's nullable fields (required or optional) to their field bits.
 var queryWorkspacesCurrentResponseNullableFields = map[string]*big.Int{
 	"clerkUpdatedAt":         queryWorkspacesCurrentResponseFieldClerkUpdatedAt,
+	"defaultSurfaceId":       queryWorkspacesCurrentResponseFieldDefaultSurfaceID,
 	"demoResetAt":            queryWorkspacesCurrentResponseFieldDemoResetAt,
 	"demoResetStatus":        queryWorkspacesCurrentResponseFieldDemoResetStatus,
 	"enabledAuthMethods":     queryWorkspacesCurrentResponseFieldEnabledAuthMethods,
@@ -1110,13 +1362,18 @@ var queryWorkspacesCurrentResponseNullableFields = map[string]*big.Int{
 
 type QueryWorkspacesCurrentResponse struct {
 	AllowMemberWorkspaceCreation bool                                                   `json:"allowMemberWorkspaceCreation" url:"allowMemberWorkspaceCreation"`
+	AutoAssignProblems           bool                                                   `json:"autoAssignProblems" url:"autoAssignProblems"`
+	AutoCreateApps               bool                                                   `json:"autoCreateApps" url:"autoCreateApps"`
 	ClerkOrgID                   string                                                 `json:"clerkOrgId" url:"clerkOrgId"`
 	ClerkUpdatedAt               *float64                                               `json:"clerkUpdatedAt,omitempty" url:"clerkUpdatedAt,omitempty"`
 	DataResidencyLocation        QueryWorkspacesCurrentResponseDataResidencyLocation    `json:"dataResidencyLocation" url:"dataResidencyLocation"`
+	DefaultSurfaceID             *string                                                `json:"defaultSurfaceId,omitempty" url:"defaultSurfaceId,omitempty"`
+	DefaultWebsiteSettings       *QueryWorkspacesCurrentResponseDefaultWebsiteSettings  `json:"defaultWebsiteSettings" url:"defaultWebsiteSettings"`
 	DemoResetAt                  *float64                                               `json:"demoResetAt,omitempty" url:"demoResetAt,omitempty"`
 	DemoResetStatus              *QueryWorkspacesCurrentResponseDemoResetStatus         `json:"demoResetStatus,omitempty" url:"demoResetStatus,omitempty"`
 	DemoWorkspace                bool                                                   `json:"demoWorkspace" url:"demoWorkspace"`
 	EnabledAuthMethods           []QueryWorkspacesCurrentResponseEnabledAuthMethodsItem `json:"enabledAuthMethods,omitempty" url:"enabledAuthMethods,omitempty"`
+	EnvironmentFiltering         bool                                                   `json:"environmentFiltering" url:"environmentFiltering"`
 	ID                           string                                                 `json:"id" url:"id"`
 	ImageURL                     string                                                 `json:"imageUrl" url:"imageUrl"`
 	ImpersonationExpiresAt       *float64                                               `json:"impersonationExpiresAt,omitempty" url:"impersonationExpiresAt,omitempty"`
@@ -1144,6 +1401,20 @@ func (q *QueryWorkspacesCurrentResponse) GetAllowMemberWorkspaceCreation() bool 
 	return q.AllowMemberWorkspaceCreation
 }
 
+func (q *QueryWorkspacesCurrentResponse) GetAutoAssignProblems() bool {
+	if q == nil {
+		return false
+	}
+	return q.AutoAssignProblems
+}
+
+func (q *QueryWorkspacesCurrentResponse) GetAutoCreateApps() bool {
+	if q == nil {
+		return false
+	}
+	return q.AutoCreateApps
+}
+
 func (q *QueryWorkspacesCurrentResponse) GetClerkOrgID() string {
 	if q == nil {
 		return ""
@@ -1163,6 +1434,20 @@ func (q *QueryWorkspacesCurrentResponse) GetDataResidencyLocation() QueryWorkspa
 		return ""
 	}
 	return q.DataResidencyLocation
+}
+
+func (q *QueryWorkspacesCurrentResponse) GetDefaultSurfaceID() *string {
+	if q == nil {
+		return nil
+	}
+	return q.DefaultSurfaceID
+}
+
+func (q *QueryWorkspacesCurrentResponse) GetDefaultWebsiteSettings() *QueryWorkspacesCurrentResponseDefaultWebsiteSettings {
+	if q == nil {
+		return nil
+	}
+	return q.DefaultWebsiteSettings
 }
 
 func (q *QueryWorkspacesCurrentResponse) GetDemoResetAt() *float64 {
@@ -1191,6 +1476,13 @@ func (q *QueryWorkspacesCurrentResponse) GetEnabledAuthMethods() []QueryWorkspac
 		return nil
 	}
 	return q.EnabledAuthMethods
+}
+
+func (q *QueryWorkspacesCurrentResponse) GetEnvironmentFiltering() bool {
+	if q == nil {
+		return false
+	}
+	return q.EnvironmentFiltering
 }
 
 func (q *QueryWorkspacesCurrentResponse) GetID() string {
@@ -1300,6 +1592,20 @@ func (q *QueryWorkspacesCurrentResponse) SetAllowMemberWorkspaceCreation(allowMe
 	q.require(queryWorkspacesCurrentResponseFieldAllowMemberWorkspaceCreation)
 }
 
+// SetAutoAssignProblems sets the AutoAssignProblems field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryWorkspacesCurrentResponse) SetAutoAssignProblems(autoAssignProblems bool) {
+	q.AutoAssignProblems = autoAssignProblems
+	q.require(queryWorkspacesCurrentResponseFieldAutoAssignProblems)
+}
+
+// SetAutoCreateApps sets the AutoCreateApps field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryWorkspacesCurrentResponse) SetAutoCreateApps(autoCreateApps bool) {
+	q.AutoCreateApps = autoCreateApps
+	q.require(queryWorkspacesCurrentResponseFieldAutoCreateApps)
+}
+
 // SetClerkOrgID sets the ClerkOrgID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (q *QueryWorkspacesCurrentResponse) SetClerkOrgID(clerkOrgID string) {
@@ -1319,6 +1625,20 @@ func (q *QueryWorkspacesCurrentResponse) SetClerkUpdatedAt(clerkUpdatedAt *float
 func (q *QueryWorkspacesCurrentResponse) SetDataResidencyLocation(dataResidencyLocation QueryWorkspacesCurrentResponseDataResidencyLocation) {
 	q.DataResidencyLocation = dataResidencyLocation
 	q.require(queryWorkspacesCurrentResponseFieldDataResidencyLocation)
+}
+
+// SetDefaultSurfaceID sets the DefaultSurfaceID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryWorkspacesCurrentResponse) SetDefaultSurfaceID(defaultSurfaceID *string) {
+	q.DefaultSurfaceID = defaultSurfaceID
+	q.require(queryWorkspacesCurrentResponseFieldDefaultSurfaceID)
+}
+
+// SetDefaultWebsiteSettings sets the DefaultWebsiteSettings field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryWorkspacesCurrentResponse) SetDefaultWebsiteSettings(defaultWebsiteSettings *QueryWorkspacesCurrentResponseDefaultWebsiteSettings) {
+	q.DefaultWebsiteSettings = defaultWebsiteSettings
+	q.require(queryWorkspacesCurrentResponseFieldDefaultWebsiteSettings)
 }
 
 // SetDemoResetAt sets the DemoResetAt field and marks it as non-optional;
@@ -1347,6 +1667,13 @@ func (q *QueryWorkspacesCurrentResponse) SetDemoWorkspace(demoWorkspace bool) {
 func (q *QueryWorkspacesCurrentResponse) SetEnabledAuthMethods(enabledAuthMethods []QueryWorkspacesCurrentResponseEnabledAuthMethodsItem) {
 	q.EnabledAuthMethods = enabledAuthMethods
 	q.require(queryWorkspacesCurrentResponseFieldEnabledAuthMethods)
+}
+
+// SetEnvironmentFiltering sets the EnvironmentFiltering field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryWorkspacesCurrentResponse) SetEnvironmentFiltering(environmentFiltering bool) {
+	q.EnvironmentFiltering = environmentFiltering
+	q.require(queryWorkspacesCurrentResponseFieldEnvironmentFiltering)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -1502,6 +1829,333 @@ func NewQueryWorkspacesCurrentResponseDataResidencyLocationFromString(s string) 
 
 func (q QueryWorkspacesCurrentResponseDataResidencyLocation) Ptr() *QueryWorkspacesCurrentResponseDataResidencyLocation {
 	return &q
+}
+
+var (
+	queryWorkspacesCurrentResponseDefaultWebsiteSettingsFieldAnonymousReplayPolicy = big.NewInt(1 << 0)
+	queryWorkspacesCurrentResponseDefaultWebsiteSettingsFieldAnonymousUserTracking = big.NewInt(1 << 1)
+	queryWorkspacesCurrentResponseDefaultWebsiteSettingsFieldEnvironmentFiltering  = big.NewInt(1 << 2)
+	queryWorkspacesCurrentResponseDefaultWebsiteSettingsFieldPlugins               = big.NewInt(1 << 3)
+)
+
+type QueryWorkspacesCurrentResponseDefaultWebsiteSettings struct {
+	// When sessions without an identified user record replay: always, only once an error occurs, or never.
+	AnonymousReplayPolicy QueryWorkspacesCurrentResponseDefaultWebsiteSettingsAnonymousReplayPolicy `json:"anonymousReplayPolicy" url:"anonymousReplayPolicy"`
+	AnonymousUserTracking bool                                                                      `json:"anonymousUserTracking" url:"anonymousUserTracking"`
+	EnvironmentFiltering  bool                                                                      `json:"environmentFiltering" url:"environmentFiltering"`
+	Plugins               *QueryWorkspacesCurrentResponseDefaultWebsiteSettingsPlugins              `json:"plugins,omitempty" url:"plugins,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (q *QueryWorkspacesCurrentResponseDefaultWebsiteSettings) GetAnonymousReplayPolicy() QueryWorkspacesCurrentResponseDefaultWebsiteSettingsAnonymousReplayPolicy {
+	if q == nil {
+		return ""
+	}
+	return q.AnonymousReplayPolicy
+}
+
+func (q *QueryWorkspacesCurrentResponseDefaultWebsiteSettings) GetAnonymousUserTracking() bool {
+	if q == nil {
+		return false
+	}
+	return q.AnonymousUserTracking
+}
+
+func (q *QueryWorkspacesCurrentResponseDefaultWebsiteSettings) GetEnvironmentFiltering() bool {
+	if q == nil {
+		return false
+	}
+	return q.EnvironmentFiltering
+}
+
+func (q *QueryWorkspacesCurrentResponseDefaultWebsiteSettings) GetPlugins() *QueryWorkspacesCurrentResponseDefaultWebsiteSettingsPlugins {
+	if q == nil {
+		return nil
+	}
+	return q.Plugins
+}
+
+func (q *QueryWorkspacesCurrentResponseDefaultWebsiteSettings) GetExtraProperties() map[string]interface{} {
+	if q == nil {
+		return nil
+	}
+	return q.extraProperties
+}
+
+func (q *QueryWorkspacesCurrentResponseDefaultWebsiteSettings) require(field *big.Int) {
+	next := new(big.Int)
+	if q.explicitFields != nil {
+		next.Set(q.explicitFields)
+	}
+	next.Or(next, field)
+	q.explicitFields = next
+}
+
+// SetAnonymousReplayPolicy sets the AnonymousReplayPolicy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryWorkspacesCurrentResponseDefaultWebsiteSettings) SetAnonymousReplayPolicy(anonymousReplayPolicy QueryWorkspacesCurrentResponseDefaultWebsiteSettingsAnonymousReplayPolicy) {
+	q.AnonymousReplayPolicy = anonymousReplayPolicy
+	q.require(queryWorkspacesCurrentResponseDefaultWebsiteSettingsFieldAnonymousReplayPolicy)
+}
+
+// SetAnonymousUserTracking sets the AnonymousUserTracking field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryWorkspacesCurrentResponseDefaultWebsiteSettings) SetAnonymousUserTracking(anonymousUserTracking bool) {
+	q.AnonymousUserTracking = anonymousUserTracking
+	q.require(queryWorkspacesCurrentResponseDefaultWebsiteSettingsFieldAnonymousUserTracking)
+}
+
+// SetEnvironmentFiltering sets the EnvironmentFiltering field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryWorkspacesCurrentResponseDefaultWebsiteSettings) SetEnvironmentFiltering(environmentFiltering bool) {
+	q.EnvironmentFiltering = environmentFiltering
+	q.require(queryWorkspacesCurrentResponseDefaultWebsiteSettingsFieldEnvironmentFiltering)
+}
+
+// SetPlugins sets the Plugins field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryWorkspacesCurrentResponseDefaultWebsiteSettings) SetPlugins(plugins *QueryWorkspacesCurrentResponseDefaultWebsiteSettingsPlugins) {
+	q.Plugins = plugins
+	q.require(queryWorkspacesCurrentResponseDefaultWebsiteSettingsFieldPlugins)
+}
+
+func (q *QueryWorkspacesCurrentResponseDefaultWebsiteSettings) UnmarshalJSON(data []byte) error {
+	type unmarshaler QueryWorkspacesCurrentResponseDefaultWebsiteSettings
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*q = QueryWorkspacesCurrentResponseDefaultWebsiteSettings(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *q)
+	if err != nil {
+		return err
+	}
+	q.extraProperties = extraProperties
+	q.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (q *QueryWorkspacesCurrentResponseDefaultWebsiteSettings) MarshalJSON() ([]byte, error) {
+	type embed QueryWorkspacesCurrentResponseDefaultWebsiteSettings
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*q),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, q.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (q *QueryWorkspacesCurrentResponseDefaultWebsiteSettings) String() string {
+	if q == nil {
+		return "<nil>"
+	}
+	if len(q.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(q.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(q); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", q)
+}
+
+// When sessions without an identified user record replay: always, only once an error occurs, or never.
+type QueryWorkspacesCurrentResponseDefaultWebsiteSettingsAnonymousReplayPolicy string
+
+const (
+	QueryWorkspacesCurrentResponseDefaultWebsiteSettingsAnonymousReplayPolicyAlways  QueryWorkspacesCurrentResponseDefaultWebsiteSettingsAnonymousReplayPolicy = "always"
+	QueryWorkspacesCurrentResponseDefaultWebsiteSettingsAnonymousReplayPolicyOnError QueryWorkspacesCurrentResponseDefaultWebsiteSettingsAnonymousReplayPolicy = "on_error"
+	QueryWorkspacesCurrentResponseDefaultWebsiteSettingsAnonymousReplayPolicyNever   QueryWorkspacesCurrentResponseDefaultWebsiteSettingsAnonymousReplayPolicy = "never"
+)
+
+func NewQueryWorkspacesCurrentResponseDefaultWebsiteSettingsAnonymousReplayPolicyFromString(s string) (QueryWorkspacesCurrentResponseDefaultWebsiteSettingsAnonymousReplayPolicy, error) {
+	switch s {
+	case "always":
+		return QueryWorkspacesCurrentResponseDefaultWebsiteSettingsAnonymousReplayPolicyAlways, nil
+	case "on_error":
+		return QueryWorkspacesCurrentResponseDefaultWebsiteSettingsAnonymousReplayPolicyOnError, nil
+	case "never":
+		return QueryWorkspacesCurrentResponseDefaultWebsiteSettingsAnonymousReplayPolicyNever, nil
+	}
+	var t QueryWorkspacesCurrentResponseDefaultWebsiteSettingsAnonymousReplayPolicy
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (q QueryWorkspacesCurrentResponseDefaultWebsiteSettingsAnonymousReplayPolicy) Ptr() *QueryWorkspacesCurrentResponseDefaultWebsiteSettingsAnonymousReplayPolicy {
+	return &q
+}
+
+var (
+	queryWorkspacesCurrentResponseDefaultWebsiteSettingsPluginsFieldErrors     = big.NewInt(1 << 0)
+	queryWorkspacesCurrentResponseDefaultWebsiteSettingsPluginsFieldDevice     = big.NewInt(1 << 1)
+	queryWorkspacesCurrentResponseDefaultWebsiteSettingsPluginsFieldPageEvents = big.NewInt(1 << 2)
+	queryWorkspacesCurrentResponseDefaultWebsiteSettingsPluginsFieldRageClick  = big.NewInt(1 << 3)
+	queryWorkspacesCurrentResponseDefaultWebsiteSettingsPluginsFieldReplay     = big.NewInt(1 << 4)
+	queryWorkspacesCurrentResponseDefaultWebsiteSettingsPluginsFieldLogs       = big.NewInt(1 << 5)
+)
+
+type QueryWorkspacesCurrentResponseDefaultWebsiteSettingsPlugins struct {
+	Errors     *bool `json:"errors,omitempty" url:"errors,omitempty"`
+	Device     *bool `json:"device,omitempty" url:"device,omitempty"`
+	PageEvents *bool `json:"pageEvents,omitempty" url:"pageEvents,omitempty"`
+	RageClick  *bool `json:"rageClick,omitempty" url:"rageClick,omitempty"`
+	Replay     *bool `json:"replay,omitempty" url:"replay,omitempty"`
+	Logs       *bool `json:"logs,omitempty" url:"logs,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (q *QueryWorkspacesCurrentResponseDefaultWebsiteSettingsPlugins) GetErrors() *bool {
+	if q == nil {
+		return nil
+	}
+	return q.Errors
+}
+
+func (q *QueryWorkspacesCurrentResponseDefaultWebsiteSettingsPlugins) GetDevice() *bool {
+	if q == nil {
+		return nil
+	}
+	return q.Device
+}
+
+func (q *QueryWorkspacesCurrentResponseDefaultWebsiteSettingsPlugins) GetPageEvents() *bool {
+	if q == nil {
+		return nil
+	}
+	return q.PageEvents
+}
+
+func (q *QueryWorkspacesCurrentResponseDefaultWebsiteSettingsPlugins) GetRageClick() *bool {
+	if q == nil {
+		return nil
+	}
+	return q.RageClick
+}
+
+func (q *QueryWorkspacesCurrentResponseDefaultWebsiteSettingsPlugins) GetReplay() *bool {
+	if q == nil {
+		return nil
+	}
+	return q.Replay
+}
+
+func (q *QueryWorkspacesCurrentResponseDefaultWebsiteSettingsPlugins) GetLogs() *bool {
+	if q == nil {
+		return nil
+	}
+	return q.Logs
+}
+
+func (q *QueryWorkspacesCurrentResponseDefaultWebsiteSettingsPlugins) GetExtraProperties() map[string]interface{} {
+	if q == nil {
+		return nil
+	}
+	return q.extraProperties
+}
+
+func (q *QueryWorkspacesCurrentResponseDefaultWebsiteSettingsPlugins) require(field *big.Int) {
+	next := new(big.Int)
+	if q.explicitFields != nil {
+		next.Set(q.explicitFields)
+	}
+	next.Or(next, field)
+	q.explicitFields = next
+}
+
+// SetErrors sets the Errors field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryWorkspacesCurrentResponseDefaultWebsiteSettingsPlugins) SetErrors(errors *bool) {
+	q.Errors = errors
+	q.require(queryWorkspacesCurrentResponseDefaultWebsiteSettingsPluginsFieldErrors)
+}
+
+// SetDevice sets the Device field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryWorkspacesCurrentResponseDefaultWebsiteSettingsPlugins) SetDevice(device *bool) {
+	q.Device = device
+	q.require(queryWorkspacesCurrentResponseDefaultWebsiteSettingsPluginsFieldDevice)
+}
+
+// SetPageEvents sets the PageEvents field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryWorkspacesCurrentResponseDefaultWebsiteSettingsPlugins) SetPageEvents(pageEvents *bool) {
+	q.PageEvents = pageEvents
+	q.require(queryWorkspacesCurrentResponseDefaultWebsiteSettingsPluginsFieldPageEvents)
+}
+
+// SetRageClick sets the RageClick field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryWorkspacesCurrentResponseDefaultWebsiteSettingsPlugins) SetRageClick(rageClick *bool) {
+	q.RageClick = rageClick
+	q.require(queryWorkspacesCurrentResponseDefaultWebsiteSettingsPluginsFieldRageClick)
+}
+
+// SetReplay sets the Replay field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryWorkspacesCurrentResponseDefaultWebsiteSettingsPlugins) SetReplay(replay *bool) {
+	q.Replay = replay
+	q.require(queryWorkspacesCurrentResponseDefaultWebsiteSettingsPluginsFieldReplay)
+}
+
+// SetLogs sets the Logs field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryWorkspacesCurrentResponseDefaultWebsiteSettingsPlugins) SetLogs(logs *bool) {
+	q.Logs = logs
+	q.require(queryWorkspacesCurrentResponseDefaultWebsiteSettingsPluginsFieldLogs)
+}
+
+func (q *QueryWorkspacesCurrentResponseDefaultWebsiteSettingsPlugins) UnmarshalJSON(data []byte) error {
+	type unmarshaler QueryWorkspacesCurrentResponseDefaultWebsiteSettingsPlugins
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*q = QueryWorkspacesCurrentResponseDefaultWebsiteSettingsPlugins(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *q)
+	if err != nil {
+		return err
+	}
+	q.extraProperties = extraProperties
+	q.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (q *QueryWorkspacesCurrentResponseDefaultWebsiteSettingsPlugins) MarshalJSON() ([]byte, error) {
+	type embed QueryWorkspacesCurrentResponseDefaultWebsiteSettingsPlugins
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*q),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, q.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (q *QueryWorkspacesCurrentResponseDefaultWebsiteSettingsPlugins) String() string {
+	if q == nil {
+		return "<nil>"
+	}
+	if len(q.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(q.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(q); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", q)
 }
 
 type QueryWorkspacesCurrentResponseDemoResetStatus string
@@ -1785,6 +2439,229 @@ func (r *ReadNetworkRulesResponseRulesItem) MarshalJSON() ([]byte, error) {
 }
 
 func (r *ReadNetworkRulesResponseRulesItem) String() string {
+	if r == nil {
+		return "<nil>"
+	}
+	if len(r.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(r); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", r)
+}
+
+var (
+	readWorkspacePublicKeyResponseFieldContent = big.NewInt(1 << 0)
+	readWorkspacePublicKeyResponseFieldName    = big.NewInt(1 << 1)
+	readWorkspacePublicKeyResponseFieldID      = big.NewInt(1 << 2)
+	readWorkspacePublicKeyResponseFieldRevoked = big.NewInt(1 << 3)
+)
+
+type ReadWorkspacePublicKeyResponse struct {
+	// Publishable credential for browser SDK configuration.
+	Content string `json:"content" url:"content"`
+	// Display name of the key.
+	Name string `json:"name" url:"name"`
+	// Unique publishable key identifier.
+	ID      string `json:"id" url:"id"`
+	Revoked bool   `json:"revoked" url:"revoked"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (r *ReadWorkspacePublicKeyResponse) GetContent() string {
+	if r == nil {
+		return ""
+	}
+	return r.Content
+}
+
+func (r *ReadWorkspacePublicKeyResponse) GetName() string {
+	if r == nil {
+		return ""
+	}
+	return r.Name
+}
+
+func (r *ReadWorkspacePublicKeyResponse) GetID() string {
+	if r == nil {
+		return ""
+	}
+	return r.ID
+}
+
+func (r *ReadWorkspacePublicKeyResponse) GetRevoked() bool {
+	if r == nil {
+		return false
+	}
+	return r.Revoked
+}
+
+func (r *ReadWorkspacePublicKeyResponse) GetExtraProperties() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
+	return r.extraProperties
+}
+
+func (r *ReadWorkspacePublicKeyResponse) require(field *big.Int) {
+	next := new(big.Int)
+	if r.explicitFields != nil {
+		next.Set(r.explicitFields)
+	}
+	next.Or(next, field)
+	r.explicitFields = next
+}
+
+// SetContent sets the Content field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ReadWorkspacePublicKeyResponse) SetContent(content string) {
+	r.Content = content
+	r.require(readWorkspacePublicKeyResponseFieldContent)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ReadWorkspacePublicKeyResponse) SetName(name string) {
+	r.Name = name
+	r.require(readWorkspacePublicKeyResponseFieldName)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ReadWorkspacePublicKeyResponse) SetID(id string) {
+	r.ID = id
+	r.require(readWorkspacePublicKeyResponseFieldID)
+}
+
+// SetRevoked sets the Revoked field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ReadWorkspacePublicKeyResponse) SetRevoked(revoked bool) {
+	r.Revoked = revoked
+	r.require(readWorkspacePublicKeyResponseFieldRevoked)
+}
+
+func (r *ReadWorkspacePublicKeyResponse) UnmarshalJSON(data []byte) error {
+	type unmarshaler ReadWorkspacePublicKeyResponse
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*r = ReadWorkspacePublicKeyResponse(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *r)
+	if err != nil {
+		return err
+	}
+	r.extraProperties = extraProperties
+	r.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (r *ReadWorkspacePublicKeyResponse) MarshalJSON() ([]byte, error) {
+	type embed ReadWorkspacePublicKeyResponse
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*r),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, r.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (r *ReadWorkspacePublicKeyResponse) String() string {
+	if r == nil {
+		return "<nil>"
+	}
+	if len(r.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(r); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", r)
+}
+
+var (
+	revokeWorkspacePublicKeyResponseFieldSuccess = big.NewInt(1 << 0)
+)
+
+type RevokeWorkspacePublicKeyResponse struct {
+	Success bool `json:"success" url:"success"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (r *RevokeWorkspacePublicKeyResponse) GetSuccess() bool {
+	if r == nil {
+		return false
+	}
+	return r.Success
+}
+
+func (r *RevokeWorkspacePublicKeyResponse) GetExtraProperties() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
+	return r.extraProperties
+}
+
+func (r *RevokeWorkspacePublicKeyResponse) require(field *big.Int) {
+	next := new(big.Int)
+	if r.explicitFields != nil {
+		next.Set(r.explicitFields)
+	}
+	next.Or(next, field)
+	r.explicitFields = next
+}
+
+// SetSuccess sets the Success field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RevokeWorkspacePublicKeyResponse) SetSuccess(success bool) {
+	r.Success = success
+	r.require(revokeWorkspacePublicKeyResponseFieldSuccess)
+}
+
+func (r *RevokeWorkspacePublicKeyResponse) UnmarshalJSON(data []byte) error {
+	type unmarshaler RevokeWorkspacePublicKeyResponse
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*r = RevokeWorkspacePublicKeyResponse(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *r)
+	if err != nil {
+		return err
+	}
+	r.extraProperties = extraProperties
+	r.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (r *RevokeWorkspacePublicKeyResponse) MarshalJSON() ([]byte, error) {
+	type embed RevokeWorkspacePublicKeyResponse
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*r),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, r.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (r *RevokeWorkspacePublicKeyResponse) String() string {
 	if r == nil {
 		return "<nil>"
 	}

@@ -164,8 +164,9 @@ var setAccessSupportRequestArgsNullableFields = map[string]*big.Int{
 }
 
 type SetAccessSupportRequestArgs struct {
-	ImpersonationExpiresAt *float64 `json:"impersonationExpiresAt,omitempty" url:"impersonationExpiresAt,omitempty"`
-	ImpersonationGranted   bool     `json:"impersonationGranted" url:"impersonationGranted"`
+	// Milliseconds since the Unix epoch in UTC.
+	ImpersonationExpiresAt *int `json:"impersonationExpiresAt,omitempty" url:"impersonationExpiresAt,omitempty"`
+	ImpersonationGranted   bool `json:"impersonationGranted" url:"impersonationGranted"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -174,7 +175,7 @@ type SetAccessSupportRequestArgs struct {
 	rawJSON         json.RawMessage
 }
 
-func (s *SetAccessSupportRequestArgs) GetImpersonationExpiresAt() *float64 {
+func (s *SetAccessSupportRequestArgs) GetImpersonationExpiresAt() *int {
 	if s == nil {
 		return nil
 	}
@@ -206,7 +207,7 @@ func (s *SetAccessSupportRequestArgs) require(field *big.Int) {
 
 // SetImpersonationExpiresAt sets the ImpersonationExpiresAt field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SetAccessSupportRequestArgs) SetImpersonationExpiresAt(impersonationExpiresAt *float64) {
+func (s *SetAccessSupportRequestArgs) SetImpersonationExpiresAt(impersonationExpiresAt *int) {
 	s.ImpersonationExpiresAt = impersonationExpiresAt
 	s.require(setAccessSupportRequestArgsFieldImpersonationExpiresAt)
 }

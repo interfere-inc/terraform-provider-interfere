@@ -26,7 +26,7 @@ func (r *trackingDomainResource) read(ctx context.Context, data trackingDomainMo
 func (data *trackingDomainModel) refresh(remote *sdk.QueryDomainsByIDIncludeDeletedResponse) {
 	data.Name = types.StringValue(remote.Name)
 	data.Status = types.StringValue(string(*remote.Status))
-	data.CNAMETarget = types.StringValue("proxy.interfere.domains")
+	data.CNAMETarget = types.StringValue(trackingCNAMETarget)
 	data.SSLStatus = types.StringNull()
 	if remote.DomainMetadata != nil {
 		data.SSLStatus = types.StringPointerValue(remote.DomainMetadata.CfSslStatus)

@@ -17,7 +17,7 @@ import (
 
 func (r *privateKeyResource) Schema(ctx context.Context, _ resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = resource_private_key.PrivateKeyResourceSchema(ctx)
-	resp.Schema.Description = "Manage a workspace or surface private API key. Optional surface_slug selects a surface. Grants and lifetime changes replace the key. Creation UUIDs are generated automatically unless explicitly configured. secret is sensitive and is stored in Terraform state. Import retrieves metadata only, never the secret."
+	resp.Schema.Description = "Manage a workspace private API key. Grants and lifetime changes replace the key. Creation UUIDs are generated automatically unless explicitly configured. secret is sensitive and is stored in Terraform state. Import retrieves metadata only, never the secret."
 	attributes := resp.Schema.Attributes
 	flattenAttributes(attributes, "api_key")
 	for _, field := range []string{"id", "version", "secret"} {
@@ -26,10 +26,6 @@ func (r *privateKeyResource) Schema(ctx context.Context, _ resource.SchemaReques
 	for _, field := range []string{"name", "workspace_slug"} {
 		attributes[field] = requiredString(attributes[field], stringplanmodifier.RequiresReplace())
 	}
-	slug := attributes["surface_slug"].(schema.StringAttribute)
-	slug.Required, slug.Optional, slug.Computed = false, true, false
-	slug.PlanModifiers = []planmodifier.String{stringplanmodifier.RequiresReplace()}
-	attributes["surface_slug"] = slug
 	scopes := attributes["scopes"].(schema.ListAttribute)
 	scopes.Validators = append(scopes.Validators, listvalidator.UniqueValues())
 	scopes.PlanModifiers = []planmodifier.List{listplanmodifier.RequiresReplace()}

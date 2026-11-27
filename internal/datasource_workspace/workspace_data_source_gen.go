@@ -15,15 +15,36 @@ import (
 func WorkspaceDataSourceSchema(ctx context.Context) schema.Schema {
 	return schema.Schema{
 		Attributes: map[string]schema.Attribute{
+			"allow_member_workspace_creation": schema.BoolAttribute{
+				Computed:            true,
+				Description:         "Whether workspace members can create additional workspaces.",
+				MarkdownDescription: "Whether workspace members can create additional workspaces.",
+			},
 			"data_residency_location": schema.StringAttribute{
 				Computed:            true,
 				Description:         "Region where workspace data is stored. Set when the workspace is created.",
 				MarkdownDescription: "Region where workspace data is stored. Set when the workspace is created.",
 			},
+			"enabled_auth_methods": schema.ListAttribute{
+				ElementType:         types.StringType,
+				Computed:            true,
+				Description:         "Sign-in methods members can use: enterprise_sso, oauth_google, oauth_github, oauth_vercel, passkey, email_code, and password. Must include passkey and email_code. Null means the workspace uses the default methods.",
+				MarkdownDescription: "Sign-in methods members can use: enterprise_sso, oauth_google, oauth_github, oauth_vercel, passkey, email_code, and password. Must include passkey and email_code. Null means the workspace uses the default methods.",
+			},
 			"id": schema.StringAttribute{
 				Computed:            true,
 				Description:         "Unique workspace identifier.",
 				MarkdownDescription: "Unique workspace identifier.",
+			},
+			"impersonation_expires_at": schema.NumberAttribute{
+				Computed:            true,
+				Description:         "When support access ends, in Unix milliseconds. Null keeps access until it is turned off.",
+				MarkdownDescription: "When support access ends, in Unix milliseconds. Null keeps access until it is turned off.",
+			},
+			"impersonation_granted": schema.BoolAttribute{
+				Computed:            true,
+				Description:         "Whether Interfere support may access the workspace by impersonation.",
+				MarkdownDescription: "Whether Interfere support may access the workspace by impersonation.",
 			},
 			"name": schema.StringAttribute{
 				Computed:            true,
@@ -43,8 +64,12 @@ func WorkspaceDataSourceSchema(ctx context.Context) schema.Schema {
 }
 
 type WorkspaceModel struct {
-	DataResidencyLocation types.String `tfsdk:"data_residency_location"`
-	Id                    types.String `tfsdk:"id"`
-	Name                  types.String `tfsdk:"name"`
-	WorkspaceSlug         types.String `tfsdk:"workspace_slug"`
+	AllowMemberWorkspaceCreation types.Bool   `tfsdk:"allow_member_workspace_creation"`
+	DataResidencyLocation        types.String `tfsdk:"data_residency_location"`
+	EnabledAuthMethods           types.List   `tfsdk:"enabled_auth_methods"`
+	Id                           types.String `tfsdk:"id"`
+	ImpersonationExpiresAt       types.Number `tfsdk:"impersonation_expires_at"`
+	ImpersonationGranted         types.Bool   `tfsdk:"impersonation_granted"`
+	Name                         types.String `tfsdk:"name"`
+	WorkspaceSlug                types.String `tfsdk:"workspace_slug"`
 }

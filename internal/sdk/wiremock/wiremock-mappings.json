@@ -19,7 +19,7 @@
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"affiliationEmailAddress\": \"affiliationEmailAddress\",\n  \"clerkDomainId\": \"clerkDomainId\",\n  \"domainMetadata\": {\n    \"cfHostnameId\": \"cfHostnameId\",\n    \"cfSslStatus\": \"cfSslStatus\",\n    \"lastError\": \"lastError\",\n    \"provider\": \"cloudflare\"\n  },\n  \"enrollmentMode\": \"enrollmentMode\",\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"organizationId\": \"organizationId\",\n  \"status\": \"pending\",\n  \"type\": \"clerk\",\n  \"verifiedAt\": 1.1,\n  \"createdAt\": 1.1,\n  \"deletedAt\": 1.1,\n  \"updatedAt\": 1.1\n}",
+        "body": "{\n  \"affiliationEmailAddress\": \"affiliationEmailAddress\",\n  \"clerkDomainId\": \"clerkDomainId\",\n  \"domainMetadata\": {\n    \"cfHostnameId\": \"cfHostnameId\",\n    \"cfSslStatus\": \"cfSslStatus\",\n    \"lastError\": \"lastError\",\n    \"provider\": \"cloudflare\"\n  },\n  \"enrollmentMode\": \"enrollmentMode\",\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"organizationId\": \"organizationId\",\n  \"ownershipVerifiedAt\": 1.1,\n  \"status\": \"pending\",\n  \"type\": \"clerk\",\n  \"verifiedAt\": 1.1,\n  \"createdAt\": 1.1,\n  \"deletedAt\": 1.1,\n  \"updatedAt\": 1.1\n}",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -55,7 +55,7 @@
       },
       "response": {
         "status": 200,
-        "body": "[\n  {\n    \"affiliationEmailAddress\": \"affiliationEmailAddress\",\n    \"clerkDomainId\": \"clerkDomainId\",\n    \"domainMetadata\": {\n      \"cfHostnameId\": \"cfHostnameId\",\n      \"cfSslStatus\": \"cfSslStatus\",\n      \"lastError\": \"lastError\",\n      \"provider\": \"cloudflare\"\n    },\n    \"enrollmentMode\": \"enrollmentMode\",\n    \"id\": \"id\",\n    \"name\": \"name\",\n    \"organizationId\": \"organizationId\",\n    \"status\": \"pending\",\n    \"type\": \"clerk\",\n    \"verifiedAt\": 1.1,\n    \"createdAt\": 1.1,\n    \"deletedAt\": 1.1,\n    \"updatedAt\": 1.1\n  }\n]",
+        "body": "[\n  {\n    \"affiliationEmailAddress\": \"affiliationEmailAddress\",\n    \"clerkDomainId\": \"clerkDomainId\",\n    \"domainMetadata\": {\n      \"cfHostnameId\": \"cfHostnameId\",\n      \"cfSslStatus\": \"cfSslStatus\",\n      \"lastError\": \"lastError\",\n      \"provider\": \"cloudflare\"\n    },\n    \"enrollmentMode\": \"enrollmentMode\",\n    \"id\": \"id\",\n    \"name\": \"name\",\n    \"organizationId\": \"organizationId\",\n    \"ownershipVerifiedAt\": 1.1,\n    \"status\": \"pending\",\n    \"type\": \"clerk\",\n    \"verifiedAt\": 1.1,\n    \"createdAt\": 1.1,\n    \"deletedAt\": 1.1,\n    \"updatedAt\": 1.1\n  }\n]",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -91,7 +91,7 @@
       },
       "response": {
         "status": 200,
-        "body": "[\n  {\n    \"enabledByUserId\": \"enabledByUserId\",\n    \"externalAccountId\": \"externalAccountId\",\n    \"id\": \"id\",\n    \"organizationId\": \"organizationId\",\n    \"provider\": \"github\",\n    \"providerMetadata\": {\n      \"provider\": \"opentelemetry\",\n      \"name\": \"name\",\n      \"installationUrl\": \"installationUrl\"\n    },\n    \"status\": \"connected\",\n    \"statusReason\": \"provider_suspended\",\n    \"createdAt\": 1.1,\n    \"deletedAt\": 1.1,\n    \"updatedAt\": 1.1,\n    \"enabledBy\": {\n      \"createdAt\": 1.1,\n      \"deletedAt\": 1.1,\n      \"updatedAt\": 1.1,\n      \"clerkUserId\": \"clerkUserId\",\n      \"deactivatedAt\": 1.1,\n      \"department\": \"department\",\n      \"displayName\": \"displayName\",\n      \"emailPrimary\": \"emailPrimary\",\n      \"firstName\": \"firstName\",\n      \"id\": \"id\",\n      \"imageUrl\": \"imageUrl\",\n      \"initials\": \"initials\",\n      \"lastName\": \"lastName\",\n      \"locale\": \"locale\",\n      \"source\": \"clerk\",\n      \"timezone\": \"timezone\",\n      \"title\": \"title\"\n    }\n  }\n]",
+        "body": "[\n  {\n    \"enabledByUserId\": \"enabledByUserId\",\n    \"externalAccountId\": \"externalAccountId\",\n    \"id\": \"id\",\n    \"organizationId\": \"organizationId\",\n    \"provider\": \"github\",\n    \"providerMetadata\": {\n      \"provider\": \"opentelemetry\",\n      \"name\": \"name\",\n      \"installationUrl\": \"installationUrl\"\n    },\n    \"status\": \"connected\",\n    \"statusReason\": \"provider_suspended\",\n    \"createdAt\": 1.1,\n    \"deletedAt\": 1.1,\n    \"updatedAt\": 1.1,\n    \"enabledBy\": {\n      \"createdAt\": 1.1,\n      \"deletedAt\": 1.1,\n      \"updatedAt\": 1.1,\n      \"clerkUserId\": \"clerkUserId\",\n      \"deactivatedAt\": 1.1,\n      \"department\": \"department\",\n      \"desktopAppSeenAt\": 1.1,\n      \"displayName\": \"displayName\",\n      \"emailPrimary\": \"emailPrimary\",\n      \"firstName\": \"firstName\",\n      \"id\": \"id\",\n      \"imageUrl\": \"imageUrl\",\n      \"initials\": \"initials\",\n      \"lastName\": \"lastName\",\n      \"locale\": \"locale\",\n      \"openLinksInDesktop\": true,\n      \"source\": \"clerk\",\n      \"timezone\": \"timezone\",\n      \"title\": \"title\"\n    }\n  }\n]",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -271,7 +271,7 @@
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"allowMemberWorkspaceCreation\": true,\n  \"clerkOrgId\": \"clerkOrgId\",\n  \"clerkUpdatedAt\": 1.1,\n  \"dataResidencyLocation\": \"us\",\n  \"demoResetAt\": 1.1,\n  \"demoResetStatus\": \"RUNNING\",\n  \"demoWorkspace\": true,\n  \"enabledAuthMethods\": [\n    \"enterprise_sso\"\n  ],\n  \"id\": \"id\",\n  \"imageUrl\": \"imageUrl\",\n  \"impersonationExpiresAt\": 1.1,\n  \"impersonationGranted\": true,\n  \"name\": \"name\",\n  \"onboardingCompletedAt\": 1.1,\n  \"residencyPolicy\": \"any\",\n  \"slug\": \"slug\",\n  \"stripeCustomerId\": \"stripeCustomerId\",\n  \"createdAt\": 1.1,\n  \"deletedAt\": 1.1,\n  \"updatedAt\": 1.1\n}",
+        "body": "{\n  \"allowMemberWorkspaceCreation\": true,\n  \"autoAssignProblems\": true,\n  \"autoCreateApps\": true,\n  \"clerkOrgId\": \"clerkOrgId\",\n  \"clerkUpdatedAt\": 1.1,\n  \"dataResidencyLocation\": \"us\",\n  \"defaultSurfaceId\": \"defaultSurfaceId\",\n  \"defaultWebsiteSettings\": {\n    \"anonymousReplayPolicy\": \"always\",\n    \"anonymousUserTracking\": true,\n    \"environmentFiltering\": true,\n    \"plugins\": {\n      \"errors\": true,\n      \"device\": true,\n      \"pageEvents\": true,\n      \"rageClick\": true,\n      \"replay\": true,\n      \"logs\": true\n    }\n  },\n  \"demoResetAt\": 1.1,\n  \"demoResetStatus\": \"RUNNING\",\n  \"demoWorkspace\": true,\n  \"enabledAuthMethods\": [\n    \"enterprise_sso\"\n  ],\n  \"environmentFiltering\": true,\n  \"id\": \"id\",\n  \"imageUrl\": \"imageUrl\",\n  \"impersonationExpiresAt\": 1.1,\n  \"impersonationGranted\": true,\n  \"name\": \"name\",\n  \"onboardingCompletedAt\": 1.1,\n  \"residencyPolicy\": \"any\",\n  \"slug\": \"slug\",\n  \"stripeCustomerId\": \"stripeCustomerId\",\n  \"createdAt\": 1.1,\n  \"deletedAt\": 1.1,\n  \"updatedAt\": 1.1\n}",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -577,6 +577,120 @@
       }
     },
     {
+      "id": "12115e1e-2110-48ae-83b0-12271d04c0e1",
+      "name": "Create workspace public key - default",
+      "request": {
+        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/publicKeys",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        },
+        "pathParameters": {
+          "workspaceSlug": {
+            "equalTo": "workspaceSlug"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"content\": \"content\",\n  \"name\": \"name\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "12115e1e-2110-48ae-83b0-12271d04c0e1",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "2ba305d0-4e92-4f4a-a189-2a0db4af2e69",
+      "name": "Read workspace public key - default",
+      "request": {
+        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/publicKeys/{publicKeyId}",
+        "method": "GET",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        },
+        "pathParameters": {
+          "workspaceSlug": {
+            "equalTo": "workspaceSlug"
+          },
+          "publicKeyId": {
+            "equalTo": "publicKeyId"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"content\": \"content\",\n  \"name\": \"name\",\n  \"id\": \"id\",\n  \"revoked\": true\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "2ba305d0-4e92-4f4a-a189-2a0db4af2e69",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "fcb549a4-b959-4074-84ad-045828203b92",
+      "name": "Revoke workspace public key - default",
+      "request": {
+        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/publicKeys/{publicKeyId}",
+        "method": "DELETE",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        },
+        "pathParameters": {
+          "workspaceSlug": {
+            "equalTo": "workspaceSlug"
+          },
+          "publicKeyId": {
+            "equalTo": "publicKeyId"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"success\": true\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "fcb549a4-b959-4074-84ad-045828203b92",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "a89e6d66-7819-498a-8d67-eba843b5fbec",
       "name": "Read workspace network rules - default",
       "request": {
@@ -649,10 +763,10 @@
       }
     },
     {
-      "id": "6f221ee7-f858-4c5e-9648-95b02b1d63b1",
-      "name": "Read surfaces.getBySlugIncludeDeleted - default",
+      "id": "6a80888e-4b05-4663-8ba3-763f17850d81",
+      "name": "Read services.byId - default",
       "request": {
-        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/queries/surfaces.getBySlugIncludeDeleted",
+        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/queries/services.byId",
         "method": "POST",
         "headers": {
           "Authorization": {
@@ -667,12 +781,12 @@
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"createdAt\": 1.1,\n  \"deletedAt\": 1.1,\n  \"updatedAt\": 1.1,\n  \"anonymousReplayPolicy\": \"anonymousReplayPolicy\",\n  \"anonymousUserTracking\": true,\n  \"destinationConnectionId\": \"destinationConnectionId\",\n  \"destinationMappingId\": \"destinationMappingId\",\n  \"destinationMappingLabel\": \"destinationMappingLabel\",\n  \"destinationMappingUrl\": \"destinationMappingUrl\",\n  \"environmentFiltering\": true,\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"onboardedAt\": 1.1,\n  \"organizationId\": \"organizationId\",\n  \"primaryEnvironmentId\": \"primaryEnvironmentId\",\n  \"primaryEnvironmentName\": \"primaryEnvironmentName\",\n  \"sdkConfig\": {\n    \"plugins\": {\n      \"errors\": true,\n      \"device\": true,\n      \"pageEvents\": true,\n      \"rageClick\": true,\n      \"replay\": true,\n      \"logs\": true\n    },\n    \"serverTracing\": \"full\",\n    \"logSourcing\": \"sdk\",\n    \"platform\": \"vercel\"\n  },\n  \"slug\": \"slug\",\n  \"sourceDatasourceId\": \"sourceDatasourceId\",\n  \"sourceConnectionId\": \"sourceConnectionId\",\n  \"sourceMappingId\": \"sourceMappingId\",\n  \"sourceMappingLabel\": \"sourceMappingLabel\",\n  \"sourceMappingUrl\": \"sourceMappingUrl\",\n  \"sourceWorkingDirectory\": \"sourceWorkingDirectory\",\n  \"type\": \"elysia\"\n}",
+        "body": "{\n  \"id\": \"id\",\n  \"organizationId\": \"organizationId\",\n  \"namespace\": \"namespace\",\n  \"name\": \"name\",\n  \"connectionId\": \"connectionId\",\n  \"resource\": \"resource\",\n  \"sourceDatasourceId\": \"sourceDatasourceId\",\n  \"sourceWorkingDirectory\": \"sourceWorkingDirectory\",\n  \"reportableEnvironment\": \"reportableEnvironment\",\n  \"type\": \"type\",\n  \"typeSource\": \"typeSource\",\n  \"createdAt\": 1.1,\n  \"updatedAt\": 1.1,\n  \"lastSeenAt\": 1.1,\n  \"firstTelemetryAt\": 1.1,\n  \"websiteSettings\": {\n    \"anonymousReplayPolicy\": \"always\",\n    \"anonymousUserTracking\": true,\n    \"environmentFiltering\": true,\n    \"plugins\": {\n      \"errors\": true,\n      \"device\": true,\n      \"pageEvents\": true,\n      \"rageClick\": true,\n      \"replay\": true,\n      \"logs\": true\n    }\n  },\n  \"destinationResource\": \"destinationResource\",\n  \"pausedAt\": 1.1,\n  \"mergedIntoId\": \"mergedIntoId\",\n  \"archivedAt\": 1.1\n}",
         "headers": {
           "Content-Type": "application/json"
         }
       },
-      "uuid": "6f221ee7-f858-4c5e-9648-95b02b1d63b1",
+      "uuid": "6a80888e-4b05-4663-8ba3-763f17850d81",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -685,10 +799,10 @@
       }
     },
     {
-      "id": "fd7d0efa-a654-425b-9ee9-562942018bde",
-      "name": "Read surfaces.list - default",
+      "id": "68f4e319-cde2-49b7-b36b-fa7a39c921bd",
+      "name": "Read services.forWorkspace - default",
       "request": {
-        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/queries/surfaces.list",
+        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/queries/services.forWorkspace",
         "method": "POST",
         "headers": {
           "Authorization": {
@@ -703,12 +817,12 @@
       },
       "response": {
         "status": 200,
-        "body": "[\n  {\n    \"createdAt\": 1.1,\n    \"deletedAt\": 1.1,\n    \"updatedAt\": 1.1,\n    \"anonymousReplayPolicy\": \"anonymousReplayPolicy\",\n    \"anonymousUserTracking\": true,\n    \"destinationConnectionId\": \"destinationConnectionId\",\n    \"destinationMappingId\": \"destinationMappingId\",\n    \"destinationMappingLabel\": \"destinationMappingLabel\",\n    \"destinationMappingUrl\": \"destinationMappingUrl\",\n    \"environmentFiltering\": true,\n    \"id\": \"id\",\n    \"name\": \"name\",\n    \"onboardedAt\": 1.1,\n    \"organizationId\": \"organizationId\",\n    \"primaryEnvironmentId\": \"primaryEnvironmentId\",\n    \"primaryEnvironmentName\": \"primaryEnvironmentName\",\n    \"sdkConfig\": {\n      \"serverTracing\": \"full\",\n      \"logSourcing\": \"sdk\",\n      \"platform\": \"vercel\"\n    },\n    \"slug\": \"slug\",\n    \"sourceDatasourceId\": \"sourceDatasourceId\",\n    \"sourceConnectionId\": \"sourceConnectionId\",\n    \"sourceMappingId\": \"sourceMappingId\",\n    \"sourceMappingLabel\": \"sourceMappingLabel\",\n    \"sourceMappingUrl\": \"sourceMappingUrl\",\n    \"sourceWorkingDirectory\": \"sourceWorkingDirectory\",\n    \"type\": \"elysia\"\n  }\n]",
+        "body": "[\n  {\n    \"id\": \"id\",\n    \"organizationId\": \"organizationId\",\n    \"namespace\": \"namespace\",\n    \"name\": \"name\",\n    \"connectionId\": \"connectionId\",\n    \"resource\": \"resource\",\n    \"sourceDatasourceId\": \"sourceDatasourceId\",\n    \"sourceWorkingDirectory\": \"sourceWorkingDirectory\",\n    \"reportableEnvironment\": \"reportableEnvironment\",\n    \"type\": \"type\",\n    \"typeSource\": \"typeSource\",\n    \"createdAt\": 1.1,\n    \"updatedAt\": 1.1,\n    \"lastSeenAt\": 1.1,\n    \"firstTelemetryAt\": 1.1,\n    \"websiteSettings\": {\n      \"anonymousReplayPolicy\": \"always\",\n      \"anonymousUserTracking\": true,\n      \"environmentFiltering\": true\n    },\n    \"destinationResource\": \"destinationResource\",\n    \"pausedAt\": 1.1,\n    \"mergedIntoId\": \"mergedIntoId\",\n    \"archivedAt\": 1.1,\n    \"sourceDatasource\": {\n      \"id\": \"id\",\n      \"organizationId\": \"organizationId\",\n      \"connectionId\": \"connectionId\",\n      \"surfaceId\": \"surfaceId\",\n      \"kind\": \"kind\",\n      \"name\": \"name\",\n      \"url\": \"url\",\n      \"availability\": \"availability\",\n      \"createdAt\": 1.1,\n      \"deletedAt\": 1.1,\n      \"updatedAt\": 1.1\n    }\n  }\n]",
         "headers": {
           "Content-Type": "application/json"
         }
       },
-      "uuid": "fd7d0efa-a654-425b-9ee9-562942018bde",
+      "uuid": "68f4e319-cde2-49b7-b36b-fa7a39c921bd",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -721,10 +835,10 @@
       }
     },
     {
-      "id": "ee5c3ac7-24a8-4d23-9991-6f89c10d0a93",
-      "name": "Run surfaces.delete - default",
+      "id": "f343b006-70e7-4592-ae88-064c2818aa72",
+      "name": "Run services.setType - default",
       "request": {
-        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/actions/surfaces.delete",
+        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/actions/services.setType",
         "method": "POST",
         "headers": {
           "Authorization": {
@@ -744,7 +858,7 @@
           "Content-Type": "application/json"
         }
       },
-      "uuid": "ee5c3ac7-24a8-4d23-9991-6f89c10d0a93",
+      "uuid": "f343b006-70e7-4592-ae88-064c2818aa72",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -757,10 +871,10 @@
       }
     },
     {
-      "id": "dbe25c29-bf5e-4cc2-9aff-e979462c165f",
-      "name": "Run surfaces.setAnonymousReplayPolicy - default",
+      "id": "80088966-6736-4953-a0ed-44d8f9641cee",
+      "name": "Run services.setWebsiteSettings - default",
       "request": {
-        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/actions/surfaces.setAnonymousReplayPolicy",
+        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/actions/services.setWebsiteSettings",
         "method": "POST",
         "headers": {
           "Authorization": {
@@ -780,151 +894,7 @@
           "Content-Type": "application/json"
         }
       },
-      "uuid": "dbe25c29-bf5e-4cc2-9aff-e979462c165f",
-      "persistent": true,
-      "priority": 3,
-      "metadata": {
-        "mocklab": {
-          "created": {
-            "at": "2020-01-01T00:00:00.000Z",
-            "via": "SYSTEM"
-          }
-        }
-      }
-    },
-    {
-      "id": "d6fa8208-9af7-4047-9d87-c1e1dc68262b",
-      "name": "Run surfaces.setAnonymousUserTracking - default",
-      "request": {
-        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/actions/surfaces.setAnonymousUserTracking",
-        "method": "POST",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        },
-        "pathParameters": {
-          "workspaceSlug": {
-            "equalTo": "workspaceSlug"
-          }
-        }
-      },
-      "response": {
-        "status": 200,
-        "body": "{\n  \"success\": true\n}",
-        "headers": {
-          "Content-Type": "application/json"
-        }
-      },
-      "uuid": "d6fa8208-9af7-4047-9d87-c1e1dc68262b",
-      "persistent": true,
-      "priority": 3,
-      "metadata": {
-        "mocklab": {
-          "created": {
-            "at": "2020-01-01T00:00:00.000Z",
-            "via": "SYSTEM"
-          }
-        }
-      }
-    },
-    {
-      "id": "1d1f2e11-1117-4c31-ba55-fb2d9615ac1d",
-      "name": "Run surfaces.setSdkPlugin - default",
-      "request": {
-        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/actions/surfaces.setSdkPlugin",
-        "method": "POST",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        },
-        "pathParameters": {
-          "workspaceSlug": {
-            "equalTo": "workspaceSlug"
-          }
-        }
-      },
-      "response": {
-        "status": 200,
-        "body": "{\n  \"success\": true\n}",
-        "headers": {
-          "Content-Type": "application/json"
-        }
-      },
-      "uuid": "1d1f2e11-1117-4c31-ba55-fb2d9615ac1d",
-      "persistent": true,
-      "priority": 3,
-      "metadata": {
-        "mocklab": {
-          "created": {
-            "at": "2020-01-01T00:00:00.000Z",
-            "via": "SYSTEM"
-          }
-        }
-      }
-    },
-    {
-      "id": "6cc9674f-8bfa-4fbb-8f51-80060b05c671",
-      "name": "Run surfaces.updateName - default",
-      "request": {
-        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/actions/surfaces.updateName",
-        "method": "POST",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        },
-        "pathParameters": {
-          "workspaceSlug": {
-            "equalTo": "workspaceSlug"
-          }
-        }
-      },
-      "response": {
-        "status": 200,
-        "body": "{\n  \"success\": true\n}",
-        "headers": {
-          "Content-Type": "application/json"
-        }
-      },
-      "uuid": "6cc9674f-8bfa-4fbb-8f51-80060b05c671",
-      "persistent": true,
-      "priority": 3,
-      "metadata": {
-        "mocklab": {
-          "created": {
-            "at": "2020-01-01T00:00:00.000Z",
-            "via": "SYSTEM"
-          }
-        }
-      }
-    },
-    {
-      "id": "837d5a91-1bb5-4e11-9f42-671eaeacda89",
-      "name": "Create app - default",
-      "request": {
-        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/surfaces",
-        "method": "POST",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        },
-        "pathParameters": {
-          "workspaceSlug": {
-            "equalTo": "workspaceSlug"
-          }
-        }
-      },
-      "response": {
-        "status": 200,
-        "body": "{\n  \"apiKey\": {\n    \"id\": \"id\",\n    \"name\": \"Default\",\n    \"secret\": \"secret\"\n  },\n  \"publicKey\": \"publicKey\",\n  \"surface\": {\n    \"id\": \"id\",\n    \"name\": \"name\",\n    \"slug\": \"slug\",\n    \"type\": \"elysia\"\n  }\n}",
-        "headers": {
-          "Content-Type": "application/json"
-        }
-      },
-      "uuid": "837d5a91-1bb5-4e11-9f42-671eaeacda89",
+      "uuid": "80088966-6736-4953-a0ed-44d8f9641cee",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -991,7 +961,7 @@
       },
       "response": {
         "status": 200,
-        "body": "[\n  {\n    \"createdAt\": 1.1,\n    \"deletedAt\": 1.1,\n    \"updatedAt\": 1.1,\n    \"content\": \"content\",\n    \"id\": \"id\",\n    \"lastUsedAt\": 1.1,\n    \"name\": \"name\",\n    \"surfaceId\": \"surfaceId\"\n  }\n]",
+        "body": "[\n  {\n    \"createdAt\": 1.1,\n    \"deletedAt\": 1.1,\n    \"updatedAt\": 1.1,\n    \"content\": \"content\",\n    \"id\": \"id\",\n    \"lastUsedAt\": 1.1,\n    \"name\": \"name\",\n    \"organizationId\": \"organizationId\",\n    \"surfaceId\": \"surfaceId\"\n  }\n]",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -1009,10 +979,10 @@
       }
     },
     {
-      "id": "c2fef2fb-3125-4279-9c8a-a54f3293f7d8",
-      "name": "Create app public key - default",
+      "id": "45895f65-9652-499b-8ffe-0f149c82cc12",
+      "name": "Read publicKeys.forWorkspace - default",
       "request": {
-        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/surfaces/{surfaceSlug}/publicKeys",
+        "urlPathTemplate": "/v3/workspaces/{workspaceSlug}/queries/publicKeys.forWorkspace",
         "method": "POST",
         "headers": {
           "Authorization": {
@@ -1022,20 +992,17 @@
         "pathParameters": {
           "workspaceSlug": {
             "equalTo": "workspaceSlug"
-          },
-          "surfaceSlug": {
-            "equalTo": "surfaceSlug"
           }
         }
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"content\": \"content\",\n  \"name\": \"name\"\n}",
+        "body": "[\n  {\n    \"createdAt\": 1.1,\n    \"deletedAt\": 1.1,\n    \"updatedAt\": 1.1,\n    \"content\": \"content\",\n    \"id\": \"id\",\n    \"lastUsedAt\": 1.1,\n    \"name\": \"name\",\n    \"organizationId\": \"organizationId\",\n    \"surfaceId\": \"surfaceId\"\n  }\n]",
         "headers": {
           "Content-Type": "application/json"
         }
       },
-      "uuid": "c2fef2fb-3125-4279-9c8a-a54f3293f7d8",
+      "uuid": "45895f65-9652-499b-8ffe-0f149c82cc12",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -1355,6 +1322,6 @@
     }
   ],
   "meta": {
-    "total": 37
+    "total": 36
   }
 }

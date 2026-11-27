@@ -12,14 +12,13 @@ variable "workspace_slug" {
   type = string
 }
 
-variable "surface_slug" {
-  type = string
-}
-
 resource "interfere_public_key" "browser" {
   workspace_slug = var.workspace_slug
-  surface_slug   = var.surface_slug
   name           = "Browser"
+}
+
+data "interfere_public_keys" "workspace" {
+  workspace_slug = var.workspace_slug
 }
 
 output "public_key" {

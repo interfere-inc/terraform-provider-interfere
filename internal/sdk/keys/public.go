@@ -10,84 +10,6 @@ import (
 )
 
 var (
-	createPublicRequestFieldWorkspaceSlug  = big.NewInt(1 << 0)
-	createPublicRequestFieldSurfaceSlug    = big.NewInt(1 << 1)
-	createPublicRequestFieldIdempotencyKey = big.NewInt(1 << 2)
-	createPublicRequestFieldName           = big.NewInt(1 << 3)
-)
-
-type CreatePublicRequest struct {
-	// Workspace URL slug, using lowercase letters, numbers, and hyphens.
-	WorkspaceSlug string `json:"-" url:"-"`
-	// Surface URL slug, using lowercase letters, numbers, and hyphens.
-	SurfaceSlug    string `json:"-" url:"-"`
-	IdempotencyKey string `json:"idempotencyKey" url:"-"`
-	// Display name of the key.
-	Name string `json:"name" url:"-"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (c *CreatePublicRequest) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
-	}
-	next.Or(next, field)
-	c.explicitFields = next
-}
-
-// SetWorkspaceSlug sets the WorkspaceSlug field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreatePublicRequest) SetWorkspaceSlug(workspaceSlug string) {
-	c.WorkspaceSlug = workspaceSlug
-	c.require(createPublicRequestFieldWorkspaceSlug)
-}
-
-// SetSurfaceSlug sets the SurfaceSlug field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreatePublicRequest) SetSurfaceSlug(surfaceSlug string) {
-	c.SurfaceSlug = surfaceSlug
-	c.require(createPublicRequestFieldSurfaceSlug)
-}
-
-// SetIdempotencyKey sets the IdempotencyKey field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreatePublicRequest) SetIdempotencyKey(idempotencyKey string) {
-	c.IdempotencyKey = idempotencyKey
-	c.require(createPublicRequestFieldIdempotencyKey)
-}
-
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreatePublicRequest) SetName(name string) {
-	c.Name = name
-	c.require(createPublicRequestFieldName)
-}
-
-func (c *CreatePublicRequest) UnmarshalJSON(data []byte) error {
-	type unmarshaler CreatePublicRequest
-	var body unmarshaler
-	if err := json.Unmarshal(data, &body); err != nil {
-		return err
-	}
-	*c = CreatePublicRequest(body)
-	return nil
-}
-
-func (c *CreatePublicRequest) MarshalJSON() ([]byte, error) {
-	type embed CreatePublicRequest
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*c),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-var (
 	deletePublicRequestFieldWorkspaceSlug = big.NewInt(1 << 0)
 	deletePublicRequestFieldSurfaceSlug   = big.NewInt(1 << 1)
 	deletePublicRequestFieldPublicKeyID   = big.NewInt(1 << 2)
@@ -132,6 +54,64 @@ func (d *DeletePublicRequest) SetSurfaceSlug(surfaceSlug string) {
 func (d *DeletePublicRequest) SetPublicKeyID(publicKeyID string) {
 	d.PublicKeyID = publicKeyID
 	d.require(deletePublicRequestFieldPublicKeyID)
+}
+
+var (
+	forWorkspacePublicRequestFieldWorkspaceSlug = big.NewInt(1 << 0)
+	forWorkspacePublicRequestFieldArgs          = big.NewInt(1 << 1)
+)
+
+type ForWorkspacePublicRequest struct {
+	// Workspace URL slug, using lowercase letters, numbers, and hyphens.
+	WorkspaceSlug string         `json:"-" url:"-"`
+	Args          map[string]any `json:"args" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (f *ForWorkspacePublicRequest) require(field *big.Int) {
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
+	}
+	next.Or(next, field)
+	f.explicitFields = next
+}
+
+// SetWorkspaceSlug sets the WorkspaceSlug field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *ForWorkspacePublicRequest) SetWorkspaceSlug(workspaceSlug string) {
+	f.WorkspaceSlug = workspaceSlug
+	f.require(forWorkspacePublicRequestFieldWorkspaceSlug)
+}
+
+// SetArgs sets the Args field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *ForWorkspacePublicRequest) SetArgs(args map[string]any) {
+	f.Args = args
+	f.require(forWorkspacePublicRequestFieldArgs)
+}
+
+func (f *ForWorkspacePublicRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler ForWorkspacePublicRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*f = ForWorkspacePublicRequest(body)
+	return nil
+}
+
+func (f *ForWorkspacePublicRequest) MarshalJSON() ([]byte, error) {
+	type embed ForWorkspacePublicRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 var (

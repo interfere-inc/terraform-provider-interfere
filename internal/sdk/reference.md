@@ -1141,6 +1141,222 @@ _, err := client.Workspaces.UpdateMemberWorkspaceCreation(
 </dl>
 </details>
 
+<details><summary><code>client.Workspaces.CreateWorkspacePublicKey(WorkspaceSlug, request) -> *sdk.CreateWorkspacePublicKeyResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a publishable key for the whole workspace. Every app in the workspace can ship it; the gateway resolves the app from the telemetry. Requires workspace authentication write permission. Reuse the same idempotency key and request after an uncertain response.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &sdk.CreateWorkspacePublicKeyRequest{
+    WorkspaceSlug: "workspaceSlug",
+    IdempotencyKey: "idempotencyKey",
+    Name: "name",
+}
+_, err := client.Workspaces.CreateWorkspacePublicKey(
+    context.TODO(),
+    request,
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**workspaceSlug:** `string` — Workspace URL slug, using lowercase letters, numbers, and hyphens.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**idempotencyKey:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `string` — Display name of the key.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Workspaces.ReadWorkspacePublicKey(WorkspaceSlug, PublicKeyID) -> *sdk.ReadWorkspacePublicKeyResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Reads a workspace publishable key's identity, current value and revocation status. Requires workspace authentication read or app read permission.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &sdk.ReadWorkspacePublicKeyRequest{
+    WorkspaceSlug: "workspaceSlug",
+    PublicKeyID: "publicKeyId",
+}
+_, err := client.Workspaces.ReadWorkspacePublicKey(
+    context.TODO(),
+    request,
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**workspaceSlug:** `string` — Workspace URL slug, using lowercase letters, numbers, and hyphens.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**publicKeyID:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Workspaces.RevokeWorkspacePublicKey(WorkspaceSlug, PublicKeyID) -> *sdk.RevokeWorkspacePublicKeyResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Revokes a workspace publishable key and all its rotation grace-period values. Every app shipping this key stops authenticating, so confirm with the user before revoking the last live workspace key. Requires workspace authentication write permission. Repeating revocation of an existing key succeeds without changing its revocation time.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &sdk.RevokeWorkspacePublicKeyRequest{
+    WorkspaceSlug: "workspaceSlug",
+    PublicKeyID: "publicKeyId",
+}
+_, err := client.Workspaces.RevokeWorkspacePublicKey(
+    context.TODO(),
+    request,
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**workspaceSlug:** `string` — Workspace URL slug, using lowercase letters, numbers, and hyphens.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**publicKeyID:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.Workspaces.ReadNetworkRules(WorkspaceSlug) -> *sdk.ReadNetworkRulesResponse</code></summary>
 <dl>
 <dd>
@@ -1276,8 +1492,8 @@ _, err := client.Workspaces.SaveNetworkRules(
 </dl>
 </details>
 
-## Surfaces
-<details><summary><code>client.Surfaces.GetBySlugIncludeDeleted(WorkspaceSlug, request) -> *sdk.QuerySurfacesGetBySlugIncludeDeletedResponse</code></summary>
+## Services
+<details><summary><code>client.Services.Get(WorkspaceSlug, request) -> *sdk.QueryServicesByIDResponse</code></summary>
 <dl>
 <dd>
 
@@ -1289,7 +1505,7 @@ _, err := client.Workspaces.SaveNetworkRules(
 <dl>
 <dd>
 
-Read an app (surface) by slug even if deleted. Use only when investigating historical references; prefer surfaces.get for active resources. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation is read-only despite using POST. Requires org:surfaces:read; insufficient permission returns an access-denied error. An authorized read with no matching resource returns WORKSPACE_RESOURCE_NOT_FOUND (404). Only use pagination arguments declared in the schema.
+Read one OpenTelemetry service in this workspace by its ID. Requires integration settings read permission. Use services.forWorkspace to discover service IDs. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation is read-only despite using POST. Permission-filtered queries may return an empty result; do not assume that proves the resource does not exist. Only use pagination arguments declared in the schema.
 </dd>
 </dl>
 </dd>
@@ -1304,13 +1520,13 @@ Read an app (surface) by slug even if deleted. Use only when investigating histo
 <dd>
 
 ```go
-request := &sdk.GetBySlugIncludeDeletedSurfacesRequest{
+request := &sdk.GetServicesRequest{
     WorkspaceSlug: "workspaceSlug",
-    Args: &sdk.GetBySlugIncludeDeletedSurfacesRequestArgs{
-        SurfaceSlug: "surfaceSlug",
+    Args: &sdk.GetServicesRequestArgs{
+        ServiceID: "serviceId",
     },
 }
-_, err := client.Surfaces.GetBySlugIncludeDeleted(
+_, err := client.Services.Get(
     context.TODO(),
     request,
 )
@@ -1336,7 +1552,7 @@ _, err := client.Surfaces.GetBySlugIncludeDeleted(
 <dl>
 <dd>
 
-**args:** `*sdk.GetBySlugIncludeDeletedSurfacesRequestArgs` 
+**args:** `*sdk.GetServicesRequestArgs` 
     
 </dd>
 </dl>
@@ -1348,7 +1564,7 @@ _, err := client.Surfaces.GetBySlugIncludeDeleted(
 </dl>
 </details>
 
-<details><summary><code>client.Surfaces.List(WorkspaceSlug, request) -> sdk.QuerySurfacesListResponse</code></summary>
+<details><summary><code>client.Services.ForWorkspace(WorkspaceSlug, request) -> sdk.QueryServicesForWorkspaceResponse</code></summary>
 <dl>
 <dd>
 
@@ -1360,7 +1576,7 @@ _, err := client.Surfaces.GetBySlugIncludeDeleted(
 <dl>
 <dd>
 
-List active apps (surfaces) in the workspace. Start here to resolve an app name to its ID and slug before querying environments, releases or keys. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation is read-only despite using POST. Permission-filtered queries may return an empty result; do not assume that proves the resource does not exist. Only use pagination arguments declared in the schema.
+List the OpenTelemetry services in this workspace, one row for each service.namespace and service.name pair. Requires integration settings read permission. A null namespace means the service sent none; unknown_service means it sent no service.name. Read last-seen times from the service activity endpoint. Returns up to limit rows (default and maximum 500), ordered by namespace and name. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation is read-only despite using POST. Permission-filtered queries may return an empty result; do not assume that proves the resource does not exist. Only use pagination arguments declared in the schema.
 </dd>
 </dl>
 </dd>
@@ -1375,10 +1591,11 @@ List active apps (surfaces) in the workspace. Start here to resolve an app name 
 <dd>
 
 ```go
-request := &sdk.ListSurfacesRequest{
+request := &sdk.ForWorkspaceServicesRequest{
     WorkspaceSlug: "workspaceSlug",
+    Args: &sdk.ForWorkspaceServicesRequestArgs{},
 }
-_, err := client.Surfaces.List(
+_, err := client.Services.ForWorkspace(
     context.TODO(),
     request,
 )
@@ -1404,7 +1621,7 @@ _, err := client.Surfaces.List(
 <dl>
 <dd>
 
-**args:** `map[string]any` 
+**args:** `*sdk.ForWorkspaceServicesRequestArgs` 
     
 </dd>
 </dl>
@@ -1416,7 +1633,7 @@ _, err := client.Surfaces.List(
 </dl>
 </details>
 
-<details><summary><code>client.Surfaces.Delete(WorkspaceSlug, request) -> *sdk.MutationSurfacesDeleteResponse</code></summary>
+<details><summary><code>client.Services.SetType(WorkspaceSlug, request) -> *sdk.MutationServicesSetTypeResponse</code></summary>
 <dl>
 <dd>
 
@@ -1428,7 +1645,7 @@ _, err := client.Surfaces.List(
 <dl>
 <dd>
 
-Delete an app (surface). This is destructive; resolve its exact ID and slug with surfaces.list and verify the requested target. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.
+Set a service's type to website, backend, other or unclassified. The explicit choice takes precedence over automatic inference. Resolve the service ID from services.forWorkspace first. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.
 </dd>
 </dl>
 </dd>
@@ -1443,13 +1660,14 @@ Delete an app (surface). This is destructive; resolve its exact ID and slug with
 <dd>
 
 ```go
-request := &sdk.DeleteSurfacesRequest{
+request := &sdk.SetTypeServicesRequest{
     WorkspaceSlug: "workspaceSlug",
-    Args: &sdk.DeleteSurfacesRequestArgs{
-        SurfaceSlug: "surfaceSlug",
+    Args: &sdk.SetTypeServicesRequestArgs{
+        ServiceID: "serviceId",
+        Type: sdk.SetTypeServicesRequestArgsTypeUnclassified,
     },
 }
-_, err := client.Surfaces.Delete(
+_, err := client.Services.SetType(
     context.TODO(),
     request,
 )
@@ -1475,7 +1693,7 @@ _, err := client.Surfaces.Delete(
 <dl>
 <dd>
 
-**args:** `*sdk.DeleteSurfacesRequestArgs` 
+**args:** `*sdk.SetTypeServicesRequestArgs` 
     
 </dd>
 </dl>
@@ -1487,7 +1705,7 @@ _, err := client.Surfaces.Delete(
 </dl>
 </details>
 
-<details><summary><code>client.Surfaces.SetAnonymousReplayPolicy(WorkspaceSlug, request) -> *sdk.MutationSurfacesSetAnonymousReplayPolicyResponse</code></summary>
+<details><summary><code>client.Services.SetWebsiteSettings(WorkspaceSlug, request) -> *sdk.MutationServicesSetWebsiteSettingsResponse</code></summary>
 <dl>
 <dd>
 
@@ -1499,7 +1717,7 @@ _, err := client.Surfaces.Delete(
 <dl>
 <dd>
 
-Choose when an app (surface) records session replay for visitors that are not identified: always, on_error (only once an error occurs) or never. Identified users always record. Inspect its current setting first. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.
+Replace a service's website settings, including anonymous replay policy, anonymous-user tracking, environment filtering and browser SDK plugins. Read services.byId first and preserve settings the user did not ask to change. This works without an App and leaves workspace defaults unchanged. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.
 </dd>
 </dl>
 </dd>
@@ -1514,307 +1732,18 @@ Choose when an app (surface) records session replay for visitors that are not id
 <dd>
 
 ```go
-request := &sdk.SetAnonymousReplayPolicySurfacesRequest{
+request := &sdk.SetWebsiteSettingsServicesRequest{
     WorkspaceSlug: "workspaceSlug",
-    Args: &sdk.SetAnonymousReplayPolicySurfacesRequestArgs{
-        SurfaceSlug: "surfaceSlug",
-        Policy: sdk.SetAnonymousReplayPolicySurfacesRequestArgsPolicyAlways,
-    },
-}
-_, err := client.Surfaces.SetAnonymousReplayPolicy(
-    context.TODO(),
-    request,
-)
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**workspaceSlug:** `string` — Workspace URL slug, using lowercase letters, numbers, and hyphens.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**args:** `*sdk.SetAnonymousReplayPolicySurfacesRequestArgs` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Surfaces.SetAnonymousUserTracking(WorkspaceSlug, request) -> *sdk.MutationSurfacesSetAnonymousUserTrackingResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Enable or disable anonymous-user tracking for an app (surface). Inspect its current setting first. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &sdk.SetAnonymousUserTrackingSurfacesRequest{
-    WorkspaceSlug: "workspaceSlug",
-    Args: &sdk.SetAnonymousUserTrackingSurfacesRequestArgs{
-        SurfaceSlug: "surfaceSlug",
-        Enabled: true,
-    },
-}
-_, err := client.Surfaces.SetAnonymousUserTracking(
-    context.TODO(),
-    request,
-)
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**workspaceSlug:** `string` — Workspace URL slug, using lowercase letters, numbers, and hyphens.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**args:** `*sdk.SetAnonymousUserTrackingSurfacesRequestArgs` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Surfaces.SetSdkPlugin(WorkspaceSlug, request) -> *sdk.MutationSurfacesSetSdkPluginResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Turn one browser SDK feature (replay, logs, pageEvents or rageClick) on or off for an app (surface). Other SDK settings are kept. Next.js and Vite apps bake this at build time, so it takes effect on their next build and deploy. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &sdk.SetSdkPluginSurfacesRequest{
-    WorkspaceSlug: "workspaceSlug",
-    Args: &sdk.SetSdkPluginSurfacesRequestArgs{
-        SurfaceSlug: "surfaceSlug",
-        Plugin: sdk.SetSdkPluginSurfacesRequestArgsPluginReplay,
-        Enabled: true,
-    },
-}
-_, err := client.Surfaces.SetSdkPlugin(
-    context.TODO(),
-    request,
-)
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**workspaceSlug:** `string` — Workspace URL slug, using lowercase letters, numbers, and hyphens.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**args:** `*sdk.SetSdkPluginSurfacesRequestArgs` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Surfaces.UpdateName(WorkspaceSlug, request) -> *sdk.MutationSurfacesUpdateNameResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Rename an app (surface). Resolve its ID with surfaces.list and preserve the rest of its settings. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &sdk.UpdateNameSurfacesRequest{
-    WorkspaceSlug: "workspaceSlug",
-    Args: &sdk.UpdateNameSurfacesRequestArgs{
-        Name: "name",
-        SurfaceSlug: "surfaceSlug",
-    },
-}
-_, err := client.Surfaces.UpdateName(
-    context.TODO(),
-    request,
-)
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**workspaceSlug:** `string` — Workspace URL slug, using lowercase letters, numbers, and hyphens.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**args:** `*sdk.UpdateNameSurfacesRequestArgs` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Surfaces.CreateSurface(WorkspaceSlug, request) -> *sdk.CreateSurfaceResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Creates an app (surface) in the workspace. Reuse the original request identity when retrying the same creation attempt.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &sdk.CreateSurfaceRequest{
-    WorkspaceSlug: "workspaceSlug",
-    APIKey: &sdk.CreateSurfaceRequestAPIKey{
-        Scopes: []sdk.CreateSurfaceRequestAPIKeyScopesItem{
-            sdk.CreateSurfaceRequestAPIKeyScopesItemOrgTelemetryWrite,
+    Args: &sdk.SetWebsiteSettingsServicesRequestArgs{
+        ServiceID: "serviceId",
+        WebsiteSettings: &sdk.SetWebsiteSettingsServicesRequestArgsWebsiteSettings{
+            AnonymousReplayPolicy: sdk.SetWebsiteSettingsServicesRequestArgsWebsiteSettingsAnonymousReplayPolicyAlways,
+            AnonymousUserTracking: true,
+            EnvironmentFiltering: true,
         },
     },
-    IdempotencyKey: "idempotencyKey",
-    Name: "name",
-    Type: sdk.CreateSurfaceRequestTypeElysia,
 }
-_, err := client.Surfaces.CreateSurface(
+_, err := client.Services.SetWebsiteSettings(
     context.TODO(),
     request,
 )
@@ -1840,47 +1769,7 @@ _, err := client.Surfaces.CreateSurface(
 <dl>
 <dd>
 
-**anonymousReplayPolicy:** `*sdk.CreateSurfaceRequestAnonymousReplayPolicy` — When sessions without an identified user record replay. Defaults to on_error when anonymous-user tracking is on, otherwise always.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**anonymousUserTracking:** `*bool` — Whether anonymous-user telemetry is collected.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**apiKey:** `*sdk.CreateSurfaceRequestAPIKey` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**idempotencyKey:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**name:** `string` — Display name of the surface.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**type_:** `sdk.CreateSurfaceRequestType` — Application framework used by the surface.
+**args:** `*sdk.SetWebsiteSettingsServicesRequestArgs` 
     
 </dd>
 </dl>
@@ -2036,7 +1925,7 @@ _, err := client.Keys.Public.ListForSurface(
 </dl>
 </details>
 
-<details><summary><code>client.Keys.Public.Create(WorkspaceSlug, SurfaceSlug, request) -> *sdk.CreateSurfacePublicKeyResponse</code></summary>
+<details><summary><code>client.Keys.Public.ForWorkspace(WorkspaceSlug, request) -> sdk.QueryPublicKeysForWorkspaceResponse</code></summary>
 <dl>
 <dd>
 
@@ -2048,7 +1937,7 @@ _, err := client.Keys.Public.ListForSurface(
 <dl>
 <dd>
 
-Creates a publishable key for the app (surface).
+List workspace-scoped publishable key records (surfaceId null). Every app in the workspace can ship a workspace key; these are separate from app keys and from private build API keys. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation is read-only despite using POST. Permission-filtered queries may return an empty result; do not assume that proves the resource does not exist. Only use pagination arguments declared in the schema.
 </dd>
 </dl>
 </dd>
@@ -2063,13 +1952,13 @@ Creates a publishable key for the app (surface).
 <dd>
 
 ```go
-request := &keys.CreatePublicRequest{
+request := &keys.ForWorkspacePublicRequest{
     WorkspaceSlug: "workspaceSlug",
-    SurfaceSlug: "surfaceSlug",
-    IdempotencyKey: "idempotencyKey",
-    Name: "name",
+    Args: map[string]any{
+        "key": "value",
+    },
 }
-_, err := client.Keys.Public.Create(
+_, err := client.Keys.Public.ForWorkspace(
     context.TODO(),
     request,
 )
@@ -2095,23 +1984,7 @@ _, err := client.Keys.Public.Create(
 <dl>
 <dd>
 
-**surfaceSlug:** `string` — Surface URL slug, using lowercase letters, numbers, and hyphens.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**idempotencyKey:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**name:** `string` — Display name of the key.
+**args:** `map[string]any` 
     
 </dd>
 </dl>
@@ -2135,7 +2008,7 @@ _, err := client.Keys.Public.Create(
 <dl>
 <dd>
 
-Reads a publishable key's identity, current value and revocation status. Requires app read permission. Revoked keys and keys belonging to deleted apps report revoked: true.
+Reads a publishable key's identity, current value and revocation status. Requires app read permission. Revoked keys report revoked: true, and so do keys of a deleted app unless the key is still mapped to a service and keeps ingesting.
 </dd>
 </dl>
 </dd>
@@ -2292,7 +2165,7 @@ _, err := client.Keys.Public.Delete(
 <dl>
 <dd>
 
-Creates a private API key with explicit scopes and expiration. Supply surfaceSlug for an app key; omit it for a workspace key. Grants cannot exceed the caller's permissions. Reuse the same idempotency key and request after an uncertain response.
+Creates a workspace secret API key with explicit scopes and expiration. One key with the release:write scope publishes releases for every app in the workspace. Grants cannot exceed the caller's permissions. Reuse the same idempotency key and request after an uncertain response.
 </dd>
 </dl>
 </dd>
@@ -2334,14 +2207,6 @@ _, err := client.Keys.Private.Create(
 <dd>
 
 **workspaceSlug:** `string` — Workspace URL slug, using lowercase letters, numbers, and hyphens.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**surfaceSlug:** `*string` — Surface URL slug, using lowercase letters, numbers, and hyphens.
     
 </dd>
 </dl>

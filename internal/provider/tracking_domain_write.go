@@ -29,7 +29,7 @@ func (r *trackingDomainResource) Create(ctx context.Context, req resource.Create
 	data.ID = data.IdempotencyKey
 	data.Status = types.StringValue("pending")
 	data.SSLStatus = types.StringNull()
-	data.CNAMETarget = types.StringValue("proxy.interfere.domains")
+	data.CNAMETarget = types.StringValue(trackingCNAMETarget)
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 	remote, err := r.read(ctx, data)
 	if err != nil {

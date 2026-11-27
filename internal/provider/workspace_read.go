@@ -41,5 +41,6 @@ func (r *workspaceResource) Read(ctx context.Context, req resource.ReadRequest, 
 	data.Id = types.StringValue(remote.ID)
 	data.Name = types.StringValue(remote.Name)
 	data.DataResidencyLocation = types.StringValue(string(remote.DataResidencyLocation))
+	resp.Diagnostics.Append(setWorkspaceSecurity(&data, remote)...)
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }

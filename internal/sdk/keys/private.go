@@ -11,19 +11,16 @@ import (
 
 var (
 	createPrivateRequestFieldWorkspaceSlug          = big.NewInt(1 << 0)
-	createPrivateRequestFieldSurfaceSlug            = big.NewInt(1 << 1)
-	createPrivateRequestFieldIdempotencyKey         = big.NewInt(1 << 2)
-	createPrivateRequestFieldName                   = big.NewInt(1 << 3)
-	createPrivateRequestFieldScopes                 = big.NewInt(1 << 4)
-	createPrivateRequestFieldSecondsUntilExpiration = big.NewInt(1 << 5)
+	createPrivateRequestFieldIdempotencyKey         = big.NewInt(1 << 1)
+	createPrivateRequestFieldName                   = big.NewInt(1 << 2)
+	createPrivateRequestFieldScopes                 = big.NewInt(1 << 3)
+	createPrivateRequestFieldSecondsUntilExpiration = big.NewInt(1 << 4)
 )
 
 type CreatePrivateRequest struct {
 	// Workspace URL slug, using lowercase letters, numbers, and hyphens.
-	WorkspaceSlug string `json:"-" url:"-"`
-	// Surface URL slug, using lowercase letters, numbers, and hyphens.
-	SurfaceSlug    *string `json:"surfaceSlug,omitempty" url:"-"`
-	IdempotencyKey string  `json:"idempotencyKey" url:"-"`
+	WorkspaceSlug  string `json:"-" url:"-"`
+	IdempotencyKey string `json:"idempotencyKey" url:"-"`
 	// Display name of the key.
 	Name string `json:"name" url:"-"`
 	// Permission scopes granted to the key.
@@ -49,13 +46,6 @@ func (c *CreatePrivateRequest) require(field *big.Int) {
 func (c *CreatePrivateRequest) SetWorkspaceSlug(workspaceSlug string) {
 	c.WorkspaceSlug = workspaceSlug
 	c.require(createPrivateRequestFieldWorkspaceSlug)
-}
-
-// SetSurfaceSlug sets the SurfaceSlug field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreatePrivateRequest) SetSurfaceSlug(surfaceSlug *string) {
-	c.SurfaceSlug = surfaceSlug
-	c.require(createPrivateRequestFieldSurfaceSlug)
 }
 
 // SetIdempotencyKey sets the IdempotencyKey field and marks it as non-optional;
@@ -188,8 +178,14 @@ const (
 	CreatePrivateRequestScopesItemOrgSurfacesRead               CreatePrivateRequestScopesItem = "org:surfaces:read"
 	CreatePrivateRequestScopesItemOrgSurfacesWrite              CreatePrivateRequestScopesItem = "org:surfaces:write"
 	CreatePrivateRequestScopesItemOrgSurfacesDelete             CreatePrivateRequestScopesItem = "org:surfaces:delete"
+	CreatePrivateRequestScopesItemOrgServicesRead               CreatePrivateRequestScopesItem = "org:services:read"
+	CreatePrivateRequestScopesItemOrgServicesWrite              CreatePrivateRequestScopesItem = "org:services:write"
+	CreatePrivateRequestScopesItemOrgCustomersRead              CreatePrivateRequestScopesItem = "org:customers:read"
+	CreatePrivateRequestScopesItemOrgTiersRead                  CreatePrivateRequestScopesItem = "org:tiers:read"
+	CreatePrivateRequestScopesItemOrgTiersWrite                 CreatePrivateRequestScopesItem = "org:tiers:write"
 	CreatePrivateRequestScopesItemOrgProblemsRead               CreatePrivateRequestScopesItem = "org:problems:read"
 	CreatePrivateRequestScopesItemOrgProblemsWrite              CreatePrivateRequestScopesItem = "org:problems:write"
+	CreatePrivateRequestScopesItemOrgFindingsRead               CreatePrivateRequestScopesItem = "org:findings:read"
 	CreatePrivateRequestScopesItemOrgSupportRead                CreatePrivateRequestScopesItem = "org:support:read"
 	CreatePrivateRequestScopesItemOrgSupportWrite               CreatePrivateRequestScopesItem = "org:support:write"
 	CreatePrivateRequestScopesItemOrgReplaysRead                CreatePrivateRequestScopesItem = "org:replays:read"
@@ -204,12 +200,13 @@ const (
 	CreatePrivateRequestScopesItemOrgWorkspaceBasicsWrite       CreatePrivateRequestScopesItem = "org:workspace_basics:write"
 	CreatePrivateRequestScopesItemOrgWorkspaceDomainsRead       CreatePrivateRequestScopesItem = "org:workspace_domains:read"
 	CreatePrivateRequestScopesItemOrgWorkspaceDomainsWrite      CreatePrivateRequestScopesItem = "org:workspace_domains:write"
+	CreatePrivateRequestScopesItemOrgAPIKeysRead                CreatePrivateRequestScopesItem = "org:api_keys:read"
+	CreatePrivateRequestScopesItemOrgAPIKeysWrite               CreatePrivateRequestScopesItem = "org:api_keys:write"
 	CreatePrivateRequestScopesItemOrgWorkspaceAuthRead          CreatePrivateRequestScopesItem = "org:workspace_auth:read"
 	CreatePrivateRequestScopesItemOrgWorkspaceAuthWrite         CreatePrivateRequestScopesItem = "org:workspace_auth:write"
 	CreatePrivateRequestScopesItemOrgWorkspaceDestroy           CreatePrivateRequestScopesItem = "org:workspace:destroy"
 	CreatePrivateRequestScopesItemOrgWorkspaceTransferOwnership CreatePrivateRequestScopesItem = "org:workspace:transfer_ownership"
 	CreatePrivateRequestScopesItemReleaseWrite                  CreatePrivateRequestScopesItem = "release:write"
-	CreatePrivateRequestScopesItemIngestWrite                   CreatePrivateRequestScopesItem = "ingest:write"
 )
 
 func NewCreatePrivateRequestScopesItemFromString(s string) (CreatePrivateRequestScopesItem, error) {
@@ -222,10 +219,22 @@ func NewCreatePrivateRequestScopesItemFromString(s string) (CreatePrivateRequest
 		return CreatePrivateRequestScopesItemOrgSurfacesWrite, nil
 	case "org:surfaces:delete":
 		return CreatePrivateRequestScopesItemOrgSurfacesDelete, nil
+	case "org:services:read":
+		return CreatePrivateRequestScopesItemOrgServicesRead, nil
+	case "org:services:write":
+		return CreatePrivateRequestScopesItemOrgServicesWrite, nil
+	case "org:customers:read":
+		return CreatePrivateRequestScopesItemOrgCustomersRead, nil
+	case "org:tiers:read":
+		return CreatePrivateRequestScopesItemOrgTiersRead, nil
+	case "org:tiers:write":
+		return CreatePrivateRequestScopesItemOrgTiersWrite, nil
 	case "org:problems:read":
 		return CreatePrivateRequestScopesItemOrgProblemsRead, nil
 	case "org:problems:write":
 		return CreatePrivateRequestScopesItemOrgProblemsWrite, nil
+	case "org:findings:read":
+		return CreatePrivateRequestScopesItemOrgFindingsRead, nil
 	case "org:support:read":
 		return CreatePrivateRequestScopesItemOrgSupportRead, nil
 	case "org:support:write":
@@ -254,6 +263,10 @@ func NewCreatePrivateRequestScopesItemFromString(s string) (CreatePrivateRequest
 		return CreatePrivateRequestScopesItemOrgWorkspaceDomainsRead, nil
 	case "org:workspace_domains:write":
 		return CreatePrivateRequestScopesItemOrgWorkspaceDomainsWrite, nil
+	case "org:api_keys:read":
+		return CreatePrivateRequestScopesItemOrgAPIKeysRead, nil
+	case "org:api_keys:write":
+		return CreatePrivateRequestScopesItemOrgAPIKeysWrite, nil
 	case "org:workspace_auth:read":
 		return CreatePrivateRequestScopesItemOrgWorkspaceAuthRead, nil
 	case "org:workspace_auth:write":
@@ -264,8 +277,6 @@ func NewCreatePrivateRequestScopesItemFromString(s string) (CreatePrivateRequest
 		return CreatePrivateRequestScopesItemOrgWorkspaceTransferOwnership, nil
 	case "release:write":
 		return CreatePrivateRequestScopesItemReleaseWrite, nil
-	case "ingest:write":
-		return CreatePrivateRequestScopesItemIngestWrite, nil
 	}
 	var t CreatePrivateRequestScopesItem
 	return "", fmt.Errorf("%s is not a valid %T", s, t)

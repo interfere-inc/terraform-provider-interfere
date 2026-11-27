@@ -16,7 +16,7 @@ import (
 func fixturePublicKey(t *testing.T, f *publicKeyFixture) (*publicKeyResource, tfsdk.State) {
 	t.Helper()
 	r := &publicKeyResource{client: client.NewClient(option.WithToken("fixture-token"), option.WithBaseURL(f.server.URL), option.WithoutRetries())}
-	model := publicKeyModel{Id: types.StringValue(attemptID), IdempotencyKey: types.StringValue(attemptID), Name: types.StringValue("Browser"), WorkspaceSlug: types.StringValue("example"), SurfaceSlug: types.StringValue("example-surface"), Content: types.StringValue("interfere_public_us_original")}
+	model := publicKeyModel{Id: types.StringValue(attemptID), IdempotencyKey: types.StringValue(attemptID), Name: types.StringValue("Browser"), WorkspaceSlug: types.StringValue("example"), Content: types.StringValue("interfere_public_us_original")}
 	var schema resource.SchemaResponse
 	r.Schema(context.Background(), resource.SchemaRequest{}, &schema)
 	state := tfsdk.State{Schema: schema.Schema}
@@ -36,8 +36,7 @@ func TestPublicKeyFailurePreservesState(t *testing.T) {
 		"permission":           {403, map[string]string{"message": "credential-from-error"}},
 		"outage":               {503, map[string]string{"message": "credential-from-error"}},
 		"unclassified missing": {404, map[string]string{"message": "credential-from-error"}},
-		"wrong identity":       {0, map[string]any{"id": "other", "name": "Browser", "surfaceSlug": "example-surface", "content": "credential-from-error", "revoked": false}},
-		"wrong surface":        {0, map[string]any{"id": attemptID, "name": "Browser", "surfaceSlug": "other", "content": "credential-from-error", "revoked": false}},
+		"wrong identity":       {0, map[string]any{"id": "other", "name": "Browser", "content": "credential-from-error", "revoked": false}},
 	} {
 		t.Run(name, func(t *testing.T) {
 			f := newPublicKeyFixture(t)
@@ -64,7 +63,7 @@ func TestPublicKeyKnownInactiveLeavesState(t *testing.T) {
 			f.readStatus = 404
 			f.readBody = map[string]string{"code": "SURFACE_KEY_NOT_FOUND"}
 		} else {
-			f.readBody = map[string]any{"id": attemptID, "name": "Browser", "surfaceSlug": "example-surface", "content": "interfere_public_us_original", "revoked": true}
+			f.readBody = map[string]any{"id": attemptID, "name": "Browser", "content": "interfere_public_us_original", "revoked": true}
 		}
 		r, state := fixturePublicKey(t, f)
 		response := resource.ReadResponse{State: state}
@@ -77,7 +76,7 @@ func TestPublicKeyKnownInactiveLeavesState(t *testing.T) {
 
 func TestPublicKeyDeleteRequiresAcknowledgement(t *testing.T) {
 	f := newPublicKeyFixture(t)
-	f.keys[attemptID] = map[string]any{"id": attemptID, "name": "Browser", "surfaceSlug": "example-surface", "content": "interfere_public_us_original", "revoked": false}
+	f.keys[attemptID] = map[string]any{"id": attemptID, "name": "Browser", "content": "interfere_public_us_original", "revoked": false}
 	f.acknowledge = false
 	r, state := fixturePublicKey(t, f)
 	response := resource.DeleteResponse{State: state}

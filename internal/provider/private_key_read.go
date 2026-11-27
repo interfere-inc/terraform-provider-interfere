@@ -37,7 +37,6 @@ func (r *privateKeyResource) read(ctx context.Context, data privateKeyModel) (*s
 func (r *privateKeyResource) refresh(ctx context.Context, data *privateKeyModel, remote *sdk.ReadPrivateKeyResponse, diagnostics *diag.Diagnostics) {
 	data.Name = types.StringValue(remote.Name)
 	data.Version = types.StringValue(remote.Version)
-	data.SurfaceSlug = types.StringPointerValue(remote.SurfaceSlug)
 	data.ExpiresAt = types.Int64Null()
 	data.SecondsUntilExpiration = types.Int64Null()
 	if remote.SecondsUntilExpiration != nil {

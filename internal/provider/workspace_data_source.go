@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
+	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/interfere-inc/terraform-provider-interfere/internal/datasource_workspace"
 	"github.com/interfere-inc/terraform-provider-interfere/internal/sdk/client"
@@ -31,6 +32,10 @@ func (r *workspaceDataSource) Configure(_ context.Context, req datasource.Config
 func (r *workspaceDataSource) Schema(ctx context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = datasource_workspace.WorkspaceDataSourceSchema(ctx)
 	resp.Schema.Description = "Look up an existing workspace without managing its lifecycle."
+	methods := resp.Schema.Attributes["enabled_auth_methods"].(schema.ListAttribute)
+	resp.Schema.Attributes["enabled_auth_methods"] = schema.SetAttribute{ElementType: types.StringType, Computed: true, Description: methods.Description, MarkdownDescription: methods.MarkdownDescription}
+	expiry := resp.Schema.Attributes["impersonation_expires_at"].(schema.NumberAttribute)
+	resp.Schema.Attributes["impersonation_expires_at"] = schema.Int64Attribute{Computed: true, Description: expiry.Description, MarkdownDescription: expiry.MarkdownDescription}
 }
 
 func (r *workspaceDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
@@ -47,5 +52,6 @@ func (r *workspaceDataSource) Read(ctx context.Context, req datasource.ReadReque
 	data.Id = types.StringValue(remote.ID)
 	data.Name = types.StringValue(remote.Name)
 	data.DataResidencyLocation = types.StringValue(string(remote.DataResidencyLocation))
+	resp.Diagnostics.Append(setWorkspaceSecurity(&data, remote)...)
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }

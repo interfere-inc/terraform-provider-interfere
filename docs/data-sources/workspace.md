@@ -27,6 +27,10 @@ data "interfere_workspace" "team" {
 
 ### Read-Only
 
+- `allow_member_workspace_creation` (Boolean) Whether workspace members can create additional workspaces.
 - `data_residency_location` (String) Region where workspace data is stored. Set when the workspace is created.
+- `enabled_auth_methods` (Set of String) Sign-in methods members can use: enterprise_sso, oauth_google, oauth_github, oauth_vercel, passkey, email_code, and password. Must include passkey and email_code. Null means the workspace uses the default methods.
 - `id` (String) Unique workspace identifier.
+- `impersonation_expires_at` (Number) When support access ends, in Unix milliseconds. Null keeps access until it is turned off.
+- `impersonation_granted` (Boolean) Whether Interfere support may access the workspace by impersonation.
 - `name` (String) Display name of the workspace.

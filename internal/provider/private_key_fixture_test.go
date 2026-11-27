@@ -68,15 +68,11 @@ func newKeyFixture(t *testing.T) *keyFixture {
 			if old == nil {
 				f.creates++
 			}
-			var surface any
-			if body.SurfaceSlug != nil {
-				surface = *body.SurfaceSlug
-			}
 			var expires any
 			if body.SecondsUntilExpiration != nil {
 				expires = 4000000000000
 			}
-			f.keys[body.IdempotencyKey] = map[string]any{"id": body.IdempotencyKey, "version": "ak_" + body.IdempotencyKey, "name": body.Name, "surfaceSlug": surface, "scopes": body.Scopes, "secondsUntilExpiration": body.SecondsUntilExpiration, "expiresAt": expires, "revoked": false}
+			f.keys[body.IdempotencyKey] = map[string]any{"id": body.IdempotencyKey, "version": "ak_" + body.IdempotencyKey, "name": body.Name, "scopes": body.Scopes, "secondsUntilExpiration": body.SecondsUntilExpiration, "expiresAt": expires, "revoked": false}
 			if f.createFailures > 0 {
 				f.createFailures--
 				w.WriteHeader(http.StatusServiceUnavailable)

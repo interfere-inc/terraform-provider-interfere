@@ -710,6 +710,41 @@ func TestEnumSetRoleGroupsRequestArgsRoleKey(t *testing.T) {
 		assert.Equal(t, SetRoleGroupsRequestArgsRoleKey("org:member"), val, "enum value should match expected wire value")
 	})
 
+	t.Run("NewFromString_org_product", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewSetRoleGroupsRequestArgsRoleKeyFromString("org:product")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, SetRoleGroupsRequestArgsRoleKey("org:product"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_org_support", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewSetRoleGroupsRequestArgsRoleKeyFromString("org:support")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, SetRoleGroupsRequestArgsRoleKey("org:support"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_org_viewer", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewSetRoleGroupsRequestArgsRoleKeyFromString("org:viewer")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, SetRoleGroupsRequestArgsRoleKey("org:viewer"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_org_billing", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewSetRoleGroupsRequestArgsRoleKeyFromString("org:billing")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, SetRoleGroupsRequestArgsRoleKey("org:billing"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_org_auditor", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewSetRoleGroupsRequestArgsRoleKeyFromString("org:auditor")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, SetRoleGroupsRequestArgsRoleKey("org:auditor"), val, "enum value should match expected wire value")
+	})
+
 	t.Run("NewFromString_Invalid", func(t *testing.T) {
 		_, err := NewSetRoleGroupsRequestArgsRoleKeyFromString("invalid_value_that_does_not_exist")
 		assert.Error(t, err)

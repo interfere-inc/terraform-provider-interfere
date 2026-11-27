@@ -7,13 +7,12 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/interfere-inc/terraform-provider-interfere/internal/sdk"
-	"github.com/interfere-inc/terraform-provider-interfere/internal/sdk/keys"
 )
 
 var errPublicKeyNotFound = errors.New("Public key no longer exists")
 
-func (r *publicKeyResource) read(ctx context.Context, data publicKeyModel) (*sdk.ReadPublicKeyResponse, error) {
-	remote, err := r.client.Keys.Public.Get(ctx, &keys.GetPublicRequest{WorkspaceSlug: data.WorkspaceSlug.ValueString(), SurfaceSlug: data.SurfaceSlug.ValueString(), PublicKeyID: data.Id.ValueString()})
+func (r *publicKeyResource) read(ctx context.Context, data publicKeyModel) (*sdk.ReadWorkspacePublicKeyResponse, error) {
+	remote, err := r.client.Workspaces.ReadWorkspacePublicKey(ctx, &sdk.ReadWorkspacePublicKeyRequest{WorkspaceSlug: data.WorkspaceSlug.ValueString(), PublicKeyID: data.Id.ValueString()})
 	if err != nil {
 		var missing *sdk.NotFoundError
 		if errors.As(err, &missing) {
@@ -23,7 +22,7 @@ func (r *publicKeyResource) read(ctx context.Context, data publicKeyModel) (*sdk
 		}
 		return nil, errors.New(apiError(err))
 	}
-	if remote == nil || remote.ID != data.Id.ValueString() || remote.SurfaceSlug != data.SurfaceSlug.ValueString() || remote.Name == "" || remote.Content == "" {
+	if remote == nil || remote.ID != data.Id.ValueString() || remote.Name == "" || remote.Content == "" {
 		return nil, errors.New("The API returned incomplete or unexpected public-key metadata. Terraform state was preserved.")
 	}
 	return remote, nil

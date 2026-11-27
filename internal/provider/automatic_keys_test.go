@@ -17,9 +17,9 @@ func TestAutomaticKeyLifecycle(t *testing.T) {
 		t.Run(kind, func(t *testing.T) {
 			private, public := newKeyFixture(t), newPublicKeyFixture(t)
 			private.createFailures, public.createFailures = 1, 1
-			url, extra := private.server.URL, "scopes = [\"org:surfaces:read\"]"
+			url, extra := private.server.URL, "scopes = [\"org:problems:read\"]"
 			if kind == "public" {
-				url, extra = public.server.URL, "surface_slug = \"example-surface\""
+				url, extra = public.server.URL, ""
 			}
 			address := "interfere_" + kind + "_key.test"
 			config := func(name, identity string) string {

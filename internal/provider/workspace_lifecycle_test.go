@@ -30,7 +30,7 @@ func TestWorkspaceSettingsLifecycle(t *testing.T) {
 		}
 		root := "/v3/workspaces/" + slug
 		if r.URL.Path == root+"/queries/workspaces.current" {
-			if err := json.NewEncoder(w).Encode(map[string]any{"id": surfaceID, "name": name, "slug": slug, "dataResidencyLocation": "eu"}); err != nil {
+			if err := json.NewEncoder(w).Encode(map[string]any{"id": workspaceID, "name": name, "slug": slug, "dataResidencyLocation": "eu"}); err != nil {
 				t.Error(err)
 			}
 			return
@@ -71,7 +71,7 @@ resource "interfere_workspace" "test" {
 	}
 	check := func(expected string) resource.TestCheckFunc {
 		return resource.ComposeAggregateTestCheckFunc(
-			resource.TestCheckResourceAttr("interfere_workspace.test", "id", surfaceID),
+			resource.TestCheckResourceAttr("interfere_workspace.test", "id", workspaceID),
 			resource.TestCheckResourceAttr("interfere_workspace.test", "name", expected),
 			resource.TestCheckResourceAttr("interfere_workspace.test", "data_residency_location", "eu"),
 		)

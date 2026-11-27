@@ -3,12 +3,12 @@
 page_title: "interfere_workspace Resource - Interfere"
 subcategory: ""
 description: |-
-  Manage an existing workspace's name and slug. Applying adopts the workspace; destroying only removes it from Terraform state and never deletes the workspace. Import using its slug.
+  Manage an existing workspace's name, slug, and security settings. Applying adopts the workspace; destroying only removes it from Terraform state and never deletes the workspace or resets its settings. Omitted security settings keep their current values. Import using its slug.
 ---
 
 # interfere_workspace (Resource)
 
-Manage an existing workspace's name and slug. Applying adopts the workspace; destroying only removes it from Terraform state and never deletes the workspace. Import using its slug.
+Manage an existing workspace's name, slug, and security settings. Applying adopts the workspace; destroying only removes it from Terraform state and never deletes the workspace or resets its settings. Omitted security settings keep their current values. Import using its slug.
 
 ## Example Usage
 
@@ -16,6 +16,10 @@ Manage an existing workspace's name and slug. Applying adopts the workspace; des
 resource "interfere_workspace" "team" {
   workspace_slug = "example"
   name           = "Example team"
+
+  allow_member_workspace_creation = false
+  enabled_auth_methods            = ["enterprise_sso", "passkey", "email_code"]
+  impersonation_granted           = false
 }
 ```
 
@@ -26,6 +30,13 @@ resource "interfere_workspace" "team" {
 
 - `name` (String) Display name of the workspace.
 - `workspace_slug` (String) Workspace URL slug, using lowercase letters, numbers, and hyphens.
+
+### Optional
+
+- `allow_member_workspace_creation` (Boolean) Whether workspace members can create additional workspaces.
+- `enabled_auth_methods` (Set of String) Sign-in methods members can use: enterprise_sso, oauth_google, oauth_github, oauth_vercel, passkey, email_code, and password. Must include passkey and email_code. Null means the workspace uses the default methods.
+- `impersonation_expires_at` (Number) When support access ends, in Unix milliseconds. Null keeps access until it is turned off.
+- `impersonation_granted` (Boolean) Whether Interfere support may access the workspace by impersonation.
 
 ### Read-Only
 

@@ -21,7 +21,6 @@ provider "interfere" {
 }
 resource "interfere_public_key" "test" {
  workspace_slug = "example"
- surface_slug = "example-surface"
  idempotency_key = %q
  name = %q
 }
@@ -32,7 +31,7 @@ resource "interfere_public_key" "test" {
 		ProtoV6ProviderFactories: map[string]func() (tfprotov6.ProviderServer, error){"interfere": providerserver.NewProtocol6WithError(New("test")())},
 		Steps: []resource.TestStep{
 			{Config: config(attemptID, "Browser"), Check: resource.TestCheckResourceAttr("interfere_public_key.test", "content", "interfere_public_us_"+attemptID)},
-			{ResourceName: "interfere_public_key.test", ImportState: true, ImportStateId: "example/example-surface/" + attemptID, ImportStateVerify: true},
+			{ResourceName: "interfere_public_key.test", ImportState: true, ImportStateId: "example/" + attemptID, ImportStateVerify: true},
 			{PreConfig: func() { f.mu.Lock(); defer f.mu.Unlock(); f.keys[attemptID]["content"] = "interfere_public_us_rotated" }, Config: config(attemptID, "Browser"), Check: resource.TestCheckResourceAttr("interfere_public_key.test", "content", "interfere_public_us_rotated")},
 			{Config: config(attemptID, "Renamed"), PlanOnly: true, ExpectError: regexp.MustCompile("New key creation identity required")},
 			{Config: config(nextID, "Replacement"), Check: resource.TestCheckResourceAttr("interfere_public_key.test", "id", nextID)},

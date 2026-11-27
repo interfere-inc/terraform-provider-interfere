@@ -1,0 +1,28 @@
+---
+page_title: "{{.Name}} {{.Type}} - {{.RenderedProviderName}}"
+subcategory: ""
+description: |-
+{{ .Description | plainmarkdown | trimspace | prefixlines "  " }}
+---
+
+# {{.Name}} ({{.Type}})
+
+{{ .Description | trimspace }}
+
+~> **Destroying this resource removes every network restriction.** Destroy saves an empty rules list, so the workspace dashboard and API become reachable from any network. Removing the resource from configuration has the same effect; use a `removed` block with `destroy = false` to stop managing the rules without clearing them.
+
+~> **Keep the Terraform runner's egress in the list.** The API rejects a save that would block the network the request comes from, so the runner's egress IP address, range or ASN must match a rule. If that egress changes after an apply, the provider can no longer read or update the rules until an administrator on an allowed network adds the new egress in the dashboard.
+
+Each apply replaces the complete list, including rules added in the dashboard. Non-empty lists require the Enterprise plan; an empty list is always allowed. The provider credential needs `org:workspace_auth:read` and `org:workspace_auth:write`.
+
+## Example Usage
+
+{{ tffile .ExampleFile }}
+
+{{ .SchemaMarkdown | trimspace }}
+
+## Import
+
+Import using the workspace slug. The imported state holds the workspace's current rules; the next apply replaces them with the configured list.
+
+{{ codefile "shell" .ImportFile }}

@@ -26,11 +26,6 @@
       "x-displayName": "App keys"
     },
     {
-      "name": "Surfaces",
-      "description": "Workspace apps (surfaces) and their activity",
-      "x-displayName": "Apps"
-    },
-    {
       "name": "Workspaces",
       "description": "Workspace creation, access, and settings"
     }
@@ -187,6 +182,16 @@
             "type": "string",
             "format": "uuid"
           },
+          "ownershipVerifiedAt": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
           "status": {
             "anyOf": [
               {
@@ -266,6 +271,7 @@
           "id",
           "name",
           "organizationId",
+          "ownershipVerifiedAt",
           "status",
           "type",
           "verifiedAt",
@@ -396,6 +402,16 @@
               "type": "string",
               "format": "uuid"
             },
+            "ownershipVerifiedAt": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
             "status": {
               "anyOf": [
                 {
@@ -475,6 +491,7 @@
             "id",
             "name",
             "organizationId",
+            "ownershipVerifiedAt",
             "status",
             "type",
             "verifiedAt",
@@ -752,6 +769,39 @@
                         "type": "string"
                       }
                     },
+                    "groups": {
+                      "type": "object",
+                      "properties": {
+                        "account": {
+                          "anyOf": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "enabled": {
+                          "type": "boolean"
+                        },
+                        "status": {
+                          "enum": [
+                            "synced",
+                            "missing_permission",
+                            "unsupported_account",
+                            "failed"
+                          ],
+                          "type": "string"
+                        },
+                        "syncedAt": {
+                          "type": "integer",
+                          "minimum": -9007199254740991,
+                          "maximum": 9007199254740991,
+                          "description": "Milliseconds since the Unix epoch in UTC."
+                        }
+                      }
+                    },
                     "provider": {
                       "const": "github"
                     },
@@ -815,6 +865,12 @@
                                 "type": "null"
                               }
                             ]
+                          },
+                          "directories": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
                           },
                           "errorMessage": {
                             "anyOf": [
@@ -966,6 +1022,39 @@
                       },
                       "additionalProperties": {
                         "type": "string"
+                      }
+                    },
+                    "groups": {
+                      "type": "object",
+                      "properties": {
+                        "account": {
+                          "anyOf": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "enabled": {
+                          "type": "boolean"
+                        },
+                        "status": {
+                          "enum": [
+                            "synced",
+                            "missing_permission",
+                            "unsupported_account",
+                            "failed"
+                          ],
+                          "type": "string"
+                        },
+                        "syncedAt": {
+                          "type": "integer",
+                          "minimum": -9007199254740991,
+                          "maximum": 9007199254740991,
+                          "description": "Milliseconds since the Unix epoch in UTC."
+                        }
                       }
                     },
                     "provider": {
@@ -1032,6 +1121,12 @@
                               }
                             ]
                           },
+                          "directories": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
                           "errorMessage": {
                             "anyOf": [
                               {
@@ -1184,6 +1279,39 @@
                         "type": "string"
                       }
                     },
+                    "groups": {
+                      "type": "object",
+                      "properties": {
+                        "account": {
+                          "anyOf": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "enabled": {
+                          "type": "boolean"
+                        },
+                        "status": {
+                          "enum": [
+                            "synced",
+                            "missing_permission",
+                            "unsupported_account",
+                            "failed"
+                          ],
+                          "type": "string"
+                        },
+                        "syncedAt": {
+                          "type": "integer",
+                          "minimum": -9007199254740991,
+                          "maximum": 9007199254740991,
+                          "description": "Milliseconds since the Unix epoch in UTC."
+                        }
+                      }
+                    },
                     "provider": {
                       "const": "ghe_server"
                     },
@@ -1247,6 +1375,12 @@
                                 "type": "null"
                               }
                             ]
+                          },
+                          "directories": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
                           },
                           "errorMessage": {
                             "anyOf": [
@@ -1538,6 +1672,38 @@
                         "type": "string"
                       }
                     },
+                    "workerGroups": {
+                      "type": "object",
+                      "propertyNames": {
+                        "type": "string"
+                      },
+                      "additionalProperties": {
+                        "type": "object",
+                        "properties": {
+                          "service": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 255
+                          },
+                          "environment": {
+                            "anyOf": [
+                              {
+                                "type": "string",
+                                "minLength": 1,
+                                "maxLength": 255
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          }
+                        },
+                        "required": [
+                          "service",
+                          "environment"
+                        ]
+                      }
+                    },
                     "workersDiscoveredAt": {
                       "type": "integer",
                       "minimum": 0,
@@ -1599,6 +1765,14 @@
                             "type": "string"
                           },
                           "channelName": {
+                            "type": "string"
+                          },
+                          "threshold": {
+                            "enum": [
+                              "HIGH",
+                              "MEDIUM",
+                              "ALL"
+                            ],
                             "type": "string"
                           }
                         },
@@ -1937,6 +2111,16 @@
                         }
                       ]
                     },
+                    "desktopAppSeenAt": {
+                      "anyOf": [
+                        {
+                          "type": "number"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
                     "displayName": {
                       "type": "string"
                     },
@@ -2018,6 +2202,9 @@
                         }
                       ]
                     },
+                    "openLinksInDesktop": {
+                      "type": "boolean"
+                    },
                     "source": {
                       "enum": [
                         "clerk",
@@ -2067,6 +2254,7 @@
                     "clerkUserId",
                     "deactivatedAt",
                     "department",
+                    "desktopAppSeenAt",
                     "displayName",
                     "emailPrimary",
                     "firstName",
@@ -2075,6 +2263,7 @@
                     "initials",
                     "lastName",
                     "locale",
+                    "openLinksInDesktop",
                     "source",
                     "timezone",
                     "title"
@@ -2109,6 +2298,12 @@
           "allowMemberWorkspaceCreation": {
             "type": "boolean"
           },
+          "autoAssignProblems": {
+            "type": "boolean"
+          },
+          "autoCreateApps": {
+            "type": "boolean"
+          },
           "clerkOrgId": {
             "type": "string"
           },
@@ -2128,6 +2323,72 @@
               "eu"
             ],
             "type": "string"
+          },
+          "defaultSurfaceId": {
+            "anyOf": [
+              {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "defaultWebsiteSettings": {
+            "type": "object",
+            "properties": {
+              "anonymousReplayPolicy": {
+                "enum": [
+                  "always",
+                  "on_error",
+                  "never"
+                ],
+                "type": "string",
+                "description": "When sessions without an identified user record replay: always, only once an error occurs, or never."
+              },
+              "anonymousUserTracking": {
+                "type": "boolean"
+              },
+              "environmentFiltering": {
+                "type": "boolean"
+              },
+              "plugins": {
+                "type": "object",
+                "properties": {
+                  "errors": {
+                    "type": "boolean"
+                  },
+                  "device": {
+                    "type": "boolean"
+                  },
+                  "pageEvents": {
+                    "type": "boolean"
+                  },
+                  "rageClick": {
+                    "type": "boolean"
+                  },
+                  "replay": {
+                    "type": "boolean"
+                  },
+                  "logs": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            },
+            "required": [
+              "anonymousReplayPolicy",
+              "anonymousUserTracking",
+              "environmentFiltering"
+            ]
           },
           "demoResetAt": {
             "anyOf": [
@@ -2185,6 +2446,9 @@
                 "type": "null"
               }
             ]
+          },
+          "environmentFiltering": {
+            "type": "boolean"
           },
           "id": {
             "type": "string",
@@ -2266,13 +2530,18 @@
         },
         "required": [
           "allowMemberWorkspaceCreation",
+          "autoAssignProblems",
+          "autoCreateApps",
           "clerkOrgId",
           "clerkUpdatedAt",
           "dataResidencyLocation",
+          "defaultSurfaceId",
+          "defaultWebsiteSettings",
           "demoResetAt",
           "demoResetStatus",
           "demoWorkspace",
           "enabledAuthMethods",
+          "environmentFiltering",
           "id",
           "imageUrl",
           "impersonationExpiresAt",
@@ -2329,9 +2598,27 @@
             "name": {
               "type": "string"
             },
-            "surfaceId": {
+            "organizationId": {
               "type": "string",
               "format": "uuid"
+            },
+            "surfaceId": {
+              "anyOf": [
+                {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                {
+                  "type": "null"
+                }
+              ]
             }
           },
           "required": [
@@ -2342,6 +2629,85 @@
             "id",
             "lastUsedAt",
             "name",
+            "organizationId",
+            "surfaceId"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "Query_publicKeys_forWorkspaceResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "createdAt": {
+              "type": "number"
+            },
+            "deletedAt": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "updatedAt": {
+              "type": "number"
+            },
+            "content": {
+              "type": "string"
+            },
+            "id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "lastUsedAt": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "name": {
+              "type": "string"
+            },
+            "organizationId": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "surfaceId": {
+              "anyOf": [
+                {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "createdAt",
+            "deletedAt",
+            "updatedAt",
+            "content",
+            "id",
+            "lastUsedAt",
+            "name",
+            "organizationId",
             "surfaceId"
           ],
           "additionalProperties": false
@@ -2443,483 +2809,339 @@
           "additionalProperties": false
         }
       },
-      "Query_surfaces_getBySlugIncludeDeletedResponse": {
-        "type": "object",
-        "properties": {
-          "createdAt": {
-            "type": "number"
-          },
-          "deletedAt": {
-            "anyOf": [
-              {
+      "Query_services_byIdResponse": {
+        "anyOf": [
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "organizationId": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "namespace": {
+                "anyOf": [
+                  {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "name": {
+                "type": "string"
+              },
+              "connectionId": {
+                "anyOf": [
+                  {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "format": "uuid"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "resource": {
+                "anyOf": [
+                  {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "sourceDatasourceId": {
+                "anyOf": [
+                  {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "format": "uuid"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "sourceWorkingDirectory": {
+                "anyOf": [
+                  {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "reportableEnvironment": {
+                "anyOf": [
+                  {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "type": {
+                "type": "string"
+              },
+              "typeSource": {
+                "anyOf": [
+                  {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "createdAt": {
                 "type": "number"
               },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "updatedAt": {
-            "type": "number"
-          },
-          "anonymousReplayPolicy": {
-            "type": "string"
-          },
-          "anonymousUserTracking": {
-            "type": "boolean"
-          },
-          "destinationConnectionId": {
-            "anyOf": [
-              {
-                "anyOf": [
-                  {
-                    "type": "string",
-                    "format": "uuid"
-                  },
-                  {
-                    "type": "null"
-                  }
-                ]
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "destinationMappingId": {
-            "anyOf": [
-              {
-                "anyOf": [
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "type": "null"
-                  }
-                ]
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "destinationMappingLabel": {
-            "anyOf": [
-              {
-                "anyOf": [
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "type": "null"
-                  }
-                ]
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "destinationMappingUrl": {
-            "anyOf": [
-              {
-                "anyOf": [
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "type": "null"
-                  }
-                ]
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "environmentFiltering": {
-            "type": "boolean"
-          },
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "name": {
-            "type": "string"
-          },
-          "onboardedAt": {
-            "anyOf": [
-              {
+              "updatedAt": {
                 "type": "number"
               },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "organizationId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "primaryEnvironmentId": {
-            "anyOf": [
-              {
+              "lastSeenAt": {
+                "type": "number"
+              },
+              "firstTelemetryAt": {
                 "anyOf": [
                   {
-                    "type": "string",
-                    "format": "uuid"
+                    "type": "number"
                   },
                   {
                     "type": "null"
                   }
                 ]
               },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "primaryEnvironmentName": {
-            "anyOf": [
-              {
+              "websiteSettings": {
                 "anyOf": [
                   {
-                    "type": "string"
-                  },
-                  {
-                    "type": "null"
-                  }
-                ]
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "sdkConfig": {
-            "anyOf": [
-              {
-                "type": "object",
-                "properties": {
-                  "plugins": {
                     "type": "object",
                     "properties": {
-                      "errors": {
+                      "anonymousReplayPolicy": {
+                        "enum": [
+                          "always",
+                          "on_error",
+                          "never"
+                        ],
+                        "type": "string",
+                        "description": "When sessions without an identified user record replay: always, only once an error occurs, or never."
+                      },
+                      "anonymousUserTracking": {
                         "type": "boolean"
                       },
-                      "device": {
+                      "environmentFiltering": {
                         "type": "boolean"
                       },
-                      "pageEvents": {
-                        "type": "boolean"
-                      },
-                      "rageClick": {
-                        "type": "boolean"
-                      },
-                      "replay": {
-                        "type": "boolean"
-                      },
-                      "logs": {
-                        "type": "boolean"
+                      "plugins": {
+                        "type": "object",
+                        "properties": {
+                          "errors": {
+                            "type": "boolean"
+                          },
+                          "device": {
+                            "type": "boolean"
+                          },
+                          "pageEvents": {
+                            "type": "boolean"
+                          },
+                          "rageClick": {
+                            "type": "boolean"
+                          },
+                          "replay": {
+                            "type": "boolean"
+                          },
+                          "logs": {
+                            "type": "boolean"
+                          }
+                        }
                       }
-                    }
-                  },
-                  "serverTracing": {
-                    "enum": [
-                      "full",
-                      "drain"
-                    ],
-                    "type": "string"
-                  },
-                  "logSourcing": {
-                    "enum": [
-                      "sdk",
-                      "drain"
-                    ],
-                    "type": "string"
-                  },
-                  "platform": {
-                    "enum": [
-                      "vercel",
-                      "cloudflare"
-                    ],
-                    "type": "string"
-                  }
-                }
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "slug": {
-            "type": "string"
-          },
-          "sourceDatasourceId": {
-            "anyOf": [
-              {
-                "anyOf": [
-                  {
-                    "type": "string",
-                    "format": "uuid"
+                    },
+                    "required": [
+                      "anonymousReplayPolicy",
+                      "anonymousUserTracking",
+                      "environmentFiltering"
+                    ]
                   },
                   {
                     "type": "null"
                   }
                 ]
               },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "sourceConnectionId": {
-            "anyOf": [
-              {
+              "destinationResource": {
                 "anyOf": [
                   {
-                    "type": "string",
-                    "format": "uuid"
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
                   },
                   {
                     "type": "null"
                   }
                 ]
               },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "sourceMappingId": {
-            "anyOf": [
-              {
+              "pausedAt": {
                 "anyOf": [
                   {
-                    "type": "string"
+                    "type": "number"
                   },
                   {
                     "type": "null"
                   }
                 ]
               },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "sourceMappingLabel": {
-            "anyOf": [
-              {
+              "mergedIntoId": {
                 "anyOf": [
                   {
-                    "type": "string"
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "format": "uuid"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
                   },
                   {
                     "type": "null"
                   }
                 ]
               },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "sourceMappingUrl": {
-            "anyOf": [
-              {
+              "archivedAt": {
                 "anyOf": [
                   {
-                    "type": "string"
+                    "type": "number"
                   },
                   {
                     "type": "null"
                   }
                 ]
-              },
-              {
-                "type": "null"
               }
-            ]
-          },
-          "sourceWorkingDirectory": {
-            "anyOf": [
-              {
-                "anyOf": [
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "type": "null"
-                  }
-                ]
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "type": {
-            "enum": [
-              "elysia",
-              "nest",
-              "nextjs",
-              "python",
-              "react"
+            },
+            "required": [
+              "id",
+              "organizationId",
+              "namespace",
+              "name",
+              "connectionId",
+              "resource",
+              "sourceDatasourceId",
+              "sourceWorkingDirectory",
+              "reportableEnvironment",
+              "type",
+              "typeSource",
+              "createdAt",
+              "updatedAt",
+              "lastSeenAt",
+              "firstTelemetryAt",
+              "websiteSettings",
+              "destinationResource",
+              "pausedAt",
+              "mergedIntoId",
+              "archivedAt"
             ],
-            "type": "string"
+            "additionalProperties": false
+          },
+          {
+            "type": "null"
           }
-        },
-        "required": [
-          "createdAt",
-          "deletedAt",
-          "updatedAt",
-          "anonymousReplayPolicy",
-          "anonymousUserTracking",
-          "destinationConnectionId",
-          "destinationMappingId",
-          "destinationMappingLabel",
-          "destinationMappingUrl",
-          "environmentFiltering",
-          "id",
-          "name",
-          "onboardedAt",
-          "organizationId",
-          "primaryEnvironmentId",
-          "primaryEnvironmentName",
-          "sdkConfig",
-          "slug",
-          "sourceDatasourceId",
-          "sourceConnectionId",
-          "sourceMappingId",
-          "sourceMappingLabel",
-          "sourceMappingUrl",
-          "sourceWorkingDirectory",
-          "type"
-        ],
-        "additionalProperties": false
+        ]
       },
-      "Query_surfaces_listResponse": {
+      "Query_services_forWorkspaceResponse": {
         "type": "array",
         "items": {
           "type": "object",
           "properties": {
-            "createdAt": {
-              "type": "number"
-            },
-            "deletedAt": {
-              "anyOf": [
-                {
-                  "type": "number"
-                },
-                {
-                  "type": "null"
-                }
-              ]
-            },
-            "updatedAt": {
-              "type": "number"
-            },
-            "anonymousReplayPolicy": {
-              "type": "string"
-            },
-            "anonymousUserTracking": {
-              "type": "boolean"
-            },
-            "destinationConnectionId": {
-              "anyOf": [
-                {
-                  "anyOf": [
-                    {
-                      "type": "string",
-                      "format": "uuid"
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                },
-                {
-                  "type": "null"
-                }
-              ]
-            },
-            "destinationMappingId": {
-              "anyOf": [
-                {
-                  "anyOf": [
-                    {
-                      "type": "string"
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                },
-                {
-                  "type": "null"
-                }
-              ]
-            },
-            "destinationMappingLabel": {
-              "anyOf": [
-                {
-                  "anyOf": [
-                    {
-                      "type": "string"
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                },
-                {
-                  "type": "null"
-                }
-              ]
-            },
-            "destinationMappingUrl": {
-              "anyOf": [
-                {
-                  "anyOf": [
-                    {
-                      "type": "string"
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                },
-                {
-                  "type": "null"
-                }
-              ]
-            },
-            "environmentFiltering": {
-              "type": "boolean"
-            },
             "id": {
               "type": "string",
               "format": "uuid"
-            },
-            "name": {
-              "type": "string"
-            },
-            "onboardedAt": {
-              "anyOf": [
-                {
-                  "type": "number"
-                },
-                {
-                  "type": "null"
-                }
-              ]
             },
             "organizationId": {
               "type": "string",
               "format": "uuid"
             },
-            "primaryEnvironmentId": {
+            "namespace": {
+              "anyOf": [
+                {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "name": {
+              "type": "string"
+            },
+            "connectionId": {
               "anyOf": [
                 {
                   "anyOf": [
@@ -2937,7 +3159,7 @@
                 }
               ]
             },
-            "primaryEnvironmentName": {
+            "resource": {
               "anyOf": [
                 {
                   "anyOf": [
@@ -2953,65 +3175,6 @@
                   "type": "null"
                 }
               ]
-            },
-            "sdkConfig": {
-              "anyOf": [
-                {
-                  "type": "object",
-                  "properties": {
-                    "plugins": {
-                      "type": "object",
-                      "properties": {
-                        "errors": {
-                          "type": "boolean"
-                        },
-                        "device": {
-                          "type": "boolean"
-                        },
-                        "pageEvents": {
-                          "type": "boolean"
-                        },
-                        "rageClick": {
-                          "type": "boolean"
-                        },
-                        "replay": {
-                          "type": "boolean"
-                        },
-                        "logs": {
-                          "type": "boolean"
-                        }
-                      }
-                    },
-                    "serverTracing": {
-                      "enum": [
-                        "full",
-                        "drain"
-                      ],
-                      "type": "string"
-                    },
-                    "logSourcing": {
-                      "enum": [
-                        "sdk",
-                        "drain"
-                      ],
-                      "type": "string"
-                    },
-                    "platform": {
-                      "enum": [
-                        "vercel",
-                        "cloudflare"
-                      ],
-                      "type": "string"
-                    }
-                  }
-                },
-                {
-                  "type": "null"
-                }
-              ]
-            },
-            "slug": {
-              "type": "string"
             },
             "sourceDatasourceId": {
               "anyOf": [
@@ -3020,75 +3183,6 @@
                     {
                       "type": "string",
                       "format": "uuid"
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                },
-                {
-                  "type": "null"
-                }
-              ]
-            },
-            "sourceConnectionId": {
-              "anyOf": [
-                {
-                  "anyOf": [
-                    {
-                      "type": "string",
-                      "format": "uuid"
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                },
-                {
-                  "type": "null"
-                }
-              ]
-            },
-            "sourceMappingId": {
-              "anyOf": [
-                {
-                  "anyOf": [
-                    {
-                      "type": "string"
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                },
-                {
-                  "type": "null"
-                }
-              ]
-            },
-            "sourceMappingLabel": {
-              "anyOf": [
-                {
-                  "anyOf": [
-                    {
-                      "type": "string"
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                },
-                {
-                  "type": "null"
-                }
-              ]
-            },
-            "sourceMappingUrl": {
-              "anyOf": [
-                {
-                  "anyOf": [
-                    {
-                      "type": "string"
                     },
                     {
                       "type": "null"
@@ -3117,43 +3211,278 @@
                 }
               ]
             },
+            "reportableEnvironment": {
+              "anyOf": [
+                {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
             "type": {
-              "enum": [
-                "elysia",
-                "nest",
-                "nextjs",
-                "python",
-                "react"
-              ],
               "type": "string"
+            },
+            "typeSource": {
+              "anyOf": [
+                {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "createdAt": {
+              "type": "number"
+            },
+            "updatedAt": {
+              "type": "number"
+            },
+            "lastSeenAt": {
+              "type": "number"
+            },
+            "firstTelemetryAt": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "websiteSettings": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "anonymousReplayPolicy": {
+                      "enum": [
+                        "always",
+                        "on_error",
+                        "never"
+                      ],
+                      "type": "string",
+                      "description": "When sessions without an identified user record replay: always, only once an error occurs, or never."
+                    },
+                    "anonymousUserTracking": {
+                      "type": "boolean"
+                    },
+                    "environmentFiltering": {
+                      "type": "boolean"
+                    },
+                    "plugins": {
+                      "type": "object",
+                      "properties": {
+                        "errors": {
+                          "type": "boolean"
+                        },
+                        "device": {
+                          "type": "boolean"
+                        },
+                        "pageEvents": {
+                          "type": "boolean"
+                        },
+                        "rageClick": {
+                          "type": "boolean"
+                        },
+                        "replay": {
+                          "type": "boolean"
+                        },
+                        "logs": {
+                          "type": "boolean"
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "anonymousReplayPolicy",
+                    "anonymousUserTracking",
+                    "environmentFiltering"
+                  ]
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "destinationResource": {
+              "anyOf": [
+                {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "pausedAt": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "mergedIntoId": {
+              "anyOf": [
+                {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "archivedAt": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "sourceDatasource": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "organizationId": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "connectionId": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "surfaceId": {
+                      "anyOf": [
+                        {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "format": "uuid"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "kind": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "url": {
+                      "type": "string"
+                    },
+                    "availability": {
+                      "type": "string"
+                    },
+                    "createdAt": {
+                      "type": "number"
+                    },
+                    "deletedAt": {
+                      "anyOf": [
+                        {
+                          "type": "number"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "updatedAt": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "organizationId",
+                    "connectionId",
+                    "surfaceId",
+                    "kind",
+                    "name",
+                    "url",
+                    "availability",
+                    "createdAt",
+                    "deletedAt",
+                    "updatedAt"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "null"
+                }
+              ]
             }
           },
           "required": [
-            "createdAt",
-            "deletedAt",
-            "updatedAt",
-            "anonymousReplayPolicy",
-            "anonymousUserTracking",
-            "destinationConnectionId",
-            "destinationMappingId",
-            "destinationMappingLabel",
-            "destinationMappingUrl",
-            "environmentFiltering",
             "id",
-            "name",
-            "onboardedAt",
             "organizationId",
-            "primaryEnvironmentId",
-            "primaryEnvironmentName",
-            "sdkConfig",
-            "slug",
+            "namespace",
+            "name",
+            "connectionId",
+            "resource",
             "sourceDatasourceId",
-            "sourceConnectionId",
-            "sourceMappingId",
-            "sourceMappingLabel",
-            "sourceMappingUrl",
             "sourceWorkingDirectory",
-            "type"
+            "reportableEnvironment",
+            "type",
+            "typeSource",
+            "createdAt",
+            "updatedAt",
+            "lastSeenAt",
+            "firstTelemetryAt",
+            "websiteSettings",
+            "destinationResource",
+            "pausedAt",
+            "mergedIntoId",
+            "archivedAt"
           ],
           "additionalProperties": false
         }
@@ -3338,7 +3667,7 @@
           "success"
         ]
       },
-      "Mutation_surfaces_deleteResponse": {
+      "Mutation_services_setTypeResponse": {
         "type": "object",
         "properties": {
           "success": {
@@ -3350,43 +3679,7 @@
           "success"
         ]
       },
-      "Mutation_surfaces_setAnonymousReplayPolicyResponse": {
-        "type": "object",
-        "properties": {
-          "success": {
-            "const": true,
-            "type": "boolean"
-          }
-        },
-        "required": [
-          "success"
-        ]
-      },
-      "Mutation_surfaces_setAnonymousUserTrackingResponse": {
-        "type": "object",
-        "properties": {
-          "success": {
-            "const": true,
-            "type": "boolean"
-          }
-        },
-        "required": [
-          "success"
-        ]
-      },
-      "Mutation_surfaces_setSdkPluginResponse": {
-        "type": "object",
-        "properties": {
-          "success": {
-            "const": true,
-            "type": "boolean"
-          }
-        },
-        "required": [
-          "success"
-        ]
-      },
-      "Mutation_surfaces_updateNameResponse": {
+      "Mutation_services_setWebsiteSettingsResponse": {
         "type": "object",
         "properties": {
           "success": {
@@ -3465,8 +3758,14 @@
                 "org:surfaces:read",
                 "org:surfaces:write",
                 "org:surfaces:delete",
+                "org:services:read",
+                "org:services:write",
+                "org:customers:read",
+                "org:tiers:read",
+                "org:tiers:write",
                 "org:problems:read",
                 "org:problems:write",
+                "org:findings:read",
                 "org:support:read",
                 "org:support:write",
                 "org:replays:read",
@@ -3481,6 +3780,8 @@
                 "org:workspace_basics:write",
                 "org:workspace_domains:read",
                 "org:workspace_domains:write",
+                "org:api_keys:read",
+                "org:api_keys:write",
                 "org:workspace_auth:read",
                 "org:workspace_auth:write",
                 "org:workspace:destroy",
@@ -3545,6 +3846,61 @@
           "success"
         ]
       },
+      "CreateWorkspacePublicKeyResponse": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "string",
+            "description": "Publishable credential for browser SDK configuration."
+          },
+          "name": {
+            "type": "string",
+            "description": "Display name of the key."
+          }
+        },
+        "required": [
+          "content",
+          "name"
+        ]
+      },
+      "ReadWorkspacePublicKeyResponse": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "string",
+            "description": "Publishable credential for browser SDK configuration."
+          },
+          "name": {
+            "type": "string",
+            "description": "Display name of the key."
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Unique publishable key identifier."
+          },
+          "revoked": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "content",
+          "name",
+          "id",
+          "revoked"
+        ]
+      },
+      "RevokeWorkspacePublicKeyResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "success"
+        ]
+      },
       "ReadNetworkRulesResponse": {
         "type": "object",
         "properties": {
@@ -3589,92 +3945,6 @@
         },
         "required": [
           "success"
-        ]
-      },
-      "CreateSurfaceResponse": {
-        "type": "object",
-        "properties": {
-          "apiKey": {
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name": {
-                "const": "Default"
-              },
-              "secret": {
-                "type": "string",
-                "minLength": 1
-              }
-            },
-            "required": [
-              "id",
-              "name",
-              "secret"
-            ]
-          },
-          "publicKey": {
-            "type": "string"
-          },
-          "surface": {
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "string",
-                "format": "uuid",
-                "description": "Unique surface identifier."
-              },
-              "name": {
-                "type": "string",
-                "description": "Display name of the surface."
-              },
-              "slug": {
-                "type": "string",
-                "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
-                "description": "Surface URL slug, using lowercase letters, numbers, and hyphens."
-              },
-              "type": {
-                "enum": [
-                  "elysia",
-                  "nest",
-                  "nextjs",
-                  "python",
-                  "react"
-                ],
-                "type": "string",
-                "description": "Application framework used by the surface."
-              }
-            },
-            "required": [
-              "id",
-              "name",
-              "slug",
-              "type"
-            ]
-          }
-        },
-        "required": [
-          "apiKey",
-          "publicKey",
-          "surface"
-        ]
-      },
-      "CreateSurfacePublicKeyResponse": {
-        "type": "object",
-        "properties": {
-          "content": {
-            "type": "string",
-            "description": "Publishable credential for browser SDK configuration."
-          },
-          "name": {
-            "type": "string",
-            "description": "Display name of the key."
-          }
-        },
-        "required": [
-          "content",
-          "name"
         ]
       },
       "ReadPublicKeyResponse": {
@@ -3743,7 +4013,7 @@
           }
         }
       },
-      "ErrorResponse_b32e7e47d27147b78e9ca9c8927315e0c48a5a54a03868590623df7e2ff7d2af": {
+      "ErrorResponse_b32e7e47": {
         "description": "Missing or invalid credentials",
         "content": {
           "application/json": {
@@ -3857,7 +4127,7 @@
           }
         }
       },
-      "ErrorResponse_10ef468de4a2f3d5e1e4a4bcd9c19369a4c535898d4ecea2b48444857aece895": {
+      "ErrorResponse_10ef468d": {
         "description": "Access denied",
         "content": {
           "application/json": {
@@ -3921,7 +4191,7 @@
           }
         }
       },
-      "ErrorResponse_826c4e9f6aac70078d2e1ac5a3cba4b915c34a2fb47c584bc2e06d7f62690109": {
+      "ErrorResponse_826c4e9f": {
         "description": "Resource not found",
         "content": {
           "application/json": {
@@ -3960,7 +4230,7 @@
           }
         }
       },
-      "ErrorResponse_a4a8a71ed4a33ddc602b7e2cf4dd0b51ef37c46db1b01870377abdbd6cbda1b5": {
+      "ErrorResponse_a4a8a71e": {
         "description": "Service temporarily unavailable; retry after the indicated delay",
         "content": {
           "application/json": {
@@ -4004,7 +4274,7 @@
           }
         }
       },
-      "ErrorResponse_088cb09282d303295e75879da2c16585de0b7b9e07c53fe74d377c3985f2792c": {
+      "ErrorResponse_088cb092": {
         "description": "Request conflicts with current state",
         "content": {
           "application/json": {
@@ -4043,7 +4313,7 @@
           }
         }
       },
-      "ErrorResponse_b7d254f6bd68a887b2398a1b58fb8fe3913110d7236a6e4540d7d2aa990fb12b": {
+      "ErrorResponse_b7d254f6": {
         "description": "Service temporarily unavailable; retry after the indicated delay",
         "content": {
           "application/json": {
@@ -4112,7 +4382,7 @@
           }
         }
       },
-      "ErrorResponse_89ad83ad210efa94079e130bda6e600e2ae591af5bb05c2ad8087c1f3d40f6cc": {
+      "ErrorResponse_89ad83ad": {
         "description": "Resource not found",
         "content": {
           "application/json": {
@@ -4133,159 +4403,6 @@
                     "message": {
                       "type": "string",
                       "default": "Surface key not found."
-                    },
-                    "data": {}
-                  },
-                  "required": [
-                    "defined",
-                    "code",
-                    "status",
-                    "message"
-                  ]
-                },
-                {
-                  "$ref": "#/components/schemas/RpcUnexpectedError"
-                }
-              ]
-            }
-          }
-        }
-      },
-      "ErrorResponse_d7174de43f943d10193d5f31cc4615acb6d01e6a15ef9a1a861235cb9792319b": {
-        "description": "Missing or invalid credentials",
-        "content": {
-          "application/json": {
-            "schema": {
-              "oneOf": [
-                {
-                  "type": "object",
-                  "properties": {
-                    "defined": {
-                      "const": true
-                    },
-                    "code": {
-                      "const": "AUTH_MISSING"
-                    },
-                    "status": {
-                      "const": 401
-                    },
-                    "message": {
-                      "type": "string",
-                      "default": "Request is missing session credentials."
-                    },
-                    "data": {}
-                  },
-                  "required": [
-                    "defined",
-                    "code",
-                    "status",
-                    "message"
-                  ]
-                },
-                {
-                  "type": "object",
-                  "properties": {
-                    "defined": {
-                      "const": true
-                    },
-                    "code": {
-                      "const": "AUTH_SESSION_INVALID"
-                    },
-                    "status": {
-                      "const": 401
-                    },
-                    "message": {
-                      "type": "string",
-                      "default": "Session token is missing, expired, or not valid here."
-                    },
-                    "data": {}
-                  },
-                  "required": [
-                    "defined",
-                    "code",
-                    "status",
-                    "message"
-                  ]
-                },
-                {
-                  "type": "object",
-                  "properties": {
-                    "defined": {
-                      "const": true
-                    },
-                    "code": {
-                      "const": "AUTH_ORG_REQUIRED"
-                    },
-                    "status": {
-                      "const": 401
-                    },
-                    "message": {
-                      "type": "string",
-                      "default": "An active workspace session is required."
-                    },
-                    "data": {}
-                  },
-                  "required": [
-                    "defined",
-                    "code",
-                    "status",
-                    "message"
-                  ]
-                },
-                {
-                  "$ref": "#/components/schemas/RpcUnexpectedError"
-                }
-              ]
-            }
-          }
-        }
-      },
-      "ErrorResponse_3cfb93c298ec62e03b5f0c773ae0ffe6465986e9ffe28eb614f7c3c4a859f869": {
-        "description": "Resource not found",
-        "content": {
-          "application/json": {
-            "schema": {
-              "oneOf": [
-                {
-                  "type": "object",
-                  "properties": {
-                    "defined": {
-                      "const": true
-                    },
-                    "code": {
-                      "const": "SURFACE_NOT_FOUND"
-                    },
-                    "status": {
-                      "const": 404
-                    },
-                    "message": {
-                      "type": "string",
-                      "default": "Surface not found."
-                    },
-                    "data": {}
-                  },
-                  "required": [
-                    "defined",
-                    "code",
-                    "status",
-                    "message"
-                  ]
-                },
-                {
-                  "type": "object",
-                  "properties": {
-                    "defined": {
-                      "const": true
-                    },
-                    "code": {
-                      "const": "WORKSPACE_NOT_FOUND"
-                    },
-                    "status": {
-                      "const": 404
-                    },
-                    "message": {
-                      "type": "string",
-                      "default": "Workspace not found."
                     },
                     "data": {}
                   },
@@ -4369,16 +4486,16 @@
             "$ref": "#/components/responses/RpcValidationError"
           },
           "401": {
-            "$ref": "#/components/responses/ErrorResponse_b32e7e47d27147b78e9ca9c8927315e0c48a5a54a03868590623df7e2ff7d2af"
+            "$ref": "#/components/responses/ErrorResponse_b32e7e47"
           },
           "403": {
-            "$ref": "#/components/responses/ErrorResponse_10ef468de4a2f3d5e1e4a4bcd9c19369a4c535898d4ecea2b48444857aece895"
+            "$ref": "#/components/responses/ErrorResponse_10ef468d"
           },
           "404": {
-            "$ref": "#/components/responses/ErrorResponse_826c4e9f6aac70078d2e1ac5a3cba4b915c34a2fb47c584bc2e06d7f62690109"
+            "$ref": "#/components/responses/ErrorResponse_826c4e9f"
           },
           "503": {
-            "$ref": "#/components/responses/ErrorResponse_a4a8a71ed4a33ddc602b7e2cf4dd0b51ef37c46db1b01870377abdbd6cbda1b5"
+            "$ref": "#/components/responses/ErrorResponse_a4a8a71e"
           }
         },
         "x-fern-sdk-method-name": "byIdIncludeDeleted",
@@ -4446,13 +4563,13 @@
             "$ref": "#/components/responses/RpcValidationError"
           },
           "401": {
-            "$ref": "#/components/responses/ErrorResponse_b32e7e47d27147b78e9ca9c8927315e0c48a5a54a03868590623df7e2ff7d2af"
+            "$ref": "#/components/responses/ErrorResponse_b32e7e47"
           },
           "403": {
-            "$ref": "#/components/responses/ErrorResponse_10ef468de4a2f3d5e1e4a4bcd9c19369a4c535898d4ecea2b48444857aece895"
+            "$ref": "#/components/responses/ErrorResponse_10ef468d"
           },
           "503": {
-            "$ref": "#/components/responses/ErrorResponse_a4a8a71ed4a33ddc602b7e2cf4dd0b51ef37c46db1b01870377abdbd6cbda1b5"
+            "$ref": "#/components/responses/ErrorResponse_a4a8a71e"
           }
         },
         "x-fern-sdk-method-name": "list",
@@ -4536,13 +4653,13 @@
             "$ref": "#/components/responses/RpcValidationError"
           },
           "401": {
-            "$ref": "#/components/responses/ErrorResponse_b32e7e47d27147b78e9ca9c8927315e0c48a5a54a03868590623df7e2ff7d2af"
+            "$ref": "#/components/responses/ErrorResponse_b32e7e47"
           },
           "403": {
-            "$ref": "#/components/responses/ErrorResponse_10ef468de4a2f3d5e1e4a4bcd9c19369a4c535898d4ecea2b48444857aece895"
+            "$ref": "#/components/responses/ErrorResponse_10ef468d"
           },
           "503": {
-            "$ref": "#/components/responses/ErrorResponse_a4a8a71ed4a33ddc602b7e2cf4dd0b51ef37c46db1b01870377abdbd6cbda1b5"
+            "$ref": "#/components/responses/ErrorResponse_a4a8a71e"
           }
         },
         "x-fern-sdk-method-name": "installations",
@@ -4610,16 +4727,16 @@
             "$ref": "#/components/responses/RpcValidationError"
           },
           "401": {
-            "$ref": "#/components/responses/ErrorResponse_b32e7e47d27147b78e9ca9c8927315e0c48a5a54a03868590623df7e2ff7d2af"
+            "$ref": "#/components/responses/ErrorResponse_b32e7e47"
           },
           "403": {
-            "$ref": "#/components/responses/ErrorResponse_10ef468de4a2f3d5e1e4a4bcd9c19369a4c535898d4ecea2b48444857aece895"
+            "$ref": "#/components/responses/ErrorResponse_10ef468d"
           },
           "404": {
-            "$ref": "#/components/responses/ErrorResponse_826c4e9f6aac70078d2e1ac5a3cba4b915c34a2fb47c584bc2e06d7f62690109"
+            "$ref": "#/components/responses/ErrorResponse_826c4e9f"
           },
           "503": {
-            "$ref": "#/components/responses/ErrorResponse_a4a8a71ed4a33ddc602b7e2cf4dd0b51ef37c46db1b01870377abdbd6cbda1b5"
+            "$ref": "#/components/responses/ErrorResponse_a4a8a71e"
           }
         },
         "x-fern-sdk-method-name": "current",
@@ -4700,16 +4817,94 @@
             "$ref": "#/components/responses/RpcValidationError"
           },
           "401": {
-            "$ref": "#/components/responses/ErrorResponse_b32e7e47d27147b78e9ca9c8927315e0c48a5a54a03868590623df7e2ff7d2af"
+            "$ref": "#/components/responses/ErrorResponse_b32e7e47"
           },
           "403": {
-            "$ref": "#/components/responses/ErrorResponse_10ef468de4a2f3d5e1e4a4bcd9c19369a4c535898d4ecea2b48444857aece895"
+            "$ref": "#/components/responses/ErrorResponse_10ef468d"
           },
           "503": {
-            "$ref": "#/components/responses/ErrorResponse_a4a8a71ed4a33ddc602b7e2cf4dd0b51ef37c46db1b01870377abdbd6cbda1b5"
+            "$ref": "#/components/responses/ErrorResponse_a4a8a71e"
           }
         },
         "x-fern-sdk-method-name": "listForSurface",
+        "x-cloudflare-labels": [
+          "cf-api-endpoint"
+        ],
+        "security": [
+          {
+            "clerkSession": []
+          }
+        ],
+        "x-internal": false,
+        "x-fern-sdk-group-name": [
+          "keys",
+          "public"
+        ]
+      }
+    },
+    "/v3/workspaces/{workspaceSlug}/queries/publicKeys.forWorkspace": {
+      "post": {
+        "operationId": "query_publicKeys_forWorkspace",
+        "summary": "Read publicKeys.forWorkspace",
+        "description": "List workspace-scoped publishable key records (surfaceId null). Every app in the workspace can ship a workspace key; these are separate from app keys and from private build API keys. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation is read-only despite using POST. Permission-filtered queries may return an empty result; do not assume that proves the resource does not exist. Only use pagination arguments declared in the schema.",
+        "tags": [
+          "Workspaces"
+        ],
+        "parameters": [
+          {
+            "name": "workspaceSlug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Workspace URL slug, using lowercase letters, numbers, and hyphens."
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "args": {
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "args"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Query_publicKeys_forWorkspaceResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/RpcValidationError"
+          },
+          "401": {
+            "$ref": "#/components/responses/ErrorResponse_b32e7e47"
+          },
+          "403": {
+            "$ref": "#/components/responses/ErrorResponse_10ef468d"
+          },
+          "503": {
+            "$ref": "#/components/responses/ErrorResponse_a4a8a71e"
+          }
+        },
+        "x-fern-sdk-method-name": "forWorkspace",
         "x-cloudflare-labels": [
           "cf-api-endpoint"
         ],
@@ -4775,13 +4970,13 @@
             "$ref": "#/components/responses/RpcValidationError"
           },
           "401": {
-            "$ref": "#/components/responses/ErrorResponse_b32e7e47d27147b78e9ca9c8927315e0c48a5a54a03868590623df7e2ff7d2af"
+            "$ref": "#/components/responses/ErrorResponse_b32e7e47"
           },
           "403": {
-            "$ref": "#/components/responses/ErrorResponse_10ef468de4a2f3d5e1e4a4bcd9c19369a4c535898d4ecea2b48444857aece895"
+            "$ref": "#/components/responses/ErrorResponse_10ef468d"
           },
           "503": {
-            "$ref": "#/components/responses/ErrorResponse_a4a8a71ed4a33ddc602b7e2cf4dd0b51ef37c46db1b01870377abdbd6cbda1b5"
+            "$ref": "#/components/responses/ErrorResponse_a4a8a71e"
           }
         },
         "x-fern-sdk-method-name": "list",
@@ -4800,11 +4995,11 @@
         ]
       }
     },
-    "/v3/workspaces/{workspaceSlug}/queries/surfaces.getBySlugIncludeDeleted": {
+    "/v3/workspaces/{workspaceSlug}/queries/services.byId": {
       "post": {
-        "operationId": "query_surfaces_getBySlugIncludeDeleted",
-        "summary": "Read surfaces.getBySlugIncludeDeleted",
-        "description": "Read an app (surface) by slug even if deleted. Use only when investigating historical references; prefer surfaces.get for active resources. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation is read-only despite using POST. Requires org:surfaces:read; insufficient permission returns an access-denied error. An authorized read with no matching resource returns WORKSPACE_RESOURCE_NOT_FOUND (404). Only use pagination arguments declared in the schema.",
+        "operationId": "query_services_byId",
+        "summary": "Read services.byId",
+        "description": "Read one OpenTelemetry service in this workspace by its ID. Requires integration settings read permission. Use services.forWorkspace to discover service IDs. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation is read-only despite using POST. Permission-filtered queries may return an empty result; do not assume that proves the resource does not exist. Only use pagination arguments declared in the schema.",
         "tags": [
           "Workspaces"
         ],
@@ -4830,14 +5025,13 @@
                   "args": {
                     "type": "object",
                     "properties": {
-                      "surfaceSlug": {
+                      "serviceId": {
                         "type": "string",
-                        "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
-                        "description": "Surface URL slug, using lowercase letters, numbers, and hyphens."
+                        "format": "uuid"
                       }
                     },
                     "required": [
-                      "surfaceSlug"
+                      "serviceId"
                     ]
                   }
                 },
@@ -4854,7 +5048,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Query_surfaces_getBySlugIncludeDeletedResponse"
+                  "$ref": "#/components/schemas/Query_services_byIdResponse"
                 }
               }
             }
@@ -4863,19 +5057,16 @@
             "$ref": "#/components/responses/RpcValidationError"
           },
           "401": {
-            "$ref": "#/components/responses/ErrorResponse_b32e7e47d27147b78e9ca9c8927315e0c48a5a54a03868590623df7e2ff7d2af"
+            "$ref": "#/components/responses/ErrorResponse_b32e7e47"
           },
           "403": {
-            "$ref": "#/components/responses/ErrorResponse_10ef468de4a2f3d5e1e4a4bcd9c19369a4c535898d4ecea2b48444857aece895"
-          },
-          "404": {
-            "$ref": "#/components/responses/ErrorResponse_826c4e9f6aac70078d2e1ac5a3cba4b915c34a2fb47c584bc2e06d7f62690109"
+            "$ref": "#/components/responses/ErrorResponse_10ef468d"
           },
           "503": {
-            "$ref": "#/components/responses/ErrorResponse_a4a8a71ed4a33ddc602b7e2cf4dd0b51ef37c46db1b01870377abdbd6cbda1b5"
+            "$ref": "#/components/responses/ErrorResponse_a4a8a71e"
           }
         },
-        "x-fern-sdk-method-name": "getBySlugIncludeDeleted",
+        "x-fern-sdk-method-name": "get",
         "x-cloudflare-labels": [
           "cf-api-endpoint"
         ],
@@ -4886,15 +5077,15 @@
         ],
         "x-internal": false,
         "x-fern-sdk-group-name": [
-          "surfaces"
+          "services"
         ]
       }
     },
-    "/v3/workspaces/{workspaceSlug}/queries/surfaces.list": {
+    "/v3/workspaces/{workspaceSlug}/queries/services.forWorkspace": {
       "post": {
-        "operationId": "query_surfaces_list",
-        "summary": "Read surfaces.list",
-        "description": "List active apps (surfaces) in the workspace. Start here to resolve an app name to its ID and slug before querying environments, releases or keys. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation is read-only despite using POST. Permission-filtered queries may return an empty result; do not assume that proves the resource does not exist. Only use pagination arguments declared in the schema.",
+        "operationId": "query_services_forWorkspace",
+        "summary": "Read services.forWorkspace",
+        "description": "List the OpenTelemetry services in this workspace, one row for each service.namespace and service.name pair. Requires integration settings read permission. A null namespace means the service sent none; unknown_service means it sent no service.name. Read last-seen times from the service activity endpoint. Returns up to limit rows (default and maximum 500), ordered by namespace and name. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation is read-only despite using POST. Permission-filtered queries may return an empty result; do not assume that proves the resource does not exist. Only use pagination arguments declared in the schema.",
         "tags": [
           "Workspaces"
         ],
@@ -4911,16 +5102,28 @@
           }
         ],
         "requestBody": {
-          "required": false,
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
                   "args": {
-                    "type": "object"
+                    "type": "object",
+                    "properties": {
+                      "limit": {
+                        "type": "integer",
+                        "minimum": -9007199254740991,
+                        "maximum": 500,
+                        "exclusiveMinimum": 0,
+                        "default": 500
+                      }
+                    }
                   }
-                }
+                },
+                "required": [
+                  "args"
+                ]
               }
             }
           }
@@ -4931,7 +5134,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Query_surfaces_listResponse"
+                  "$ref": "#/components/schemas/Query_services_forWorkspaceResponse"
                 }
               }
             }
@@ -4940,16 +5143,16 @@
             "$ref": "#/components/responses/RpcValidationError"
           },
           "401": {
-            "$ref": "#/components/responses/ErrorResponse_b32e7e47d27147b78e9ca9c8927315e0c48a5a54a03868590623df7e2ff7d2af"
+            "$ref": "#/components/responses/ErrorResponse_b32e7e47"
           },
           "403": {
-            "$ref": "#/components/responses/ErrorResponse_10ef468de4a2f3d5e1e4a4bcd9c19369a4c535898d4ecea2b48444857aece895"
+            "$ref": "#/components/responses/ErrorResponse_10ef468d"
           },
           "503": {
-            "$ref": "#/components/responses/ErrorResponse_a4a8a71ed4a33ddc602b7e2cf4dd0b51ef37c46db1b01870377abdbd6cbda1b5"
+            "$ref": "#/components/responses/ErrorResponse_a4a8a71e"
           }
         },
-        "x-fern-sdk-method-name": "list",
+        "x-fern-sdk-method-name": "forWorkspace",
         "x-cloudflare-labels": [
           "cf-api-endpoint"
         ],
@@ -4960,7 +5163,7 @@
         ],
         "x-internal": false,
         "x-fern-sdk-group-name": [
-          "surfaces"
+          "services"
         ]
       }
     },
@@ -5038,13 +5241,13 @@
             "$ref": "#/components/responses/RpcValidationError"
           },
           "401": {
-            "$ref": "#/components/responses/ErrorResponse_b32e7e47d27147b78e9ca9c8927315e0c48a5a54a03868590623df7e2ff7d2af"
+            "$ref": "#/components/responses/ErrorResponse_b32e7e47"
           },
           "403": {
-            "$ref": "#/components/responses/ErrorResponse_10ef468de4a2f3d5e1e4a4bcd9c19369a4c535898d4ecea2b48444857aece895"
+            "$ref": "#/components/responses/ErrorResponse_10ef468d"
           },
           "503": {
-            "$ref": "#/components/responses/ErrorResponse_a4a8a71ed4a33ddc602b7e2cf4dd0b51ef37c46db1b01870377abdbd6cbda1b5"
+            "$ref": "#/components/responses/ErrorResponse_a4a8a71e"
           }
         },
         "x-fern-sdk-method-name": "linkSurfaceToDestination",
@@ -5147,13 +5350,13 @@
             "$ref": "#/components/responses/RpcValidationError"
           },
           "401": {
-            "$ref": "#/components/responses/ErrorResponse_b32e7e47d27147b78e9ca9c8927315e0c48a5a54a03868590623df7e2ff7d2af"
+            "$ref": "#/components/responses/ErrorResponse_b32e7e47"
           },
           "403": {
-            "$ref": "#/components/responses/ErrorResponse_10ef468de4a2f3d5e1e4a4bcd9c19369a4c535898d4ecea2b48444857aece895"
+            "$ref": "#/components/responses/ErrorResponse_10ef468d"
           },
           "503": {
-            "$ref": "#/components/responses/ErrorResponse_a4a8a71ed4a33ddc602b7e2cf4dd0b51ef37c46db1b01870377abdbd6cbda1b5"
+            "$ref": "#/components/responses/ErrorResponse_a4a8a71e"
           }
         },
         "x-fern-sdk-method-name": "linkSurfaceToRepository",
@@ -5234,13 +5437,13 @@
             "$ref": "#/components/responses/RpcValidationError"
           },
           "401": {
-            "$ref": "#/components/responses/ErrorResponse_b32e7e47d27147b78e9ca9c8927315e0c48a5a54a03868590623df7e2ff7d2af"
+            "$ref": "#/components/responses/ErrorResponse_b32e7e47"
           },
           "403": {
-            "$ref": "#/components/responses/ErrorResponse_10ef468de4a2f3d5e1e4a4bcd9c19369a4c535898d4ecea2b48444857aece895"
+            "$ref": "#/components/responses/ErrorResponse_10ef468d"
           },
           "503": {
-            "$ref": "#/components/responses/ErrorResponse_a4a8a71ed4a33ddc602b7e2cf4dd0b51ef37c46db1b01870377abdbd6cbda1b5"
+            "$ref": "#/components/responses/ErrorResponse_a4a8a71e"
           }
         },
         "x-fern-sdk-method-name": "unlinkSurfaceDestinationMapping",
@@ -5321,13 +5524,13 @@
             "$ref": "#/components/responses/RpcValidationError"
           },
           "401": {
-            "$ref": "#/components/responses/ErrorResponse_b32e7e47d27147b78e9ca9c8927315e0c48a5a54a03868590623df7e2ff7d2af"
+            "$ref": "#/components/responses/ErrorResponse_b32e7e47"
           },
           "403": {
-            "$ref": "#/components/responses/ErrorResponse_10ef468de4a2f3d5e1e4a4bcd9c19369a4c535898d4ecea2b48444857aece895"
+            "$ref": "#/components/responses/ErrorResponse_10ef468d"
           },
           "503": {
-            "$ref": "#/components/responses/ErrorResponse_a4a8a71ed4a33ddc602b7e2cf4dd0b51ef37c46db1b01870377abdbd6cbda1b5"
+            "$ref": "#/components/responses/ErrorResponse_a4a8a71e"
           }
         },
         "x-fern-sdk-method-name": "unlinkSurfaceMapping",
@@ -5411,13 +5614,13 @@
             "$ref": "#/components/responses/RpcValidationError"
           },
           "401": {
-            "$ref": "#/components/responses/ErrorResponse_b32e7e47d27147b78e9ca9c8927315e0c48a5a54a03868590623df7e2ff7d2af"
+            "$ref": "#/components/responses/ErrorResponse_b32e7e47"
           },
           "403": {
-            "$ref": "#/components/responses/ErrorResponse_10ef468de4a2f3d5e1e4a4bcd9c19369a4c535898d4ecea2b48444857aece895"
+            "$ref": "#/components/responses/ErrorResponse_10ef468d"
           },
           "503": {
-            "$ref": "#/components/responses/ErrorResponse_a4a8a71ed4a33ddc602b7e2cf4dd0b51ef37c46db1b01870377abdbd6cbda1b5"
+            "$ref": "#/components/responses/ErrorResponse_a4a8a71e"
           }
         },
         "x-fern-sdk-method-name": "addDomain",
@@ -5503,13 +5706,13 @@
             "$ref": "#/components/responses/RpcValidationError"
           },
           "401": {
-            "$ref": "#/components/responses/ErrorResponse_b32e7e47d27147b78e9ca9c8927315e0c48a5a54a03868590623df7e2ff7d2af"
+            "$ref": "#/components/responses/ErrorResponse_b32e7e47"
           },
           "403": {
-            "$ref": "#/components/responses/ErrorResponse_10ef468de4a2f3d5e1e4a4bcd9c19369a4c535898d4ecea2b48444857aece895"
+            "$ref": "#/components/responses/ErrorResponse_10ef468d"
           },
           "503": {
-            "$ref": "#/components/responses/ErrorResponse_a4a8a71ed4a33ddc602b7e2cf4dd0b51ef37c46db1b01870377abdbd6cbda1b5"
+            "$ref": "#/components/responses/ErrorResponse_a4a8a71e"
           }
         },
         "x-fern-sdk-method-name": "addProxyDomain",
@@ -5589,13 +5792,13 @@
             "$ref": "#/components/responses/RpcValidationError"
           },
           "401": {
-            "$ref": "#/components/responses/ErrorResponse_b32e7e47d27147b78e9ca9c8927315e0c48a5a54a03868590623df7e2ff7d2af"
+            "$ref": "#/components/responses/ErrorResponse_b32e7e47"
           },
           "403": {
-            "$ref": "#/components/responses/ErrorResponse_10ef468de4a2f3d5e1e4a4bcd9c19369a4c535898d4ecea2b48444857aece895"
+            "$ref": "#/components/responses/ErrorResponse_10ef468d"
           },
           "503": {
-            "$ref": "#/components/responses/ErrorResponse_a4a8a71ed4a33ddc602b7e2cf4dd0b51ef37c46db1b01870377abdbd6cbda1b5"
+            "$ref": "#/components/responses/ErrorResponse_a4a8a71e"
           }
         },
         "x-fern-sdk-method-name": "removeDomain",
@@ -5679,13 +5882,13 @@
             "$ref": "#/components/responses/RpcValidationError"
           },
           "401": {
-            "$ref": "#/components/responses/ErrorResponse_b32e7e47d27147b78e9ca9c8927315e0c48a5a54a03868590623df7e2ff7d2af"
+            "$ref": "#/components/responses/ErrorResponse_b32e7e47"
           },
           "403": {
-            "$ref": "#/components/responses/ErrorResponse_10ef468de4a2f3d5e1e4a4bcd9c19369a4c535898d4ecea2b48444857aece895"
+            "$ref": "#/components/responses/ErrorResponse_10ef468d"
           },
           "503": {
-            "$ref": "#/components/responses/ErrorResponse_a4a8a71ed4a33ddc602b7e2cf4dd0b51ef37c46db1b01870377abdbd6cbda1b5"
+            "$ref": "#/components/responses/ErrorResponse_a4a8a71e"
           }
         },
         "x-fern-sdk-method-name": "removeProxyDomain",
@@ -5774,13 +5977,13 @@
             "$ref": "#/components/responses/RpcValidationError"
           },
           "401": {
-            "$ref": "#/components/responses/ErrorResponse_b32e7e47d27147b78e9ca9c8927315e0c48a5a54a03868590623df7e2ff7d2af"
+            "$ref": "#/components/responses/ErrorResponse_b32e7e47"
           },
           "403": {
-            "$ref": "#/components/responses/ErrorResponse_10ef468de4a2f3d5e1e4a4bcd9c19369a4c535898d4ecea2b48444857aece895"
+            "$ref": "#/components/responses/ErrorResponse_10ef468d"
           },
           "503": {
-            "$ref": "#/components/responses/ErrorResponse_a4a8a71ed4a33ddc602b7e2cf4dd0b51ef37c46db1b01870377abdbd6cbda1b5"
+            "$ref": "#/components/responses/ErrorResponse_a4a8a71e"
           }
         },
         "x-fern-sdk-method-name": "reorder",
@@ -5839,7 +6042,12 @@
                             "enum": [
                               "org:owner",
                               "org:admin",
-                              "org:member"
+                              "org:member",
+                              "org:product",
+                              "org:support",
+                              "org:viewer",
+                              "org:billing",
+                              "org:auditor"
                             ],
                             "type": "string"
                           },
@@ -5877,13 +6085,13 @@
             "$ref": "#/components/responses/RpcValidationError"
           },
           "401": {
-            "$ref": "#/components/responses/ErrorResponse_b32e7e47d27147b78e9ca9c8927315e0c48a5a54a03868590623df7e2ff7d2af"
+            "$ref": "#/components/responses/ErrorResponse_b32e7e47"
           },
           "403": {
-            "$ref": "#/components/responses/ErrorResponse_10ef468de4a2f3d5e1e4a4bcd9c19369a4c535898d4ecea2b48444857aece895"
+            "$ref": "#/components/responses/ErrorResponse_10ef468d"
           },
           "503": {
-            "$ref": "#/components/responses/ErrorResponse_a4a8a71ed4a33ddc602b7e2cf4dd0b51ef37c46db1b01870377abdbd6cbda1b5"
+            "$ref": "#/components/responses/ErrorResponse_a4a8a71e"
           }
         },
         "x-fern-sdk-method-name": "setRole",
@@ -5975,13 +6183,13 @@
             "$ref": "#/components/responses/RpcValidationError"
           },
           "401": {
-            "$ref": "#/components/responses/ErrorResponse_b32e7e47d27147b78e9ca9c8927315e0c48a5a54a03868590623df7e2ff7d2af"
+            "$ref": "#/components/responses/ErrorResponse_b32e7e47"
           },
           "403": {
-            "$ref": "#/components/responses/ErrorResponse_10ef468de4a2f3d5e1e4a4bcd9c19369a4c535898d4ecea2b48444857aece895"
+            "$ref": "#/components/responses/ErrorResponse_10ef468d"
           },
           "503": {
-            "$ref": "#/components/responses/ErrorResponse_a4a8a71ed4a33ddc602b7e2cf4dd0b51ef37c46db1b01870377abdbd6cbda1b5"
+            "$ref": "#/components/responses/ErrorResponse_a4a8a71e"
           }
         },
         "x-fern-sdk-method-name": "updateAuthMethods",
@@ -6064,13 +6272,13 @@
             "$ref": "#/components/responses/RpcValidationError"
           },
           "401": {
-            "$ref": "#/components/responses/ErrorResponse_b32e7e47d27147b78e9ca9c8927315e0c48a5a54a03868590623df7e2ff7d2af"
+            "$ref": "#/components/responses/ErrorResponse_b32e7e47"
           },
           "403": {
-            "$ref": "#/components/responses/ErrorResponse_10ef468de4a2f3d5e1e4a4bcd9c19369a4c535898d4ecea2b48444857aece895"
+            "$ref": "#/components/responses/ErrorResponse_10ef468d"
           },
           "503": {
-            "$ref": "#/components/responses/ErrorResponse_a4a8a71ed4a33ddc602b7e2cf4dd0b51ef37c46db1b01870377abdbd6cbda1b5"
+            "$ref": "#/components/responses/ErrorResponse_a4a8a71e"
           }
         },
         "x-fern-sdk-method-name": "updateBasics",
@@ -6159,13 +6367,13 @@
             "$ref": "#/components/responses/RpcValidationError"
           },
           "401": {
-            "$ref": "#/components/responses/ErrorResponse_b32e7e47d27147b78e9ca9c8927315e0c48a5a54a03868590623df7e2ff7d2af"
+            "$ref": "#/components/responses/ErrorResponse_b32e7e47"
           },
           "403": {
-            "$ref": "#/components/responses/ErrorResponse_10ef468de4a2f3d5e1e4a4bcd9c19369a4c535898d4ecea2b48444857aece895"
+            "$ref": "#/components/responses/ErrorResponse_10ef468d"
           },
           "503": {
-            "$ref": "#/components/responses/ErrorResponse_a4a8a71ed4a33ddc602b7e2cf4dd0b51ef37c46db1b01870377abdbd6cbda1b5"
+            "$ref": "#/components/responses/ErrorResponse_a4a8a71e"
           }
         },
         "x-fern-sdk-method-name": "updateDomainEnrollmentMode",
@@ -6244,13 +6452,13 @@
             "$ref": "#/components/responses/RpcValidationError"
           },
           "401": {
-            "$ref": "#/components/responses/ErrorResponse_b32e7e47d27147b78e9ca9c8927315e0c48a5a54a03868590623df7e2ff7d2af"
+            "$ref": "#/components/responses/ErrorResponse_b32e7e47"
           },
           "403": {
-            "$ref": "#/components/responses/ErrorResponse_10ef468de4a2f3d5e1e4a4bcd9c19369a4c535898d4ecea2b48444857aece895"
+            "$ref": "#/components/responses/ErrorResponse_10ef468d"
           },
           "503": {
-            "$ref": "#/components/responses/ErrorResponse_a4a8a71ed4a33ddc602b7e2cf4dd0b51ef37c46db1b01870377abdbd6cbda1b5"
+            "$ref": "#/components/responses/ErrorResponse_a4a8a71e"
           }
         },
         "x-fern-sdk-method-name": "updateMemberWorkspaceCreation",
@@ -6301,7 +6509,10 @@
                       "impersonationExpiresAt": {
                         "anyOf": [
                           {
-                            "type": "number"
+                            "type": "integer",
+                            "minimum": -9007199254740991,
+                            "maximum": 9007199254740991,
+                            "description": "Milliseconds since the Unix epoch in UTC."
                           },
                           {
                             "type": "null"
@@ -6339,13 +6550,13 @@
             "$ref": "#/components/responses/RpcValidationError"
           },
           "401": {
-            "$ref": "#/components/responses/ErrorResponse_b32e7e47d27147b78e9ca9c8927315e0c48a5a54a03868590623df7e2ff7d2af"
+            "$ref": "#/components/responses/ErrorResponse_b32e7e47"
           },
           "403": {
-            "$ref": "#/components/responses/ErrorResponse_10ef468de4a2f3d5e1e4a4bcd9c19369a4c535898d4ecea2b48444857aece895"
+            "$ref": "#/components/responses/ErrorResponse_10ef468d"
           },
           "503": {
-            "$ref": "#/components/responses/ErrorResponse_a4a8a71ed4a33ddc602b7e2cf4dd0b51ef37c46db1b01870377abdbd6cbda1b5"
+            "$ref": "#/components/responses/ErrorResponse_a4a8a71e"
           }
         },
         "x-fern-sdk-method-name": "setAccess",
@@ -6363,11 +6574,11 @@
         ]
       }
     },
-    "/v3/workspaces/{workspaceSlug}/actions/surfaces.delete": {
+    "/v3/workspaces/{workspaceSlug}/actions/services.setType": {
       "post": {
-        "operationId": "mutation_surfaces_delete",
-        "summary": "Run surfaces.delete",
-        "description": "Delete an app (surface). This is destructive; resolve its exact ID and slug with surfaces.list and verify the requested target. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.",
+        "operationId": "mutation_services_setType",
+        "summary": "Run services.setType",
+        "description": "Set a service's type to website, backend, other or unclassified. The explicit choice takes precedence over automatic inference. Resolve the service ID from services.forWorkspace first. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.",
         "tags": [
           "Workspaces"
         ],
@@ -6393,303 +6604,23 @@
                   "args": {
                     "type": "object",
                     "properties": {
-                      "surfaceSlug": {
+                      "serviceId": {
                         "type": "string",
-                        "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
-                        "description": "Surface URL slug, using lowercase letters, numbers, and hyphens."
-                      }
-                    },
-                    "required": [
-                      "surfaceSlug"
-                    ]
-                  }
-                },
-                "required": [
-                  "args"
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Mutation_surfaces_deleteResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/RpcValidationError"
-          },
-          "401": {
-            "$ref": "#/components/responses/ErrorResponse_b32e7e47d27147b78e9ca9c8927315e0c48a5a54a03868590623df7e2ff7d2af"
-          },
-          "403": {
-            "$ref": "#/components/responses/ErrorResponse_10ef468de4a2f3d5e1e4a4bcd9c19369a4c535898d4ecea2b48444857aece895"
-          },
-          "503": {
-            "$ref": "#/components/responses/ErrorResponse_a4a8a71ed4a33ddc602b7e2cf4dd0b51ef37c46db1b01870377abdbd6cbda1b5"
-          }
-        },
-        "x-fern-sdk-method-name": "delete",
-        "x-cloudflare-labels": [
-          "cf-api-endpoint"
-        ],
-        "security": [
-          {
-            "clerkSession": []
-          }
-        ],
-        "x-internal": false,
-        "x-fern-sdk-group-name": [
-          "surfaces"
-        ]
-      }
-    },
-    "/v3/workspaces/{workspaceSlug}/actions/surfaces.setAnonymousReplayPolicy": {
-      "post": {
-        "operationId": "mutation_surfaces_setAnonymousReplayPolicy",
-        "summary": "Run surfaces.setAnonymousReplayPolicy",
-        "description": "Choose when an app (surface) records session replay for visitors that are not identified: always, on_error (only once an error occurs) or never. Identified users always record. Inspect its current setting first. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.",
-        "tags": [
-          "Workspaces"
-        ],
-        "parameters": [
-          {
-            "name": "workspaceSlug",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
-              "description": "Workspace URL slug, using lowercase letters, numbers, and hyphens."
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "args": {
-                    "type": "object",
-                    "properties": {
-                      "surfaceSlug": {
-                        "type": "string",
-                        "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
-                        "description": "Surface URL slug, using lowercase letters, numbers, and hyphens."
+                        "format": "uuid"
                       },
-                      "policy": {
+                      "type": {
                         "enum": [
-                          "always",
-                          "on_error",
-                          "never"
-                        ],
-                        "type": "string",
-                        "description": "When sessions without an identified user record replay: always, only once an error occurs, or never."
-                      }
-                    },
-                    "required": [
-                      "surfaceSlug",
-                      "policy"
-                    ]
-                  }
-                },
-                "required": [
-                  "args"
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Mutation_surfaces_setAnonymousReplayPolicyResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/RpcValidationError"
-          },
-          "401": {
-            "$ref": "#/components/responses/ErrorResponse_b32e7e47d27147b78e9ca9c8927315e0c48a5a54a03868590623df7e2ff7d2af"
-          },
-          "403": {
-            "$ref": "#/components/responses/ErrorResponse_10ef468de4a2f3d5e1e4a4bcd9c19369a4c535898d4ecea2b48444857aece895"
-          },
-          "503": {
-            "$ref": "#/components/responses/ErrorResponse_a4a8a71ed4a33ddc602b7e2cf4dd0b51ef37c46db1b01870377abdbd6cbda1b5"
-          }
-        },
-        "x-fern-sdk-method-name": "setAnonymousReplayPolicy",
-        "x-cloudflare-labels": [
-          "cf-api-endpoint"
-        ],
-        "security": [
-          {
-            "clerkSession": []
-          }
-        ],
-        "x-internal": false,
-        "x-fern-sdk-group-name": [
-          "surfaces"
-        ]
-      }
-    },
-    "/v3/workspaces/{workspaceSlug}/actions/surfaces.setAnonymousUserTracking": {
-      "post": {
-        "operationId": "mutation_surfaces_setAnonymousUserTracking",
-        "summary": "Run surfaces.setAnonymousUserTracking",
-        "description": "Enable or disable anonymous-user tracking for an app (surface). Inspect its current setting first. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.",
-        "tags": [
-          "Workspaces"
-        ],
-        "parameters": [
-          {
-            "name": "workspaceSlug",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
-              "description": "Workspace URL slug, using lowercase letters, numbers, and hyphens."
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "args": {
-                    "type": "object",
-                    "properties": {
-                      "surfaceSlug": {
-                        "type": "string",
-                        "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
-                        "description": "Surface URL slug, using lowercase letters, numbers, and hyphens."
-                      },
-                      "enabled": {
-                        "type": "boolean"
-                      }
-                    },
-                    "required": [
-                      "surfaceSlug",
-                      "enabled"
-                    ]
-                  }
-                },
-                "required": [
-                  "args"
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Mutation_surfaces_setAnonymousUserTrackingResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/RpcValidationError"
-          },
-          "401": {
-            "$ref": "#/components/responses/ErrorResponse_b32e7e47d27147b78e9ca9c8927315e0c48a5a54a03868590623df7e2ff7d2af"
-          },
-          "403": {
-            "$ref": "#/components/responses/ErrorResponse_10ef468de4a2f3d5e1e4a4bcd9c19369a4c535898d4ecea2b48444857aece895"
-          },
-          "503": {
-            "$ref": "#/components/responses/ErrorResponse_a4a8a71ed4a33ddc602b7e2cf4dd0b51ef37c46db1b01870377abdbd6cbda1b5"
-          }
-        },
-        "x-fern-sdk-method-name": "setAnonymousUserTracking",
-        "x-cloudflare-labels": [
-          "cf-api-endpoint"
-        ],
-        "security": [
-          {
-            "clerkSession": []
-          }
-        ],
-        "x-internal": false,
-        "x-fern-sdk-group-name": [
-          "surfaces"
-        ]
-      }
-    },
-    "/v3/workspaces/{workspaceSlug}/actions/surfaces.setSdkPlugin": {
-      "post": {
-        "operationId": "mutation_surfaces_setSdkPlugin",
-        "summary": "Run surfaces.setSdkPlugin",
-        "description": "Turn one browser SDK feature (replay, logs, pageEvents or rageClick) on or off for an app (surface). Other SDK settings are kept. Next.js and Vite apps bake this at build time, so it takes effect on their next build and deploy. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.",
-        "tags": [
-          "Workspaces"
-        ],
-        "parameters": [
-          {
-            "name": "workspaceSlug",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
-              "description": "Workspace URL slug, using lowercase letters, numbers, and hyphens."
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "args": {
-                    "type": "object",
-                    "properties": {
-                      "surfaceSlug": {
-                        "type": "string",
-                        "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
-                        "description": "Surface URL slug, using lowercase letters, numbers, and hyphens."
-                      },
-                      "plugin": {
-                        "enum": [
-                          "replay",
-                          "logs",
-                          "pageEvents",
-                          "rageClick"
+                          "unclassified",
+                          "other",
+                          "backend",
+                          "website"
                         ],
                         "type": "string"
-                      },
-                      "enabled": {
-                        "type": "boolean"
                       }
                     },
                     "required": [
-                      "surfaceSlug",
-                      "plugin",
-                      "enabled"
+                      "serviceId",
+                      "type"
                     ]
                   }
                 },
@@ -6706,7 +6637,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Mutation_surfaces_setSdkPluginResponse"
+                  "$ref": "#/components/schemas/Mutation_services_setTypeResponse"
                 }
               }
             }
@@ -6715,16 +6646,16 @@
             "$ref": "#/components/responses/RpcValidationError"
           },
           "401": {
-            "$ref": "#/components/responses/ErrorResponse_b32e7e47d27147b78e9ca9c8927315e0c48a5a54a03868590623df7e2ff7d2af"
+            "$ref": "#/components/responses/ErrorResponse_b32e7e47"
           },
           "403": {
-            "$ref": "#/components/responses/ErrorResponse_10ef468de4a2f3d5e1e4a4bcd9c19369a4c535898d4ecea2b48444857aece895"
+            "$ref": "#/components/responses/ErrorResponse_10ef468d"
           },
           "503": {
-            "$ref": "#/components/responses/ErrorResponse_a4a8a71ed4a33ddc602b7e2cf4dd0b51ef37c46db1b01870377abdbd6cbda1b5"
+            "$ref": "#/components/responses/ErrorResponse_a4a8a71e"
           }
         },
-        "x-fern-sdk-method-name": "setSdkPlugin",
+        "x-fern-sdk-method-name": "setType",
         "x-cloudflare-labels": [
           "cf-api-endpoint"
         ],
@@ -6735,15 +6666,15 @@
         ],
         "x-internal": false,
         "x-fern-sdk-group-name": [
-          "surfaces"
+          "services"
         ]
       }
     },
-    "/v3/workspaces/{workspaceSlug}/actions/surfaces.updateName": {
+    "/v3/workspaces/{workspaceSlug}/actions/services.setWebsiteSettings": {
       "post": {
-        "operationId": "mutation_surfaces_updateName",
-        "summary": "Run surfaces.updateName",
-        "description": "Rename an app (surface). Resolve its ID with surfaces.list and preserve the rest of its settings. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.",
+        "operationId": "mutation_services_setWebsiteSettings",
+        "summary": "Run services.setWebsiteSettings",
+        "description": "Replace a service's website settings, including anonymous replay policy, anonymous-user tracking, environment filtering and browser SDK plugins. Read services.byId first and preserve settings the user did not ask to change. This works without an App and leaves workspace defaults unchanged. Pass the workspace slug in the URL and operation arguments inside the JSON body as { args: ... }. Inspect the request schema for required fields and exact identifier formats. This operation writes data under the caller's existing permissions and records its audit event. Do not automatically retry after a timeout; read the affected resource to determine whether the write completed.",
         "tags": [
           "Workspaces"
         ],
@@ -6769,20 +6700,62 @@
                   "args": {
                     "type": "object",
                     "properties": {
-                      "name": {
+                      "serviceId": {
                         "type": "string",
-                        "minLength": 1,
-                        "maxLength": 48
+                        "format": "uuid"
                       },
-                      "surfaceSlug": {
-                        "type": "string",
-                        "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
-                        "description": "Surface URL slug, using lowercase letters, numbers, and hyphens."
+                      "websiteSettings": {
+                        "type": "object",
+                        "properties": {
+                          "anonymousReplayPolicy": {
+                            "enum": [
+                              "always",
+                              "on_error",
+                              "never"
+                            ],
+                            "type": "string",
+                            "description": "When sessions without an identified user record replay: always, only once an error occurs, or never."
+                          },
+                          "anonymousUserTracking": {
+                            "type": "boolean"
+                          },
+                          "environmentFiltering": {
+                            "type": "boolean"
+                          },
+                          "plugins": {
+                            "type": "object",
+                            "properties": {
+                              "errors": {
+                                "type": "boolean"
+                              },
+                              "device": {
+                                "type": "boolean"
+                              },
+                              "pageEvents": {
+                                "type": "boolean"
+                              },
+                              "rageClick": {
+                                "type": "boolean"
+                              },
+                              "replay": {
+                                "type": "boolean"
+                              },
+                              "logs": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        },
+                        "required": [
+                          "anonymousReplayPolicy",
+                          "anonymousUserTracking",
+                          "environmentFiltering"
+                        ]
                       }
                     },
                     "required": [
-                      "name",
-                      "surfaceSlug"
+                      "serviceId",
+                      "websiteSettings"
                     ]
                   }
                 },
@@ -6799,7 +6772,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Mutation_surfaces_updateNameResponse"
+                  "$ref": "#/components/schemas/Mutation_services_setWebsiteSettingsResponse"
                 }
               }
             }
@@ -6808,16 +6781,16 @@
             "$ref": "#/components/responses/RpcValidationError"
           },
           "401": {
-            "$ref": "#/components/responses/ErrorResponse_b32e7e47d27147b78e9ca9c8927315e0c48a5a54a03868590623df7e2ff7d2af"
+            "$ref": "#/components/responses/ErrorResponse_b32e7e47"
           },
           "403": {
-            "$ref": "#/components/responses/ErrorResponse_10ef468de4a2f3d5e1e4a4bcd9c19369a4c535898d4ecea2b48444857aece895"
+            "$ref": "#/components/responses/ErrorResponse_10ef468d"
           },
           "503": {
-            "$ref": "#/components/responses/ErrorResponse_a4a8a71ed4a33ddc602b7e2cf4dd0b51ef37c46db1b01870377abdbd6cbda1b5"
+            "$ref": "#/components/responses/ErrorResponse_a4a8a71e"
           }
         },
-        "x-fern-sdk-method-name": "updateName",
+        "x-fern-sdk-method-name": "setWebsiteSettings",
         "x-cloudflare-labels": [
           "cf-api-endpoint"
         ],
@@ -6828,7 +6801,7 @@
         ],
         "x-internal": false,
         "x-fern-sdk-group-name": [
-          "surfaces"
+          "services"
         ]
       }
     },
@@ -6836,7 +6809,7 @@
       "post": {
         "operationId": "createWorkspaceApiKey",
         "summary": "Create workspace API key",
-        "description": "Creates a private API key with explicit scopes and expiration. Supply surfaceSlug for an app key; omit it for a workspace key. Grants cannot exceed the caller's permissions. Reuse the same idempotency key and request after an uncertain response.",
+        "description": "Creates a workspace secret API key with explicit scopes and expiration. One key with the release:write scope publishes releases for every app in the workspace. Grants cannot exceed the caller's permissions. Reuse the same idempotency key and request after an uncertain response.",
         "tags": [
           "Workspaces"
         ],
@@ -6859,11 +6832,6 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "surfaceSlug": {
-                    "type": "string",
-                    "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
-                    "description": "Surface URL slug, using lowercase letters, numbers, and hyphens."
-                  },
                   "idempotencyKey": {
                     "type": "string",
                     "format": "uuid"
@@ -6883,8 +6851,14 @@
                         "org:surfaces:read",
                         "org:surfaces:write",
                         "org:surfaces:delete",
+                        "org:services:read",
+                        "org:services:write",
+                        "org:customers:read",
+                        "org:tiers:read",
+                        "org:tiers:write",
                         "org:problems:read",
                         "org:problems:write",
+                        "org:findings:read",
                         "org:support:read",
                         "org:support:write",
                         "org:replays:read",
@@ -6899,12 +6873,13 @@
                         "org:workspace_basics:write",
                         "org:workspace_domains:read",
                         "org:workspace_domains:write",
+                        "org:api_keys:read",
+                        "org:api_keys:write",
                         "org:workspace_auth:read",
                         "org:workspace_auth:write",
                         "org:workspace:destroy",
                         "org:workspace:transfer_ownership",
-                        "release:write",
-                        "ingest:write"
+                        "release:write"
                       ],
                       "type": "string"
                     },
@@ -6950,16 +6925,16 @@
             "$ref": "#/components/responses/RpcValidationError"
           },
           "401": {
-            "$ref": "#/components/responses/ErrorResponse_b32e7e47d27147b78e9ca9c8927315e0c48a5a54a03868590623df7e2ff7d2af"
+            "$ref": "#/components/responses/ErrorResponse_b32e7e47"
           },
           "403": {
-            "$ref": "#/components/responses/ErrorResponse_10ef468de4a2f3d5e1e4a4bcd9c19369a4c535898d4ecea2b48444857aece895"
+            "$ref": "#/components/responses/ErrorResponse_10ef468d"
           },
           "409": {
-            "$ref": "#/components/responses/ErrorResponse_088cb09282d303295e75879da2c16585de0b7b9e07c53fe74d377c3985f2792c"
+            "$ref": "#/components/responses/ErrorResponse_088cb092"
           },
           "503": {
-            "$ref": "#/components/responses/ErrorResponse_b7d254f6bd68a887b2398a1b58fb8fe3913110d7236a6e4540d7d2aa990fb12b"
+            "$ref": "#/components/responses/ErrorResponse_b7d254f6"
           }
         },
         "x-cloudflare-labels": [
@@ -7021,16 +6996,16 @@
             "$ref": "#/components/responses/RpcValidationError"
           },
           "401": {
-            "$ref": "#/components/responses/ErrorResponse_b32e7e47d27147b78e9ca9c8927315e0c48a5a54a03868590623df7e2ff7d2af"
+            "$ref": "#/components/responses/ErrorResponse_b32e7e47"
           },
           "403": {
-            "$ref": "#/components/responses/ErrorResponse_10ef468de4a2f3d5e1e4a4bcd9c19369a4c535898d4ecea2b48444857aece895"
+            "$ref": "#/components/responses/ErrorResponse_10ef468d"
           },
           "404": {
-            "$ref": "#/components/responses/ErrorResponse_89ad83ad210efa94079e130bda6e600e2ae591af5bb05c2ad8087c1f3d40f6cc"
+            "$ref": "#/components/responses/ErrorResponse_89ad83ad"
           },
           "503": {
-            "$ref": "#/components/responses/ErrorResponse_b7d254f6bd68a887b2398a1b58fb8fe3913110d7236a6e4540d7d2aa990fb12b"
+            "$ref": "#/components/responses/ErrorResponse_b7d254f6"
           }
         },
         "x-cloudflare-labels": [
@@ -7090,13 +7065,13 @@
             "$ref": "#/components/responses/RpcValidationError"
           },
           "401": {
-            "$ref": "#/components/responses/ErrorResponse_b32e7e47d27147b78e9ca9c8927315e0c48a5a54a03868590623df7e2ff7d2af"
+            "$ref": "#/components/responses/ErrorResponse_b32e7e47"
           },
           "403": {
-            "$ref": "#/components/responses/ErrorResponse_10ef468de4a2f3d5e1e4a4bcd9c19369a4c535898d4ecea2b48444857aece895"
+            "$ref": "#/components/responses/ErrorResponse_10ef468d"
           },
           "503": {
-            "$ref": "#/components/responses/ErrorResponse_b7d254f6bd68a887b2398a1b58fb8fe3913110d7236a6e4540d7d2aa990fb12b"
+            "$ref": "#/components/responses/ErrorResponse_b7d254f6"
           }
         },
         "x-cloudflare-labels": [
@@ -7112,6 +7087,258 @@
           "private"
         ],
         "x-fern-sdk-method-name": "delete"
+      }
+    },
+    "/v3/workspaces/{workspaceSlug}/publicKeys": {
+      "post": {
+        "operationId": "createWorkspacePublicKey",
+        "summary": "Create workspace public key",
+        "description": "Creates a publishable key for the whole workspace. Every app in the workspace can ship it; the gateway resolves the app from the telemetry. Requires workspace authentication write permission. Reuse the same idempotency key and request after an uncertain response.",
+        "tags": [
+          "Workspaces"
+        ],
+        "parameters": [
+          {
+            "name": "workspaceSlug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Workspace URL slug, using lowercase letters, numbers, and hyphens."
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "idempotencyKey": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "description": "Display name of the key."
+                  }
+                },
+                "required": [
+                  "idempotencyKey",
+                  "name"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateWorkspacePublicKeyResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/RpcValidationError"
+          },
+          "401": {
+            "$ref": "#/components/responses/ErrorResponse_b32e7e47"
+          },
+          "403": {
+            "$ref": "#/components/responses/ErrorResponse_10ef468d"
+          },
+          "404": {
+            "description": "Resource not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "defined": {
+                          "const": true
+                        },
+                        "code": {
+                          "const": "WORKSPACE_NOT_FOUND"
+                        },
+                        "status": {
+                          "const": 404
+                        },
+                        "message": {
+                          "type": "string",
+                          "default": "Workspace not found."
+                        },
+                        "data": {}
+                      },
+                      "required": [
+                        "defined",
+                        "code",
+                        "status",
+                        "message"
+                      ]
+                    },
+                    {
+                      "$ref": "#/components/schemas/RpcUnexpectedError"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "409": {
+            "$ref": "#/components/responses/ErrorResponse_088cb092"
+          },
+          "503": {
+            "$ref": "#/components/responses/ErrorResponse_b7d254f6"
+          }
+        },
+        "x-cloudflare-labels": [
+          "cf-api-endpoint"
+        ],
+        "security": [
+          {
+            "clerkSession": []
+          }
+        ]
+      }
+    },
+    "/v3/workspaces/{workspaceSlug}/publicKeys/{publicKeyId}": {
+      "get": {
+        "operationId": "readWorkspacePublicKey",
+        "summary": "Read workspace public key",
+        "description": "Reads a workspace publishable key's identity, current value and revocation status. Requires workspace authentication read or app read permission.",
+        "tags": [
+          "Workspaces"
+        ],
+        "parameters": [
+          {
+            "name": "workspaceSlug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Workspace URL slug, using lowercase letters, numbers, and hyphens."
+            }
+          },
+          {
+            "name": "publicKeyId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReadWorkspacePublicKeyResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/RpcValidationError"
+          },
+          "401": {
+            "$ref": "#/components/responses/ErrorResponse_b32e7e47"
+          },
+          "403": {
+            "$ref": "#/components/responses/ErrorResponse_10ef468d"
+          },
+          "404": {
+            "$ref": "#/components/responses/ErrorResponse_89ad83ad"
+          },
+          "503": {
+            "$ref": "#/components/responses/ErrorResponse_b7d254f6"
+          }
+        },
+        "x-cloudflare-labels": [
+          "cf-api-endpoint"
+        ],
+        "security": [
+          {
+            "clerkSession": []
+          }
+        ]
+      },
+      "delete": {
+        "operationId": "revokeWorkspacePublicKey",
+        "summary": "Revoke workspace public key",
+        "description": "Revokes a workspace publishable key and all its rotation grace-period values. Every app shipping this key stops authenticating, so confirm with the user before revoking the last live workspace key. Requires workspace authentication write permission. Repeating revocation of an existing key succeeds without changing its revocation time.",
+        "tags": [
+          "Workspaces"
+        ],
+        "parameters": [
+          {
+            "name": "workspaceSlug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Workspace URL slug, using lowercase letters, numbers, and hyphens."
+            }
+          },
+          {
+            "name": "publicKeyId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RevokeWorkspacePublicKeyResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/RpcValidationError"
+          },
+          "401": {
+            "$ref": "#/components/responses/ErrorResponse_b32e7e47"
+          },
+          "403": {
+            "$ref": "#/components/responses/ErrorResponse_10ef468d"
+          },
+          "404": {
+            "$ref": "#/components/responses/ErrorResponse_89ad83ad"
+          },
+          "503": {
+            "$ref": "#/components/responses/ErrorResponse_b7d254f6"
+          }
+        },
+        "x-cloudflare-labels": [
+          "cf-api-endpoint"
+        ],
+        "security": [
+          {
+            "clerkSession": []
+          }
+        ]
       }
     },
     "/v3/workspaces/{workspaceSlug}/network/rules": {
@@ -7149,13 +7376,13 @@
             "$ref": "#/components/responses/RpcValidationError"
           },
           "401": {
-            "$ref": "#/components/responses/ErrorResponse_b32e7e47d27147b78e9ca9c8927315e0c48a5a54a03868590623df7e2ff7d2af"
+            "$ref": "#/components/responses/ErrorResponse_b32e7e47"
           },
           "403": {
-            "$ref": "#/components/responses/ErrorResponse_10ef468de4a2f3d5e1e4a4bcd9c19369a4c535898d4ecea2b48444857aece895"
+            "$ref": "#/components/responses/ErrorResponse_10ef468d"
           },
           "503": {
-            "$ref": "#/components/responses/ErrorResponse_a4a8a71ed4a33ddc602b7e2cf4dd0b51ef37c46db1b01870377abdbd6cbda1b5"
+            "$ref": "#/components/responses/ErrorResponse_a4a8a71e"
           }
         },
         "x-cloudflare-labels": [
@@ -7242,7 +7469,93 @@
             "$ref": "#/components/responses/RpcValidationError"
           },
           "401": {
-            "$ref": "#/components/responses/ErrorResponse_d7174de43f943d10193d5f31cc4615acb6d01e6a15ef9a1a861235cb9792319b"
+            "description": "Missing or invalid credentials",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "defined": {
+                          "const": true
+                        },
+                        "code": {
+                          "const": "AUTH_MISSING"
+                        },
+                        "status": {
+                          "const": 401
+                        },
+                        "message": {
+                          "type": "string",
+                          "default": "Request is missing session credentials."
+                        },
+                        "data": {}
+                      },
+                      "required": [
+                        "defined",
+                        "code",
+                        "status",
+                        "message"
+                      ]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "defined": {
+                          "const": true
+                        },
+                        "code": {
+                          "const": "AUTH_SESSION_INVALID"
+                        },
+                        "status": {
+                          "const": 401
+                        },
+                        "message": {
+                          "type": "string",
+                          "default": "Session token is missing, expired, or not valid here."
+                        },
+                        "data": {}
+                      },
+                      "required": [
+                        "defined",
+                        "code",
+                        "status",
+                        "message"
+                      ]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "defined": {
+                          "const": true
+                        },
+                        "code": {
+                          "const": "AUTH_ORG_REQUIRED"
+                        },
+                        "status": {
+                          "const": 401
+                        },
+                        "message": {
+                          "type": "string",
+                          "default": "An active workspace session is required."
+                        },
+                        "data": {}
+                      },
+                      "required": [
+                        "defined",
+                        "code",
+                        "status",
+                        "message"
+                      ]
+                    },
+                    {
+                      "$ref": "#/components/schemas/RpcUnexpectedError"
+                    }
+                  ]
+                }
+              }
+            }
           },
           "403": {
             "description": "Access denied",
@@ -7348,7 +7661,7 @@
             }
           },
           "503": {
-            "$ref": "#/components/responses/ErrorResponse_a4a8a71ed4a33ddc602b7e2cf4dd0b51ef37c46db1b01870377abdbd6cbda1b5"
+            "$ref": "#/components/responses/ErrorResponse_a4a8a71e"
           }
         },
         "x-cloudflare-labels": [
@@ -7359,372 +7672,13 @@
             "clerkSession": []
           }
         ]
-      }
-    },
-    "/v3/workspaces/{workspaceSlug}/surfaces": {
-      "post": {
-        "operationId": "createSurface",
-        "summary": "Create app",
-        "description": "Creates an app (surface) in the workspace. Reuse the original request identity when retrying the same creation attempt.",
-        "tags": [
-          "Surfaces"
-        ],
-        "parameters": [
-          {
-            "name": "workspaceSlug",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
-              "description": "Workspace URL slug, using lowercase letters, numbers, and hyphens."
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "anonymousReplayPolicy": {
-                    "enum": [
-                      "always",
-                      "on_error",
-                      "never"
-                    ],
-                    "type": "string",
-                    "description": "When sessions without an identified user record replay. Defaults to on_error when anonymous-user tracking is on, otherwise always."
-                  },
-                  "anonymousUserTracking": {
-                    "type": "boolean",
-                    "default": true,
-                    "description": "Whether anonymous-user telemetry is collected."
-                  },
-                  "apiKey": {
-                    "type": "object",
-                    "properties": {
-                      "scopes": {
-                        "type": "array",
-                        "minItems": 1,
-                        "items": {
-                          "enum": [
-                            "org:telemetry:write",
-                            "org:surfaces:read",
-                            "org:surfaces:write",
-                            "org:surfaces:delete",
-                            "org:problems:read",
-                            "org:problems:write",
-                            "org:support:read",
-                            "org:support:write",
-                            "org:replays:read",
-                            "org:source_context:read",
-                            "org:integration_settings:read",
-                            "org:integration_settings:write",
-                            "org:workspace_members:read",
-                            "org:workspace_members:write",
-                            "org:workspace_billing:read",
-                            "org:workspace_billing:write",
-                            "org:workspace_basics:read",
-                            "org:workspace_basics:write",
-                            "org:workspace_domains:read",
-                            "org:workspace_domains:write",
-                            "org:workspace_auth:read",
-                            "org:workspace_auth:write",
-                            "org:workspace:destroy",
-                            "org:workspace:transfer_ownership",
-                            "release:write",
-                            "ingest:write"
-                          ],
-                          "type": "string"
-                        },
-                        "description": "Permission scopes granted to the key."
-                      },
-                      "secondsUntilExpiration": {
-                        "anyOf": [
-                          {
-                            "type": "integer",
-                            "minimum": -9007199254740991,
-                            "maximum": 9007199254740991,
-                            "exclusiveMinimum": 0,
-                            "description": "Positive lifetime in seconds, or null for no expiry."
-                          },
-                          {
-                            "type": "null"
-                          }
-                        ]
-                      }
-                    },
-                    "required": [
-                      "scopes",
-                      "secondsUntilExpiration"
-                    ]
-                  },
-                  "idempotencyKey": {
-                    "type": "string",
-                    "format": "uuid"
-                  },
-                  "name": {
-                    "type": "string",
-                    "minLength": 1,
-                    "maxLength": 48,
-                    "description": "Display name of the surface."
-                  },
-                  "type": {
-                    "enum": [
-                      "elysia",
-                      "nest",
-                      "nextjs",
-                      "python",
-                      "react"
-                    ],
-                    "type": "string",
-                    "description": "Application framework used by the surface."
-                  }
-                },
-                "required": [
-                  "apiKey",
-                  "idempotencyKey",
-                  "name",
-                  "type"
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CreateSurfaceResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/RpcValidationError"
-          },
-          "401": {
-            "$ref": "#/components/responses/ErrorResponse_d7174de43f943d10193d5f31cc4615acb6d01e6a15ef9a1a861235cb9792319b"
-          },
-          "403": {
-            "$ref": "#/components/responses/ErrorResponse_10ef468de4a2f3d5e1e4a4bcd9c19369a4c535898d4ecea2b48444857aece895"
-          },
-          "404": {
-            "$ref": "#/components/responses/ErrorResponse_3cfb93c298ec62e03b5f0c773ae0ffe6465986e9ffe28eb614f7c3c4a859f869"
-          },
-          "409": {
-            "description": "Request conflicts with current state",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "oneOf": [
-                    {
-                      "type": "object",
-                      "properties": {
-                        "defined": {
-                          "const": true
-                        },
-                        "code": {
-                          "const": "SURFACE_CREATION_CONFLICT"
-                        },
-                        "status": {
-                          "const": 409
-                        },
-                        "message": {
-                          "type": "string",
-                          "default": "This surface creation attempt no longer matches. Refresh before trying again."
-                        },
-                        "data": {}
-                      },
-                      "required": [
-                        "defined",
-                        "code",
-                        "status",
-                        "message"
-                      ]
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "defined": {
-                          "const": true
-                        },
-                        "code": {
-                          "const": "SURFACE_KEY_CONFLICT"
-                        },
-                        "status": {
-                          "const": 409
-                        },
-                        "message": {
-                          "type": "string",
-                          "default": "This key name or revision is no longer available. Refresh the keys before trying again."
-                        },
-                        "data": {}
-                      },
-                      "required": [
-                        "defined",
-                        "code",
-                        "status",
-                        "message"
-                      ]
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "defined": {
-                          "const": true
-                        },
-                        "code": {
-                          "const": "SURFACE_NAME_CONFLICT"
-                        },
-                        "status": {
-                          "const": 409
-                        },
-                        "message": {
-                          "type": "string",
-                          "default": "This name is already used by another surface. Try a different name."
-                        },
-                        "data": {}
-                      },
-                      "required": [
-                        "defined",
-                        "code",
-                        "status",
-                        "message"
-                      ]
-                    },
-                    {
-                      "$ref": "#/components/schemas/RpcUnexpectedError"
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "503": {
-            "$ref": "#/components/responses/ErrorResponse_b7d254f6bd68a887b2398a1b58fb8fe3913110d7236a6e4540d7d2aa990fb12b"
-          }
-        },
-        "x-cloudflare-labels": [
-          "cf-api-endpoint"
-        ],
-        "security": [
-          {
-            "clerkSession": []
-          }
-        ]
-      }
-    },
-    "/v3/workspaces/{workspaceSlug}/surfaces/{surfaceSlug}/publicKeys": {
-      "post": {
-        "operationId": "createSurfacePublicKey",
-        "summary": "Create app public key",
-        "description": "Creates a publishable key for the app (surface).",
-        "tags": [
-          "Surface keys"
-        ],
-        "parameters": [
-          {
-            "name": "workspaceSlug",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
-              "description": "Workspace URL slug, using lowercase letters, numbers, and hyphens."
-            }
-          },
-          {
-            "name": "surfaceSlug",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
-              "description": "Surface URL slug, using lowercase letters, numbers, and hyphens."
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "idempotencyKey": {
-                    "type": "string",
-                    "format": "uuid"
-                  },
-                  "name": {
-                    "type": "string",
-                    "minLength": 1,
-                    "maxLength": 64,
-                    "description": "Display name of the key."
-                  }
-                },
-                "required": [
-                  "idempotencyKey",
-                  "name"
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CreateSurfacePublicKeyResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/RpcValidationError"
-          },
-          "401": {
-            "$ref": "#/components/responses/ErrorResponse_d7174de43f943d10193d5f31cc4615acb6d01e6a15ef9a1a861235cb9792319b"
-          },
-          "403": {
-            "$ref": "#/components/responses/ErrorResponse_10ef468de4a2f3d5e1e4a4bcd9c19369a4c535898d4ecea2b48444857aece895"
-          },
-          "404": {
-            "$ref": "#/components/responses/ErrorResponse_3cfb93c298ec62e03b5f0c773ae0ffe6465986e9ffe28eb614f7c3c4a859f869"
-          },
-          "409": {
-            "$ref": "#/components/responses/ErrorResponse_088cb09282d303295e75879da2c16585de0b7b9e07c53fe74d377c3985f2792c"
-          },
-          "503": {
-            "$ref": "#/components/responses/ErrorResponse_b7d254f6bd68a887b2398a1b58fb8fe3913110d7236a6e4540d7d2aa990fb12b"
-          }
-        },
-        "x-cloudflare-labels": [
-          "cf-api-endpoint"
-        ],
-        "security": [
-          {
-            "clerkSession": []
-          }
-        ],
-        "x-fern-sdk-group-name": [
-          "keys",
-          "public"
-        ],
-        "x-fern-sdk-method-name": "create"
       }
     },
     "/v3/workspaces/{workspaceSlug}/surfaces/{surfaceSlug}/publicKeys/{publicKeyId}": {
       "get": {
         "operationId": "readPublicKey",
         "summary": "Read app public key",
-        "description": "Reads a publishable key's identity, current value and revocation status. Requires app read permission. Revoked keys and keys belonging to deleted apps report revoked: true.",
+        "description": "Reads a publishable key's identity, current value and revocation status. Requires app read permission. Revoked keys report revoked: true, and so do keys of a deleted app unless the key is still mapped to a service and keeps ingesting.",
         "tags": [
           "Surface keys"
         ],
@@ -7774,16 +7728,16 @@
             "$ref": "#/components/responses/RpcValidationError"
           },
           "401": {
-            "$ref": "#/components/responses/ErrorResponse_b32e7e47d27147b78e9ca9c8927315e0c48a5a54a03868590623df7e2ff7d2af"
+            "$ref": "#/components/responses/ErrorResponse_b32e7e47"
           },
           "403": {
-            "$ref": "#/components/responses/ErrorResponse_10ef468de4a2f3d5e1e4a4bcd9c19369a4c535898d4ecea2b48444857aece895"
+            "$ref": "#/components/responses/ErrorResponse_10ef468d"
           },
           "404": {
-            "$ref": "#/components/responses/ErrorResponse_89ad83ad210efa94079e130bda6e600e2ae591af5bb05c2ad8087c1f3d40f6cc"
+            "$ref": "#/components/responses/ErrorResponse_89ad83ad"
           },
           "503": {
-            "$ref": "#/components/responses/ErrorResponse_b7d254f6bd68a887b2398a1b58fb8fe3913110d7236a6e4540d7d2aa990fb12b"
+            "$ref": "#/components/responses/ErrorResponse_b7d254f6"
           }
         },
         "x-cloudflare-labels": [
@@ -7853,16 +7807,16 @@
             "$ref": "#/components/responses/RpcValidationError"
           },
           "401": {
-            "$ref": "#/components/responses/ErrorResponse_b32e7e47d27147b78e9ca9c8927315e0c48a5a54a03868590623df7e2ff7d2af"
+            "$ref": "#/components/responses/ErrorResponse_b32e7e47"
           },
           "403": {
-            "$ref": "#/components/responses/ErrorResponse_10ef468de4a2f3d5e1e4a4bcd9c19369a4c535898d4ecea2b48444857aece895"
+            "$ref": "#/components/responses/ErrorResponse_10ef468d"
           },
           "404": {
-            "$ref": "#/components/responses/ErrorResponse_89ad83ad210efa94079e130bda6e600e2ae591af5bb05c2ad8087c1f3d40f6cc"
+            "$ref": "#/components/responses/ErrorResponse_89ad83ad"
           },
           "503": {
-            "$ref": "#/components/responses/ErrorResponse_b7d254f6bd68a887b2398a1b58fb8fe3913110d7236a6e4540d7d2aa990fb12b"
+            "$ref": "#/components/responses/ErrorResponse_b7d254f6"
           }
         },
         "x-cloudflare-labels": [

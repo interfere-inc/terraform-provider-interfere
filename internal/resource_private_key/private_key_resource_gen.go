@@ -76,15 +76,6 @@ func PrivateKeyResourceSchema(ctx context.Context) schema.Schema {
 					int64validator.Between(-9007199254740991, 9007199254740991),
 				},
 			},
-			"surface_slug": schema.StringAttribute{
-				Optional:            true,
-				Computed:            true,
-				Description:         "Surface URL slug, using lowercase letters, numbers, and hyphens.",
-				MarkdownDescription: "Surface URL slug, using lowercase letters, numbers, and hyphens.",
-				Validators: []validator.String{
-					stringvalidator.RegexMatches(regexp.MustCompile("^[a-z0-9]+(?:-[a-z0-9]+)*$"), ""),
-				},
-			},
 			"version": schema.StringAttribute{
 				Computed:            true,
 				Description:         "Identifier of the currently active key version.",
@@ -111,7 +102,6 @@ type PrivateKeyModel struct {
 	Name                   types.String `tfsdk:"name"`
 	Scopes                 types.List   `tfsdk:"scopes"`
 	SecondsUntilExpiration types.Int64  `tfsdk:"seconds_until_expiration"`
-	SurfaceSlug            types.String `tfsdk:"surface_slug"`
 	Version                types.String `tfsdk:"version"`
 	WorkspaceSlug          types.String `tfsdk:"workspace_slug"`
 }

@@ -167,7 +167,7 @@ func TestSettersMarkExplicitMutationWorkspacesUpdateSupportAccessResponse(t *tes
 func TestSettersSetAccessSupportRequestArgs(t *testing.T) {
 	t.Run("SetImpersonationExpiresAt", func(t *testing.T) {
 		obj := &SetAccessSupportRequestArgs{}
-		var fernTestValueImpersonationExpiresAt *float64
+		var fernTestValueImpersonationExpiresAt *int
 		obj.SetImpersonationExpiresAt(fernTestValueImpersonationExpiresAt)
 		assert.Equal(t, fernTestValueImpersonationExpiresAt, obj.ImpersonationExpiresAt)
 		assert.NotNil(t, obj.explicitFields)
@@ -188,7 +188,7 @@ func TestGettersSetAccessSupportRequestArgs(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &SetAccessSupportRequestArgs{}
-		var expected *float64
+		var expected *int
 		obj.ImpersonationExpiresAt = expected
 
 		// Act & Assert
@@ -247,7 +247,7 @@ func TestSettersMarkExplicitSetAccessSupportRequestArgs(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &SetAccessSupportRequestArgs{}
-		var fernTestValueImpersonationExpiresAt *float64
+		var fernTestValueImpersonationExpiresAt *int
 
 		// Act
 		obj.SetImpersonationExpiresAt(fernTestValueImpersonationExpiresAt)
